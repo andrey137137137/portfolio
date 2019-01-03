@@ -1,12 +1,18 @@
 import Vue from "vue";
 import App from "./App.vue";
-import router from "./router";
 import store from "./store";
+import router from "./router";
+import Vuelidate from "vuelidate";
+import axios from "axios";
+import interceptor from "@/api/interceptor";
 
-Vue.config.productionTip = false;
+interceptor(axios);
+
+Vue.use(Vuelidate);
 
 new Vue({
-  router,
+  el: "#app",
   store,
+  router,
   render: h => h(App)
-}).$mount("#app");
+});

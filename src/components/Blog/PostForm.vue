@@ -23,13 +23,13 @@
 <script>
 import {
   required,
-  alphaNum,
-  minLength,
-  maxLength
+  // alphaNum,
+  minLength
+  // maxLength
 } from "vuelidate/lib/validators";
 
-import ItemForm from "../ItemForm";
-import FormField from "../Form/FormField";
+import ItemForm from "@/components/ItemForm";
+import FormField from "@/components/Form/FormField";
 
 import { mapActions } from "vuex";
 
@@ -93,7 +93,7 @@ export default {
         this.deletePost(postId);
       }
     },
-    submit(e) {
+    submit() {
       if (this.$v.$invalid) {
         return false;
       }

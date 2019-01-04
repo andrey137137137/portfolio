@@ -19,13 +19,13 @@
 <script>
 import {
   required,
-  alphaNum,
+  // alphaNum,
   minValue,
   maxValue
 } from "vuelidate/lib/validators";
 
-import ItemForm from "../ItemForm";
-import FormField from "../Form/FormField";
+import ItemForm from "@/components/ItemForm";
+import FormField from "@/components/Form/FormField";
 
 import { mapActions } from "vuex";
 
@@ -82,7 +82,7 @@ export default {
     removeExistedSkill(skillId) {
       this.removeSkill(skillId);
     },
-    submit(e) {
+    submit() {
       const newSkill = {
         id: Math.round(Math.random() * 1000000),
         name: this.skillName,

@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import SkillForm from "./SkillForm";
+import SkillForm from "@/components/About/SkillForm";
 
 export default {
   components: {

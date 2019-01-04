@@ -1,5 +1,5 @@
 import axios from "axios";
-import * as types from "../../common-mutation-types";
+import * as types from "@/store/common-mutation-types";
 
 const dbPage = "post";
 
@@ -20,7 +20,7 @@ const blog = {
       state.data.push(newItem);
     },
     [types.DELETE](state, id) {
-      state.data = state.data.filter(item => item.id !== skillId);
+      state.data = state.data.filter(item => item.id !== id);
     }
   },
   actions: {
@@ -30,17 +30,17 @@ const blog = {
       });
     },
     createPost({ dispatch }, data) {
-      axios.post(dbPage, data).then(response => {
+      axios.post(dbPage, data).then(() => {
         dispatch("getPosts");
       });
     },
     updatePost({ dispatch }, post) {
-      axios.put(`${dbPage}/${post.id}`, post.data).then(response => {
+      axios.put(`${dbPage}/${post.id}`, post.data).then(() => {
         dispatch("getPosts");
       });
     },
     deletePost({ dispatch }, id) {
-      axios.delete(`${dbPage}/${id}`).then(response => {
+      axios.delete(`${dbPage}/${id}`).then(() => {
         dispatch("getPosts");
       });
     }

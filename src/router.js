@@ -1,9 +1,9 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 
-import About from "./components/About";
-import Blog from "./components/Blog";
-import PageCmp from "./components/PageCmp.vue";
+import About from "@/components/About";
+import Blog from "@/components/Blog";
+import PageCmp from "@/components/PageCmp.vue";
 
 Vue.use(VueRouter);
 

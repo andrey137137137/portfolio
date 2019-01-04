@@ -9,14 +9,12 @@
 <script>
 import HeaderCmp from "@/components/HeaderCmp";
 import NavCmp from "@/components/NavCmp";
-// import About from "@/components/About";
 
 export default {
   name: "App",
   components: {
     HeaderCmp,
     NavCmp
-    // About
   }
 };
 </script>

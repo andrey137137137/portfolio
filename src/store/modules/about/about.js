@@ -1,5 +1,5 @@
 import axios from "axios";
-import * as types from "../../common-mutation-types";
+import * as types from "@/store/common-mutation-types";
 
 const dbPage = "skill";
 
@@ -20,7 +20,7 @@ const about = {
       state.data.push(newItem);
     },
     [types.DELETE](state, id) {
-      state.data = state.data.filter(item => item.id !== skillId);
+      state.data = state.data.filter(item => item.id !== id);
     }
   },
   actions: {

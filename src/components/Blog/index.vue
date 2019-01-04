@@ -13,7 +13,7 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
-import PostForm from "./PostForm";
+import PostForm from "@/components/Blog/PostForm";
 
 export default {
   name: "Blog",

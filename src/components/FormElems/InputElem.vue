@@ -1,7 +1,8 @@
 <template lang="pug">
-  .form__wrap.form__wrap-textarea(:class="addClasses")
+  .form__wrap.form__wrap-text(:class="addClasses")
     label.form__label(v-if="label") {{label}}
-    textarea.form__input(
+    input.form__input(
+      :type="getType"
       v-model="state"
       :class="validationClass"
       :placeholder="placeholder"
@@ -10,12 +11,12 @@
 </template>
 
 <script>
-import addClasses from "../../mixins/addClasses";
-import formElem from "../../mixins/formElem";
-import ErrorElem from "./ErrorElem";
+import addClasses from "@/mixins/addClasses";
+import formElem from "@/mixins/formElem";
+import ErrorElem from "@/components/FormElems/ErrorElem";
 
 export default {
-  name: "TextareaElem",
+  name: "InputElem",
   components: {
     ErrorElem
   },

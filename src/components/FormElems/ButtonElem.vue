@@ -4,7 +4,7 @@
 </template>
 
 <script>
-import addClasses from "../../mixins/addClasses";
+import addClasses from "@/mixins/addClasses";
 
 export default {
   name: "ButtonElem",

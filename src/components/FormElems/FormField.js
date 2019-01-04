@@ -1,6 +1,6 @@
-import types from "../../constants/validation/types";
-import addClasses from "../../mixins/addClasses";
-import ErrorElem from "./ErrorElem";
+// import types from "@/constants/validation/types";
+import addClasses from "@/mixins/addClasses";
+import ErrorElem from "@/components/FormElems/ErrorElem";
 
 export default {
   render(h) {
@@ -127,13 +127,13 @@ export default {
     }
   },
   methods: {
-    labelElem(h) {
+    labelElem() {
       return <label class="form__label">{this.label}</label>;
     },
-    errorElem(h) {
+    errorElem() {
       return <ErrorElem type={this.errorType} />;
     },
-    measureElem(h) {
+    measureElem() {
       return <span class="form__measure">{this.measure}</span>;
     },
     inputElem(h) {

@@ -15,13 +15,13 @@ export default {
 
 <style lang="scss">
 .icon {
-  background: svg("../assets/img/icons/phone.svg", "#ccc") center center
+  background: svg("../../assets/img/icons/phone.svg", "#ccc") center center
     no-repeat;
   width: 40px;
   height: 40px;
 
   &:hover {
-    background-image: svg("../assets/img/icons/phone.svg", "#0a0");
+    background-image: svg("../../assets/img/icons/phone.svg", "#0a0");
   }
 }
 </style>

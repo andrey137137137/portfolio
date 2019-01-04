@@ -4,8 +4,8 @@
 </template>
 
 <script>
-import exist from "../../helpers/exist";
-import errors from "../../constants/validation/errors";
+import exist from "@/helpers/exist";
+import errors from "@/constants/validation/errors";
 
 export default {
   name: "ErrorElem",

@@ -9,12 +9,12 @@
 </template>
 
 <script>
-import skillCat from "@/components/About/skillCat";
+import skillCat from "@/components/AdminCmp/AboutCmp/skillCat";
 
 import { mapActions, mapGetters } from "vuex";
 
 export default {
-  name: "About",
+  name: "AboutCmp",
   components: {
     skillCat
   },

@@ -13,9 +13,9 @@
 </template>
 
 <script>
-import addClasses from "../../mixins/addClasses";
-import formElem from "../../mixins/formElem";
-import ErrorElem from "./ErrorElem";
+import addClasses from "@/mixins/addClasses";
+import formElem from "@/mixins/formElem";
+import ErrorElem from "@/components/FormElems/ErrorElem";
 
 export default {
   name: "NumberElem",

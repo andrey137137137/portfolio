@@ -12,11 +12,12 @@
 </template>
 
 <script>
+import PostForm from "@/components/AdminCmp/BlogCmp/PostForm";
+
 import { mapActions, mapGetters } from "vuex";
-import PostForm from "@/components/Blog/PostForm";
 
 export default {
-  name: "Blog",
+  name: "BlogCmp",
   components: { PostForm },
   computed: {
     ...mapGetters(["posts"])

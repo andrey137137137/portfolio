@@ -9,14 +9,14 @@
 
 <script>
 export default {
-  name: "NavCmp",
+  name: "AdminNav",
   data() {
     return {
       tabs: [
-        { name: "Обо мне", href: "/about" },
-        { name: "Блог", href: "/blog" },
-        { name: "Таб 3", href: "/page/50" },
-        { name: "Таб 4", href: "/page/70" }
+        { name: "Обо мне", href: "/admin/about" },
+        { name: "Блог", href: "/admin/blog" },
+        { name: "Таб 3", href: "/admin/page/50" },
+        { name: "Таб 4", href: "/admin/page/70" }
       ]
     };
   },

@@ -16,11 +16,9 @@
 </template>
 
 <script>
-import FormWrapper from "./Form/FormWrapper";
-import FormField from "./Form/FormField";
-import ButtonElem from "./Form/ButtonElem";
-
-import { mapActions } from "vuex";
+import FormWrapper from "@/components/FormElems/FormWrapper";
+import FormField from "@/components/FormElems/FormField";
+import ButtonElem from "@/components/FormElems/ButtonElem";
 
 export default {
   name: "ItemForm",

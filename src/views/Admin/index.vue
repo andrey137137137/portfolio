@@ -7,8 +7,8 @@
 </template>
 
 <script>
-import AdminHeader from "@/components/AdminCmp/AdminHeader";
-import AdminNav from "@/components/AdminCmp/AdminNav";
+import AdminHeader from "@/components/Admin/AdminHeader";
+import AdminNav from "@/components/Admin/AdminNav";
 
 export default {
   name: "App",
@@ -20,7 +20,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import "@/styles/app.scss";
 .main {
   background: url("../../assets/img/bg.jpg") center center / cover no-repeat;
 }

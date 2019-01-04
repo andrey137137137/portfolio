@@ -1,11 +1,11 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 
-import Home from "@/views/Home.vue";
-import AdminCmp from "@/components/AdminCmp";
-import AboutCmp from "@/components/AdminCmp/AboutCmp";
-import BlogCmp from "@/components/AdminCmp/BlogCmp";
-import PageCmp from "@/components/AdminCmp/PageCmp.vue";
+import Home from "@/views/Home";
+import Admin from "@/views/Admin";
+import About from "@/views/Admin/About";
+import Blog from "@/views/Admin/Blog";
+import Page from "@/views/Admin/Page";
 
 Vue.use(VueRouter);
 
@@ -29,19 +29,19 @@ export default new VueRouter({
     },
     {
       path: "/admin",
-      component: AdminCmp,
+      component: Admin,
       children: [
         {
           path: "about",
-          component: AboutCmp
+          component: About
         },
         {
           path: "blog",
-          component: BlogCmp
+          component: Blog
         },
         {
           path: "page/:pageId",
-          component: PageCmp,
+          component: Page,
           props: true
         }
       ]

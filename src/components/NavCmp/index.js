@@ -1,3 +1,6 @@
+import MainMenu from "@/components/NavCmp/MainMenu";
+import SocialMenu from "@/components/NavCmp/SocialMenu";
+
 export default {
   name: "NavCmp",
   render(h) {
@@ -51,7 +54,7 @@ export default {
     }
   },
   methods: {
-    checkerElem(h) {
+    checkerElem() {
       return (
         <a
           id="menu_checker"
@@ -64,11 +67,11 @@ export default {
         </a>
       );
     },
-    mainMenuElem(h) {
-      return <MainMenu inHeader="inHeader" isContent="isContent" />;
+    mainMenuElem() {
+      return <MainMenu inHeader={this.inHeader} isContent={this.isContent} />;
     },
-    socialMenuElem(h) {
-      return <SocialMenu inHeader="inHeader" isContent="isContent" />;
+    socialMenuElem() {
+      return <SocialMenu inHeader={this.inHeader} isContent={this.isContent} />;
     }
   }
 };

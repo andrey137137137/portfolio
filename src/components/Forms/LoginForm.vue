@@ -1,6 +1,6 @@
 <template lang="pug">
   FormWrapper#login_form(
-    :addClasses="{login_form: true, ...addClasses}"
+    :addClasses="containerClass"
     @submit.prevent.native="handleSubmit")
 
     .login_form__top_wrap
@@ -45,10 +45,19 @@
 </template>
 
 <script>
-import addClasses from "../../mixins/addClasses";
+import addClasses from "@/mixins/addClasses";
+import FormWrapper from "@/components/FormElems/FormWrapper";
 
 export default {
   name: "LoginForm",
-  mixins: [addClasses]
+  mixins: [addClasses],
+  components: {
+    FormWrapper
+  },
+  computed: {
+    containerClass() {
+      return { login_form: true, ...addClasses };
+    }
+  }
 };
 </script>

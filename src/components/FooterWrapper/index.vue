@@ -3,10 +3,9 @@
 
     a.icon.icon-chevron_up.scroll_btn.scroll_btn-to_up(v-if="isToUp" href="#header")
 
-    if page.content
-      FooterTop
+    FooterTop(v-if="isContent")
 
-    ul.section.footer_bottom(:class={"'footer_bottom-bg': isContent"})
+    ul.section.footer_bottom(:class="{'footer_bottom-bg': isContent}")
       li.container.footer_bottom__container
         p.section__desc.footer_bottom__col.footer_bottom__author &copy; Банников Андрей
         p.section__desc.footer_bottom__col.footer_bottom__desc Создаю с любовью в LoftSchool
@@ -14,10 +13,14 @@
 </template>
 
 <script>
-import addClasses from "../../mixins/addClasses";
+import addClasses from "@/mixins/addClasses";
+import FooterTop from "@/components/FooterWrapper/FooterTop";
 
 export default {
   name: "FooterWrapper",
+  components: {
+    FooterTop
+  },
   mixins: [addClasses],
   props: {
     isToUp: {

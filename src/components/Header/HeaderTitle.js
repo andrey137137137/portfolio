@@ -40,7 +40,8 @@ export default {
   },
   methods: {
     titleElem(h) {
-      const level = isLarge ? 1 : 2;
+      const level = this.isLarge ? 1 : 2;
+      console.log(`h${level}`);
 
       return h(
         `h${level}`,
@@ -51,10 +52,10 @@ export default {
             ...this.titleClass
           }
         },
-        [this.slots.default]
+        [this.slots]
       );
     },
-    descElem(h) {
+    descElem() {
       return (
         <p
           class={{ section__desc: true, header__desc: true, ...this.descClass }}

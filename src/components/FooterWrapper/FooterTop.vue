@@ -12,8 +12,13 @@
 </template>
 
 <script>
+import NavCmp from "@/components/NavCmp";
+
 export default {
   name: "FooterTop",
+  components: {
+    NavCmp
+  },
   data() {
     return {
       contacts: [

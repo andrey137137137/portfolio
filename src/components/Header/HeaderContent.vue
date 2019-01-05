@@ -10,19 +10,25 @@
 </template>
 
 <script>
-import addClasses from "../../mixins/addClasses";
+import addClasses from "@/mixins/addClasses";
+import SvgCmp from "@/components/SvgCmp";
+import HeaderTitle from "@/components/Header/HeaderTitle";
 
 export default {
   name: "HeaderContent",
+  components: {
+    SvgCmp,
+    HeaderTitle
+  },
   mixins: [addClasses],
   props: {
     isBlog: {
       type: Boolean,
-      required: true
+      default: false
     },
     isContent: {
       type: Boolean,
-      required: true
+      default: true
     }
   },
   computed: {

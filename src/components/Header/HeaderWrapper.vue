@@ -1,10 +1,10 @@
 <template lang="pug">
   header#header.section.header(:class="addClasses")
-  header#header.section.header.header-wide(class={'header-blog': page.name == 'blog'})
+    slot
 </template>
 
 <script>
-import addClasses from "../../mixins/addClasses";
+import addClasses from "@/mixins/addClasses";
 
 export default {
   name: "HeaderWrapper",

@@ -47,7 +47,9 @@ export default {
       return {
         footer_top__socials: true
       };
-    },
+    }
+  },
+  methods: {
     iconClass: icon => {
       return { [`icon-${icon}`]: true };
     }

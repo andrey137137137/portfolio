@@ -19,7 +19,6 @@ body {
   flex-flow: column nowrap;
   justify-content: space-between;
   font: 14px/24px $mainFont;
-  // color: $grey #223b65;
   color: $grey;
 
   &.full_screen {
@@ -49,7 +48,7 @@ body {
   &__title {
     $elem: &;
 
-    font: 500 21px/34px $mainFont;
+    font: 500 21px $mainFont;
 
     &#{$elem}-uppercase,
     &#{$elem}-large {
@@ -283,137 +282,5 @@ ul {
 
   &-map_marker:before {
     content: "\f041";
-  }
-}
-
-.socials {
-  display: table;
-  margin: 0 auto;
-
-  &__link {
-    float: left;
-    width: 59px;
-    text-decoration: none;
-    overflow: hidden;
-  }
-}
-
-.scroll_btn {
-  @include position("absolute * * * 50%");
-  color: rgba($white, 0.7);
-  text-decoration: none;
-  transform: translateX(-50%);
-
-  &:hover {
-    color: $white;
-  }
-
-  &-to_bottom {
-    top: 455px;
-  }
-
-  &-to_up {
-    bottom: 356px;
-  }
-}
-
-.title_wrap {
-  $block: &;
-
-  position: relative;
-  padding-top: 20px;
-  width: 100%;
-
-  &__bg {
-    $elem: &;
-
-    @include position("absolute 0 * * 0");
-    size: 100%;
-    opacity: 0.15;
-
-    &#{$elem}-contrast {
-      display: none;
-      opacity: 0.1;
-
-      circle {
-        fill: #3552ce;
-      }
-    }
-  }
-
-  #{$titleClass}#{$block}__title {
-    position: relative;
-    z-index: 1;
-    padding-top: 0;
-  }
-}
-
-.top_wrap {
-  $block: &;
-
-  margin-top: -$cornerBorderHeight;
-  width: 100%;
-  overflow-y: visible;
-
-  &__corner_border {
-    $elem: &;
-
-    position: relative;
-    // @include border("#{$cornerBorderHeight} 160px 0 160px / solid / transparent * transparent *");
-    // @include borderPx(320px, $cornerBorderHeight);
-    @include border(
-      "#{$cornerBorderHeight} 49.5vw 0 49.5vw / solid / transparent * transparent *"
-    );
-    width: 100%;
-
-    &#{$elem}-half_opacity {
-      @include borderCornerColor(rgba(#0d1120, 0.85));
-
-      // &:before {
-      //   display: block;
-      //   size: 100% 93px;
-      //   content: '';
-      // }
-    }
-
-    &#{$elem}-two_colors {
-      @include borderCornerColor(#f2f0e8);
-    }
-
-    &#{$elem}-beige {
-      @include borderCornerColor(#f9f8f0);
-    }
-  }
-
-  &__title_wrap {
-    height: 94px;
-    color: $white rgba(#0d1120, 0.85);
-    overflow: hidden;
-
-    .title_wrap__bg {
-      transform: translateX(-5px) rotate(190deg);
-    }
-
-    // .title_wrap__title {
-    //   padding-top: 20px;
-    // }
-  }
-
-  &#{$block}-beige {
-    background-color: #f9f8f0;
-  }
-}
-
-.bottom_wrap {
-  $block: &;
-
-  &#{$block}-map_wrap {
-    position: relative;
-  }
-
-  &#{$block}-bg {
-    height: 1478px;
-    // background: #110d14 url(../img/bottom.jpg) center top no-repeat;
-    background-size: cover;
   }
 }

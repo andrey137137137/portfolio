@@ -14,3 +14,6 @@ export default {
   name: "PreloaderCmp"
 };
 </script>
+
+<style lang="scss" src="@/styles/components/PreloaderCmp.scss">
+</style>

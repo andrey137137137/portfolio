@@ -30,28 +30,5 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-.nav {
-  display: block;
-
-  &__item {
-    border-top: 2px solid $white;
-
-    &:first-child {
-      border-top-width: 0;
-    }
-  }
-
-  &__link {
-    border-width: 0;
-    @include oneLineBlock(45px);
-    color: $grey #f0efe9;
-    transition: color $trsTime, background-color $trsTime;
-
-    &:hover,
-    &-active {
-      color: $blue $white;
-    }
-  }
-}
+<style lang="scss" src="@/styles/components/AdminNav.scss" scoped>
 </style>

@@ -56,3 +56,6 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" src="@/styles/components/SocialMenu.scss" scoped>
+</style>

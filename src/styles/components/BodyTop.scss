@@ -1,0 +1,9 @@
+#app {
+  background-color: #223b65;
+
+  .section {
+    &__title {
+      line-height: 28px;
+    }
+  }
+}

@@ -1,6 +1,6 @@
 <template lang="pug">
   div
-    PreloaderCmp
+    //- PreloaderCmp
     ParallaxCmp(:addClasses="addClasses")
 </template>
 
@@ -18,3 +18,6 @@ export default {
   mixins: [addClasses]
 };
 </script>
+
+<style lang="scss" src="@/styles/components/BodyTop.scss">
+</style>

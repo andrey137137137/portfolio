@@ -1,0 +1,9 @@
+.main {
+  background: url("../assets/img/bg.jpg") center center / cover no-repeat;
+}
+
+.section {
+  &__title {
+    line-height: 34px;
+  }
+}

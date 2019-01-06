@@ -1,7 +1,29 @@
+const path = require("path");
+
+function resolve(dir) {
+  return path.join(__dirname, dir);
+}
+
+function resolveSrc(dir) {
+  return resolve(path.join("src", dir));
+}
+
+function resolveCommon(dir) {
+  return resolveSrc(path.join("common", dir));
+}
+
+function resolveFront(dir) {
+  return resolveSrc(path.join("frontend", dir));
+}
+
+function resolveBack(dir) {
+  return resolveSrc(path.join("backend", dir));
+}
+
 module.exports = {
   pages: {
-    index: "src/index/main.js",
-    admin: "src/admin/admin.js"
+    index: "src/frontend/main.js",
+    admin: "src/backend/admin.js"
   },
   devServer: {
     historyApiFallback: {
@@ -15,8 +37,24 @@ module.exports = {
     modules: true,
     loaderOptions: {
       sass: {
-        data: `@import "@/styles/variables.scss"; @import "@/styles/mixins.scss";`
+        data: `@import "@/common/styles/variables.scss"; @import "@/common/styles/mixins.scss";`
       }
     }
+  },
+  chainWebpack: config => {
+    config.resolve.alias.set("@common", resolveSrc("common"));
+    config.resolve.alias.set("@frontend", resolveSrc("frontend"));
+    config.resolve.alias.set("@backend", resolveSrc("backend"));
+
+    config.resolve.alias.set("@styles", resolveCommon("styles"));
+    config.resolve.alias.set("@components", resolveCommon("components"));
+
+    config.resolve.alias.set("@frontStyles", resolveFront("styles"));
+    config.resolve.alias.set("@frontCmp", resolveFront("components"));
+    config.resolve.alias.set("@frontViews", resolveFront("views"));
+
+    config.resolve.alias.set("@backStyles", resolveBack("styles"));
+    config.resolve.alias.set("@backCmp", resolveBack("components"));
+    config.resolve.alias.set("@backViews", resolveBack("views"));
   }
 };

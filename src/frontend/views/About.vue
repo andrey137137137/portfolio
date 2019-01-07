@@ -1,5 +1,39 @@
-<template>
-  <div class="about">
-    <h1>This is an about page</h1>
-  </div>
+<template lang="pug">
+  .main_wrap
+    //- BodyTop
+    HeaderWrapper
+      NavCmp
+      HeaderContent
+      ScrollButton
 </template>
+
+<script>
+import BodyTop from "@frontCmp/BodyTop";
+import HeaderWrapper from "@frontCmp/Header/HeaderWrapper";
+import NavCmp from "@frontCmp/NavCmp";
+import HeaderContent from "@frontCmp/Header/HeaderContent";
+import ScrollButton from "@frontCmp/ScrollButton";
+
+import { mapActions } from "vuex";
+
+export default {
+  name: "AboutView",
+  components: {
+    BodyTop,
+    HeaderWrapper,
+    NavCmp,
+    HeaderContent,
+    ScrollButton
+    // FooterWrapper
+  },
+  methods: {
+    ...mapActions(["setConfig"])
+  },
+  created() {
+    this.setConfig({
+      name: "Обо мне",
+      isContent: true
+    });
+  }
+};
+</script>

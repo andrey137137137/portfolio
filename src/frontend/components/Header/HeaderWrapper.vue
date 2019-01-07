@@ -1,14 +1,23 @@
 <template lang="pug">
-  header#header.section.header(:class="addClasses")
+  header#header.section.header(:class="classes")
     slot
 </template>
 
 <script>
-import addClasses from "@common/mixins/addClasses";
+import { mapGetters } from "vuex";
 
 export default {
   name: "HeaderWrapper",
-  mixins: [addClasses]
+  computed: {
+    ...mapGetters(["config"]),
+    classes() {
+      return {
+        "header-framed": !this.config.isContent,
+        "header-wide": this.config.isContent,
+        "header-blog": this.config.isBlog
+      };
+    }
+  }
 };
 </script>
 

@@ -1,7 +1,7 @@
 <template lang="pug">
   div
     //- BodyTop
-    HeaderWrapper(:addClasses="{'header-framed': true}")
+    HeaderWrapper
       a#flip_2_back.btn.btn-opacity.authorization(href="#login") Авторизоваться
       #flip_container.container.header__container.header__container-framed
         .header__flip_wrap
@@ -44,10 +44,7 @@ export default {
   },
   created() {
     this.setConfig({
-      name: "Главная",
-      isBlog: false,
-      isContent: false,
-      sections: 0
+      name: "Главная"
     });
   }
 };

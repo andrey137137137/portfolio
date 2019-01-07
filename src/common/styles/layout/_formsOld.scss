@@ -2,6 +2,15 @@ form {
   width: 100%;
 }
 
+.form__row-flex {
+  &:after {
+    display: block;
+    size: 100% 0;
+    clear: both;
+    content: "";
+  }
+}
+
 .form {
   $block: &;
 

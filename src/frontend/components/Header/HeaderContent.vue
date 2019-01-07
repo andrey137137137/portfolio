@@ -1,18 +1,20 @@
 <template lang="pug">
-  article.header__article(:class="articleClass")
+  article.header__article(:class="articleClasses")
 
-    SvgCmp(v-if="isContent" id="stars1" :addClasses="svgClass")
+    SvgCmp(v-if="config.isContent" id="stars1" :addClasses="svgClasses")
 
-    a.img_wrap.header__avatar(:class="avatarClass" href="/")
+    a.img_wrap.header__avatar(:class="avatarClasses" href="/")
       img.img_wrap__img(src="@/assets/userfiles/avatar.jpg" alt="Аватарка")
 
-    HeaderTitle(:isRelative="isContent", :isLarge="isBlog")
+    HeaderTitle
 </template>
 
 <script>
-import addClasses from "@/common/mixins/addClasses";
-import SvgCmp from "@/common/components/SvgCmp";
+import addClasses from "@common/mixins/addClasses";
+import SvgCmp from "@components/SvgCmp";
 import HeaderTitle from "./HeaderTitle";
+
+import { mapGetters } from "vuex";
 
 export default {
   name: "HeaderContent",
@@ -21,31 +23,22 @@ export default {
     HeaderTitle
   },
   mixins: [addClasses],
-  props: {
-    isBlog: {
-      type: Boolean,
-      default: false
-    },
-    isContent: {
-      type: Boolean,
-      default: true
-    }
-  },
   computed: {
-    articleClass() {
+    ...mapGetters(["config"]),
+    articleClasses() {
       return {
-        "header__article-relative": this.isContent,
-        "header__article-padding": !this.isContent
+        "header__article-relative": this.config.isContent,
+        "header__article-padding": !this.config.isContent
       };
     },
-    svgClass() {
+    svgClasses() {
       return {
         header__logo: true,
-        "header__logo-for_blog": this.isBlog
+        "header__logo-for_blog": this.config.isBlog
       };
     },
-    avatarClass() {
-      return { "header__avatar-relative": this.isContent };
+    avatarClasses() {
+      return { "header__avatar-relative": this.config.isContent };
     }
   }
 };

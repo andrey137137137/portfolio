@@ -1,6 +1,8 @@
 import MainMenu from "./MainMenu";
 import SocialMenu from "./SocialMenu";
 
+import { mapGetters } from "vuex";
+
 export default {
   name: "NavCmp",
   render(h) {
@@ -9,7 +11,7 @@ export default {
     if (this.inHeader) {
       elems.push(this.socialMenuElem(h));
 
-      if (this.isContent) {
+      if (this.config.isContent) {
         elems.push(this.checkerElem(h));
       } else {
         elems.push(this.mainMenuElem(h));
@@ -25,19 +27,18 @@ export default {
     inHeader: {
       type: Boolean,
       default: true
-    },
-    isContent: {
-      type: Boolean,
-      default: true
     }
   },
   computed: {
+    ...mapGetters(["config"]),
     classes() {
+      // console.log(this.inHeader);
+
       if (this.inHeader) {
         return {
           nav: true,
           header__nav: true,
-          "header__nav-fixed": this.isContent
+          "header__nav-fixed": this.config.isContent
         };
       }
 
@@ -68,10 +69,10 @@ export default {
       );
     },
     mainMenuElem() {
-      return <MainMenu inHeader={this.inHeader} isContent={this.isContent} />;
+      return <MainMenu inHeader={this.inHeader} />;
     },
     socialMenuElem() {
-      return <SocialMenu inHeader={this.inHeader} isContent={this.isContent} />;
+      return <SocialMenu inHeader={this.inHeader} />;
     }
   }
 };

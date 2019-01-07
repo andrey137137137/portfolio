@@ -1,46 +1,45 @@
 <template lang="pug">
-  .menu(:id="id" :class="containerClass")
+  .menu(:id="id" :class="containerClasses")
     a.menu__link(
       v-for="link in links"
       :key="link.href"
-      :class="linkClass"
+      :class="linkClasses"
       :href="link.href"
     ) {{link.name}}
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   name: "MainMenu",
   props: {
     inHeader: {
       type: Boolean,
-      default: true
-    },
-    isContent: {
-      type: Boolean,
-      default: true
+      default: false
     }
   },
   data() {
     return {
       links: [
-        { name: "index", isContent: !this.isContent, href: "/" },
-        { name: "works", isContent: this.isContent, href: "/works" },
-        { name: "about", isContent: this.isContent, href: "/about" },
-        { name: "blog", isContent: this.isContent, href: "/blog" }
+        { name: "home", isContent: false, href: "/" },
+        { name: "works", isContent: true, href: "/works" },
+        { name: "about", isContent: true, href: "/about" },
+        { name: "blog", isContent: true, href: "/blog" }
       ]
     };
   },
   computed: {
+    ...mapGetters(["config"]),
     id() {
-      return this.inHeader && this.isContent ? "main_menu" : "";
+      return this.inHeader && this.config.isContent ? "main_menu" : "";
     },
-    containerClass() {
+    containerClasses() {
       if (this.inHeader) {
         return {
           header__menu: true,
-          "header__menu-absolute": this.isContent,
-          "header__menu-float": !this.isContent
+          "header__menu-absolute": this.config.isContent,
+          "header__menu-float": !this.config.isContent
         };
       }
 
@@ -48,16 +47,16 @@ export default {
         footer_top__menu: true
       };
     },
-    linkClass() {
+    linkClasses() {
       if (this.inHeader) {
         return {};
       }
 
       return {
-        section__title: this.isContent,
-        "section__title-large": this.isContent,
-        "section__title-underlined": this.isContent,
-        btn: !this.isContent
+        section__title: this.config.isContent,
+        "section__title-large": this.config.isContent,
+        "section__title-underlined": this.config.isContent,
+        btn: !this.config.isContent
       };
     }
   }

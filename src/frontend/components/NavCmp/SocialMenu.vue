@@ -1,5 +1,5 @@
 <template lang="pug">
-  .socials(:class="containerClass")
+  .socials(:class="containerClasses")
     a.icon.socials__link(
       v-for="link in links"
       :key="link.href"
@@ -10,14 +10,12 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   name: "SocialMenu",
   props: {
     inHeader: {
-      type: Boolean,
-      default: true
-    },
-    isContent: {
       type: Boolean,
       default: true
     }
@@ -33,14 +31,15 @@ export default {
     };
   },
   computed: {
+    ...mapGetters(["config"]),
     id() {
-      return this.inHeader && this.isContent ? "main_menu" : "";
+      return this.inHeader && this.config.isContent ? "main_menu" : "";
     },
-    containerClass() {
+    containerClasses() {
       if (this.inHeader) {
         return {
           header__socials: true,
-          "header__socials-left": this.isContent
+          "header__socials-left": this.config.isContent
         };
       }
 
@@ -57,5 +56,5 @@ export default {
 };
 </script>
 
-<style lang="scss" src="@/frontend/styles/cmp/SocialMenu.scss" scoped>
+<style lang="scss" src="@frontStylesCmp/SocialMenu.scss" scoped>
 </style>

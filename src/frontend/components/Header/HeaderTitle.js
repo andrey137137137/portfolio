@@ -1,19 +1,18 @@
+import { mapGetters } from "vuex";
+
 export default {
   name: "HeaderTitle",
   render(h) {
     return h("div", {}, [this.titleElem(h), this.descElem(h)]);
   },
-  props: {
-    isRelative: {
-      type: Boolean,
-      default: true
-    },
-    isLarge: {
-      type: Boolean,
-      default: false
-    }
-  },
   computed: {
+    ...mapGetters(["config"]),
+    isRelative() {
+      return this.config.isContent;
+    },
+    isLarge() {
+      return this.config.isBlog;
+    },
     titleClass() {
       if (!this.isRelative) {
         return {};
@@ -41,19 +40,14 @@ export default {
   methods: {
     titleElem(h) {
       const level = this.isLarge ? 1 : 2;
-      console.log(`h${level}`);
 
-      return h(
-        `h${level}`,
-        {
-          class: {
-            section__title: true,
-            header__title: true,
-            ...this.titleClass
-          }
-        },
-        [this.slots]
-      );
+      return h(`h${level}`, {
+        class: {
+          section__title: true,
+          header__title: true,
+          ...this.titleClass
+        }
+      });
     },
     descElem() {
       return (

@@ -4,7 +4,7 @@
 
       p.col.col-ds_float.col-ds_4.col-xds_4.section__desc.footer_top__col.footer_top__desc Этот сайт я делаю в рамках обучения в Школе онлайн образования LoftSchool.
 
-      NavCmp
+      NavCmp(:inHeader="false")
 
       ul.col.col-tb_float.col-tb_6.col-ds_3.col-xds_4.footer_top__col.footer_top__contacts_list
         li.footer_top__contacts_item(v-for="item in contacts" :key="item.link")
@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import NavCmp from "../NavCmp";
+import NavCmp from "@frontCmp/NavCmp";
 
 export default {
   name: "FooterTop",

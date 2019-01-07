@@ -12,5 +12,5 @@ export default {
 };
 </script>
 
-<style lang="scss" src="@frontStyles/cmp/HeaderWrapper.scss">
+<style lang="scss" src="@frontStylesCmp/HeaderWrapper.scss">
 </style>

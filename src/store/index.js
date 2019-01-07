@@ -3,14 +3,14 @@ import Vuex from "vuex";
 
 Vue.use(Vuex);
 
-import about from "@/store/modules/about/about.js";
-import blog from "@/store/modules/blog/blog.js";
+import about from "@/store/modules/about";
+import blog from "@/store/modules/blog";
+import frontView from "@/store/modules/frontView";
 
-const store = new Vuex.Store({
+export default new Vuex.Store({
   modules: {
     about,
-    blog
+    blog,
+    frontView
   }
 });
-
-export default store;

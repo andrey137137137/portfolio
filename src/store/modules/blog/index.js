@@ -3,24 +3,13 @@ import * as types from "@/store/common-mutation-types";
 
 const dbPage = "post";
 
-const blog = {
+export default {
   state: {
     data: []
   },
   getters: {
     posts(state) {
       return state.data;
-    }
-  },
-  mutations: {
-    [types.SET](state, data) {
-      state.data = data;
-    },
-    [types.ADD](state, newItem) {
-      state.data.push(newItem);
-    },
-    [types.DELETE](state, id) {
-      state.data = state.data.filter(item => item.id !== id);
     }
   },
   actions: {
@@ -44,7 +33,16 @@ const blog = {
         dispatch("getPosts");
       });
     }
+  },
+  mutations: {
+    [types.SET](state, data) {
+      state.data = data;
+    },
+    [types.ADD](state, newItem) {
+      state.data.push(newItem);
+    },
+    [types.DELETE](state, id) {
+      state.data = state.data.filter(item => item.id !== id);
+    }
   }
 };
-
-export default blog;

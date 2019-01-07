@@ -8,16 +8,18 @@
           HeaderContent
           NavCmp
         LoginForm(:addClasses="formClasses")
-    FooterWrapper(:isToUp="false")
+    FooterWrapper
 </template>
 
 <script>
+import LoginForm from "@components/Forms/LoginForm";
 import BodyTop from "@frontCmp/BodyTop";
 import HeaderWrapper from "@frontCmp/Header/HeaderWrapper";
 import HeaderContent from "@frontCmp/Header/HeaderContent";
 import NavCmp from "@frontCmp/NavCmp";
-import LoginForm from "@components/Forms/LoginForm";
 import FooterWrapper from "@frontCmp/FooterWrapper";
+
+import { mapActions } from "vuex";
 
 export default {
   name: "Home",
@@ -29,12 +31,6 @@ export default {
     LoginForm,
     FooterWrapper
   },
-  props: {
-    isBlog: {
-      type: Boolean,
-      default: false
-    }
-  },
   data() {
     return {
       formClasses: {
@@ -42,6 +38,17 @@ export default {
         "header__flip_wrap-back": true
       }
     };
+  },
+  methods: {
+    ...mapActions(["setConfig"])
+  },
+  created() {
+    this.setConfig({
+      name: "Главная",
+      isBlog: false,
+      isContent: false,
+      sections: 0
+    });
   }
 };
 </script>

@@ -1,6 +1,6 @@
 <template lang="pug">
   .main_wrap
-    //- BodyTop
+    BodyTop
     HeaderWrapper
       NavCmp
       HeaderContent
@@ -13,6 +13,7 @@ import HeaderWrapper from "@frontCmp/Header/HeaderWrapper";
 import NavCmp from "@frontCmp/NavCmp";
 import HeaderContent from "@frontCmp/Header/HeaderContent";
 import ScrollButton from "@frontCmp/ScrollButton";
+import FooterWrapper from "@frontCmp/FooterWrapper";
 
 import { mapActions } from "vuex";
 
@@ -23,8 +24,8 @@ export default {
     HeaderWrapper,
     NavCmp,
     HeaderContent,
-    ScrollButton
-    // FooterWrapper
+    ScrollButton,
+    FooterWrapper
   },
   methods: {
     ...mapActions(["setConfig"])

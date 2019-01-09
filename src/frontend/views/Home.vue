@@ -12,6 +12,8 @@
 </template>
 
 <script>
+import $ from "jQuery";
+
 import LoginForm from "@components/Forms/LoginForm";
 import BodyTop from "@frontCmp/BodyTop";
 import HeaderWrapper from "@frontCmp/Header/HeaderWrapper";
@@ -33,6 +35,10 @@ export default {
   },
   data() {
     return {
+      $flipBtn: null,
+      $container: null,
+      // btnHiddenClass: "authorization-hidden",
+      flippedClass: "header__container-flipped",
       formClasses: {
         header__flip_wrap: true,
         "header__flip_wrap-back": true
@@ -45,6 +51,28 @@ export default {
   created() {
     this.setConfig({
       name: "Главная"
+    });
+  },
+  mounted() {
+    const $vm = this;
+
+    $(document).ready(() => {
+      $vm.$flipBtn = $("#flip_2_back");
+      $vm.$container = $("#flip_container");
+
+      $vm.$flipBtn.click(function(event) {
+        event.preventDefault();
+
+        $vm.$flipBtn.fadeOut();
+        $vm.$container.addClass($vm.flippedClass);
+      });
+
+      $("#flip_2_front").click(function(event) {
+        event.preventDefault();
+
+        $vm.$container.removeClass($vm.flippedClass);
+        $vm.$flipBtn.fadeIn();
+      });
     });
   }
 };

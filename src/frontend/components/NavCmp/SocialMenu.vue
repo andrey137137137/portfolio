@@ -23,10 +23,21 @@ export default {
   data() {
     return {
       links: [
-        { name: "index", href: "/" },
-        { name: "works", href: "/works" },
-        { name: "about", href: "/about" },
-        { name: "blog", href: "/blog" }
+        {
+          name: "vk",
+          href: "",
+          icon: "vk"
+        },
+        {
+          name: "github",
+          href: "https://github.com/andrey137137137",
+          icon: "github_alt"
+        },
+        {
+          name: "skype",
+          href: "skype:andrey27x777@gmail.com",
+          icon: "skype"
+        }
       ]
     };
   },

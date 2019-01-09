@@ -1,6 +1,6 @@
 <template lang="pug">
   div
-    //- PreloaderCmp
+    PreloaderCmp
     ParallaxCmp
 </template>
 

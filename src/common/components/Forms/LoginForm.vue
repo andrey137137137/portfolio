@@ -1,10 +1,10 @@
 <template lang="pug">
   FormWrapper#login_form(
-    :addClasses="containerClass"
+    :addClasses="containerClasses"
     @submit.prevent.native="handleSubmit")
 
     .login_form__top_wrap
-      h2.section__title.section__title-uppercase.login_form__title= title
+      h2.section__title.section__title-uppercase.login_form__title Авторизуйтесь
 
       .form__row.form__row-text_wrap.form__row-icon_label_wrap.login_form__row
         label.form__label.form__label-icon
@@ -55,8 +55,11 @@ export default {
     FormWrapper
   },
   computed: {
-    containerClass() {
-      return { login_form: true, ...this.addClasses };
+    containerClasses() {
+      return {
+        login_form: true,
+        ...this.addClasses
+      };
     }
   }
 };

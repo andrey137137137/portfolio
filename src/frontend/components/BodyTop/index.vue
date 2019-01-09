@@ -1,11 +1,10 @@
 <template lang="pug">
   div
-    PreloaderCmp
-    ParallaxCmp(:addClasses="addClasses")
+    //- PreloaderCmp
+    ParallaxCmp
 </template>
 
 <script>
-import addClasses from "@/common/mixins/addClasses";
 import PreloaderCmp from "./PreloaderCmp";
 import ParallaxCmp from "./ParallaxCmp";
 
@@ -14,7 +13,6 @@ export default {
   components: {
     PreloaderCmp,
     ParallaxCmp
-  },
-  mixins: [addClasses]
+  }
 };
 </script>

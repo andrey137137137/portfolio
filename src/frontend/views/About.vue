@@ -32,7 +32,8 @@ export default {
   created() {
     this.setConfig({
       name: "Обо мне",
-      isContent: true
+      isContent: true,
+      sections: 3
     });
   }
 };

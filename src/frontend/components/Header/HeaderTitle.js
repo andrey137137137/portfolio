@@ -35,26 +35,38 @@ export default {
         "header__desc-after_medium_title": !this.isLarge,
         "header__desc-after_large_title": this.isLarge
       };
+    },
+    title() {
+      return this.config.isBlog ? "Блог" : "Банников Андрей";
+    },
+    desc() {
+      return this.config.isBlog
+        ? "Статьи, которые я написал"
+        : "Личный сайт веб разработчика";
     }
   },
   methods: {
     titleElem(h) {
       const level = this.isLarge ? 1 : 2;
 
-      return h(`h${level}`, {
-        class: {
-          section__title: true,
-          header__title: true,
-          ...this.titleClass
-        }
-      });
+      return h(
+        `h${level}`,
+        {
+          class: {
+            section__title: true,
+            header__title: true,
+            ...this.titleClass
+          }
+        },
+        [this.title]
+      );
     },
     descElem() {
       return (
         <p
           class={{ section__desc: true, header__desc: true, ...this.descClass }}
         >
-          <slot />
+          {this.desc}
         </p>
       );
     }

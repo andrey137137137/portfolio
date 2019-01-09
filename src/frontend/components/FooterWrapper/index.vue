@@ -1,11 +1,11 @@
 <template lang="pug">
-  footer#footer.footer(:class="addClasses")
+  footer#footer.footer(:class="containerClasses")
 
-    a.icon.icon-chevron_up.scroll_btn.scroll_btn-to_up(v-if="config.sections" href="#header")
+    ScrollButton(v-if="config.sections" :inHeader="false")
 
     FooterTop(v-if="config.isContent")
 
-    ul.section.footer_bottom(:class="{'footer_bottom-bg': config.isContent}")
+    ul.section.footer_bottom(:class="footerBottomClasses")
       li.container.footer_bottom__container
         p.section__desc.footer_bottom__col.footer_bottom__author &copy; Банников Андрей
         p.section__desc.footer_bottom__col.footer_bottom__desc Создаю с любовью в LoftSchool
@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import addClasses from "@common/mixins/addClasses";
+import ScrollButton from "@frontCmp/ScrollButton";
 import FooterTop from "./FooterTop";
 
 import { mapGetters } from "vuex";
@@ -21,11 +21,22 @@ import { mapGetters } from "vuex";
 export default {
   name: "FooterWrapper",
   components: {
+    ScrollButton,
     FooterTop
   },
-  mixins: [addClasses],
   computed: {
-    ...mapGetters(["config"])
+    ...mapGetters(["config"]),
+    containerClasses() {
+      return {
+        "footer-absolute": !this.config.isContent || this.config.sections,
+        "footer-bg": this.config.isBlog
+      };
+    },
+    footerBottomClasses() {
+      return {
+        "footer_bottom-bg": this.config.isContent
+      };
+    }
   }
 };
 </script>

@@ -49,15 +49,15 @@ export default {
     },
     linkClasses() {
       if (this.inHeader) {
-        return {};
+        return {
+          section__title: this.config.isContent,
+          "section__title-large": this.config.isContent,
+          "section__title-underlined": this.config.isContent,
+          btn: !this.config.isContent
+        };
       }
 
-      return {
-        section__title: this.config.isContent,
-        "section__title-large": this.config.isContent,
-        "section__title-underlined": this.config.isContent,
-        btn: !this.config.isContent
-      };
+      return {};
     }
   }
 };

@@ -56,7 +56,7 @@ export default {
   },
   computed: {
     containerClass() {
-      return { login_form: true, ...addClasses };
+      return { login_form: true, ...this.addClasses };
     }
   }
 };

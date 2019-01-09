@@ -10,7 +10,6 @@
 </template>
 
 <script>
-import addClasses from "@common/mixins/addClasses";
 import SvgCmp from "@components/SvgCmp";
 import HeaderTitle from "./HeaderTitle";
 
@@ -22,7 +21,6 @@ export default {
     SvgCmp,
     HeaderTitle
   },
-  mixins: [addClasses],
   computed: {
     ...mapGetters(["config"]),
     articleClasses() {

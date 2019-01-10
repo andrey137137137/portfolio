@@ -18,4 +18,13 @@
   &__legend {
     line-height: 34px;
   }
+
+  &__error {
+    @include padding("* 10px");
+    color: $red;
+
+    &-required {
+      color: $orange;
+    }
+  }
 }

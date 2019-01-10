@@ -4,20 +4,34 @@ import ErrorElem from "@/common/components/FormElems/ErrorElem";
 
 export default {
   render(h) {
+    const wrapClass = this.wrapClass ? this.wrapClass : this.type;
     let elems = [];
 
-    if (this.label) {
-      elems.push(this.labelElem(h));
+    if (this.label && wrapClass !== "checkbox") {
+      if (wrapClass === "icon_label") {
+        elems.push(this.iconLabelElem());
+      } else {
+        elems.push(this.labelElem());
+      }
     }
 
     elems.push(this.inputElem(h));
 
     if (this.measure) {
-      elems.push(this.measureElem(h));
+      elems.push(this.measureElem());
     }
 
-    if (this.type === "number") {
-      elems = [h("div", { class: "form__row" }, elems)];
+    switch (this.type) {
+      case "checkbox":
+        elems.push(this.checkedElem());
+        elems.push(this.checkboxTextElem());
+        elems = [h("label", { class: "form__label" }, elems)];
+        break;
+      default:
+        if (wrapClass === "icon_label" || this.type === "number") {
+          elems = [h("div", { class: "form__row" }, elems)];
+        }
+        break;
     }
 
     return h(
@@ -25,7 +39,7 @@ export default {
       {
         class: {
           form__wrap: true,
-          [`form__wrap-${this.type}`]: true,
+          [`form__wrap-${wrapClass}`]: true,
           ...this.addClasses
         }
       },
@@ -34,6 +48,10 @@ export default {
   },
   mixins: [addClasses],
   props: {
+    wrapClass: {
+      type: String,
+      default: ""
+    },
     val: {
       type: Object,
       required: true
@@ -129,6 +147,15 @@ export default {
   methods: {
     labelElem() {
       return <label class="form__label">{this.label}</label>;
+    },
+    iconLabelElem() {
+      return <label class="form__label" />;
+    },
+    checkedElem() {
+      return <div class="form__checked" />;
+    },
+    checkboxTextElem() {
+      return <div class="form__checkbox_text">{this.label}</div>;
     },
     errorElem() {
       return <ErrorElem type={this.errorType} />;

@@ -28,8 +28,8 @@ import {
   // maxLength
 } from "vuelidate/lib/validators";
 
-import ItemForm from "@/common/components/Forms/ItemForm";
-import FormField from "@/common/components/FormElems/FormField";
+import ItemForm from "@components/Forms/ItemForm";
+import FormField from "@components/FormElems/FormField";
 
 import { mapActions } from "vuex";
 

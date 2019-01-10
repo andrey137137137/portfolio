@@ -31,6 +31,16 @@ body {
     }
   }
 
+  &__error {
+    border-radius: 5px;
+    font-weight: 500;
+    color: $white $red;
+
+    &-required {
+      background-color: $orange;
+    }
+  }
+
   &__legend {
     margin-bottom: 7px;
     font-weight: bold;

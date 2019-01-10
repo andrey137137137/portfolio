@@ -287,11 +287,6 @@ form {
   &__error {
     @include padding("* 10px");
     font-size: 14px/20px;
-    color: $red;
-
-    &-required {
-      color: $orange;
-    }
   }
 
   &__btn {

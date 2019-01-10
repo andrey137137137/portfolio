@@ -1,5 +1,5 @@
 <template lang="pug">
-  .clearfix.form__wrap.form__wrap-number(:class="addClasses")
+  .form__wrap.form__wrap-number(:class="addClasses")
     .form__row
       label.form__label(v-if="label") {{label}}
       input.form__input(

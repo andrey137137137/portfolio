@@ -6,37 +6,38 @@
     .login_form__top_wrap
       h2.section__title.section__title-uppercase.login_form__title Авторизуйтесь
 
-      .form__wrap.form__wrap-text.form__wrap-icon_label
-        .form__row.login_form__row
-          label.form__label
-          input.form__input.login_form__text_input
-        .form__error_wrap
-          .form__error form__error
+      FormField(
+        wrapClass="icon_label"
+        label="Пользователь"
+        v-model="name"
+        :val="$v.name"
+        placeholder="Пользователь")
 
-      .form__wrap.form__wrap-text.form__wrap-icon_label
-        .form__row.login_form__row
-          label.form__label
-          input.form__input.login_form__text_input(type="password", name="")
-        .form__error_wrap
-          .form__error form__error
+      FormField(
+        wrapClass="icon_label"
+        label="Пароль"
+        v-model="password"
+        :val="$v.password"
+        type="password"
+        placeholder="Пароль")
 
       .form__wrap.form__wrap-checkbox
         label.form__label
-          input.form__input(type="checkbox", name="login_form__checkbox")
+          input.form__input(type="checkbox")
           .form__checked
           .form__checkbox_text Я человек
         .form__error_wrap
           .form__error form__error
 
-      legend.form__legend.login_form__legend Вы точно не робот?
+      legend.form__legend Вы точно не робот?
 
       .flex.flex-wrap.form__wrap.form__wrap-radio.login_form__radio_wrap
         label.form__label.login_form__radio_yes
-          input.form__input(type="radio", name="login_form__radio")
+          input.form__input(type="radio")
           .form__checked
           .form__checkbox_text Да
         label.form__label
-          input.form__input(type="radio", name="login_form__radio")
+          input.form__input(type="radio")
           .form__checked
           .form__checkbox_text Не уверен
         .form__error_wrap
@@ -52,14 +53,28 @@
 </template>
 
 <script>
-import addClasses from "@/common/mixins/addClasses";
-import FormWrapper from "@/common/components/FormElems/FormWrapper";
+import {
+  required,
+  alphaNum,
+  minLength,
+  maxLength
+} from "vuelidate/lib/validators";
+import addClasses from "@common/mixins/addClasses";
+import FormWrapper from "@components/FormElems/FormWrapper";
+import FormField from "@components/FormElems/FormField";
 
 export default {
   name: "LoginForm",
   mixins: [addClasses],
   components: {
-    FormWrapper
+    FormWrapper,
+    FormField
+  },
+  data() {
+    return {
+      name: "",
+      password: ""
+    };
   },
   computed: {
     containerClasses() {
@@ -67,6 +82,19 @@ export default {
         login_form: true,
         ...this.addClasses
       };
+    }
+  },
+  validations: {
+    name: {
+      required,
+      alphaNum,
+      minLength: minLength(7)
+    },
+    password: {
+      required,
+      alphaNum,
+      minLength: minLength(7),
+      maxLength: maxLength(15)
     }
   }
 };

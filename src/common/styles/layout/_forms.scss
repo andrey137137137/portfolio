@@ -34,8 +34,9 @@ form {
       }
     }
 
-    &-number,
-    &-text {
+    &-icon_label,
+    &-text,
+    &-number {
       #{$block}__input {
         @include oneLineBlock(45px, 1px);
       }
@@ -92,7 +93,7 @@ form {
     &-icon_label {
       #{$block} {
         &__label {
-          width: 45px;
+          size: 45px;
           text-align: center;
           color: #c4cbcd #f0efe9;
 
@@ -104,13 +105,14 @@ form {
 
         &__input {
           width: auto;
+          color: rgba(#373e42, 0.5) $white;
         }
       }
     }
 
     &-checkbox,
     &-radio {
-      height: 20px;
+      // height: 20px;
       font-size: 16px;
 
       #{$block} {
@@ -147,13 +149,15 @@ form {
     }
 
     &#{$elem}-checkbox {
-      display: table;
-      @include margin("* auto 15px");
-      width: auto;
+      // @include margin("* auto 15px");
       line-height: 18px;
 
       #{$block} {
         &__label {
+          display: table;
+          @include margin("* auto");
+          width: auto;
+
           &:before {
             border-radius: 2px;
             background: $darkBlue;

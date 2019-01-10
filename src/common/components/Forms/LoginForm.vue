@@ -25,6 +25,8 @@
           input.form__input(type="checkbox", name="login_form__checkbox")
           .form__checked
           .form__checkbox_text Я человек
+        .form__error_wrap
+          .form__error form__error
 
       legend.form__legend.login_form__legend Вы точно не робот?
 

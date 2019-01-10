@@ -1,9 +1,39 @@
 body {
   background-color: #223b65;
+}
 
-  .section {
-    &__title {
-      line-height: 28px;
+.flex {
+  display: flex;
+
+  &-wrap {
+    flex-wrap: wrap;
+  }
+}
+
+.section {
+  &__title {
+    line-height: 28px;
+  }
+}
+
+.form {
+  &__wrap,
+  &__input {
+    @include padding("* 20px");
+  }
+
+  &__wrap {
+    &:after {
+      display: block;
+      size: 100% 0;
+      clear: both;
+      content: "";
     }
+  }
+
+  &__legend {
+    margin-bottom: 7px;
+    font-weight: bold;
+    text-align: center;
   }
 }

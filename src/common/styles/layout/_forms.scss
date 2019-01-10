@@ -25,20 +25,19 @@ form {
     //   width: auto;
     // }
 
-    &-number,
-    &-text {
-      #{$block}__input {
-        @include oneLineBlock(45px, 1px);
-      }
-    }
-
-    &-numeric,
     &-icon_label {
       #{$block} {
         &__label,
         &__input {
           float: left;
         }
+      }
+    }
+
+    &-number,
+    &-text {
+      #{$block}__input {
+        @include oneLineBlock(45px, 1px);
       }
     }
 
@@ -104,8 +103,109 @@ form {
         }
 
         &__input {
-          float: left;
           width: auto;
+        }
+      }
+    }
+
+    &-checkbox,
+    &-radio {
+      height: 20px;
+      font-size: 16px;
+
+      #{$block} {
+        &__label:before,
+        &__checkbox_text {
+          float: left;
+        }
+
+        &__input {
+          display: none;
+        }
+
+        &__label {
+          position: relative;
+          cursor: pointer;
+
+          &:before {
+            display: block;
+            size: 20px;
+            content: "";
+          }
+        }
+
+        &__checked {
+          position: absolute;
+          opacity: 0;
+          transition: opacity 0.5s;
+        }
+
+        &__input:checked + #{$block}__checked {
+          opacity: 1;
+        }
+      }
+    }
+
+    &#{$elem}-checkbox {
+      display: table;
+      @include margin("* auto 15px");
+      width: auto;
+      line-height: 18px;
+
+      #{$block} {
+        &__label {
+          &:before {
+            border-radius: 2px;
+            background: $darkBlue;
+          }
+        }
+
+        &__checkbox_text {
+          padding-top: 2px;
+          margin-left: 11px;
+        }
+
+        &__checked {
+          size: 20px;
+          font: 11px/20px FontAwesome;
+          text-align: center;
+          // color: $white;
+
+          &:before {
+            display: block;
+            content: "\f00c";
+          }
+        }
+      }
+    }
+
+    &-radio {
+      line-height: 20px;
+
+      #{$block}__label:before,
+      #{$block}__checked {
+        border-radius: 50%;
+      }
+
+      #{$block} {
+        &__label {
+          @include margin("* auto");
+          @include padding("* 20px");
+          width: auto;
+
+          &:before {
+            background-color: $white;
+          }
+        }
+
+        &__checkbox_text {
+          margin-left: 9px;
+        }
+
+        &__checked {
+          @include position("absolute 6px * * 26px");
+          size: 8px;
+          background-color: $darkBlue;
         }
       }
     }
@@ -117,21 +217,8 @@ form {
     width: 100%;
   }
 
-  &__input,
-  &__btn {
-    border-radius: 5px;
-    @include padding("* 17px");
-  }
-
   &__legend {
     font-size: 16px;
-  }
-
-  &__legend {
-    // margin-bottom: 7px;
-    font-weight: bold;
-    line-height: 34px;
-    // text-align: center;
   }
 
   &__label {

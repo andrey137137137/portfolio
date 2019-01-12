@@ -1,34 +1,86 @@
 // import types from "@/common/constants/validation/types";
 import addClasses from "@/common/mixins/addClasses";
-import ErrorElem from "@/common/components/FormElems/ErrorElem";
+import ErrorElem from "@components/FormElems/ErrorElem";
+import InputElem from "@components/FormElems/InputElem";
+import TextareaElem from "@components/FormElems/TextareaElem";
 
 export default {
-  render(h) {
-    const wrapClass = this.wrapClass ? this.wrapClass : this.type;
-    let elems = [];
+  functional: true,
+  render(h, context) {
+    function labelElem() {
+      return <label class="form__label">{context.label}</label>;
+    }
 
-    if (this.label && wrapClass !== "checkbox") {
-      if (wrapClass === "icon_label") {
-        elems.push(this.iconLabelElem());
-      } else {
-        elems.push(this.labelElem());
+    function iconLabelElem() {
+      return <label class="form__label" />;
+    }
+
+    function checkedElem() {
+      return <div class="form__checked" />;
+    }
+
+    function checkboxTextElem() {
+      return <div class="form__checkbox_text">{context.label}</div>;
+    }
+
+    function errorElem() {
+      return <ErrorElem type={context.errorType} />;
+    }
+
+    function measureElem() {
+      return <span class="form__measure">{context.measure}</span>;
+    }
+
+    function inputElem() {
+      switch (context.type) {
+        case "textarea":
+          return (
+            <TextareaElem
+              type={context.type}
+              value={context.value}
+              placeholder={context.placeholder}
+            />
+          );
+        default:
+          return (
+            <InputElem
+              type={context.type}
+              value={context.value}
+              placeholder={context.placeholder}
+            />
+          );
       }
     }
 
-    elems.push(this.inputElem(h));
+    const wrapClass = context.wrapClass ? context.wrapClass : context.type;
+    let elems = [];
 
-    if (this.measure) {
-      elems.push(this.measureElem());
+    if (context.label && wrapClass !== "checkbox") {
+      if (wrapClass === "icon_label") {
+        elems.push(iconLabelElem());
+      } else {
+        elems.push(labelElem());
+      }
     }
 
-    switch (this.type) {
+    elems.push(inputElem());
+
+    if (context.measure) {
+      elems.push(measureElem());
+    }
+
+    switch (context.type) {
       case "checkbox":
-        elems.push(this.checkedElem());
-        elems.push(this.checkboxTextElem());
+        elems.push(checkedElem());
+
+        if (context.label) {
+          elems.push(checkboxTextElem());
+        }
+
         elems = [h("label", { class: "form__label" }, elems)];
         break;
       default:
-        if (wrapClass === "icon_label" || this.type === "number") {
+        if (wrapClass === "icon_label" || context.type === "number") {
           elems = [h("div", { class: "form__row" }, elems)];
         }
         break;
@@ -40,10 +92,10 @@ export default {
         class: {
           form__wrap: true,
           [`form__wrap-${wrapClass}`]: true,
-          ...this.addClasses
+          ...context.addClasses
         }
       },
-      [...elems, this.errorElem(h)]
+      [...elems, errorElem()]
     );
   },
   mixins: [addClasses],
@@ -79,123 +131,6 @@ export default {
     measure: {
       type: String,
       default: ""
-    }
-  },
-  data() {
-    return {
-      classes: {
-        block: "form",
-        elem: "input",
-        modifs: {
-          required: "required",
-          error: "error",
-          valid: "valid"
-        }
-      }
-    };
-  },
-  computed: {
-    // state: {
-    //   get() {
-    //     return this.value;
-    //   },
-    //   set(value) {
-    //     this.val.$touch();
-    //     let eventType;
-
-    //     switch (this.type) {
-    //       case types.native.checkbox:
-    //         eventType = "box-checked";
-    //         break;
-    //       case types.native.radio:
-    //         eventType = "radio-changed";
-    //         break;
-    //       default:
-    //         eventType = "input";
-    //     }
-
-    //     this.$emit(eventType, value);
-    //   }
-    // },
-    // getType() {
-    //   return this.type;
-    // },
-    isEmptyRequired() {
-      // return this.val.$error && !this.state;
-      return this.val.$error && !this.value;
-    },
-    errorType() {
-      if (this.isEmptyRequired) {
-        return "required";
-      }
-
-      if (this.val.$error) {
-        return this.type;
-      }
-
-      return "";
-    },
-    validationClass() {
-      const baseClass = `${this.classes.block}__${this.classes.elem}-`;
-
-      return {
-        [baseClass + this.classes.modifs.error]: this.val.$error,
-        [baseClass + this.classes.modifs.valid]: !this.val.$invalid
-      };
-    }
-  },
-  methods: {
-    labelElem() {
-      return <label class="form__label">{this.label}</label>;
-    },
-    iconLabelElem() {
-      return <label class="form__label" />;
-    },
-    checkedElem() {
-      return <div class="form__checked" />;
-    },
-    checkboxTextElem() {
-      return <div class="form__checkbox_text">{this.label}</div>;
-    },
-    errorElem() {
-      return <ErrorElem type={this.errorType} />;
-    },
-    measureElem() {
-      return <span class="form__measure">{this.measure}</span>;
-    },
-    inputElem(h) {
-      const self = this;
-      const attrs = {
-        placeholder: this.placeholder
-      };
-      let formElem = "";
-
-      if (this.type === "textarea") {
-        formElem = this.type;
-      } else {
-        formElem = "input";
-        attrs.type = this.type;
-      }
-
-      return h(formElem, {
-        class: {
-          form__input: true,
-          ...this.validationClass
-        },
-        attrs,
-        domProps: {
-          value: this.value
-        },
-        on: {
-          input(e) {
-            self.val.$touch();
-            self.$emit("input", e.target.value);
-          }
-        },
-        nativeOn: {
-          blur: this.val.$touch()
-        }
-      });
     }
   }
 };

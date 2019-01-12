@@ -21,13 +21,19 @@
         type="password"
         placeholder="Пароль")
 
-      .form__wrap.form__wrap-checkbox
-        label.form__label
-          input.form__input(type="checkbox")
-          .form__checked
-          .form__checkbox_text Я человек
-        .form__error_wrap
-          .form__error form__error
+      //- .form__wrap.form__wrap-checkbox
+      //-   label.form__label
+      //-     input.form__input(type="checkbox" v-model="isHuman")
+      //-     .form__checked
+      //-     .form__checkbox_text Я человек
+      //-   .form__error_wrap
+      //-     .form__error form__error
+
+      FormField(
+        label="Я человек"
+        v-model="isHuman"
+        :val="$v.isHuman"
+        type="checkbox")
 
       legend.form__legend Вы точно не робот?
 
@@ -73,7 +79,8 @@ export default {
   data() {
     return {
       name: "",
-      password: ""
+      password: "",
+      isHuman: false
     };
   },
   computed: {
@@ -95,6 +102,9 @@ export default {
       alphaNum,
       minLength: minLength(7),
       maxLength: maxLength(15)
+    },
+    isHuman: {
+      required
     }
   }
 };

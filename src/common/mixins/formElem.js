@@ -46,22 +46,17 @@ export default {
         return this.value;
       },
       set(value) {
-        this.val.$touch();
         let eventType;
 
         switch (this.type) {
-          case types.native.checkbox:
-            eventType = "box-checked";
-            break;
-          case types.native.radio:
-            eventType = "radio-changed";
+          case "checkbox":
+            eventType = "change";
             break;
           default:
-            // if (isSet(this.type, types.native)) {
             eventType = "input";
-          // }
         }
 
+        this.val.$touch();
         this.$emit(eventType, value);
       }
     },
@@ -82,7 +77,7 @@ export default {
 
       return "";
     },
-    validationClass() {
+    validationClasses() {
       const baseClass = `${this.classes.block}__${this.classes.elem}-`;
 
       return {

@@ -6,14 +6,14 @@
     .login_form__top_wrap
       h2.section__title.section__title-uppercase.login_form__title Авторизуйтесь
 
-      FormField(
+      InputEventElem(
         wrapClass="icon_label"
         label="Пользователь"
         v-model="name"
         :val="$v.name"
         placeholder="Пользователь")
 
-      FormField(
+      InputEventElem(
         wrapClass="icon_label"
         label="Пароль"
         v-model="password"
@@ -29,7 +29,7 @@
       //-   .form__error_wrap
       //-     .form__error form__error
 
-      FormField(
+      ChangeEventElem(
         label="Я человек"
         v-model="isHuman"
         :val="$v.isHuman"
@@ -67,14 +67,16 @@ import {
 } from "vuelidate/lib/validators";
 import addClasses from "@common/mixins/addClasses";
 import FormWrapper from "@components/FormElems/FormWrapper";
-import FormField from "@components/FormElems/FormField";
+import InputEventElem from "@components/FormElems/InputEventElem";
+import ChangeEventElem from "@components/FormElems/ChangeEventElem";
 
 export default {
   name: "LoginForm",
   mixins: [addClasses],
   components: {
     FormWrapper,
-    FormField
+    InputEventElem,
+    ChangeEventElem
   },
   data() {
     return {

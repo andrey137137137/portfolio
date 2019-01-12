@@ -4,11 +4,11 @@
     :isNew="isNew"
     :disabled="$v.$pending || $v.$invalid"
   )
-    FormField(
+    InputEventElem(
       v-model="title"
       :val="$v.title"
       placeholder="Навык")
-    FormField(
+    InputEventElem(
       type="number"
       v-model="percents"
       :val="$v.percents"
@@ -25,7 +25,7 @@ import {
 } from "vuelidate/lib/validators";
 
 import ItemForm from "@/common/components/Forms/ItemForm";
-import FormField from "@/common/components/FormElems/FormField";
+import InputEventElem from "@components/FormElems/InputEventElem";
 
 import { mapActions } from "vuex";
 
@@ -33,7 +33,7 @@ export default {
   name: "SkillForm",
   components: {
     ItemForm,
-    FormField
+    InputEventElem
   },
   props: {
     category: {

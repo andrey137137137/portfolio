@@ -17,14 +17,12 @@
 
 <script>
 import FormWrapper from "@/common/components/FormElems/FormWrapper";
-import FormField from "@/common/components/FormElems/FormField";
 import ButtonElem from "@/common/components/FormElems/ButtonElem";
 
 export default {
   name: "ItemForm",
   components: {
     FormWrapper,
-    FormField,
     ButtonElem
   },
   props: {

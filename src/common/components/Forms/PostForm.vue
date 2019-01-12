@@ -4,16 +4,16 @@
     :isNew="isNew"
     :disabled="$v.$pending || $v.$invalid"
   )
-    FormField(
+    InputEventElem(
       v-model="title"
       :val="$v.title"
       placeholder="Название")
-    FormField(
+    InputEventElem(
       v-if="!isNew"
       v-model="date"
       :val="$v.date"
       placeholder="Дата")
-    FormField(
+    InputEventElem(
       type="textarea"
       v-model="text"
       :val="$v.text"
@@ -29,7 +29,7 @@ import {
 } from "vuelidate/lib/validators";
 
 import ItemForm from "@components/Forms/ItemForm";
-import FormField from "@components/FormElems/FormField";
+import InputEventElem from "@components/FormElems/InputEventElem";
 
 import { mapActions } from "vuex";
 
@@ -37,7 +37,7 @@ export default {
   name: "PostForm",
   components: {
     ItemForm,
-    FormField
+    InputEventElem
   },
   props: {
     isNew: {

@@ -1,13 +1,13 @@
 <template lang="pug">
   textarea.form__input(
     v-model="state"
-    :class="validationClass"
+    :class="validationClasses"
     :placeholder="placeholder"
     @blur.once="val.$touch()")
 </template>
 
 <script>
-import formElem from "@/mixins/formElem";
+import formElem from "@common/mixins/formElem";
 
 export default {
   name: "TextareaElem",

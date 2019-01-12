@@ -13,8 +13,8 @@
 </template>
 
 <script>
-import addClasses from "@/mixins/addClasses";
-import formElem from "@/mixins/formElem";
+import addClasses from "@common/mixins/addClasses";
+import formElem from "@common/mixins/formElem";
 import ErrorElem from "@/components/FormElems/ErrorElem";
 
 export default {

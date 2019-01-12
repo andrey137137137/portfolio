@@ -2,7 +2,7 @@
   input.form__input(
     :type="type"
     v-model="state"
-    :class="validationClass"
+    :class="validationClasses"
     :placeholder="placeholder"
     @blur.once="val.$touch()")
 </template>

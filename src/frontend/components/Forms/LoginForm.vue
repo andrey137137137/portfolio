@@ -21,14 +21,6 @@
         type="password"
         placeholder="Пароль")
 
-      //- .form__wrap.form__wrap-checkbox
-      //-   label.form__label
-      //-     input.form__input(type="checkbox" v-model="isHuman")
-      //-     .form__checked
-      //-     .form__checkbox_text Я человек
-      //-   .form__error_wrap
-      //-     .form__error form__error
-
       ChangeEventElem(
         label="Я человек"
         v-model="isHuman"
@@ -37,16 +29,17 @@
 
       legend.form__legend Вы точно не робот?
 
-      .flex.flex-wrap.form__wrap.form__wrap-radio.login_form__radio_wrap
-        label.form__label.login_form__radio_yes
-          input.form__input(type="radio")
-          .form__checked
-          .form__checkbox_text Да
-        label.form__label
-          input.form__input(type="radio")
-          .form__checked
-          .form__checkbox_text Не уверен
-        .form__error_wrap
+      .form__wrap.form__wrap-radio.login_form__radio_wrap
+        .form__row.flex.flex-wrap
+          label.form__label.login_form__radio_yes
+            input.form__input(type="radio" value="yes" v-model="$v.notRobot.$model")
+            .form__checked
+            .form__checkbox_text Да
+          label.form__label
+            input.form__input(type="radio" value="no" v-model="$v.notRobot.$model")
+            .form__checked
+            .form__checkbox_text Не уверен
+        .form__error_wrap(v-show="!$v.notRobot.required")
           .form__error form__error
 
     .menu.header__menu.header__menu-float.form__menu.login_form__menu
@@ -83,7 +76,8 @@ export default {
     return {
       name: "",
       password: "",
-      isHuman: false
+      isHuman: false,
+      notRobot: ""
     };
   },
   computed: {
@@ -108,6 +102,9 @@ export default {
     },
     isHuman: {
       checked
+    },
+    notRobot: {
+      required
     }
   }
 };

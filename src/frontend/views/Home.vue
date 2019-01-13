@@ -3,7 +3,7 @@
     BodyTop
     HeaderWrapper
       a#flip_2_back.btn.btn-opacity.authorization(href="#login") Авторизоваться
-      #flip_container.container.header__container.header__container-framed.header__container-flipped
+      #flip_container.container.header__container.header__container-framed
         .header__flip_wrap
           HeaderContent
           NavCmp

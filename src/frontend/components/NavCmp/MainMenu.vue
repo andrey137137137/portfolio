@@ -1,7 +1,7 @@
 <template lang="pug">
   .menu(:id="id" :class="containerClasses")
     a.menu__link(
-      v-for="link in links"
+      v-for="link in activeLinks"
       :key="link.href"
       :class="linkClasses"
       :href="link.href"
@@ -16,21 +16,24 @@ export default {
   props: {
     inHeader: {
       type: Boolean,
-      default: false
+      default: true
     }
   },
   data() {
     return {
       links: [
-        { name: "home", isContent: false, href: "/" },
-        { name: "works", isContent: true, href: "/works" },
-        { name: "about", isContent: true, href: "/about" },
-        { name: "blog", isContent: true, href: "/blog" }
+        { name: "Главная", isContent: false, href: "/" },
+        { name: "Мои работы", isContent: true, href: "/works" },
+        { name: "Обо мне", isContent: true, href: "/about" },
+        { name: "Блог", isContent: true, href: "/blog" }
       ]
     };
   },
   computed: {
     ...mapGetters(["config"]),
+    activeLinks() {
+      return this.links.filter(item => item.isContent);
+    },
     id() {
       return this.inHeader && this.config.isContent ? "main_menu" : "";
     },

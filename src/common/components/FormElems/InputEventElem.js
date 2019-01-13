@@ -1,9 +1,8 @@
 // import types from "@/common/constants/validation/types";
-import addClasses from "@/common/mixins/addClasses";
 import formElem from "@common/mixins/formElem";
 
 export default {
-  mixins: [addClasses, formElem],
+  mixins: [formElem],
   props: {
     placeholder: {
       type: String,

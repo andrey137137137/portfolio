@@ -14,11 +14,11 @@
 <script>
 import $ from "jQuery";
 
-import LoginForm from "@components/Forms/LoginForm";
 import BodyTop from "@frontCmp/BodyTop";
 import HeaderWrapper from "@frontCmp/Header/HeaderWrapper";
 import HeaderContent from "@frontCmp/Header/HeaderContent";
 import NavCmp from "@frontCmp/NavCmp";
+import LoginForm from "@frontCmp/Forms/LoginForm";
 import FooterWrapper from "@frontCmp/FooterWrapper";
 
 import { mapActions } from "vuex";

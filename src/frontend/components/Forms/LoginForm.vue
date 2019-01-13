@@ -65,6 +65,7 @@ import {
   minLength,
   maxLength
 } from "vuelidate/lib/validators";
+import { checked } from "@common/helpers/validators";
 import addClasses from "@common/mixins/addClasses";
 import FormWrapper from "@components/FormElems/FormWrapper";
 import InputEventElem from "@components/FormElems/InputEventElem";
@@ -106,7 +107,7 @@ export default {
       maxLength: maxLength(15)
     },
     isHuman: {
-      required
+      checked
     }
   }
 };

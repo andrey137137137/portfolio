@@ -24,7 +24,7 @@ import {
   maxValue
 } from "vuelidate/lib/validators";
 
-import ItemForm from "@/common/components/Forms/ItemForm";
+import ItemForm from "@backCmp/Forms/ItemForm";
 import InputEventElem from "@components/FormElems/InputEventElem";
 
 import { mapActions } from "vuex";

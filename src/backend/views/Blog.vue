@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import PostForm from "@/common/components/Forms/PostForm";
+import PostForm from "@backCmp/Forms/PostForm";
 
 import { mapActions, mapGetters } from "vuex";
 

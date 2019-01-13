@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import skillCat from "@/common/components/Forms/skillCat";
+import skillCat from "@backCmp/Forms/skillCat";
 
 import { mapActions, mapGetters } from "vuex";
 

@@ -16,8 +16,8 @@
 </template>
 
 <script>
-import FormWrapper from "@/common/components/FormElems/FormWrapper";
-import ButtonElem from "@/common/components/FormElems/ButtonElem";
+import FormWrapper from "@components/FormElems/FormWrapper";
+import ButtonElem from "@components/FormElems/ButtonElem";
 
 export default {
   name: "ItemForm",

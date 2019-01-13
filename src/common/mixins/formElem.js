@@ -85,7 +85,7 @@ export default {
     //   }
     // },
     isEmptyRequired() {
-      return this.val.$error && !this.state;
+      return this.val.$error && !this.value;
     },
     errorType() {
       if (this.isEmptyRequired) {
@@ -154,7 +154,7 @@ export default {
       return h(formElem, {
         class: {
           form__input: true,
-          ...this.validationClass
+          ...this.validationClasses
         },
         attrs,
         domProps: {

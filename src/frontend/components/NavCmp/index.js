@@ -9,16 +9,16 @@ export default {
     const elems = [];
 
     if (this.inHeader) {
-      elems.push(this.socialMenuElem(h));
+      elems.push(this.socialMenuElem());
 
       if (this.config.isContent) {
-        elems.push(this.checkerElem(h));
+        elems.push(this.checkerElem());
       } else {
-        elems.push(this.mainMenuElem(h));
+        elems.push(this.mainMenuElem());
       }
     } else {
-      elems.push(this.mainMenuElem(h));
-      elems.push(this.socialMenuElem(h));
+      elems.push(this.mainMenuElem());
+      elems.push(this.socialMenuElem());
     }
 
     return h("nav", { class: this.classes }, elems);
@@ -32,8 +32,6 @@ export default {
   computed: {
     ...mapGetters(["config"]),
     classes() {
-      // console.log(this.inHeader);
-
       if (this.inHeader) {
         return {
           nav: true,

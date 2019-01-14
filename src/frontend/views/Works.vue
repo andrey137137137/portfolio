@@ -5,7 +5,7 @@
       NavCmp
       HeaderContent
       ScrollButton
-    TopWrapper
+    TopWrapper(:title="config.name")
     //- FooterWrapper
     MainMenu
 </template>
@@ -21,10 +21,10 @@ import TopWrapper from "@frontCmp/TopWrapper";
 import FooterWrapper from "@frontCmp/FooterWrapper";
 import MainMenu from "@frontCmp/NavCmp/MainMenu";
 
-import { mapActions } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
-  name: "AboutView",
+  name: "WorksView",
   components: {
     BodyTop,
     HeaderWrapper,
@@ -36,14 +36,17 @@ export default {
     MainMenu
   },
   mixins: [menuChecker],
+  computed: {
+    ...mapGetters(["config"])
+  },
   methods: {
     ...mapActions(["setConfig"])
   },
   created() {
     this.setConfig({
-      name: "Обо мне",
+      name: "Мои работы",
       isContent: true,
-      sections: 4
+      sections: 3
     });
   }
 };

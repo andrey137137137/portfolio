@@ -1,7 +1,7 @@
 <template lang="pug">
   footer#footer.footer(:class="containerClasses")
 
-    ScrollButton(v-if="config.sections" :inHeader="false")
+    ScrollButton(v-if="config.sections > 2" :inHeader="false")
 
     FooterTop(v-if="config.isContent")
 

@@ -24,7 +24,7 @@ import MainMenu from "@frontCmp/NavCmp/MainMenu";
 import { mapActions } from "vuex";
 
 export default {
-  name: "AboutView",
+  name: "BlogView",
   components: {
     BodyTop,
     HeaderWrapper,
@@ -41,9 +41,10 @@ export default {
   },
   created() {
     this.setConfig({
-      name: "Обо мне",
+      name: "Блог",
+      isBlog: true,
       isContent: true,
-      sections: 4
+      sections: 2
     });
   }
 };

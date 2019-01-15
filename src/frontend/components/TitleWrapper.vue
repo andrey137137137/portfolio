@@ -63,11 +63,6 @@ export default {
         ...this.titleAddClasses
       };
     }
-  },
-  methods: {
-    svgElem() {
-      return <SvgCmp id={this.bgIcon} addClasses={this.bgClasses} />;
-    }
   }
 };
 </script>

@@ -1,41 +1,19 @@
 <template lang="pug">
-  .main_wrap
-    BodyTop
-    HeaderWrapper
-      NavCmp
-      HeaderContent
-      ScrollButton
-    TopWrapper
-    //- FooterWrapper
-    MainMenu
+  PageWrapper
 </template>
 
 <script>
-import menuChecker from "@frontend/mixins/menuChecker";
-import BodyTop from "@frontCmp/BodyTop";
-import HeaderWrapper from "@frontCmp/Header/HeaderWrapper";
-import NavCmp from "@frontCmp/NavCmp";
-import HeaderContent from "@frontCmp/Header/HeaderContent";
-import ScrollButton from "@frontCmp/ScrollButton";
-import TopWrapper from "@frontCmp/TopWrapper";
-import FooterWrapper from "@frontCmp/FooterWrapper";
-import MainMenu from "@frontCmp/NavCmp/MainMenu";
+import PageWrapper from "@frontCmp/PageWrapper";
+import SectionWrapper from "@frontCmp/SectionWrapper";
 
 import { mapActions } from "vuex";
 
 export default {
   name: "AboutView",
   components: {
-    BodyTop,
-    HeaderWrapper,
-    NavCmp,
-    HeaderContent,
-    ScrollButton,
-    TopWrapper,
-    FooterWrapper,
-    MainMenu
+    PageWrapper,
+    SectionWrapper
   },
-  mixins: [menuChecker],
   methods: {
     ...mapActions(["setConfig"])
   },

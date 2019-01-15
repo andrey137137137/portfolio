@@ -4,6 +4,7 @@ export default {
   state: {
     data: {
       name: "",
+      isTopWrapTitle: false,
       isBlog: false,
       isContent: false,
       sections: 0

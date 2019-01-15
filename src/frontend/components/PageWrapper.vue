@@ -5,7 +5,6 @@
       NavCmp
       HeaderContent
       ScrollButton
-    TopWrapper
     slot
     //- FooterWrapper
     MainMenu
@@ -18,7 +17,6 @@ import HeaderWrapper from "@frontCmp/Header/HeaderWrapper";
 import NavCmp from "@frontCmp/NavCmp";
 import HeaderContent from "@frontCmp/Header/HeaderContent";
 import ScrollButton from "@frontCmp/ScrollButton";
-import TopWrapper from "@frontCmp/TopWrapper";
 import FooterWrapper from "@frontCmp/FooterWrapper";
 import MainMenu from "@frontCmp/NavCmp/MainMenu";
 
@@ -30,7 +28,6 @@ export default {
     NavCmp,
     HeaderContent,
     ScrollButton,
-    TopWrapper,
     FooterWrapper,
     MainMenu
   },

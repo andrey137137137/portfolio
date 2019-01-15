@@ -1,16 +1,19 @@
 <template lang="pug">
   PageWrapper
+    TopWrapper
 </template>
 
 <script>
 import PageWrapper from "@frontCmp/PageWrapper";
+import TopWrapper from "@frontCmp/TopWrapper";
 
 import { mapActions } from "vuex";
 
 export default {
   name: "WorksView",
   components: {
-    PageWrapper
+    PageWrapper,
+    TopWrapper
   },
   methods: {
     ...mapActions(["setConfig"])
@@ -25,3 +28,6 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" src="@frontStylesPgs/Works.scss">
+</style>

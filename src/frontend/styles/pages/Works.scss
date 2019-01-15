@@ -35,7 +35,7 @@
     // background-size: cover;
 
     &:nth-of-type(1) {
-      background-image: url("../userfiles/slide.png");
+      background-image: url("/assets/userfiles/slide.png");
     }
 
     /* http://unrestrictedstock.com/wp-content/uploads/snowy-winter-vignette-bokeh-night-snow-falling-free-stock-photo.jpg */
@@ -120,11 +120,11 @@
     }
 
     &-prev {
-      background-image: url("../userfiles/prev.jpg");
+      background-image: url("/assets/userfiles/prev.jpg");
     }
 
     &-next {
-      background-image: url("../userfiles/next.jpg");
+      background-image: url("/assets/userfiles/next.jpg");
     }
 
     &:hover:before,

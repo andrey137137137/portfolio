@@ -8,11 +8,13 @@ export default {
   render(h) {
     const { name, isTopWrapTitle } = this.config;
     const wrapperElem = isTopWrapTitle ? "section" : "div";
-    const elems = [h("div", { class: this.cornerBorderClasses })];
+    const elems = [<div class={this.cornerBorderClasses} />];
 
     if (isTopWrapTitle) {
       elems.push(<TitleWrapper title={name} addClasses={this.titleClasses} />);
     }
+
+    elems.push(this.$slots.default);
 
     return h(wrapperElem, { class: ["section", "top_wrap"] }, elems);
   },

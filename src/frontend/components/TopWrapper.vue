@@ -1,5 +1,5 @@
 <script>
-import SvgCmp from "@components/SvgCmp";
+import TitleWrapper from "@frontCmp/TitleWrapper";
 
 import { mapGetters } from "vuex";
 
@@ -10,7 +10,9 @@ export default {
     const elems = [h("div", { class: this.cornerBorderClasses })];
 
     if (this.title) {
-      elems.push(this.titleWrapper);
+      elems.push(
+        <TitleWrapper title={this.title} addClasses={this.titleClasses} />
+      );
     }
 
     return h(wrapperElem, { class: ["section", "top_wrap"] }, elems);
@@ -32,15 +34,10 @@ export default {
         "top_wrap__corner_border-beige": !this.title && this.config.isBlog
       };
     },
-    titleWrapper() {
-      return (
-        <div class="title_wrap top_wrap__title_wrap">
-          <SvgCmp id="stars2" addClasses={{ title_wrap__bg: true }} />
-          <h1 class="section__title section__title-large title_wrap__title">
-            {this.title}
-          </h1>
-        </div>
-      );
+    titleClasses() {
+      return {
+        top_wrap__title_wrap: true
+      };
     }
   }
 };

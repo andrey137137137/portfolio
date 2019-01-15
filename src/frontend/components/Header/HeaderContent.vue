@@ -1,5 +1,5 @@
 <template lang="pug">
-  article.header__article(:class="articleClasses")
+  article.header__article(:class="containerClasses")
 
     SvgCmp(v-if="config.isContent" id="stars1" :addClasses="svgClasses")
 
@@ -23,7 +23,7 @@ export default {
   },
   computed: {
     ...mapGetters(["config"]),
-    articleClasses() {
+    containerClasses() {
       return {
         "header__article-relative": this.config.isContent,
         "header__article-padding": !this.config.isContent

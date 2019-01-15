@@ -4,6 +4,7 @@ import * as types from "@/store/common-mutation-types";
 const dbPage = "post";
 
 export default {
+  namespaced: true,
   state: {
     data: []
   },

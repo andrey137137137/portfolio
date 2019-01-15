@@ -1,4 +1,5 @@
-import { mapGetters } from "vuex";
+import { createNamespacedHelpers } from "vuex";
+const { mapGetters } = createNamespacedHelpers("frontView");
 
 export default {
   name: "HeaderTitle",

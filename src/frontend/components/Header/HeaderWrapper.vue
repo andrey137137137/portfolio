@@ -4,7 +4,8 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { createNamespacedHelpers } from "vuex";
+const { mapGetters } = createNamespacedHelpers("frontView");
 
 export default {
   name: "HeaderWrapper",

@@ -21,7 +21,8 @@ import NavCmp from "@frontCmp/NavCmp";
 import LoginForm from "@frontCmp/Forms/LoginForm";
 import FooterWrapper from "@frontCmp/FooterWrapper";
 
-import { mapActions } from "vuex";
+import { createNamespacedHelpers } from "vuex";
+const { mapActions } = createNamespacedHelpers("frontView");
 
 export default {
   name: "Home",

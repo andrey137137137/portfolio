@@ -7,7 +7,8 @@
 import PageWrapper from "@frontCmp/PageWrapper";
 import TopWrapper from "@frontCmp/TopWrapper";
 
-import { mapActions } from "vuex";
+import { createNamespacedHelpers } from "vuex";
+const { mapActions } = createNamespacedHelpers("frontView");
 
 export default {
   name: "BlogView",

@@ -11,7 +11,8 @@
 <script>
 import $ from "jQuery";
 
-import { mapGetters } from "vuex";
+import { createNamespacedHelpers } from "vuex";
+const { mapGetters } = createNamespacedHelpers("frontView");
 
 export default {
   name: "ParallaxCmp",

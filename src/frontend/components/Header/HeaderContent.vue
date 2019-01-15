@@ -13,7 +13,8 @@
 import SvgCmp from "@components/SvgCmp";
 import HeaderTitle from "./HeaderTitle";
 
-import { mapGetters } from "vuex";
+import { createNamespacedHelpers } from "vuex";
+const { mapGetters } = createNamespacedHelpers("frontView");
 
 export default {
   name: "HeaderContent",

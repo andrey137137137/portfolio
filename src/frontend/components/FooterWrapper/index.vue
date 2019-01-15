@@ -16,7 +16,8 @@
 import ScrollButton from "@frontCmp/ScrollButton";
 import FooterTop from "./FooterTop";
 
-import { mapGetters } from "vuex";
+import { createNamespacedHelpers } from "vuex";
+const { mapGetters } = createNamespacedHelpers("frontView");
 
 export default {
   name: "FooterWrapper",

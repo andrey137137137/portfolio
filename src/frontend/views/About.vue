@@ -32,7 +32,8 @@ import SectionWrapper from "@frontCmp/SectionWrapper";
 import TitleWrapper from "@frontCmp/TitleWrapper";
 import BottomWrapper from "@frontCmp/BottomWrapper";
 
-import { mapGetters, mapActions } from "vuex";
+import { createNamespacedHelpers } from "vuex";
+const { mapGetters, mapActions } = createNamespacedHelpers("frontView");
 
 export default {
   name: "AboutView",

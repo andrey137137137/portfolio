@@ -21,6 +21,8 @@
           | Вам полезен
         p.col.col-center.col-tb_8.section__desc.skills__desc Больше всего меня привлекет Frontend разработка, но я также знаком и могу решать не сложные задачи на Backend. Но давайте по порядку.
 
+        SkillList(:categories="skills")
+
     BottomWrapper(:addClasses="{'bottom_wrap-map_wrap': true}")
       iframe.section.map(src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d1373.5715527640798!2d30.7402854!3d46.4854787!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40c631985b45cb0b%3A0x6e315e968e5b2a42!2z0J7QtNC10YHRgdC60LjQuSDQs9C-0YHRg9C00LDRgNGB0YLQstC10L3QvdGL0Lkg0LDQutCw0LTQtdC80LjRh9C10YHQutC40Lkg0YLQtdCw0YLRgCDQvtC_0LXRgNGLINC4INCx0LDQu9C10YLQsA!5e0!3m2!1sru!2sua!4v1522350054754" frameborder="0" style="border:0" allowfullscreen)
 </template>
@@ -30,10 +32,13 @@ import PageWrapper from "@frontCmp/PageWrapper";
 import TopWrapper from "@frontCmp/TopWrapper";
 import SectionWrapper from "@frontCmp/SectionWrapper";
 import TitleWrapper from "@frontCmp/TitleWrapper";
+import SkillList from "@frontCmp/SkillList";
 import BottomWrapper from "@frontCmp/BottomWrapper";
 
 import { createNamespacedHelpers } from "vuex";
-const { mapGetters, mapActions } = createNamespacedHelpers("frontView");
+const { mapActions, mapGetters } = createNamespacedHelpers("about");
+const viewMapGetters = createNamespacedHelpers("frontView").mapGetters;
+const viewMapActions = createNamespacedHelpers("frontView").mapActions;
 
 export default {
   name: "AboutView",
@@ -42,15 +47,19 @@ export default {
     TopWrapper,
     SectionWrapper,
     TitleWrapper,
+    SkillList,
     BottomWrapper
   },
   computed: {
-    ...mapGetters(["config"])
+    ...mapGetters(["skills"]),
+    ...viewMapGetters(["config"])
   },
   methods: {
-    ...mapActions(["setConfig"])
+    ...mapActions(["getSkills"]),
+    ...viewMapActions(["setConfig"])
   },
   created() {
+    this.getSkills();
     this.setConfig({
       name: "Обо мне",
       isContent: true,

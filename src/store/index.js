@@ -8,7 +8,7 @@ import blog from "@/store/modules/blog";
 import frontView from "@/store/modules/frontView";
 
 export default new Vuex.Store({
-  strict: true,
+  // strict: true,
   modules: {
     about,
     blog,

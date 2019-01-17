@@ -6,7 +6,7 @@
       HeaderContent
       ScrollButton
     slot
-    //- FooterWrapper
+    FooterWrapper
     MainMenu
 </template>
 

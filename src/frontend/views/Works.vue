@@ -4,11 +4,9 @@
 </template>
 
 <script>
+import pageConfig from "@frontend/mixins/pageConfig";
 import PageWrapper from "@frontCmp/PageWrapper";
 import TopWrapper from "@frontCmp/TopWrapper";
-
-import { createNamespacedHelpers } from "vuex";
-const { mapActions } = createNamespacedHelpers("frontView");
 
 export default {
   name: "WorksView",
@@ -16,16 +14,17 @@ export default {
     PageWrapper,
     TopWrapper
   },
-  methods: {
-    ...mapActions(["setConfig"])
-  },
-  created() {
-    this.setConfig({
-      name: "Мои работы",
-      isTopWrapTitle: true,
-      isContent: true,
-      sections: 3
-    });
+  mixins: [pageConfig],
+  data() {
+    return {
+      dbPage: "works",
+      configParams: {
+        name: "Мои работы",
+        isTopWrapTitle: true,
+        isContent: true,
+        sections: 3
+      }
+    };
   }
 };
 </script>

@@ -1,4 +1,4 @@
-import myConfig from "../../config";
+import myConfig from "@/../config";
 
 export default function interceptor(axios) {
   axios.interceptors.request.use(

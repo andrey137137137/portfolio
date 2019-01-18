@@ -4,7 +4,7 @@
       aside.tabs
         #scroll_menu.container.tabs__container
           a.tabs__link(
-            v-for="post in posts"
+            v-for="post in dbData"
             :key="post._id"
             :href="getTabLink(post._id)") {{post.title}}
 
@@ -12,7 +12,7 @@
         .container.blog__container
 
           article.blog__post(
-            v-for="(post, index) in posts"
+            v-for="(post, index) in dbData"
             :key="post._id"
             :id="post._id"
           )
@@ -20,18 +20,14 @@
             span.blog__date {{post.date}}
             p {{post.body}}
 
-            .blog__separator(v-show="index < posts.length - 1")
+            .blog__separator(v-show="index < dbData.length - 1")
 
 </template>
 
 <script>
+import pageConfig from "@frontend/mixins/pageConfig";
 import PageWrapper from "@frontCmp/PageWrapper";
 import TopWrapper from "@frontCmp/TopWrapper";
-
-import { createNamespacedHelpers } from "vuex";
-const { mapActions, mapGetters } = createNamespacedHelpers("blog");
-const viewMapGetters = createNamespacedHelpers("frontView").mapGetters;
-const viewMapActions = createNamespacedHelpers("frontView").mapActions;
 
 export default {
   name: "BlogView",
@@ -39,25 +35,22 @@ export default {
     PageWrapper,
     TopWrapper
   },
-  computed: {
-    ...mapGetters(["posts"]),
-    ...viewMapGetters(["config"])
+  mixins: [pageConfig],
+  data() {
+    return {
+      dbPage: "post",
+      configParams: {
+        name: "Блог",
+        isBlog: true,
+        isContent: true,
+        sections: 2
+      }
+    };
   },
   methods: {
-    ...mapActions(["getPosts"]),
-    ...viewMapActions(["setConfig"]),
     getTabLink(name) {
       return `#${name}`;
     }
-  },
-  created() {
-    this.getPosts();
-    this.setConfig({
-      name: "Блог",
-      isBlog: true,
-      isContent: true,
-      sections: 2
-    });
   }
 };
 </script>

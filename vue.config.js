@@ -28,8 +28,8 @@ module.exports = {
   devServer: {
     historyApiFallback: {
       rewrites: [
-        { from: /\/index/, to: "/index.html" },
-        { from: /\/admin/, to: "/admin.html" }
+        { from: /^\/index/, to: "/index.html" },
+        { from: /^\/admin\//, to: "/admin.html" }
       ]
     }
   },

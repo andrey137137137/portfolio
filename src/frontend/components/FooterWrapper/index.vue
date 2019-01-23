@@ -41,6 +41,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss" src="@frontStylesCmp/FooterWrapper.scss">
-</style>

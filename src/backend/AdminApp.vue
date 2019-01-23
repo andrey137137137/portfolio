@@ -1,21 +1,17 @@
 <template lang="pug">
-  .admin
-    AdminHeader
-    AdminNav
-    main.section.main
-      router-view
+  router-view
 </template>
 
 <script>
-import AdminHeader from "./components/AdminHeader";
-import AdminNav from "./components/AdminNav";
+// import AdminHeader from "./components/AdminHeader";
+// import AdminNav from "./components/AdminNav";
 
 export default {
-  name: "AdminApp",
-  components: {
-    AdminHeader,
-    AdminNav
-  }
+  name: "AdminApp"
+  // components: {
+  //   AdminHeader,
+  //   AdminNav
+  // }
 };
 </script>
 

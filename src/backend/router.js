@@ -1,9 +1,10 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 
-import About from "./views/About";
-import Blog from "./views/Blog";
-import Page from "./views/Page";
+import AdminCmp from "@backCmp/AdminCmp";
+import About from "@backViews/About";
+import Blog from "@backViews/Blog";
+import Page from "@backViews/Page";
 
 Vue.use(VueRouter);
 
@@ -12,17 +13,23 @@ export default new VueRouter({
   base: process.env.BASE_URL,
   routes: [
     {
-      path: "about",
-      component: About
-    },
-    {
-      path: "blog",
-      component: Blog
-    },
-    {
-      path: "page/:pageId",
-      component: Page,
-      props: true
+      path: "admin",
+      component: AdminCmp,
+      children: [
+        {
+          path: "about",
+          component: About
+        },
+        {
+          path: "blog",
+          component: Blog
+        },
+        {
+          path: "page/:pageId",
+          component: Page,
+          props: true
+        }
+      ]
     }
   ]
 });

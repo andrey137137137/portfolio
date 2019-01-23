@@ -4,8 +4,8 @@ import axios from "axios";
 
 import interceptor from "@common/api/interceptor";
 import store from "@common/store";
-import AdminApp from "./AdminApp.vue";
-import router from "./router";
+import AdminApp from "@backend/AdminApp.vue";
+import router from "@backend/router";
 
 interceptor(axios);
 

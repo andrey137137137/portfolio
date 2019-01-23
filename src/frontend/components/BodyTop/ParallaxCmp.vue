@@ -125,6 +125,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss" src="@frontStylesCmp/ParallaxCmp.scss">
-</style>

@@ -1,5 +1,5 @@
 <template lang="pug">
-  PageWrapper
+  FullPageWrapper
     TopWrapper
       aside.tabs
         #scroll_menu.container.tabs__container
@@ -26,13 +26,13 @@
 
 <script>
 import pageConfig from "@frontend/mixins/pageConfig";
-import PageWrapper from "@frontCmp/PageWrapper";
+import FullPageWrapper from "@frontCmp/FullPageWrapper";
 import TopWrapper from "@frontCmp/TopWrapper";
 
 export default {
   name: "BlogView",
   components: {
-    PageWrapper,
+    FullPageWrapper,
     TopWrapper
   },
   mixins: [pageConfig],

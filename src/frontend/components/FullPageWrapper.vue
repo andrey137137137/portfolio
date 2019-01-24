@@ -1,6 +1,5 @@
 <template lang="pug">
-  .main_wrap
-    BodyTop
+  PageWrapper
     HeaderWrapper
       NavCmp
       HeaderContent
@@ -12,7 +11,7 @@
 
 <script>
 import menuChecker from "@frontend/mixins/menuChecker";
-import BodyTop from "@frontCmp/BodyTop";
+import PageWrapper from "@frontCmp/PageWrapper";
 import HeaderWrapper from "@frontCmp/Header/HeaderWrapper";
 import NavCmp from "@frontCmp/NavCmp";
 import HeaderContent from "@frontCmp/Header/HeaderContent";
@@ -21,9 +20,9 @@ import FooterWrapper from "@frontCmp/FooterWrapper";
 import MainMenu from "@frontCmp/NavCmp/MainMenu";
 
 export default {
-  name: "PageWrapper",
+  name: "FullPageWrapper",
   components: {
-    BodyTop,
+    PageWrapper,
     HeaderWrapper,
     NavCmp,
     HeaderContent,

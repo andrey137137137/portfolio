@@ -1,8 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 
-// import Home from "./views/Home";
-
 Vue.use(VueRouter);
 
 export default new VueRouter({
@@ -32,6 +30,25 @@ export default new VueRouter({
       path: "/blog",
       name: "blog",
       component: () => import("@frontViews/Blog.vue")
+    },
+    {
+      path: "/admin",
+      component: () => import("@backend"),
+      children: [
+        {
+          path: "about",
+          component: () => import("@backViews/About.vue")
+        },
+        {
+          path: "blog",
+          component: () => import("@backViews/Blog.vue")
+        },
+        {
+          path: "page/:pageId",
+          component: () => import("@backViews/Page.vue"),
+          props: true
+        }
+      ]
     }
   ]
 });

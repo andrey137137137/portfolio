@@ -1,6 +1,5 @@
 <template lang="pug">
-  .full_screen
-    BodyTop
+  PageWrapper
     HeaderWrapper
       a#flip_2_back.btn.btn-opacity.authorization(href="#login") Авторизоваться
       #flip_container.container.header__container.header__container-framed
@@ -14,7 +13,7 @@
 <script>
 import $ from "jQuery";
 
-import BodyTop from "@frontCmp/BodyTop";
+import PageWrapper from "@frontCmp/PageWrapper";
 import HeaderWrapper from "@frontCmp/Header/HeaderWrapper";
 import HeaderContent from "@frontCmp/Header/HeaderContent";
 import NavCmp from "@frontCmp/NavCmp";
@@ -27,7 +26,7 @@ const { mapActions } = createNamespacedHelpers("frontView");
 export default {
   name: "Home",
   components: {
-    BodyTop,
+    PageWrapper,
     HeaderWrapper,
     HeaderContent,
     NavCmp,

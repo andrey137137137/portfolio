@@ -4,8 +4,8 @@ import axios from "axios";
 
 import interceptor from "@common/api/interceptor";
 import store from "@common/store";
-import PublicApp from "@frontend/PublicApp.vue";
-import router from "@frontend/router";
+import App from "@/App.vue";
+import router from "@/router";
 
 interceptor(axios);
 
@@ -17,5 +17,5 @@ new Vue({
   el: "#app",
   store,
   router,
-  render: h => h(PublicApp)
+  render: h => h(App)
 });

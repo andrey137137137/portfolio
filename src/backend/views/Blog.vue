@@ -3,7 +3,7 @@
     h1.section__title Страница "Блог"
 
     PostForm(
-      v-for="post in posts"
+      v-for="post in dbData"
       :key="post._id"
       :post="post")
 
@@ -12,21 +12,19 @@
 </template>
 
 <script>
+import pageConfig from "@backend/mixins/pageConfig";
 import PostForm from "@backCmp/Forms/PostForm";
-
-import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "AdminBlogView",
-  components: { PostForm },
-  computed: {
-    ...mapGetters(["posts"])
+  components: {
+    PostForm
   },
-  methods: {
-    ...mapActions(["getPosts"])
-  },
-  mounted() {
-    this.getPosts();
+  mixins: [pageConfig],
+  data() {
+    return {
+      dbPage: "post"
+    };
   }
 };
 </script>

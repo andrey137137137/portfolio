@@ -10,6 +10,3 @@ export default {
   name: "AdminHeader"
 };
 </script>
-
-<style lang="scss" src="../styles/cmp/AdminHeader.scss">
-</style>

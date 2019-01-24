@@ -1,5 +1,5 @@
 <template lang="pug">
-  PageWrapper
+  FullPageWrapper
     TopWrapper
       SectionWrapper(name="about" :isFullWidth="true" :isOwnContainerClass="true")
         TitleWrapper(
@@ -36,7 +36,7 @@
 
 <script>
 import pageConfig from "@frontend/mixins/pageConfig";
-import PageWrapper from "@frontCmp/PageWrapper";
+import FullPageWrapper from "@frontCmp/FullPageWrapper";
 import TopWrapper from "@frontCmp/TopWrapper";
 import SectionWrapper from "@frontCmp/SectionWrapper";
 import TitleWrapper from "@frontCmp/TitleWrapper";
@@ -47,7 +47,7 @@ import ContactList from "@frontCmp/ContactList";
 export default {
   name: "AboutView",
   components: {
-    PageWrapper,
+    FullPageWrapper,
     TopWrapper,
     SectionWrapper,
     TitleWrapper,

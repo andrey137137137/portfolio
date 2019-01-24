@@ -1,10 +1,10 @@
 <template lang="pug">
   .menu(:id="id" :class="containerClasses")
-    router-link.menu__link(
+    a.menu__link(
       v-for="link in activeLinks"
       :key="link.href"
       :class="linkClasses"
-      :to="link.href"
+      :href="link.href"
     ) {{link.name}}
 </template>
 

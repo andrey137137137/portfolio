@@ -1,17 +1,17 @@
 <template lang="pug">
-  PageWrapper
+  FullPageWrapper
     TopWrapper
 </template>
 
 <script>
 import pageConfig from "@frontend/mixins/pageConfig";
-import PageWrapper from "@frontCmp/PageWrapper";
+import FullPageWrapper from "@frontCmp/FullPageWrapper";
 import TopWrapper from "@frontCmp/TopWrapper";
 
 export default {
   name: "WorksView",
   components: {
-    PageWrapper,
+    FullPageWrapper,
     TopWrapper
   },
   mixins: [pageConfig],

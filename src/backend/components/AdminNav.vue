@@ -5,7 +5,6 @@
         :class="isActiveClass(tab.href)"
         :to="tab.href"
       ) {{tab.name}}
-    | {{$route}}
 </template>
 
 <script>
@@ -14,10 +13,10 @@ export default {
   data() {
     return {
       tabs: [
-        { name: "Обо мне", href: "admin/about" },
-        { name: "Блог", href: "admin/blog" },
-        { name: "Таб 3", href: "admin/page/50" },
-        { name: "Таб 4", href: "admin/page/70" }
+        { name: "Обо мне", href: "/admin/about" },
+        { name: "Блог", href: "/admin/blog" },
+        { name: "Таб 3", href: "/admin/page/50" },
+        { name: "Таб 4", href: "/admin/page/70" }
       ]
     };
   },
@@ -31,5 +30,5 @@ export default {
 };
 </script>
 
-<style lang="scss" src="../styles/cmp/AdminNav.scss" scoped>
+<style lang="scss" src="@backStylesCmp/AdminNav.scss" scoped>
 </style>

@@ -21,20 +21,20 @@ function resolveBack(dir) {
 }
 
 module.exports = {
-  pages: {
-    index: "src/frontend/main.js",
-    admin: "src/backend/admin.js"
-  },
-  devServer: {
-    historyApiFallback: {
-      rewrites: [
-        { from: /^\/index/, to: "/index.html" },
-        { from: /^\/admin\//, to: "/admin.html" }
-      ]
-    }
-  },
+  // pages: {
+  //   index: "src/frontend/main.js",
+  //   admin: "src/backend/admin.js"
+  // },
+  // devServer: {
+  //   historyApiFallback: {
+  //     rewrites: [
+  //       { from: /^\/index/, to: "/index.html" },
+  //       { from: /^\/admin\//, to: "/admin.html" }
+  //     ]
+  //   }
+  // },
   css: {
-    modules: true,
+    // modules: true,
     loaderOptions: {
       sass: {
         data: `@import "@/common/styles/variables.scss"; @import "@/common/styles/mixins.scss";`

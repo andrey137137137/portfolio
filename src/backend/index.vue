@@ -18,3 +18,8 @@ export default {
   }
 };
 </script>
+
+<style lang="scss">
+@import "@backStyles/common.scss";
+@import "@backStylesCmp/header.scss";
+</style>

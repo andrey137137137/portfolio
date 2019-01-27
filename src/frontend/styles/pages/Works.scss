@@ -210,11 +210,12 @@
   // height: 422px;
   color: $white rgba(#dadbd6, 0.05);
 
-  &__row {
-    height: 40px;
-  }
+  // &__row {
+  //   height: 40px;
+  // }
 
   &__text_input {
+    @include oneLineBlock(40px);
     border-width: 0;
     color: rgba($white, 0.5) rgba($white, 0.07);
   }

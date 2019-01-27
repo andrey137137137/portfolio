@@ -6,15 +6,10 @@ export default {
   name: "TitleWrapper",
   mixins: [addClasses],
   render(h) {
-    const elems = [
-      <SvgCmp id={this.bgIcon} addClasses={this.bgClasses} />,
-      h(`h${this.titleLevel}`, {
-        class: this.titleClasses,
-        domProps: { innerHTML: this.title }
-      })
-    ];
-
-    return h("div", { class: this.containerClasses }, elems);
+    return h("div", { class: this.containerClasses }, [
+      this.svgElem(),
+      this.titleElem(h)
+    ]);
   },
   props: {
     title: {
@@ -62,6 +57,17 @@ export default {
         title_wrap__title: true,
         ...this.titleAddClasses
       };
+    }
+  },
+  methods: {
+    svgElem() {
+      return <SvgCmp id={this.bgIcon} addClasses={this.bgClasses} />;
+    },
+    titleElem(h) {
+      return h(`h${this.titleLevel}`, {
+        class: this.titleClasses,
+        domProps: { innerHTML: this.title }
+      });
     }
   }
 };

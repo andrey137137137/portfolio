@@ -14,7 +14,7 @@ export default {
     isLarge() {
       return this.config.isBlog;
     },
-    titleClass() {
+    titleClasses() {
       if (!this.isRelative) {
         return {};
       }
@@ -26,7 +26,7 @@ export default {
         "header__title-large": this.isLarge
       };
     },
-    descClass() {
+    descClasses() {
       if (!this.isRelative) {
         return {};
       }
@@ -56,7 +56,7 @@ export default {
           class: {
             section__title: true,
             header__title: true,
-            ...this.titleClass
+            ...this.titleClasses
           }
         },
         [this.title]
@@ -65,7 +65,11 @@ export default {
     descElem() {
       return (
         <p
-          class={{ section__desc: true, header__desc: true, ...this.descClass }}
+          class={{
+            section__desc: true,
+            header__desc: true,
+            ...this.descClasses
+          }}
         >
           {this.desc}
         </p>

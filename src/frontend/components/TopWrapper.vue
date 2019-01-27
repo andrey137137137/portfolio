@@ -12,7 +12,7 @@ export default {
     const elems = [<div class={this.cornerBorderClasses} />];
 
     if (isTopWrapTitle) {
-      elems.push(<TitleWrapper title={name} addClasses={this.titleClasses} />);
+      elems.push(<TitleWrapper title={name} class="top_wrap__title_wrap" />);
     }
 
     elems.push(this.$slots.default);
@@ -29,11 +29,6 @@ export default {
         "top_wrap__corner_border-half_opacity": isTopWrapTitle,
         "top_wrap__corner_border-two_colors": !isTopWrapTitle && !isBlog,
         "top_wrap__corner_border-beige": !isTopWrapTitle && isBlog
-      };
-    },
-    titleClasses() {
-      return {
-        top_wrap__title_wrap: true
       };
     }
   }

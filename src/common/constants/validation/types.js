@@ -5,11 +5,11 @@ export default {
     email: "email",
     password: "password",
     checkbox: "checkbox",
-    radio: "radio"
+    radio: "radio",
+    range: "range"
   },
   custom: {
     toggle: "toggle",
-    range: "range",
     textarea: "textarea",
     dropdown: "dropdown",
     phone: "phone",

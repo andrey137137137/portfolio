@@ -1,11 +1,25 @@
-// import types from "@common/constants/validation/types";
+import types from "@common/constants/validation/types";
 import exist from "@common/helpers/exist";
 import addClasses from "@common/mixins/addClasses";
 import ErrorElem from "@components/FormElems/ErrorElem";
 
 export default {
   render(h) {
-    const wrapClass = this.wrapClass ? this.wrapClass : this.type;
+    let wrapClass = this.wrapClass;
+
+    if (!wrapClass) {
+      switch (this.type) {
+        case types.native.checkbox:
+        case types.native.radio:
+        case types.native.number:
+        case types.custom.textarea:
+          wrapClass = this.type;
+          break;
+        default:
+          wrapClass = types.native.text;
+      }
+    }
+
     let elems = [
       ...this.elemsBeforeInput(h),
       this.inputElem(h),
@@ -33,6 +47,12 @@ export default {
     wrapClass: {
       type: String,
       default: ""
+    },
+    addInputClasses: {
+      type: Object,
+      default() {
+        return {};
+      }
     },
     val: {
       type: Object,
@@ -154,6 +174,7 @@ export default {
       return h(formElem, {
         class: {
           form__input: true,
+          ...this.addInputClasses,
           ...this.validationClasses
         },
         attrs,

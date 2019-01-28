@@ -1,25 +1,29 @@
 <template lang="pug">
   FullPageWrapper
     TopWrapper
-      SectionWrapper(name="slider" :isFullWidth="true" :isOwnContainerClass="true")
-        ul.slider__list
-          li.slider__item.slider__item-active
-          li.slider__item
-          li.slider__item
-          li.slider__item
-        
-        article.slider__text_wrap
-          h2.section__title.section__title-uppercase.section__title-underlined.slider__title Сайт школы онлайн Образования
-          p.section__desc.slider__desc HTML , CSS, JAVASCRIPT
-          a.clearfix.btn.slider__btn(href="")
-            span.icon.icon-link.slider__btn_icon
-            span.slider__btn_text Посмотреть сайт
+      SliderCmp
+    BottomWrapper(:addClasses="bottomWrapClass")
+      section#reviews.section.container.reviews
 
-        .clearfix.slider__nav
-          a.icon.icon-chevron_down.slider__arrow.slider__arrow-prev(href="")
-          a.icon.icon-chevron_up.slider__arrow.slider__arrow-next(href="")
+        TitleWrapper(
+          title="Что обо мне говорят"
+          bgIcon="stars3"
+          containerAddClass="reviews__title_wrap"
+          titleAddClass="reviews__title"
+        )
 
-    BottomWrapper(:addClasses="{'bottom_wrap-bg': true}")
+        article.col.col-float.col-tb_6.col-ds_4.reviews__article(v-for="(review, index) in dbData" class="{'reviews__article-first': !index}")
+          .icon.icon-quote.reviews__quote
+          picture.img_wrap.reviews__img_wrap
+            source.img_wrap__img(srcset="userfiles/reviews/m/" + (index + 1) + ".jpg" media="(min-width: 768px)")
+            img.img_wrap__img(srcset="userfiles/reviews/s/" + (index + 1) + ".jpg" alt="review.author")
+          .reviews__text_wrap
+            p.section__desc.reviews__desc {{review.description}}
+            span.reviews__author {{review.author}}
+            span.reviews__status
+              | &#8212;
+              | {{review.status}}
+
       FeedbackForm
 </template>
 
@@ -27,9 +31,9 @@
 import pageConfig from "@frontend/mixins/pageConfig";
 import FullPageWrapper from "@frontCmp/FullPageWrapper";
 import TopWrapper from "@frontCmp/TopWrapper";
-import SectionWrapper from "@frontCmp/SectionWrapper";
-import TitleWrapper from "@frontCmp/TitleWrapper";
+import SliderCmp from "@frontCmp/SliderCmp";
 import BottomWrapper from "@frontCmp/BottomWrapper";
+import TitleWrapper from "@frontCmp/TitleWrapper";
 import FeedbackForm from "@frontCmp/Forms/FeedbackForm";
 
 export default {
@@ -37,20 +41,23 @@ export default {
   components: {
     FullPageWrapper,
     TopWrapper,
-    SectionWrapper,
-    TitleWrapper,
+    SliderCmp,
     BottomWrapper,
+    TitleWrapper,
     FeedbackForm
   },
   mixins: [pageConfig],
   data() {
     return {
-      dbPage: "works",
+      dbPage: "review",
       configParams: {
         name: "Мои работы",
         isTopWrapTitle: true,
         isContent: true,
         sections: 3
+      },
+      bottomWrapClass: {
+        "bottom_wrap-bg": true
       }
     };
   }

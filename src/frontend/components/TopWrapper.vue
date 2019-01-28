@@ -7,12 +7,11 @@ const { mapGetters } = createNamespacedHelpers("frontView");
 export default {
   name: "TopWrapper",
   render(h) {
-    const { name, isTopWrapTitle } = this.config;
-    const wrapperElem = isTopWrapTitle ? "section" : "div";
-    const elems = [<div class={this.cornerBorderClasses} />];
+    const wrapperElem = this.config.isTopWrapTitle ? "section" : "div";
+    const elems = [this.cornerBorderElem()];
 
-    if (isTopWrapTitle) {
-      elems.push(<TitleWrapper title={name} class="top_wrap__title_wrap" />);
+    if (this.config.isTopWrapTitle) {
+      elems.push(this.titleWrapperElem());
     }
 
     elems.push(this.$slots.default);
@@ -30,6 +29,19 @@ export default {
         "top_wrap__corner_border-two_colors": !isTopWrapTitle && !isBlog,
         "top_wrap__corner_border-beige": !isTopWrapTitle && isBlog
       };
+    }
+  },
+  methods: {
+    cornerBorderElem() {
+      return <div class={this.cornerBorderClasses} />;
+    },
+    titleWrapperElem() {
+      return (
+        <TitleWrapper
+          title={this.config.name}
+          containerAddClass="top_wrap__title_wrap"
+        />
+      );
     }
   }
 };

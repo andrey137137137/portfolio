@@ -7,6 +7,7 @@ Vue.use(Vuex);
 import * as types from "@common/store/common-mutation-types";
 // import about from "@common/store/modules/about";
 // import blog from "@common/store/modules/blog";
+import reviews from "@common/store/data/reviews.json";
 import frontView from "@common/store/modules/frontView";
 
 export default new Vuex.Store({
@@ -21,9 +22,26 @@ export default new Vuex.Store({
   },
   actions: {
     readData({ commit }, dbPage) {
-      axios.get(dbPage).then(response => {
-        commit(types.SET, response.data[`${dbPage}s`]);
-      });
+      switch (dbPage) {
+        case "work":
+        case "review":
+          // fetch("/src/common/store/data/data.json")
+          //   .then(data => {
+          //     return data.text();
+          //   })
+          //   .then(response => {
+          //     // state.data = response;
+          //     commit(types.SET, response);
+          //   });
+
+          console.log(reviews);
+          commit(types.SET, reviews);
+          break;
+        default:
+          axios.get(dbPage).then(response => {
+            commit(types.SET, response.data[`${dbPage}s`]);
+          });
+      }
     },
     insertData({ dispatch }, payload) {
       axios.post(payload.dbPage, payload.data).then(() => {

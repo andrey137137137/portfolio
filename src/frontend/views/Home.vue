@@ -6,7 +6,7 @@
         .header__flip_wrap
           HeaderContent
           NavCmp
-        LoginForm.header__flip_wrap.header__flip_wrap-back
+        LoginForm(:addClasses="formClasses")
     FooterWrapper
 </template>
 

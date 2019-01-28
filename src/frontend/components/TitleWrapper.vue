@@ -1,10 +1,8 @@
 <script>
-import addClasses from "@common/mixins/addClasses";
 import SvgCmp from "@components/SvgCmp";
 
 export default {
   name: "TitleWrapper",
-  mixins: [addClasses],
   render(h) {
     return h("div", { class: this.containerClasses }, [
       this.svgElem(),
@@ -16,6 +14,10 @@ export default {
       type: String,
       required: true
     },
+    containerAddClass: {
+      type: String,
+      required: true
+    },
     titleLevel: {
       type: Number,
       default: 1
@@ -24,39 +26,32 @@ export default {
       type: String,
       default: "stars2"
     },
-    bgAddClasses: {
-      type: Object,
-      default() {
-        return {};
-      }
+    bgAddClass: {
+      type: String,
+      default: ""
     },
-    titleAddClasses: {
-      type: Object,
-      default() {
-        return {};
-      }
+    titleAddClass: {
+      type: String,
+      default: ""
     }
   },
   computed: {
     containerClasses() {
-      return {
-        title_wrap: true,
-        ...this.addClasses
-      };
+      return ["title_wrap", this.containerAddClass];
     },
     bgClasses() {
       return {
         title_wrap__bg: true,
-        ...this.bgAddClasses
+        [this.bgAddClass]: true
       };
     },
     titleClasses() {
-      return {
-        section__title: true,
-        "section__title-large": true,
-        title_wrap__title: true,
-        ...this.titleAddClasses
-      };
+      return [
+        "section__title",
+        "section__title-large",
+        "title_wrap__title",
+        this.titleAddClass
+      ];
     }
   },
   methods: {

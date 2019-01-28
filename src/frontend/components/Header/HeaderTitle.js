@@ -4,7 +4,7 @@ const { mapGetters } = createNamespacedHelpers("frontView");
 export default {
   name: "HeaderTitle",
   render(h) {
-    return h("div", {}, [this.titleElem(h), this.descElem(h)]);
+    return h("div", {}, [this.titleElem(h), this.descElem()]);
   },
   computed: {
     ...mapGetters(["config"]),

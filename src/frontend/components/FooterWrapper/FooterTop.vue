@@ -9,7 +9,7 @@
       ContactList(
         classBlock="footer_top__contacts"
         classElemSeparator="_"
-        :addClasses="contactsClasses")
+        :addClasses="contactClasses")
 </template>
 
 <script>
@@ -24,7 +24,7 @@ export default {
   },
   data() {
     return {
-      contactsClasses: {
+      contactClasses: {
         col: true,
         "col-tb_float": true,
         "col-tb_6": true,

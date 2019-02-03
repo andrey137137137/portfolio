@@ -20,8 +20,8 @@ import NavCmp from "@frontCmp/NavCmp";
 import LoginForm from "@frontCmp/Forms/LoginForm";
 import FooterWrapper from "@frontCmp/FooterWrapper";
 
-import { createNamespacedHelpers } from "vuex";
-const { mapActions } = createNamespacedHelpers("frontView");
+// import { createNamespacedHelpers } from "vuex";
+// const { mapActions } = createNamespacedHelpers("frontView");
 
 export default {
   name: "Home",
@@ -45,14 +45,14 @@ export default {
       }
     };
   },
-  methods: {
-    ...mapActions(["setConfig"])
-  },
-  created() {
-    this.setConfig({
-      name: "Главная"
-    });
-  },
+  // methods: {
+  //   ...mapActions(["setConfig"])
+  // },
+  // created() {
+  //   this.setConfig({
+  //     name: "Главная"
+  //   });
+  // },
   mounted() {
     const $vm = this;
 

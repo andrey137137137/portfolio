@@ -49,13 +49,13 @@ export default {
   mixins: [pageConfig],
   data() {
     return {
-      dbPage: "review",
-      configParams: {
-        name: "Мои работы",
-        isTopWrapTitle: true,
-        isContent: true,
-        sections: 3
-      },
+      // dbPage: "review",
+      // configParams: {
+      //   name: "Мои работы",
+      //   isTopWrapTitle: true,
+      //   isContent: true,
+      //   sections: 3
+      // },
       bottomWrapClass: {
         "bottom_wrap-bg": true
       }

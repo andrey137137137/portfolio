@@ -1,14 +1,22 @@
 import * as types from "./mutation-types";
 
+const defaultData = {
+  name: "",
+  isTopWrapTitle: false,
+  isBlog: false,
+  isContent: false,
+  sections: 0
+};
+
 export default {
   namespaced: true,
   state: {
     data: {
-      name: "",
-      isTopWrapTitle: false,
-      isBlog: false,
-      isContent: false,
-      sections: 0
+      // name: defaultData.name,
+      // isTopWrapTitle: defaultData.isTopWrapTitle,
+      // isBlog: defaultData.isBlog,
+      // isContent: defaultData.isContent,
+      // sections: defaultData.sections
     }
   },
   getters: {
@@ -23,10 +31,12 @@ export default {
   },
   mutations: {
     [types.SET](state, data) {
-      for (var key in data) {
-        if (state.data.hasOwnProperty(key)) {
-          state.data[key] = data[key];
-        }
+      const tempData = { ...defaultData, ...data };
+
+      for (var key in tempData) {
+        // if (state.data.hasOwnProperty(key)) {
+        state.data[key] = tempData[key];
+        // }
       }
     }
   }

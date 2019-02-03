@@ -62,12 +62,12 @@ export default {
   mixins: [pageConfig],
   data() {
     return {
-      dbPage: "skill",
-      configParams: {
-        name: "Обо мне",
-        isContent: true,
-        sections: 4
-      },
+      // dbPage: "skill",
+      // configParams: {
+      //   name: "Обо мне",
+      //   isContent: true,
+      //   sections: 4
+      // },
       bottomWrapClass: {
         "bottom_wrap-map_wrap": true
       },

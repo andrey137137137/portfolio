@@ -1,7 +1,19 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import store from "@common/store";
 
 Vue.use(VueRouter);
+
+function pageConfig(config, dbPage = "") {
+  if (dbPage) {
+    store.dispatch("readData", dbPage);
+  }
+  // console.log(store);
+
+  store.dispatch("frontView/setConfig", config);
+
+  return {};
+}
 
 export default new VueRouter({
   mode: "history",
@@ -10,11 +22,40 @@ export default new VueRouter({
     {
       path: "/",
       name: "home",
+      props: () => {
+        pageConfig({ name: "Главная" });
+      },
       component: () => import("@frontViews/Home.vue")
+    },
+    {
+      path: "/works",
+      name: "works",
+      props: () => {
+        pageConfig(
+          {
+            name: "Мои работы",
+            isTopWrapTitle: true,
+            isContent: true,
+            sections: 3
+          },
+          "review"
+        );
+      },
+      component: () => import("@frontViews/Works.vue")
     },
     {
       path: "/about",
       name: "about",
+      props: () => {
+        pageConfig(
+          {
+            name: "Обо мне",
+            isContent: true,
+            sections: 4
+          },
+          "skill"
+        );
+      },
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
@@ -22,13 +63,19 @@ export default new VueRouter({
         import(/* webpackChunkName: "about" */ "@frontViews/About.vue")
     },
     {
-      path: "/works",
-      name: "works",
-      component: () => import("@frontViews/Works.vue")
-    },
-    {
       path: "/blog",
       name: "blog",
+      props: () => {
+        pageConfig(
+          {
+            name: "Блог",
+            isBlog: true,
+            isContent: true,
+            sections: 2
+          },
+          "post"
+        );
+      },
       component: () => import("@frontViews/Blog.vue")
     },
     {

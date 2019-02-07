@@ -1,7 +1,7 @@
 <template lang="pug">
   div(:class="classes")
-    PreloaderCmp
-    //- ParallaxCmp
+    //- PreloaderCmp
+    ParallaxCmp
     slot
 </template>
 

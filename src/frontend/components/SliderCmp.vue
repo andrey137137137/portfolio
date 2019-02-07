@@ -1,10 +1,10 @@
 <template lang="pug">
-  SectionWrapper(name="id" :isFullWidth="true" :isOwnContainerClass="true")
+  SectionWrapper(:name="id" :isFullWidth="true" :isOwnContainerClass="true")
     ul.slider__list
-      li.slider__item.slider__item-active
-      li.slider__item
-      li.slider__item
-      li.slider__item
+      li.slider__item(
+        v-for="(item, index) in items"
+        :key="item._id"
+        :class="getItemClass(index)")
     
     article.slider__text_wrap
       h2.section__title.section__title-uppercase.section__title-underlined.slider__title Сайт школы онлайн Образования
@@ -50,6 +50,9 @@ export default {
     };
   },
   methods: {
+    getItemClass(index) {
+      return !index ? "slider__item-active" : "";
+    },
     moveSlide(
       $slide
       // direction

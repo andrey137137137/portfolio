@@ -28,7 +28,7 @@
         SkillList(:categories="dbData")
 
     BottomWrapper(:addClasses="bottomWrapClass")
-      iframe.section.map(src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d1373.5715527640798!2d30.7402854!3d46.4854787!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40c631985b45cb0b%3A0x6e315e968e5b2a42!2z0J7QtNC10YHRgdC60LjQuSDQs9C-0YHRg9C00LDRgNGB0YLQstC10L3QvdGL0Lkg0LDQutCw0LTQtdC80LjRh9C10YHQutC40Lkg0YLQtdCw0YLRgCDQvtC_0LXRgNGLINC4INCx0LDQu9C10YLQsA!5e0!3m2!1sru!2sua!4v1522350054754" frameborder="0" style="border:0" allowfullscreen)
+      //- iframe.section.map(src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d1373.5715527640798!2d30.7402854!3d46.4854787!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40c631985b45cb0b%3A0x6e315e968e5b2a42!2z0J7QtNC10YHRgdC60LjQuSDQs9C-0YHRg9C00LDRgNGB0YLQstC10L3QvdGL0Lkg0LDQutCw0LTQtdC80LjRh9C10YHQutC40Lkg0YLQtdCw0YLRgCDQvtC_0LXRgNGLINC4INCx0LDQu9C10YLQsA!5e0!3m2!1sru!2sua!4v1522350054754" frameborder="0" style="border:0" allowfullscreen)
 
       SectionWrapper(name="contacts" :isOwnContainerClass="true")
         ContactList(

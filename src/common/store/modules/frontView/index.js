@@ -1,4 +1,4 @@
-import * as types from "./mutation-types";
+import { SET } from "@common/store/common-mutation-types";
 
 const defaultData = {
   name: "",
@@ -26,11 +26,11 @@ export default {
   },
   actions: {
     setConfig({ commit }, data) {
-      commit(types.SET, data);
+      commit(SET, data);
     }
   },
   mutations: {
-    [types.SET](state, data) {
+    [SET](state, data) {
       const tempData = { ...defaultData, ...data };
 
       for (var key in tempData) {

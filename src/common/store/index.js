@@ -5,10 +5,9 @@ import axios from "axios";
 Vue.use(Vuex);
 
 import * as types from "@common/store/common-mutation-types";
-// import about from "@common/store/modules/about";
-// import blog from "@common/store/modules/blog";
-import reviews from "@common/store/data/reviews.json";
+import works from "@common/store/data/works.json";
 import frontView from "@common/store/modules/frontView";
+import comments from "@common/store/modules/comments";
 
 export default new Vuex.Store({
   strict: true,
@@ -24,7 +23,6 @@ export default new Vuex.Store({
     readData({ commit }, dbPage) {
       switch (dbPage) {
         case "work":
-        case "review":
           // fetch("/src/common/store/data/data.json")
           //   .then(data => {
           //     return data.text();
@@ -34,8 +32,8 @@ export default new Vuex.Store({
           //     commit(types.SET, response);
           //   });
 
-          console.log(reviews);
-          commit(types.SET, reviews);
+          console.log(works);
+          commit(types.SET, works);
           break;
         default:
           axios.get(dbPage).then(response => {
@@ -71,8 +69,7 @@ export default new Vuex.Store({
     }
   },
   modules: {
-    // about,
-    // blog,
-    frontView
+    frontView,
+    comments
   }
 });

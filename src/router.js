@@ -38,7 +38,7 @@ export default new VueRouter({
             isContent: true,
             sections: 3
           },
-          "review"
+          "work"
         );
       },
       component: () => import("@frontViews/Works.vue")
@@ -92,8 +92,8 @@ export default new VueRouter({
         },
         {
           path: "page/:pageId",
-          component: () => import("@backViews/Page.vue"),
-          props: true
+          props: true,
+          component: () => import("@backViews/Page.vue")
         }
       ]
     }

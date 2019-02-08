@@ -1,6 +1,7 @@
 <template lang="pug">
   .form__error_wrap
-    .form__error(v-show="type") {{error}}
+    transition(name="fade")
+      .form__error(v-if="type") {{error}}
 </template>
 
 <script>
@@ -12,7 +13,8 @@ export default {
   props: {
     type: {
       type: String,
-      default: ""
+      // default: ""
+      required: true
     }
   },
   computed: {
@@ -29,3 +31,18 @@ export default {
   }
 };
 </script>
+
+<style lang="scss">
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+
+.fade-enter, .fade-leave-to /* .fade-leave-active до версии 2.1.8 */ {
+  opacity: 0;
+}
+
+.fade-enter-to, .fade-leave /* .fade-leave-active до версии 2.1.8 */ {
+  opacity: 1;
+}
+</style>

@@ -39,8 +39,9 @@
             input.form__input(type="radio" value="no" v-model="$v.notRobot.$model")
             .form__checked
             .form__checkbox_text Не уверен
-        .form__error_wrap(v-show="!$v.notRobot.required")
-          .form__error form__error
+          .form__error_wrap
+            transition(name="fade")
+              .form__error(v-show="!$v.notRobot.required") form__error
 
     .menu.header__menu.header__menu-float.form__menu.login_form__menu
       a#flip_2_front.menu__link.btn(href="index.html") На главную

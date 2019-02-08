@@ -1,5 +1,6 @@
 <template lang="pug">
-  router-view
+  transition(name="fade")
+    router-view
 </template>
 
 <script>

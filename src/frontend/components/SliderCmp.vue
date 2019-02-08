@@ -7,9 +7,9 @@
         :class="getItemClass(index)")
     
     article.slider__text_wrap
-      h2.section__title.section__title-uppercase.section__title-underlined.slider__title Сайт школы онлайн Образования
-      p.section__desc.slider__desc HTML , CSS, JAVASCRIPT
-      a.clearfix.btn.slider__btn(href="")
+      h2.section__title.section__title-uppercase.section__title-underlined.slider__title(ref="title") {{title}}
+      p.section__desc.slider__desc(ref="techs") {{techs}}
+      a.clearfix.btn.slider__btn(ref="link" href="items[0].link" target="_blank")
         span.icon.icon-link.slider__btn_icon
         span.slider__btn_text Посмотреть сайт
 
@@ -46,18 +46,28 @@ export default {
       $firstSlide: null,
       $lastSlide: null,
       duration: 500,
+      curIndex: 0,
       count: 0
     };
+  },
+  computed: {
+    title() {
+      return this.items[this.curIndex].title;
+    },
+    techs() {
+      return this.items[this.curIndex].techs.join(", ");
+    }
   },
   methods: {
     getItemClass(index) {
       return !index ? "slider__item-active" : "";
     },
-    moveSlide(
-      $slide
-      // direction
-    ) {
+    setCurIndex() {
+      this.curIndex = (this.curIndex + 1) % this.count;
+    },
+    moveSlide($slide) {
       const $vm = this;
+      // const curItem = $vm.items[$vm.curIndex];
       let $movableSlide = $slide;
 
       $movableSlide.css("opacity", 0).addClass("slider__item-movable");
@@ -69,6 +79,8 @@ export default {
         // $slides.css('opacity', 0).removeClass('active');
         $vm.$slides.removeClass("slider__item-active");
         $this.toggleClass("slider__item-movable slider__item-active");
+        // $vm.$refs.title.innerText = curItem.title;
+        // $vm.$refs.link.href = curItem.link;
       });
     }
   },
@@ -76,8 +88,6 @@ export default {
     const $vm = this;
 
     $(document).ready(() => {
-      console.log("Slider script");
-
       $vm.$slides = $("#" + $vm.id).find(".slider__item");
 
       if (!$vm.$slides.length) {
@@ -98,16 +108,20 @@ export default {
         $vm.$lastSlide = $vm.$slides.last();
 
         if ($this.hasClass("slider__arrow-next")) {
+          $vm.setCurIndex();
+
           if ($vm.$nextSlide.index() >= 0) {
-            $vm.moveSlide($vm.$nextSlide, "forward");
+            $vm.moveSlide($vm.$nextSlide);
           } else {
-            $vm.moveSlide($vm.$firstSlide, "forward");
+            $vm.moveSlide($vm.$firstSlide);
           }
         } else if ($this.hasClass("slider__arrow-prev")) {
+          $vm.setCurIndex();
+
           if ($vm.$prevSlide.index() >= 0) {
-            $vm.moveSlide($vm.$prevSlide, "backward");
+            $vm.moveSlide($vm.$prevSlide);
           } else {
-            $vm.moveSlide($vm.$lastSlide, "backward");
+            $vm.moveSlide($vm.$lastSlide);
           }
         }
       });

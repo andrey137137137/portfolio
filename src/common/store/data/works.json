@@ -2,15 +2,15 @@
   {
     "title": "Сайт школы онлайн Образования",
     "description": "Этот парень проходил обучение веб-разработке не где-то, а в LoftSchool! 2 месяца только самых тяжелых испытаний и бессонных ночей!",
-    "link": "",
+    "link": "https://loftschool.com/",
     "image": "",
-    "technologies": []
+    "techs": ["HTML", "CSS", "JavaScript"]
   },
   {
     "title": "Сайт-портфолио Reasanik",
     "description": "Этот код выдержит любые испытания. Только пожалуйста, не загружайте сайт на слишком старых браузерах!",
-    "link": "",
+    "link": "http://reasanik.pro/",
     "image": "",
-    "technologies": []
+    "techs": ["PHP", "SASS", "Gulp", "EcmaScript5"]
   }
 ]

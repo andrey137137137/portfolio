@@ -73,7 +73,22 @@
   }
 
   // &__title {
-  //   padding-top: 28px;
+  //   // padding-top: 28px;
+
+  //   &-enter-active,
+  //   &-leave-active {
+  //     transition: all 1s;
+  //   }
+  //   &-enter, &-leave-to /* .list-leave-active до версии 2.1.8 */ {
+  //     opacity: 0;
+  //     transform: translateY(30px);
+  //   }
+  // }
+
+  // &__letter {
+  //   position: relative;
+  //   display: inline-block;
+  //   min-width: 5px;
   // }
 
   &__desc {

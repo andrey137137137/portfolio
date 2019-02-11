@@ -1,11 +1,10 @@
 <template lang="pug">
   SectionWrapper(:name="id" :isFullWidth="true" :isOwnContainerClass="true")
-    ul.slider__list
-      li.slider__item(
-        v-for="(item, index) in items"
-        :key="item._id"
-        :class="getItemClass(index)")
-    
+    ul.slider__demo
+      transition(:name="transitionName")
+        li.img_wrap.slider__item.slider__demo_item(:key="curIndex")
+          img.img_wrap__img(src="../../assets/userfiles/slide.png" :alt="curIndex + 1")
+
     article.slider__text_wrap
       AnimateStr(
         transitionName="slider__title"
@@ -28,16 +27,22 @@
     .clearfix.slider__nav
       a.icon.icon-chevron_down.slider__arrow.slider__arrow-prev(
         href=""
-        @click.prevent="handlePrev")
+        @click.prevent="handlePrev"
+      )
+        transition(name="slider__arrow-scroll_down")
+          .img_wrap.slider__item(:key="curIndex")
+            img.img_wrap__img(src="../../assets/userfiles/prev.jpg" :alt="curIndex + 1")
+
       a.icon.icon-chevron_up.slider__arrow.slider__arrow-next(
         href=""
-        @click.prevent="handleNext")
+        @click.prevent="handleNext"
+      )
+        transition(name="slider__arrow-scroll_up")
+          .img_wrap.slider__item(:key="curIndex")
+            img.img_wrap__img(src="../../assets/userfiles/next.jpg" :alt="curIndex + 1")
 </template>
 
 <script>
-// import Velocity from "velocity";
-// import $ from "jQuery";
-
 import SectionWrapper from "@frontCmp/SectionWrapper";
 import AnimateStr from "@frontCmp/AnimateStr";
 
@@ -59,12 +64,7 @@ export default {
   },
   data() {
     return {
-      // $slides: null,
-      // $activeSlide: null,
-      // $prevSlide: null,
-      // $nextSlide: null,
-      // $firstSlide: null,
-      // $lastSlide: null,
+      transitionMethod: "scroll_up",
       duration: 500,
       curIndex: 0,
       count: this.items.length,
@@ -81,6 +81,9 @@ export default {
     };
   },
   computed: {
+    transitionName() {
+      return `slider__item-${this.transitionMethod}`;
+    },
     title() {
       return this.items[this.curIndex].title;
     },
@@ -89,11 +92,10 @@ export default {
     }
   },
   methods: {
-    getItemClass(index) {
-      return !index ? "slider__item-active" : "";
-    },
     handlePrev() {
       let tempIndex = this.curIndex - 1;
+
+      this.transitionMethod = "scroll_down";
 
       if (tempIndex < 0) {
         this.curIndex = this.count - 1;
@@ -102,69 +104,9 @@ export default {
       }
     },
     handleNext() {
+      this.transitionMethod = "scroll_up";
       this.curIndex = (this.curIndex + 1) % this.count;
     }
-    // moveSlide($slide) {
-    //   const $vm = this;
-    //   // const curItem = $vm.items[$vm.curIndex];
-    //   let $movableSlide = $slide;
-
-    //   $movableSlide.css("opacity", 0).addClass("slider__item-movable");
-
-    //   // this.$activeSlide.animate({'opacity': 0}, duration);
-    //   $movableSlide.animate({ opacity: 1 }, this.duration, function() {
-    //     let $this = $(this);
-
-    //     // $slides.css('opacity', 0).removeClass('active');
-    //     $vm.$slides.removeClass("slider__item-active");
-    //     $this.toggleClass("slider__item-movable slider__item-active");
-    //     // $vm.$refs.title.innerText = curItem.title;
-    //     // $vm.$refs.link.href = curItem.link;
-    //   });
-    // }
   }
-  // mounted() {
-  //   const $vm = this;
-
-  //   $(document).ready(() => {
-  //     $vm.$slides = $("#" + $vm.id).find(".slider__item");
-
-  //     if (!$vm.$slides.length) {
-  //       return;
-  //     }
-
-  //     $vm.count = $vm.$slides.length;
-
-  //     $(".slider__arrow").click(function(event) {
-  //       event.preventDefault();
-
-  //       let $this = $(this);
-
-  //       $vm.$activeSlide = $vm.$slides.filter(".slider__item-active");
-  //       $vm.$prevSlide = $vm.$activeSlide.prev();
-  //       $vm.$nextSlide = $vm.$activeSlide.next();
-  //       $vm.$firstSlide = $vm.$slides.first();
-  //       $vm.$lastSlide = $vm.$slides.last();
-
-  //       if ($this.hasClass("slider__arrow-next")) {
-  //         $vm.setCurIndex();
-
-  //         if ($vm.$nextSlide.index() >= 0) {
-  //           $vm.moveSlide($vm.$nextSlide);
-  //         } else {
-  //           $vm.moveSlide($vm.$firstSlide);
-  //         }
-  //       } else if ($this.hasClass("slider__arrow-prev")) {
-  //         $vm.setCurIndex();
-
-  //         if ($vm.$prevSlide.index() >= 0) {
-  //           $vm.moveSlide($vm.$prevSlide);
-  //         } else {
-  //           $vm.moveSlide($vm.$lastSlide);
-  //         }
-  //       }
-  //     });
-  //   });
-  // }
 };
 </script>

@@ -3,7 +3,7 @@
     "title": "Сайт школы онлайн Образования",
     "description": "Этот парень проходил обучение веб-разработке не где-то, а в LoftSchool! 2 месяца только самых тяжелых испытаний и бессонных ночей!",
     "link": "https://loftschool.com/",
-    "image": "",
+    "image": "./assets/userfiles/slide.png",
     "techs": ["HTML", "CSS", "JavaScript"]
   },
   {

@@ -73,11 +73,9 @@ export default {
       return this.commonKey + symbol + index;
     },
     beforeEnter: function(el) {
-      console.log("beforeEnter");
       el.style.opacity = 0;
     },
     enter: function(el, done) {
-      console.log("enter");
       setTimeout(function() {
         // Velocity(el, { opacity: 1, height: "1.6em" }, { complete: done });
         $(el).animate(
@@ -90,8 +88,7 @@ export default {
       }, el.dataset.index * this.spanDelay);
     },
     leave: function(el, done) {
-      console.log("leave");
-      $(el).css({ opacity: 0 });
+      el.style.opacity = 0;
       done();
     }
   }

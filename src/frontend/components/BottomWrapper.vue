@@ -12,5 +12,4 @@ export default {
 };
 </script>
 
-<style lang="scss" src="@frontStylesCmp/BottomWrapper.scss">
-</style>
+<style lang="scss" src="@frontStylesCmp/BottomWrapper.scss"></style>

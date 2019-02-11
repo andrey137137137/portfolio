@@ -47,5 +47,4 @@ export default {
 };
 </script>
 
-<style lang="scss" src="@frontStylesCmp/TopWrapper.scss">
-</style>
+<style lang="scss" src="@frontStylesCmp/TopWrapper.scss"></style>

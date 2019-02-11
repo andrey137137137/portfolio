@@ -72,18 +72,23 @@
     // height: 219px;
   }
 
-  // &__title {
-  //   // padding-top: 28px;
+  &__title {
+    // padding-top: 28px;
+    height: 103px;
 
-  //   &-enter-active,
-  //   &-leave-active {
-  //     transition: all 1s;
-  //   }
-  //   &-enter, &-leave-to /* .list-leave-active до версии 2.1.8 */ {
-  //     opacity: 0;
-  //     transform: translateY(30px);
-  //   }
-  // }
+    &:after {
+      transition: all $trsTime;
+    }
+
+    // &-enter-active,
+    // &-leave-active {
+    //   transition: all 1s;
+    // }
+    // &-enter, &-leave-to /* .list-leave-active до версии 2.1.8 */ {
+    //   opacity: 0;
+    //   transform: translateY(30px);
+    // }
+  }
 
   // &__letter {
   //   position: relative;

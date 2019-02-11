@@ -7,22 +7,20 @@
         :class="getItemClass(index)")
     
     article.slider__text_wrap
-      transition-group(
-        name="slider__title"
-        tag="h2"
-        appear
-        :class="titleClasses"
-        :css="false"
-        @before-enter="beforeEnter"
-        @enter="enter"
-        @leave="leave"
+      AnimateStr(
+        transitionName="slider__title"
+        rootElem="h2"
+        :str="title"
+        :commonKey="curIndex"
+        :addClasses="titleClasses"
       )
-        span.slider__letter(
-          v-for="(symbol, index) in title"
-          :key="getSymbolKey(symbol, index)"
-          :data-index="index"
-        ) {{symbol}}
-      p.section__desc.slider__desc(ref="techs") {{techs}}
+      AnimateStr(
+        transitionName="slider__techs"
+        rootElem="p"
+        :str="techs"
+        :commonKey="curIndex"
+        :addClasses="techsClasses"
+      )
       a.clearfix.btn.slider__btn(ref="link" :href="items[0].link" target="_blank")
         span.icon.icon-link.slider__btn_icon
         span.slider__btn_text Посмотреть сайт
@@ -38,13 +36,16 @@
 
 <script>
 // import Velocity from "velocity";
-import $ from "jQuery";
+// import $ from "jQuery";
+
 import SectionWrapper from "@frontCmp/SectionWrapper";
+import AnimateStr from "@frontCmp/AnimateStr";
 
 export default {
   name: "SliderCmp",
   components: {
-    SectionWrapper
+    SectionWrapper,
+    AnimateStr
   },
   props: {
     items: {
@@ -58,16 +59,25 @@ export default {
   },
   data() {
     return {
-      $slides: null,
-      $activeSlide: null,
-      $prevSlide: null,
-      $nextSlide: null,
-      $firstSlide: null,
-      $lastSlide: null,
+      // $slides: null,
+      // $activeSlide: null,
+      // $prevSlide: null,
+      // $nextSlide: null,
+      // $firstSlide: null,
+      // $lastSlide: null,
       duration: 500,
       curIndex: 0,
       count: this.items.length,
-      symbols: []
+      titleClasses: {
+        section__title: true,
+        "section__title-uppercase": true,
+        "section__title-underlined": true,
+        slider__title: true
+      },
+      techsClasses: {
+        section__desc: true,
+        slider__desc: true
+      }
     };
   },
   computed: {
@@ -76,66 +86,11 @@ export default {
     },
     techs() {
       return this.items[this.curIndex].techs.join(", ");
-    },
-    titleLength() {
-      return this.title.length;
-    },
-    titleDuration() {
-      return Math.ceil((this.duration * 10) / this.titleLength);
-    },
-    titleDelay() {
-      return Math.ceil((150 * 10) / this.titleLength);
-    },
-    titleClasses() {
-      return [
-        "section__title",
-        "section__title-uppercase",
-        "section__title-underlined",
-        "slider__title"
-      ];
     }
   },
   methods: {
     getItemClass(index) {
       return !index ? "slider__item-active" : "";
-    },
-    getSymbolKey(symbol, index) {
-      return this.curIndex + symbol + index;
-    },
-    beforeEnter: function(el) {
-      console.log("beforeEnter");
-
-      el.style.opacity = 0;
-    },
-    enter: function(el, done) {
-      console.log("enter");
-
-      var delay = el.dataset.index * this.titleDelay;
-      setTimeout(function() {
-        // Velocity(el, { opacity: 1, height: "1.6em" }, { complete: done });
-        $(el).animate(
-          {
-            opacity: 1
-          },
-          this.titleDuration,
-          done
-        );
-      }, delay);
-    },
-    leave: function(el, done) {
-      console.log("leave");
-
-      // var delay = el.dataset.index * this.titleDelay;
-      // setTimeout(function() {
-      // Velocity(el, { opacity: 0, height: 0 }, { complete: done });
-      $(el).animate(
-        {
-          opacity: 0
-        },
-        1,
-        done
-      );
-      // }, delay);
     },
     handlePrev() {
       let tempIndex = this.curIndex - 1;

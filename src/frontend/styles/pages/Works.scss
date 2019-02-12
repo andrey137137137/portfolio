@@ -30,30 +30,20 @@
     &_item {
       font-size: 40px;
       padding: 40px;
+
+      &_number {
+        font-size: 150px/257px;
+      }
     }
   }
 
   &__item {
     @include position("absolute 0 * * 0");
-    // z-index: 0;
-    // display: none;
     size: 100%;
+    text-align: center;
     color: $red;
     // background: $black;
     // background-size: cover;
-
-    // &-active,
-    // &-movable {
-    //   display: block;
-    // }
-
-    // &-active {
-    //   z-index: 1;
-    // }
-
-    // &-movable {
-    //   z-index: 2;
-    // }
 
     &-scroll_down {
       &-enter-active,
@@ -84,6 +74,12 @@
         top: $demoHeight;
       }
     }
+
+    &_number {
+      @include position("absolute 0 * * 0");
+      z-index: 1;
+      size: 100%;
+    }
   }
 
   &__text_wrap {
@@ -98,22 +94,7 @@
     &:after {
       transition: all $trsTime;
     }
-
-    // &-enter-active,
-    // &-leave-active {
-    //   transition: all 1s;
-    // }
-    // &-enter, &-leave-to /* .list-leave-active до версии 2.1.8 */ {
-    //   opacity: 0;
-    //   transform: translateY(30px);
-    // }
   }
-
-  // &__letter {
-  //   position: relative;
-  //   display: inline-block;
-  //   min-width: 5px;
-  // }
 
   &__desc {
     @include padding("5px * 12px");
@@ -183,9 +164,13 @@
       }
     }
 
+    &_number {
+      font-size: 90px/93px;
+    }
+
     &:before {
       position: absolute;
-      z-index: 1;
+      z-index: 2;
       display: block;
       size: 100%;
       color: $white rgba(#aaabb7, 0.7);

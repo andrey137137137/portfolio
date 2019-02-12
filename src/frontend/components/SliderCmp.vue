@@ -3,7 +3,8 @@
     ul.slider__demo
       transition(:name="transitionName")
         li.img_wrap.slider__item.slider__demo_item(:key="curIndex")
-          img.img_wrap__img(src="../../assets/userfiles/slide.png" :alt="curIndex + 1")
+          img.img_wrap__img(:src="demoImg" alt="")
+          .slider__item_number.slider__demo_item_number {{curIndex + 1}}
 
     article.slider__text_wrap
       AnimateStr(
@@ -20,7 +21,7 @@
         :commonKey="curIndex"
         :addClasses="techsClasses"
       )
-      a.clearfix.btn.slider__btn(ref="link" :href="items[0].link" target="_blank")
+      a.clearfix.btn.slider__btn(:href="link" target="_blank")
         span.icon.icon-link.slider__btn_icon
         span.slider__btn_text Посмотреть сайт
 
@@ -31,7 +32,8 @@
       )
         transition(name="slider__arrow-scroll_down")
           .img_wrap.slider__item(:key="curIndex")
-            img.img_wrap__img(src="../../assets/userfiles/prev.jpg" :alt="curIndex + 1")
+            img.img_wrap__img(:src="prevImg" :alt="curIndex + 1")
+            .slider__item_number.slider__arrow_number {{this.getPrevIndex() + 1}}
 
       a.icon.icon-chevron_up.slider__arrow.slider__arrow-next(
         href=""
@@ -39,10 +41,17 @@
       )
         transition(name="slider__arrow-scroll_up")
           .img_wrap.slider__item(:key="curIndex")
-            img.img_wrap__img(src="../../assets/userfiles/next.jpg" :alt="curIndex + 1")
+            img.img_wrap__img(:src="nextImg" :alt="curIndex + 1")
+            .slider__item_number.slider__arrow_number {{this.getNextIndex() + 1}}
 </template>
 
 <script>
+const images = {
+  png: require.context("@/assets/userfiles/", false, /\.png$/),
+  jpg: require.context("@/assets/userfiles/", false, /\.jpg$/)
+};
+
+import getImg from "@common/helpers/getImg";
 import SectionWrapper from "@frontCmp/SectionWrapper";
 import AnimateStr from "@frontCmp/AnimateStr";
 
@@ -84,28 +93,45 @@ export default {
     transitionName() {
       return `slider__item-${this.transitionMethod}`;
     },
+    demoImg() {
+      return getImg(this.items[this.curIndex].image, images);
+    },
+    prevImg() {
+      return getImg(this.items[this.getPrevIndex()].image, images);
+    },
+    nextImg() {
+      return getImg(this.items[this.getNextIndex()].image, images);
+    },
     title() {
       return this.items[this.curIndex].title;
     },
     techs() {
       return this.items[this.curIndex].techs.join(", ");
+    },
+    link() {
+      return this.items[this.curIndex].link;
     }
   },
   methods: {
-    handlePrev() {
+    getPrevIndex() {
       let tempIndex = this.curIndex - 1;
 
-      this.transitionMethod = "scroll_down";
-
       if (tempIndex < 0) {
-        this.curIndex = this.count - 1;
-      } else {
-        this.curIndex = tempIndex;
+        return this.count - 1;
       }
+
+      return tempIndex;
+    },
+    getNextIndex() {
+      return (this.curIndex + 1) % this.count;
+    },
+    handlePrev() {
+      this.curIndex = this.getPrevIndex();
+      this.transitionMethod = "scroll_down";
     },
     handleNext() {
+      this.curIndex = this.getNextIndex();
       this.transitionMethod = "scroll_up";
-      this.curIndex = (this.curIndex + 1) % this.count;
     }
   }
 };

@@ -1,6 +1,5 @@
 <template lang="pug">
-  .container
-    h1.section__title.section__main_title.main__big_title Страница "Обо мне"
+  PageWrapper(title="Обо мне")
     skill-cat(
       v-for="skillCat in dbData"
       :key="skillCat._id"
@@ -9,15 +8,17 @@
 </template>
 
 <script>
-import pageConfig from "@backend/mixins/pageConfig";
+import pageData from "@backend/mixins/pageData";
+import PageWrapper from "@backCmp/PageWrapper";
 import skillCat from "@backCmp/Forms/skillCat";
 
 export default {
   name: "AdminAboutView",
   components: {
+    PageWrapper,
     skillCat
   },
-  mixins: [pageConfig],
+  mixins: [pageData],
   data() {
     return {
       dbPage: "skill"

@@ -1,7 +1,7 @@
 <template lang="pug">
   header.section.header
     .container
-      a.header__link(href="/") Вернуться на сайт
+      a.header__link(href="/" target="_blank") Вернуться на сайт
       h2.section__title.header__title Панель администрирования
 </template>
 

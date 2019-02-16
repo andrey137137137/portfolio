@@ -46,12 +46,12 @@
 </template>
 
 <script>
-const images = {
-  png: require.context("@/assets/userfiles/", false, /\.png$/),
-  jpg: require.context("@/assets/userfiles/", false, /\.jpg$/)
-};
+// const images = {
+//   png: require.context("@/../public/userfiles/", false, /\.png$/),
+//   jpg: require.context("@/../public/userfiles/", false, /\.jpg$/)
+// };
 
-import getImg from "@common/helpers/getImg";
+// import getImg from "@common/helpers/getImg";
 import SectionWrapper from "@frontCmp/SectionWrapper";
 import AnimateStr from "@frontCmp/AnimateStr";
 
@@ -94,13 +94,16 @@ export default {
       return `slider__item-${this.transitionMethod}`;
     },
     demoImg() {
-      return getImg(this.items[this.curIndex].image, images);
+      // return getImg(this.items[this.curIndex].image, images);
+      return "/userfiles/" + this.items[this.curIndex].image;
     },
     prevImg() {
-      return getImg(this.items[this.getPrevIndex()].image, images);
+      // return getImg(this.items[this.getPrevIndex()].image, images);
+      return "/userfiles/" + this.items[this.getPrevIndex()].image;
     },
     nextImg() {
-      return getImg(this.items[this.getNextIndex()].image, images);
+      // return getImg(this.items[this.getNextIndex()].image, images);
+      return "/userfiles/" + this.items[this.getNextIndex()].image;
     },
     title() {
       return this.items[this.curIndex].title;

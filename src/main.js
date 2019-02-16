@@ -2,7 +2,8 @@ import Vue from "vue";
 import Vuelidate from "vuelidate";
 import axios from "axios";
 
-import interceptor from "@common/api/interceptor";
+import interceptor from "../api/interceptor";
+
 import store from "@common/store";
 import App from "@/App.vue";
 import router from "@/router";

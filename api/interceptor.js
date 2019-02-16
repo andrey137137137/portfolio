@@ -1,6 +1,6 @@
-import myConfig from "@/../config";
+const myConfig = require("./config");
 
-export default function interceptor(axios) {
+module.exports = function(axios) {
   axios.interceptors.request.use(
     config => {
       config.baseURL = `${myConfig.server.protocol}://${myConfig.server.host}:${
@@ -16,4 +16,4 @@ export default function interceptor(axios) {
       return Promise.reject();
     }
   );
-}
+};

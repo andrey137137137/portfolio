@@ -1,15 +1,18 @@
 <template lang="pug">
   ul#parallax.parallax(:class="classes")
     //- .parallax__container
-    li.parallax__layer
-      img.parallax__img(src="@/assets/img/parallax/layer_1.png")
-    li.parallax__layer
-      img.parallax__img(src="@/assets/img/parallax/layer_2.png")
+    li.parallax__layer(v-for="(item, index) in layers")
+      img.parallax__img(:src="img(index)")
     //- .parallax__content
 </template>
 
 <script>
+const images = {
+  png: require.context("@/assets/img/parallax/", false, /\.png$/)
+};
+
 import $ from "jQuery";
+import getImg from "@common/helpers/getImg";
 
 import { createNamespacedHelpers } from "vuex";
 const { mapGetters } = createNamespacedHelpers("frontView");
@@ -33,11 +36,11 @@ export default {
       transformString: "",
       path: "../../assets/img/parallax",
       ext: "png",
-      layers: 2,
-      images: [
-        "../../assets/img/parallax/layer_1.png",
-        "../../assets/img/parallax/layer_2.png"
-      ]
+      layers: 2
+      // images: [
+      //   "../../assets/img/parallax/layer_1.png",
+      //   "../../assets/img/parallax/layer_2.png"
+      // ]
     };
   },
   computed: {
@@ -45,17 +48,11 @@ export default {
     classes() {
       return { "parallax-scroll": this.config.isContent };
     }
-    // images() {
-    //   const data = [];
-
-    //   for (var i = 1; i <= this.layers; i++) {
-    //     data.push(`${this.path}/layer_${i}.${this.ext}`);
-    //   }
-
-    //   return data;
-    // }
   },
   methods: {
+    img(index) {
+      return getImg("layer_" + (index + 1) + ".png", images);
+    },
     moveLayers(event) {
       const $vm = this;
       const isScroll = this.config.isContent;

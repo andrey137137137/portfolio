@@ -5,7 +5,7 @@ const ctrlHome = require("../controllers/home");
 const ctrlWorks = require("../controllers/works");
 const ctrlAbout = require("../controllers/about");
 const ctrlBlog = require("../controllers/blog");
-const ctrlAdmin = require("../controllers/admin");
+const ctrlAvatar = require("../controllers/avatar");
 
 router.get("/", ctrlHome.index);
 // router.get("/", ctrlHome.login);
@@ -22,7 +22,7 @@ router.get("/blog", ctrlBlog.index);
 // router.put("/blog/:id", ctrlBlog.updatePost);
 // router.delete("/blog/:id", ctrlBlog.deletePost);
 
-router.get("/admin", ctrlAdmin.admin);
+router.post("/avatar", ctrlAvatar.index);
 
 router.get("*", (req, res) => {
   res.status(404).json({ msg: "Not found", err: 404 });

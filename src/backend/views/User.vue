@@ -11,19 +11,26 @@
     //-   :customStrings="{upload: '<h1>Bummer!</h1>', drag: 'Drag a 😺 GIF or GTFO'}")
     //- button(@click="attemptUpload" v-bind:class="{ disabled: !image }") Upload
 
-    form#upload.form(enctype="multipart/form-data" @submit.prevent="sendFile")
-      .form__wrap.form__wrap-text
-        input.form__input(v-model="name" placeholder="Название изображения")
-      .form__wrap.form__wrap-text
-        input.form__input(
-          :image="image"
-          type="file"
-          accept="image/*"
-          required
-          @change="changeImage($event)"
-          ref="upload")
+    form#upload.form(enctype="multipart/form-data" @submit.prevent="uploadImage")
+      //- .form__wrap.form__wrap-text
+      //-   input.form__input(
+      //-     :image="image"
+      //-     type="file"
+      //-     accept="image/*"
+      //-     required
+      //-     @change="changeImage($event)"
+      //-     ref="upload")
+      picture-input(
+        ref="pictureInput"
+        @change="changeImage"
+        @remove="removeImage"
+        :removable="true"
+        removeButtonClass="ui red button"
+        accept="image/jpeg, image/png, image/gif"
+        buttonClass="ui button primary"
+        :customStrings="{upload: '<h1>Bummer!</h1>', drag: 'Drag a 😺 GIF or GTFO'}")
       .form__row.form__row-buttons
-        input.btn.form__btn(type="reset" value="Очистить")
+        //- input.btn.form__btn(type="reset" value="Очистить")
         ButtonElem Отправить
       | {{fileMsg}}
 </template>
@@ -43,7 +50,6 @@ export default {
   },
   data() {
     return {
-      name: "",
       image: null,
       fileMsg: ""
     };
@@ -75,9 +81,6 @@ export default {
     //     console.log("Old browser. No support for Filereader API");
     //   }
     // },
-    // onRemoved() {
-    //   this.image = "";
-    // },
     // attemptUpload() {
     //   if (this.image) {
     //     this.upload("http://localhost:8080/", this.image)
@@ -92,22 +95,23 @@ export default {
     //       });
     //   }
     // },
-    changeImage(event) {
-      this.image = event.target.files[0];
+    changeImage() {
+      this.image = this.$refs.pictureInput.file;
       console.log(this.image);
     },
+    removeImage() {
+      this.image = "";
+    },
     uploadImage() {
-      const URL = "http://localhost:3000/db/avatar";
+      const URL = "http://localhost:3000/avatar";
 
       let data = new FormData();
-      data.append("name", this.name);
       data.append("image", this.image, this.image.name);
 
       axios.post(URL, data).then(response => {
         this.fileMsg = response.data.msg;
 
         if (response.data.status === "Ok") {
-          this.name = "";
           this.image = null;
           this.$refs.upload.value = null;
         }

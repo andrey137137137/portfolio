@@ -4,7 +4,7 @@
     SvgCmp(v-if="config.isContent" id="stars1" :addClasses="svgClasses")
 
     router-link.img_wrap.header__avatar(:class="avatarClasses" to="/")
-      img.img_wrap__img(src="/userfiles/avatar.jpg" alt="Аватарка")
+      img.img_wrap__img(src="/upload/avatar.jpg" alt="Аватарка")
 
     HeaderTitle
 </template>

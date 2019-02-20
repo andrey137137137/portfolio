@@ -95,9 +95,8 @@ export default new VueRouter({
           component: () => import("@backViews/User.vue")
         },
         {
-          path: "page/:pageId",
-          props: true,
-          component: () => import("@backViews/Page.vue")
+          path: "works",
+          component: () => import("@backViews/Works.vue")
         }
       ]
     }

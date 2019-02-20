@@ -44,4 +44,4 @@ process.on("SIGINT", function() {
 
 require("./models/post");
 require("./models/skill");
-require("./models/avatar");
+require("./models/slide");

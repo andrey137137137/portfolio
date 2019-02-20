@@ -15,8 +15,8 @@ export default {
       tabs: [
         { name: "Обо мне", href: "/admin/about" },
         { name: "Блог", href: "/admin/blog" },
-        { name: "Личные данные", href: "/admin/user" },
-        { name: "Таб 4", href: "/admin/page/70" }
+        { name: "Мои работы", href: "/admin/works" },
+        { name: "Личные данные", href: "/admin/user" }
       ]
     };
   },

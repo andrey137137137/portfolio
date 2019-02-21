@@ -12,6 +12,15 @@
       v-model="link"
       :val="$v.link"
       placeholder="Ссылка")
+    picture-input(
+      ref="pictureInput"
+      @change="changeImage"
+      @remove="removeImage"
+      :removable="true"
+      removeButtonClass="ui red button"
+      accept="image/jpeg, image/png, image/gif"
+      buttonClass="ui button primary"
+      :customStrings="{upload: '<h1>Bummer!</h1>', drag: 'Drag a 😺 GIF or GTFO'}")
     div(v-for="(v, index) in $v.techs.$each.$iter")
       //- .form-group(:class="{ 'form-group--error': v.$error }")
       //-   label.form__label Name for {{ index }}
@@ -35,7 +44,8 @@ import {
   // minLength,
   // maxLength
 } from "vuelidate/lib/validators";
-
+import axios from "axios";
+import PictureInput from "vue-picture-input";
 import ItemForm from "@backCmp/Forms/ItemForm";
 import InputEventElem from "@components/FormElems/InputEventElem";
 
@@ -44,6 +54,7 @@ import { mapActions } from "vuex";
 export default {
   name: "SlideForm",
   components: {
+    PictureInput,
     ItemForm,
     InputEventElem
   },
@@ -104,6 +115,30 @@ export default {
     ...mapActions(["deletePost", "updatePost", "createPost"]),
     getIndex(index) {
       return parseInt(index) + 1;
+    },
+    changeImage() {
+      this.image = this.$refs.pictureInput.file;
+      console.log(this.image);
+    },
+    removeImage() {
+      this.image = "";
+    },
+    uploadImage() {
+      const URL = "http://localhost:3000/avatar";
+
+      let data = new FormData();
+      data.append("image", this.image, this.image.name);
+
+      axios.post(URL, data).then(response => {
+        this.fileMsg = response.data.msg;
+
+        if (response.data.status === "Ok") {
+          this.image = null;
+          this.$refs.upload.value = null;
+        }
+
+        console.log("image upload response > ", response);
+      });
     },
     removePost(postId) {
       console.log(postId);

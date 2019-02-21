@@ -1,7 +1,8 @@
 <template lang="pug">
   ItemForm(
     :handleSubmit="submit"
-    :isNew="isNew"
+    :handleDelete="removePost"
+    :id="getId()"
     :disabled="$v.$pending || $v.$invalid"
   )
     InputEventElem(
@@ -9,7 +10,7 @@
       :val="$v.title"
       placeholder="Название")
     InputEventElem(
-      v-if="!isNew"
+      v-if="post"
       v-model="date"
       :val="$v.date"
       placeholder="Дата")
@@ -28,6 +29,7 @@ import {
   // maxLength
 } from "vuelidate/lib/validators";
 
+// import exist from "@common/helpers/exist";
 import ItemForm from "@backCmp/Forms/ItemForm";
 import InputEventElem from "@components/FormElems/InputEventElem";
 
@@ -40,30 +42,26 @@ export default {
     InputEventElem
   },
   props: {
-    isNew: {
-      type: Boolean,
-      default: false
-    },
     post: {
       type: Object,
-      default() {
-        return {};
-      }
+      default: null
     }
   },
   data() {
-    if (this.isNew) {
-      return {
-        title: "",
-        text: ""
-      };
+    const data = {
+      dbPage: "post"
+    };
+
+    if (!this.post) {
+      data.title = "";
+      data.text = "";
+    } else {
+      data.title = this.post.title;
+      data.date = this.post.date;
+      data.text = this.post.body;
     }
 
-    return {
-      title: this.post.title,
-      date: this.post.date,
-      text: this.post.body
-    };
+    return data;
   },
   validations() {
     const data = {
@@ -76,7 +74,7 @@ export default {
       }
     };
 
-    if (!this.isNew) {
+    if (this.post) {
       data.date = {
         required
       };
@@ -85,12 +83,17 @@ export default {
     return data;
   },
   methods: {
-    ...mapActions(["deletePost", "updatePost", "createPost"]),
-    removePost(postId) {
-      console.log(postId);
+    ...mapActions(["deleteData", "updateData", "insertData"]),
+    getId() {
+      return this.post ? this.post._id : 0;
+    },
+    removePost(id) {
+      console.log(id);
 
-      if (confirm(`Вы уверены, что хотите удалить пост ${postId}?`)) {
-        this.deletePost(postId);
+      if (
+        confirm(`Вы уверены, что хотите удалить пост: "${this.post.title}"?`)
+      ) {
+        this.deleteData({ dbPage: this.dbPage, id });
       }
     },
     submit() {
@@ -104,11 +107,11 @@ export default {
         text: this.text
       };
 
-      if (this.isNew) {
-        this.createPost(data);
+      if (!this.post) {
+        this.insertData({ dbPage: this.dbPage, data });
       } else {
         data.date = this.date;
-        this.updatePost({ id: this.post._id, data });
+        this.updateData({ dbPage: this.dbPage, id: this.post._id, data });
       }
 
       return true;

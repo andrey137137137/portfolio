@@ -4,14 +4,14 @@
 
     .form__row.form__row-buttons
       ButtonElem(
-        v-if="!isNew"
-        :wrapperClass="buttonWrapperClass"
+        v-if="id"
+        :addClasses="buttonWrapperClass"
         :isDanger="true"
-        @click.prevent.native="handleDelete"
+        @click.prevent.native="remove()"
       ) Удалить
       ButtonElem(
         :disabled="disabled"
-        :wrapperClass="buttonWrapperClass"
+        :addClasses="buttonWrapperClass"
       ) {{buttonValue}}
 </template>
 
@@ -38,9 +38,9 @@ export default {
       type: Function,
       default: () => {}
     },
-    isNew: {
-      type: Boolean,
-      default: false
+    id: {
+      // type: Number,
+      default: 0
     }
   },
   computed: {
@@ -48,7 +48,14 @@ export default {
       return { form__col: true, "form__btn-disabled": this.disabled };
     },
     buttonValue() {
-      return this.isNew ? "Добавить" : "Обновить";
+      return this.id ? "Обновить" : "Добавить";
+    }
+  },
+  methods: {
+    remove() {
+      if (this.id) {
+        this.handleDelete(this.id);
+      }
     }
   }
 };

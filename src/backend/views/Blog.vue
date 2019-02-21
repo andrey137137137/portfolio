@@ -5,7 +5,7 @@
       :key="post._id"
       :post="post")
     h3.form__legend Добавить запись
-    PostForm(:isNew="true")
+    PostForm
 </template>
 
 <script>

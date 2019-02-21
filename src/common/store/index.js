@@ -43,17 +43,17 @@ export default new Vuex.Store({
     },
     insertData({ dispatch }, payload) {
       axios.post(payload.dbPage, payload.data).then(() => {
-        dispatch("readData");
+        dispatch("readData", payload.dbPage);
       });
     },
     updateData({ dispatch }, payload) {
       axios.put(`${payload.dbPage}/${payload.id}`, payload.data).then(() => {
-        dispatch("readData");
+        dispatch("readData", payload.dbPage);
       });
     },
     deleteData({ dispatch }, payload) {
       axios.delete(`${payload.dbPage}/${payload.id}`).then(() => {
-        dispatch("readData");
+        dispatch("readData", payload.dbPage);
       });
     }
   },

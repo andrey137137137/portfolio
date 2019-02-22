@@ -8,16 +8,18 @@ function getExt(name) {
   return name.slice(start + 1);
 }
 
-module.exports.index = function(req, res) {
+function upload(req, res, dir = "") {
   const form = new formidable.IncomingForm();
-  const upload = "public/upload";
+  const rootPath = "public/upload";
+  const uploadPath = dir ? rootPath : `${rootPath}/${dir}`;
   let fileName;
+  let filePath;
 
-  if (!fs.existsSync(upload)) {
-    fs.mkdirSync(upload);
+  if (!fs.existsSync(uploadPath)) {
+    fs.mkdirSync(uploadPath);
   }
 
-  form.uploadDir = path.join(process.cwd(), upload);
+  form.uploadDir = path.join(process.cwd(), uploadPath);
 
   form.parse(req, function(err, fields, files) {
     if (err) {
@@ -27,17 +29,19 @@ module.exports.index = function(req, res) {
       });
     }
 
-    fileName = path.join(upload, `avatar.${getExt(files.image.name)}`);
+    fileName = !dir ? `avatar.${getExt(files.image.name)}` : files.image.name;
+    filePath = path.join(uploadPath, fileName);
+    console.log(filePath);
 
-    fs.rename(files.image.path, fileName, function(err) {
+    fs.rename(files.image.path, filePath, function(err) {
       if (err) {
         console.log(err);
-        fs.unlink(fileName);
-        fs.rename(files.image.path, fileName);
+        fs.unlink(filePath);
+        fs.rename(files.image.path, filePath);
       }
 
       // const pathApi = "/api/avatar";
-      // let dir = fileName.substr(fileName.indexOf("\\"));
+      // let dir = filePath.substr(filePath.indexOf("\\"));
       // const requestOptions = {
       //   url: apiOptions.server + pathApi,
       //   method: "POST",
@@ -58,4 +62,16 @@ module.exports.index = function(req, res) {
       // });
     });
   });
+}
+
+module.exports.avatar = function(req, res) {
+  upload(req, res);
+};
+
+module.exports.slider = function(req, res) {
+  upload(req, res, "slider");
+};
+
+module.exports.comments = function(req, res) {
+  upload(req, res, "comments");
 };

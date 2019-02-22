@@ -1,11 +1,11 @@
 <template lang="pug">
   PageWrapper(title="Мои работы")
-    //- SlideForm(
-    //-   v-for="slide in dbData"
-    //-   :key="slide._id"
-    //-   :slide="slide")
+    SlideForm(
+      v-for="slide in dbData"
+      :key="slide._id"
+      :slide="slide")
     h3.form__legend Добавить запись
-    SlideForm(:isNew="true")
+    SlideForm
 </template>
 
 <script>

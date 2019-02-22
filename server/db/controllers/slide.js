@@ -17,9 +17,11 @@ module.exports.createSlide = function(req, res) {
   // создаем новую запись блога и передаем в нее поля из формы
   let item = new Model({
     title: req.body.title,
-    date: new Date(),
-    body: req.body.text
+    link: req.body.link,
+    image: req.body.image,
+    techs: req.body.techs
   });
+
   // сохраняем запись в базе
   item
     .save()

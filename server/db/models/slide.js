@@ -15,7 +15,7 @@ const SlideSchema = new Schema({
   },
   techs: {
     type: Array,
-    required: ""
+    required: [true, "Укажите картинку работы"]
   }
 });
 

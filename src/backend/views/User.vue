@@ -18,6 +18,7 @@
 
 <script>
 import axios from "axios";
+import upload from "@backend/mixins/upload";
 import PictureInput from "vue-picture-input";
 import PageWrapper from "@backCmp/PageWrapper";
 import ButtonElem from "@components/FormElems/ButtonElem";
@@ -29,6 +30,7 @@ export default {
     PictureInput,
     ButtonElem
   },
+  mixins: [upload],
   data() {
     return {
       image: null,
@@ -44,12 +46,10 @@ export default {
       this.image = "";
     },
     uploadImage() {
-      const URL = "http://localhost:3000/avatar";
-
       let data = new FormData();
       data.append("image", this.image, this.image.name);
 
-      axios.post(URL, data).then(response => {
+      axios.post(this.getUploadPage("avatar"), data).then(response => {
         this.fileMsg = response.data.msg;
 
         if (response.data.status === "Ok") {

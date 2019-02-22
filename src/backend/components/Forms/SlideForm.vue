@@ -1,7 +1,8 @@
 <template lang="pug">
   ItemForm(
     :handleSubmit="submit"
-    :isNew="isNew"
+    :handleDelete="removeSlide"
+    :id="getId()"
     :disabled="$v.$pending || $v.$invalid"
   )
     InputEventElem(
@@ -12,7 +13,7 @@
       v-model="link"
       :val="$v.link"
       placeholder="Ссылка")
-    picture-input(
+    PictureInput(
       ref="pictureInput"
       @change="changeImage"
       @remove="removeImage"
@@ -32,9 +33,9 @@
         v-model="v.name.$model"
         :val="v.name"
         :placeholder="`Технология ${getIndex(index)}`")
-    div
-      button.button(@click="techs.push({name: ''})") Add
-      button.button(@click="techs.pop()") Remove
+    .menu
+      button.btn(@click="techs.pop()") Remove
+      button.btn(@click="techs.push({name: ''})") Add
 </template>
 
 <script>
@@ -45,6 +46,7 @@ import {
   // maxLength
 } from "vuelidate/lib/validators";
 import axios from "axios";
+import upload from "@backend/mixins/upload";
 import PictureInput from "vue-picture-input";
 import ItemForm from "@backCmp/Forms/ItemForm";
 import InputEventElem from "@components/FormElems/InputEventElem";
@@ -58,42 +60,42 @@ export default {
     ItemForm,
     InputEventElem
   },
+  mixins: [upload],
   props: {
-    isNew: {
-      type: Boolean,
-      default: false
-    },
     slide: {
       type: Object,
-      default() {
-        return {};
-      }
+      default: null
     }
   },
   data() {
-    if (this.isNew) {
-      return {
-        title: "",
-        link: "",
-        techs: [
-          {
-            name: "Html"
-          },
-          {
-            name: "Css"
-          },
-          {
-            name: "JavaScript"
-          }
-        ]
-      };
+    const data = {
+      dbPage: "slide",
+      image: null
+    };
+
+    if (!this.slide) {
+      data.title = "";
+      data.link = "";
+      data.techs = [
+        {
+          name: "Html"
+        },
+        {
+          name: "Css"
+        },
+        {
+          name: "JavaScript"
+        }
+      ];
+    } else {
+      data.title = this.slide.title;
+      data.link = this.slide.link;
+      data.techs = this.slide.techs.map(item => {
+        return { name: item };
+      });
     }
 
-    return {
-      title: this.slide.title,
-      link: this.slide.link,
-      techs: this.slide.techs
-    };
+    return data;
   },
   validations: {
     title: {
@@ -112,7 +114,10 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["deletePost", "updatePost", "createPost"]),
+    ...mapActions(["deleteData", "updateData", "insertData"]),
+    getId() {
+      return this.slide ? this.slide._id : 0;
+    },
     getIndex(index) {
       return parseInt(index) + 1;
     },
@@ -124,12 +129,10 @@ export default {
       this.image = "";
     },
     uploadImage() {
-      const URL = "http://localhost:3000/avatar";
-
       let data = new FormData();
       data.append("image", this.image, this.image.name);
 
-      axios.post(URL, data).then(response => {
+      axios.post(this.getUploadPage("slider"), data).then(response => {
         this.fileMsg = response.data.msg;
 
         if (response.data.status === "Ok") {
@@ -140,11 +143,13 @@ export default {
         console.log("image upload response > ", response);
       });
     },
-    removePost(postId) {
-      console.log(postId);
+    removeSlide(id) {
+      console.log(id);
 
-      if (confirm(`Вы уверены, что хотите удалить пост ${postId}?`)) {
-        this.deletePost(postId);
+      if (
+        confirm(`Вы уверены, что хотите удалить пост: "${this.post.title}"?`)
+      ) {
+        this.deleteData({ dbPage: this.dbPage, id });
       }
     },
     submit() {
@@ -152,17 +157,24 @@ export default {
         return false;
       }
 
+      const image = this.image ? this.image.name : "";
       const data = {
-        // id: Math.round(Math.random() * 1000000),
         title: this.title,
-        text: this.text
+        link: this.link,
+        image,
+        techs: this.techs.map(item => item.name)
       };
 
-      if (this.isNew) {
-        this.createPost(data);
+      if (!this.slide) {
+        console.log(data);
+        this.insertData({ dbPage: this.dbPage, data });
       } else {
         data.date = this.date;
-        this.updatePost({ id: this.slide._id, data });
+        this.updateData({ dbPage: this.dbPage, id: this.slide._id, data });
+      }
+
+      if (image) {
+        this.uploadImage();
       }
 
       return true;

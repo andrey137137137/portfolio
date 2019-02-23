@@ -23,12 +23,6 @@
       buttonClass="ui button primary"
       :customStrings="{upload: '<h1>Bummer!</h1>', drag: 'Drag a 😺 GIF or GTFO'}")
     div(v-for="(v, index) in $v.techs.$each.$iter")
-      //- .form-group(:class="{ 'form-group--error': v.$error }")
-      //-   label.form__label Name for {{ index }}
-      //-   input.form__input(v-model.trim="v.name.$model")
-      //- .error(v-if="!v.name.required") Name is required.
-      //- .error(v-if="!v.name.minLength")
-      //-   | Name must have at least {{ v.name.$params.minLength.min }} letters.
       InputEventElem(
         v-model="v.name.$model"
         :val="v.name"
@@ -147,7 +141,7 @@ export default {
       console.log(id);
 
       if (
-        confirm(`Вы уверены, что хотите удалить пост: "${this.post.title}"?`)
+        confirm(`Вы уверены, что хотите удалить пост: "${this.slide.title}"?`)
       ) {
         this.deleteData({ dbPage: this.dbPage, id });
       }

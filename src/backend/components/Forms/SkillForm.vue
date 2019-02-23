@@ -1,19 +1,29 @@
 <template lang="pug">
   ItemForm(
     :handleSubmit="submit"
-    :isNew="isNew"
+    :handleDelete="removeSlide"
+    :id="getId()"
     :disabled="$v.$pending || $v.$invalid"
   )
     InputEventElem(
-      v-model="title"
-      :val="$v.title"
+      v-model="category"
+      :val="$v.category"
       placeholder="Навык")
-    InputEventElem(
-      type="number"
-      v-model="percents"
-      :val="$v.percents"
-      placeholder="Владение"
-      measure="%")
+    div(v-for="(v, index) in $v.items.$each.$iter")
+      .form__legend Обновить навык
+      InputEventElem(
+        v-model="v.name.$model"
+        :val="v.name"
+        :placeholder="`Навык ${getIndex(index)}`")
+      InputEventElem(
+        type="number"
+        v-model="v.percents.$model"
+        :val="v.percents"
+        :placeholder="`Владение ${getIndex(index)}`"
+        measure="%")
+    .menu
+      button.btn(@click="items.pop()") Remove
+      button.btn(@click="items.push({name: '', percents: ''})") Add
 </template>
 
 <script>
@@ -36,65 +46,98 @@ export default {
     InputEventElem
   },
   props: {
-    category: {
-      type: String,
-      default: ""
-    },
     skill: {
       type: Object,
-      default() {
-        return {};
-      }
+      default: null
     }
   },
   data() {
-    if (this.category) {
-      return {
-        title: "",
-        percents: ""
-      };
+    const data = {
+      dbPage: "skill"
+    };
+
+    if (!this.skill) {
+      data.category = "";
+      data.items = [
+        {
+          name: "Html",
+          percents: 1
+        },
+        {
+          name: "Css",
+          percents: 1
+        },
+        {
+          name: "JavaScript",
+          percents: 1
+        }
+      ];
+    } else {
+      data.category = this.skill.category;
+      data.items = this.skill.items.map(item => {
+        return { name: item.name, percents: item.percents };
+      });
     }
 
-    return {
-      title: this.skill.title,
-      percents: this.skill.percents
-    };
+    return data;
   },
-  computed: {
-    isNew() {
-      return this.category ? true : false;
+  validations: {
+    category: {
+      required
+    },
+    items: {
+      required,
+      $each: {
+        name: {
+          required
+        },
+        percents: {
+          required,
+          minValue: minValue(1),
+          maxValue: maxValue(100)
+        }
+      }
     }
   },
-  validations() {
-    return {
-      title: {
-        required
-      },
-      percents: {
-        required,
-        minValue: minValue(1),
-        maxValue: maxValue(100)
-      }
-    };
-  },
   methods: {
-    ...mapActions(["addSkill", "removeSkill"]),
-    removeExistedSkill(skillId) {
-      this.removeSkill(skillId);
+    ...mapActions(["deleteData", "updateData", "insertData"]),
+    getId() {
+      return this.skill ? this.skill._id : 0;
+    },
+    getIndex(index) {
+      return parseInt(index) + 1;
+    },
+    removeSlide(id) {
+      console.log(id);
+
+      if (
+        confirm(
+          `Вы уверены, что хотите удалить пост: "${this.skill.category}"?`
+        )
+      ) {
+        this.deleteData({ dbPage: this.dbPage, id });
+      }
     },
     submit() {
-      const newSkill = {
-        id: Math.round(Math.random() * 1000000),
-        name: this.skillName,
-        percents: 0,
-        type: this.type
+      if (this.$v.$invalid) {
+        return false;
+      }
+
+      const data = {
+        category: this.category,
+        items: this.items.map(item => {
+          return { name: item.name, percents: item.percents };
+        })
       };
-      this.$validate().then(success => {
-        if (!success) return;
-        this.addSkill(newSkill);
-        this.skillName = "";
-        this.validation.reset();
-      });
+
+      if (!this.skill) {
+        console.log(data);
+        this.insertData({ dbPage: this.dbPage, data });
+      } else {
+        this.updateData({ dbPage: this.dbPage, id: this.skill._id, data });
+      }
+
+      return true;
     }
   }
 };

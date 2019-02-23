@@ -1,22 +1,23 @@
 <template lang="pug">
   PageWrapper(title="Обо мне")
-    skill-cat(
-      v-for="skillCat in dbData"
-      :key="skillCat._id"
-      :skillCat="skillCat"
-    )
+    SkillForm(
+      v-for="skill in dbData"
+      :key="skill._id"
+      :skill="skill")
+    h3.form__legend Добавить навыки
+    SkillForm
 </template>
 
 <script>
 import pageData from "@backend/mixins/pageData";
 import PageWrapper from "@backCmp/PageWrapper";
-import skillCat from "@backCmp/Forms/skillCat";
+import SkillForm from "@backCmp/Forms/SkillForm";
 
 export default {
   name: "AdminAboutView",
   components: {
     PageWrapper,
-    skillCat
+    SkillForm
   },
   mixins: [pageData],
   data() {

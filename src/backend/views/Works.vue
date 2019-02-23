@@ -9,8 +9,8 @@
 </template>
 
 <script>
-import PageWrapper from "@backCmp/PageWrapper";
 import pageData from "@backend/mixins/pageData";
+import PageWrapper from "@backCmp/PageWrapper";
 import SlideForm from "@backCmp/Forms/SlideForm";
 
 export default {

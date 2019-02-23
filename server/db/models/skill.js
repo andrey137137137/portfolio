@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const SkillSchema = new Schema({
-  title: {
+  name: {
     type: String,
     required: [true, "Укажите заголовок статьи"]
   },
@@ -18,7 +18,7 @@ const SkillCategorySchema = new Schema({
     type: String,
     required: [true, "Укажите заголовок статьи"]
   },
-  skills: {
+  items: {
     type: Array,
     required: "",
     // default: [],

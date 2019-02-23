@@ -31,7 +31,7 @@ app.use(async (req, res, next) => {
   next();
 });
 
-app.set("views", path.join(__dirname, "server", "views"));
+app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
 
 app.use(logger("dev"));
@@ -53,6 +53,7 @@ app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get("env") === "development" ? err : {};
+  console.log(res.locals.error);
 
   // render the error page
   res.status(err.status || 500);

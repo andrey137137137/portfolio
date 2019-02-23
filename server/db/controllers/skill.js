@@ -16,8 +16,8 @@ module.exports.getSkills = function(req, res) {
 module.exports.createSkill = function(req, res) {
   // создаем новую запись блога и передаем в нее поля из формы
   let item = new Model({
-    title: req.body.title,
-    body: req.body.text
+    category: req.body.category,
+    items: req.body.items
   });
   // сохраняем запись в базе
   item
@@ -37,12 +37,11 @@ module.exports.updateSkill = function(req, res) {
   const id = req.params.id;
 
   let data = {
-    title: req.body.title,
-    date: new Date(req.body.date),
-    body: req.body.text
+    category: req.body.category,
+    items: req.body.items
   };
 
-  const Model = mongoose.model("skillType");
+  const Model = mongoose.model("skill");
 
   Model.findByIdAndUpdate(id, { $set: data })
     .then(item => {
@@ -61,7 +60,7 @@ module.exports.updateSkill = function(req, res) {
 
 module.exports.deleteSkill = function(req, res) {
   const id = req.params.id;
-  const Model = mongoose.model("skillType");
+  const Model = mongoose.model("skill");
 
   Model.findByIdAndRemove(id).then(
     item => {

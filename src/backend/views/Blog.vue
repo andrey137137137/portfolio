@@ -19,11 +19,6 @@ export default {
     PageWrapper,
     PostForm
   },
-  mixins: [pageData],
-  data() {
-    return {
-      dbPage: "post"
-    };
-  }
+  mixins: [pageData]
 };
 </script>

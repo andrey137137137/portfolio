@@ -8,14 +8,14 @@
 
       ul.clearfix.skills__list
         li.skills__item_wrap(
-          v-for="(skill, index) in category.skills"
-          :class="getSkillItemWrapperClasses(index, category.skills.length)"
+          v-for="(skill, index) in category.items"
+          :class="getSkillItemWrapperClasses(index, category.items.length)"
         )
           div(:class="getSkillItemPercentClass(skill.percents)")
             svg.skills__item_circle(width="110" height="110" viewBox="0 0 110 110")
               circle.skills__item_base(r="45" cx="55" cy="55")
               circle.skills__item_sector(r="45" cx="55" cy="55" transform="rotate(-90 55 55)")
-            span.skills__item_title {{skill.title}}
+            span.skills__item_title {{skill.name}}
 </template>
 
 <script>

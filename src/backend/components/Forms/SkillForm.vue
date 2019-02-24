@@ -52,34 +52,32 @@ export default {
     }
   },
   data() {
-    const data = {
-      dbPage: "skill"
-    };
-
     if (!this.skill) {
-      data.category = "";
-      data.items = [
-        {
-          name: "Html",
-          percents: 1
-        },
-        {
-          name: "Css",
-          percents: 1
-        },
-        {
-          name: "JavaScript",
-          percents: 1
-        }
-      ];
-    } else {
-      data.category = this.skill.category;
-      data.items = this.skill.items.map(item => {
-        return { name: item.name, percents: item.percents };
-      });
+      return {
+        category: "",
+        items: [
+          {
+            name: "Html",
+            percents: 1
+          },
+          {
+            name: "Css",
+            percents: 1
+          },
+          {
+            name: "JavaScript",
+            percents: 1
+          }
+        ]
+      };
     }
 
-    return data;
+    return {
+      category: this.skill.category,
+      items: this.skill.items.map(item => {
+        return { name: item.name, percents: item.percents };
+      })
+    };
   },
   validations: {
     category: {
@@ -115,7 +113,7 @@ export default {
           `Вы уверены, что хотите удалить пост: "${this.skill.category}"?`
         )
       ) {
-        this.deleteData({ dbPage: this.dbPage, id });
+        this.deleteData(id);
       }
     },
     submit() {
@@ -132,9 +130,9 @@ export default {
 
       if (!this.skill) {
         console.log(data);
-        this.insertData({ dbPage: this.dbPage, data });
+        this.insertData(data);
       } else {
-        this.updateData({ dbPage: this.dbPage, id: this.skill._id, data });
+        this.updateData({ id: this.skill._id, data });
       }
 
       return true;

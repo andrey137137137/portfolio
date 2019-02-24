@@ -36,17 +36,6 @@ export default {
     TopWrapper
   },
   mixins: [pageConfig],
-  data() {
-    return {
-      dbPage: "post",
-      configParams: {
-        name: "Блог",
-        isBlog: true,
-        isContent: true,
-        sections: 2
-      }
-    };
-  },
   methods: {
     getTabLink(name) {
       return `#${name}`;

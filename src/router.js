@@ -4,14 +4,17 @@ import store from "@common/store";
 
 Vue.use(VueRouter);
 
+function setDbPage(dbPage) {
+  store.dispatch("setPage", dbPage);
+}
+
 function pageConfig(config, dbPage = "") {
   if (dbPage) {
-    store.dispatch("readData", dbPage);
+    setDbPage(dbPage);
+    // store.dispatch("readData");
   }
-  // console.log(store);
 
   store.dispatch("frontView/setConfig", config);
-
   return {};
 }
 
@@ -38,7 +41,7 @@ export default new VueRouter({
             isContent: true,
             sections: 3
           },
-          "work"
+          "slide"
         );
       },
       component: () => import("@frontViews/Works.vue")
@@ -84,18 +87,30 @@ export default new VueRouter({
       children: [
         {
           path: "about",
+          props: () => {
+            setDbPage("skill");
+          },
           component: () => import("@backViews/About.vue")
         },
         {
           path: "blog",
+          props: () => {
+            setDbPage("post");
+          },
           component: () => import("@backViews/Blog.vue")
         },
         {
           path: "user",
+          props: () => {
+            setDbPage("");
+          },
           component: () => import("@backViews/User.vue")
         },
         {
           path: "works",
+          props: () => {
+            setDbPage("slide");
+          },
           component: () => import("@backViews/Works.vue")
         }
       ]

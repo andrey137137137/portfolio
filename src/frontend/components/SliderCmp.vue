@@ -3,7 +3,7 @@
     ul.slider__demo
       transition(:name="transitionName")
         li.img_wrap.slider__item.slider__demo_item(:key="curIndex")
-          img.img_wrap__img(:src="demoImg" alt="")
+          img.img_wrap__img(src="demoImg" alt="")
           .slider__item_number.slider__demo_item_number {{curIndex + 1}}
 
     article.slider__text_wrap
@@ -32,7 +32,7 @@
       )
         transition(name="slider__arrow-scroll_down")
           .img_wrap.slider__item(:key="curIndex")
-            img.img_wrap__img(:src="prevImg" :alt="curIndex + 1")
+            img.img_wrap__img(src="prevImg" :alt="curIndex + 1")
             .slider__item_number.slider__arrow_number {{this.getPrevIndex() + 1}}
 
       a.icon.icon-chevron_up.slider__arrow.slider__arrow-next(
@@ -41,7 +41,7 @@
       )
         transition(name="slider__arrow-scroll_up")
           .img_wrap.slider__item(:key="curIndex")
-            img.img_wrap__img(:src="nextImg" :alt="curIndex + 1")
+            img.img_wrap__img(src="nextImg" :alt="curIndex + 1")
             .slider__item_number.slider__arrow_number {{this.getNextIndex() + 1}}
 </template>
 
@@ -95,16 +95,16 @@ export default {
     },
     demoImg() {
       // return getImg(this.items[this.curIndex].image, images);
-      return "/userfiles/" + this.items[this.curIndex].image;
+      return "/upload/slider/" + this.items[this.curIndex].image;
     },
-    prevImg() {
-      // return getImg(this.items[this.getPrevIndex()].image, images);
-      return "/userfiles/" + this.items[this.getPrevIndex()].image;
-    },
-    nextImg() {
-      // return getImg(this.items[this.getNextIndex()].image, images);
-      return "/userfiles/" + this.items[this.getNextIndex()].image;
-    },
+    // prevImg() {
+    //   // return getImg(this.items[this.getPrevIndex()].image, images);
+    //   return "/upload/slider/" + this.items[this.getPrevIndex()].image;
+    // },
+    // nextImg() {
+    //   // return getImg(this.items[this.getNextIndex()].image, images);
+    //   return "/upload/slider/" + this.items[this.getNextIndex()].image;
+    // },
     title() {
       return this.items[this.curIndex].title;
     },

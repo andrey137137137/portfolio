@@ -19,11 +19,6 @@ export default {
     PageWrapper,
     SkillForm
   },
-  mixins: [pageData],
-  data() {
-    return {
-      dbPage: "skill"
-    };
-  }
+  mixins: [pageData]
 };
 </script>

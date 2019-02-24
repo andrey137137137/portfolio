@@ -5,67 +5,67 @@ import axios from "axios";
 Vue.use(Vuex);
 
 import * as types from "@common/store/common-mutation-types";
-import works from "@common/store/data/works.json";
 import frontView from "@common/store/modules/frontView";
 import comments from "@common/store/modules/comments";
+import works from "@common/store/data/works";
 
 export default new Vuex.Store({
   strict: true,
   state: {
-    data: []
+    data: {
+      page: "",
+      items: []
+    }
   },
   getters: {
+    dbPage(state) {
+      return state.data.page;
+    },
     dbData(state) {
-      return state.data;
+      return state.data.items;
     }
   },
   actions: {
-    readData({ commit }, dbPage) {
-      switch (dbPage) {
-        case "work":
-          // fetch("/src/common/store/data/data.json")
-          //   .then(data => {
-          //     return data.text();
-          //   })
-          //   .then(response => {
-          //     // state.data = response;
-          //     commit(types.SET, response);
-          //   });
-
-          console.log(works);
-          commit(types.SET, works);
-          break;
-        default:
-          axios.get(dbPage).then(response => {
-            commit(types.SET, response.data[`${dbPage}s`]);
-          });
+    setPage({ commit }, page) {
+      commit(types.SETPAGE, page);
+    },
+    readData({ state, commit }) {
+      if (state.data.page == "slide") {
+        commit(types.SET, works);
+      } else {
+        axios.get(state.data.page).then(response => {
+          commit(types.SET, response.data[`${state.data.page}s`]);
+        });
       }
     },
-    insertData({ dispatch }, payload) {
-      axios.post(payload.dbPage, payload.data).then(() => {
-        dispatch("readData", payload.dbPage);
+    insertData({ state, dispatch }, data) {
+      axios.post(state.data.page, data).then(() => {
+        dispatch("readData", state.data.page);
       });
     },
-    updateData({ dispatch }, payload) {
-      axios.put(`${payload.dbPage}/${payload.id}`, payload.data).then(() => {
-        dispatch("readData", payload.dbPage);
+    updateData({ state, dispatch }, payload) {
+      axios.put(`${state.data.page}/${payload.id}`, payload.data).then(() => {
+        dispatch("readData", state.data.page);
       });
     },
-    deleteData({ dispatch }, payload) {
-      axios.delete(`${payload.dbPage}/${payload.id}`).then(() => {
-        dispatch("readData", payload.dbPage);
+    deleteData({ state, dispatch }, id) {
+      axios.delete(`${state.data.page}/${id}`).then(() => {
+        dispatch("readData", state.data.page);
       });
     }
   },
   mutations: {
+    [types.SETPAGE](state, page) {
+      state.data.page = page;
+    },
     [types.SET](state, data) {
-      state.data = data;
+      state.data.items = data;
     },
     [types.ADD](state, newItem) {
-      state.data.push(newItem);
+      state.data.items.push(newItem);
     },
     [types.DELETE](state, id) {
-      state.data = state.data.filter(item => item.id !== id);
+      state.data.items = state.data.items.filter(item => item.id !== id);
     }
   },
   modules: {

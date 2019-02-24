@@ -19,12 +19,7 @@ export default {
     PageWrapper,
     SlideForm
   },
-  mixins: [pageData],
-  data() {
-    return {
-      dbPage: "slide"
-    };
-  }
+  mixins: [pageData]
 };
 </script>
 

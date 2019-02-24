@@ -8,6 +8,6 @@ export default {
     ...mapActions(["readData"])
   },
   created() {
-    this.readData(this.dbPage);
+    this.readData();
   }
 };

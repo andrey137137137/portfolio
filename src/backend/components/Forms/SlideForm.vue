@@ -63,7 +63,6 @@ export default {
   },
   data() {
     const data = {
-      dbPage: "slide",
       image: null
     };
 
@@ -143,7 +142,7 @@ export default {
       if (
         confirm(`Вы уверены, что хотите удалить пост: "${this.slide.title}"?`)
       ) {
-        this.deleteData({ dbPage: this.dbPage, id });
+        this.deleteData(id);
       }
     },
     submit() {
@@ -161,10 +160,10 @@ export default {
 
       if (!this.slide) {
         console.log(data);
-        this.insertData({ dbPage: this.dbPage, data });
+        this.insertData(data);
       } else {
         data.date = this.date;
-        this.updateData({ dbPage: this.dbPage, id: this.slide._id, data });
+        this.updateData({ id: this.slide._id, data });
       }
 
       if (image) {

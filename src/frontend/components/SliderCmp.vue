@@ -6,6 +6,9 @@
           img.img_wrap__img(src="demoImg" alt="")
           .slider__item_number.slider__demo_item_number {{curIndex + 1}}
 
+    ul.menu
+      li.menu__item(v-for="item in items") {{item.title}}
+
     article.slider__text_wrap
       AnimateStr(
         transitionName="slider__title"
@@ -63,7 +66,7 @@ export default {
   },
   props: {
     items: {
-      type: Array,
+      // type: Array,
       required: true
     },
     id: {
@@ -97,14 +100,14 @@ export default {
       // return getImg(this.items[this.curIndex].image, images);
       return "/upload/slider/" + this.items[this.curIndex].image;
     },
-    // prevImg() {
-    //   // return getImg(this.items[this.getPrevIndex()].image, images);
-    //   return "/upload/slider/" + this.items[this.getPrevIndex()].image;
-    // },
-    // nextImg() {
-    //   // return getImg(this.items[this.getNextIndex()].image, images);
-    //   return "/upload/slider/" + this.items[this.getNextIndex()].image;
-    // },
+    prevImg() {
+      // return getImg(this.items[this.getPrevIndex()].image, images);
+      return "/upload/slider/" + this.items[this.getPrevIndex()].image;
+    },
+    nextImg() {
+      // return getImg(this.items[this.getNextIndex()].image, images);
+      return "/upload/slider/" + this.items[this.getNextIndex()].image;
+    },
     title() {
       return this.items[this.curIndex].title;
     },
@@ -136,6 +139,9 @@ export default {
       this.curIndex = this.getNextIndex();
       this.transitionMethod = "scroll_up";
     }
+  },
+  created() {
+    console.log(this.items.map((item, index) => item[index].title));
   }
 };
 </script>

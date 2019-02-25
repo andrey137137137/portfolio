@@ -14,8 +14,6 @@ export default {
   created() {
     this.readData();
     // this.setConfig(this.configParams);
-    for (const key in this.dbData) {
-      console.log(this.dbData[key]);
-    }
+    console.log(this.dbData.map((item, index) => item[index]));
   }
 };

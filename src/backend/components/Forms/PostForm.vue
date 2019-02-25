@@ -93,7 +93,7 @@ export default {
       if (
         confirm(`Вы уверены, что хотите удалить пост: "${this.post.title}"?`)
       ) {
-        this.deleteData({ dbPage: this.dbPage, id });
+        this.deleteData(id);
       }
     },
     submit() {

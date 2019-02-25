@@ -4,6 +4,7 @@ import addClasses from "@common/mixins/addClasses";
 import ErrorElem from "@components/FormElems/ErrorElem";
 
 export default {
+  mixins: [addClasses],
   render(h) {
     let wrapClass = this.wrapClass;
 
@@ -42,7 +43,6 @@ export default {
       [...elems, this.errorElem()]
     );
   },
-  mixins: [addClasses],
   props: {
     wrapClass: {
       type: String,

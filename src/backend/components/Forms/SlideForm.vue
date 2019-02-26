@@ -34,8 +34,7 @@
       :vals="$v.techs.$each.$iter"
       :items="techs"
       :fields="fields"
-      :propTemplate="propTemplate"
-    )
+      :propTemplate="propTemplate")
 </template>
 
 <script>

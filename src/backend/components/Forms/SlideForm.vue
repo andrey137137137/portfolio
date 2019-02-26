@@ -22,14 +22,20 @@
       accept="image/jpeg, image/png, image/gif"
       buttonClass="ui button primary"
       :customStrings="{upload: '<h1>Bummer!</h1>', drag: 'Drag a 😺 GIF or GTFO'}")
-    div(v-for="(v, index) in $v.techs.$each.$iter")
-      InputEventElem(
-        v-model="v.name.$model"
-        :val="v.name"
-        :placeholder="`Технология ${getIndex(index)}`")
-    .menu
-      button.btn(@click="techs.pop()") Remove
-      button.btn(@click="techs.push({name: ''})") Add
+    //- div(v-for="(v, index) in $v.techs.$each.$iter")
+    //-   InputEventElem(
+    //-     v-model="v.name.$model"
+    //-     :val="v.name"
+    //-     :placeholder="`Технология ${getIndex(index)}`")
+    //- .menu
+    //-   button.btn(@click="techs.pop()") Remove
+    //-   button.btn(@click="techs.push({name: ''})") Add
+    MultipleElem(
+      :vals="$v.techs.$each.$iter"
+      :items="techs"
+      :fields="fields"
+      :propTemplate="propTemplate"
+    )
 </template>
 
 <script>
@@ -44,6 +50,7 @@ import upload from "@backend/mixins/upload";
 import PictureInput from "vue-picture-input";
 import ItemForm from "@backCmp/Forms/ItemForm";
 import InputEventElem from "@components/FormElems/InputEventElem";
+import MultipleElem from "@components/FormElems/MultipleElem";
 
 import { mapActions } from "vuex";
 
@@ -52,7 +59,8 @@ export default {
   components: {
     PictureInput,
     ItemForm,
-    InputEventElem
+    InputEventElem,
+    MultipleElem
   },
   mixins: [upload],
   props: {
@@ -63,7 +71,15 @@ export default {
   },
   data() {
     const data = {
-      image: null
+      image: null,
+      fields: [
+        {
+          name: "name",
+          type: "text",
+          placeholder: "Технология"
+        }
+      ],
+      propTemplate: { name: "" }
     };
 
     if (!this.slide) {

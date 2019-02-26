@@ -7,7 +7,7 @@ Vue.use(Vuex);
 import * as types from "@common/store/common-mutation-types";
 import frontView from "@common/store/modules/frontView";
 import comments from "@common/store/modules/comments";
-import works from "@common/store/data/works";
+// import works from "@common/store/data/works";
 
 export default new Vuex.Store({
   strict: true,

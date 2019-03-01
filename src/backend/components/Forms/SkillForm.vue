@@ -123,9 +123,9 @@ export default {
     getId() {
       return this.skill ? this.skill._id : 0;
     },
-    getIndex(index) {
-      return parseInt(index) + 1;
-    },
+    // getIndex(index) {
+    //   return parseInt(index) + 1;
+    // },
     removeSlide(id) {
       console.log(id);
 

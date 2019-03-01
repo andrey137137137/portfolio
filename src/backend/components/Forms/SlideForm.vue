@@ -22,14 +22,6 @@
       accept="image/jpeg, image/png, image/gif"
       buttonClass="ui button primary"
       :customStrings="{upload: '<h1>Bummer!</h1>', drag: 'Drag a 😺 GIF or GTFO'}")
-    //- div(v-for="(v, index) in $v.techs.$each.$iter")
-    //-   InputEventElem(
-    //-     v-model="v.name.$model"
-    //-     :val="v.name"
-    //-     :placeholder="`Технология ${getIndex(index)}`")
-    //- .menu
-    //-   button.btn(@click="techs.pop()") Remove
-    //-   button.btn(@click="techs.push({name: ''})") Add
     MultipleElem(
       :vals="$v.techs.$each.$iter"
       :items="techs"

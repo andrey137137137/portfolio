@@ -3,7 +3,7 @@
     SkillForm(
       v-for="skill in dbData"
       :key="skill._id"
-      :skill="skill")
+      :item="skill")
     h3.form__legend Добавить навыки
     SkillForm
 </template>

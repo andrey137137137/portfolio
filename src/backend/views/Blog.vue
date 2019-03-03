@@ -3,7 +3,7 @@
     PostForm(
       v-for="post in dbData"
       :key="post._id"
-      :post="post")
+      :item="post")
     h3.form__legend Добавить запись
     PostForm
 </template>

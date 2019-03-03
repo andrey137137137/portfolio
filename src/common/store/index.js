@@ -34,7 +34,7 @@ export default new Vuex.Store({
       //   commit(types.SET, works);
       // } else {
       axios.get(state.data.page).then(response => {
-        commit(types.SET, response.data[`${state.data.page}s`]);
+        commit(types.SET, response.data.items);
       });
       // }
     },

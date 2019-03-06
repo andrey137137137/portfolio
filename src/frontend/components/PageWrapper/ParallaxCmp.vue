@@ -1,14 +1,14 @@
 <template lang="pug">
   ul#parallax.parallax(:class="classes")
     //- .parallax__container
-    li.parallax__layer(v-for="(item, index) in layers")
+    li.parallax__layer(v-for="(item, index) in layers" :data-depth="item")
       img.parallax__img(:src="img(index)")
     //- .parallax__content
 </template>
 
 <script>
 const images = {
-  png: require.context("@/assets/img/parallax/", false, /\.png$/)
+  png: require.context("@/assets/img/parallax/", false, /layer_\d+\.png$/)
 };
 
 import $ from "jQuery";
@@ -36,11 +36,7 @@ export default {
       transformString: "",
       path: "../../assets/img/parallax",
       ext: "png",
-      layers: 2
-      // images: [
-      //   "../../assets/img/parallax/layer_1.png",
-      //   "../../assets/img/parallax/layer_2.png"
-      // ]
+      layers: [100, 100, 90, 80, 70, 60, 15, 10]
     };
   },
   computed: {
@@ -71,8 +67,10 @@ export default {
           if (isScroll) {
             $vm.divider = (index + 1) / 90;
           } else {
-            $vm.divider = (index + 1) / 110;
+            $vm.divider = ((index + 1) * $layer.dataset.depth) / 10000;
           }
+
+          // console.log($layer.dataset.depth);
 
           $vm.positionY = $vm.initialY * $vm.divider;
           $vm.bottomPosition = (window.innerHeight / 2) * $vm.divider;
@@ -94,6 +92,7 @@ export default {
   },
   mounted() {
     const $vm = this;
+    console.log(images.png.length);
 
     $(document).ready(() => {
       const isScroll = $vm.config.isContent;

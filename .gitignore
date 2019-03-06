@@ -1,8 +1,10 @@
 .DS_Store
 node_modules
 /dist
-public/userfiles
 api/config.json
+public/userfiles
+src/assets/img/parallax
+src/assets/img
 
 # local env files
 .env.local

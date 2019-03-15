@@ -12,7 +12,7 @@ const SlideSchema = new Schema({
   },
   image: {
     type: String,
-    required: [true, "Укажите картинку работы"]
+    required: ""
   },
   techs: {
     type: Array,

@@ -158,8 +158,9 @@ module.exports.updateSlide = function(req, res) {
     req.params.id,
     {
       title: req.body.title,
-      date: new Date(req.body.date),
-      body: req.body.text
+      link: req.body.link,
+      image: req.body.image,
+      techs: req.body.techs
     },
     res
   );

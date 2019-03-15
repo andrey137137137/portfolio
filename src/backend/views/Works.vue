@@ -3,7 +3,7 @@
     SlideForm(
       v-for="slide in dbData"
       :key="slide._id"
-      :slide="slide")
+      :item="slide")
     h3.form__legend Добавить запись
     SlideForm
 </template>

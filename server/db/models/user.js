@@ -1,6 +1,18 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+const ContactSchema = new Schema({
+  icon: {
+    type: String
+  },
+  name: {
+    type: String
+  },
+  value: {
+    type: String
+  }
+});
+
 const UserSchema = new Schema({
   firstName: {
     type: String,
@@ -19,7 +31,8 @@ const UserSchema = new Schema({
     required: [true, "Укажите описание картинки"]
   },
   contacts: {
-    type: Array
+    type: Array,
+    children: [ContactSchema]
   }
 });
 

@@ -1,9 +1,9 @@
 <template lang="pug">
   ItemForm(
     :handleSubmit="submit"
-    :handleDelete="removeSlide"
-    :id="getId()"
-    :disabled="$v.$pending || $v.$invalid"
+    :handleDelete="removeItem"
+    :id="id"
+    :disabled="disabled"
   )
     InputEventElem(
       v-model="title"
@@ -37,13 +37,13 @@ import {
   // maxLength
 } from "vuelidate/lib/validators";
 import axios from "axios";
+import exist from "@common/helpers/exist";
 import upload from "@backend/mixins/upload";
+import form from "@backend/mixins/form";
 import PictureInput from "vue-picture-input";
 import ItemForm from "@backCmp/Forms/ItemForm";
 import InputEventElem from "@components/FormElems/InputEventElem";
 import MultipleElem from "@components/FormElems/MultipleElem";
-
-import { mapActions } from "vuex";
 
 export default {
   name: "SlideForm",
@@ -53,13 +53,7 @@ export default {
     InputEventElem,
     MultipleElem
   },
-  mixins: [upload],
-  props: {
-    slide: {
-      type: Object,
-      default: null
-    }
-  },
+  mixins: [upload, form],
   data() {
     const data = {
       image: null,
@@ -73,29 +67,42 @@ export default {
       propTemplate: { name: "" }
     };
 
-    if (!this.slide) {
-      data.title = "";
-      data.link = "";
-      data.techs = [
-        {
-          name: "Html"
-        },
-        {
-          name: "Css"
-        },
-        {
-          name: "JavaScript"
-        }
-      ];
-    } else {
-      data.title = this.slide.title;
-      data.link = this.slide.link;
-      data.techs = this.slide.techs.map(item => {
-        return { name: item };
-      });
+    // if (!this.slide) {
+    //   data.title = "";
+    //   data.link = "";
+    //   data.techs = [
+    //     {
+    //       name: "Html"
+    //     },
+    //     {
+    //       name: "Css"
+    //     },
+    //     {
+    //       name: "JavaScript"
+    //     }
+    //   ];
+    // } else {
+    //   data.title = this.slide.title;
+    //   data.link = this.slide.link;
+    //   data.techs = this.slide.techs.map(item => {
+    //     return { name: item };
+    //   });
+    // }
+
+    if (!this.item) {
+      return { ...data, ...this.defaultFields() };
     }
 
-    return data;
+    return {
+      ...data,
+      title: this.item.title,
+      link: this.item.link,
+      techs: exist("techs", this.item)
+        ? this.item.techs.map(item => {
+            return { name: item };
+          })
+        : []
+    };
   },
   validations: {
     title: {
@@ -114,12 +121,33 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["deleteData", "updateData", "insertData"]),
-    getId() {
-      return this.slide ? this.slide._id : 0;
+    // getIndex(index) {
+    //   return parseInt(index) + 1;
+    // },
+    defaultFields() {
+      return {
+        title: "",
+        link: "",
+        techs: [
+          {
+            name: "Html"
+          },
+          {
+            name: "Css"
+          },
+          {
+            name: "JavaScript"
+          }
+        ]
+      };
     },
-    getIndex(index) {
-      return parseInt(index) + 1;
+    prepareData() {
+      this.submitData = {
+        title: this.title,
+        link: this.link,
+        image: this.image ? this.image.name : "gyjgfhjfgh",
+        techs: this.techs.map(item => item.name)
+      };
     },
     changeImage() {
       this.image = this.$refs.pictureInput.file;
@@ -142,43 +170,34 @@ export default {
 
         console.log("image upload response > ", response);
       });
-    },
-    removeSlide(id) {
-      console.log(id);
-
-      if (
-        confirm(`Вы уверены, что хотите удалить пост: "${this.slide.title}"?`)
-      ) {
-        this.deleteData(id);
-      }
-    },
-    submit() {
-      if (this.$v.$invalid) {
-        return false;
-      }
-
-      const image = this.image ? this.image.name : "";
-      const data = {
-        title: this.title,
-        link: this.link,
-        image,
-        techs: this.techs.map(item => item.name)
-      };
-
-      if (!this.slide) {
-        console.log(data);
-        this.insertData(data);
-      } else {
-        data.date = this.date;
-        this.updateData({ id: this.slide._id, data });
-      }
-
-      if (image) {
-        this.uploadImage();
-      }
-
-      return true;
     }
+    // submit() {
+    //   if (this.$v.$invalid) {
+    //     return false;
+    //   }
+
+    //   const image = this.image ? this.image.name : "";
+    //   const data = {
+    //     title: this.title,
+    //     link: this.link,
+    //     image,
+    //     techs: this.techs.map(item => item.name)
+    //   };
+
+    //   if (!this.slide) {
+    //     console.log(data);
+    //     this.insertData(data);
+    //   } else {
+    //     data.date = this.date;
+    //     this.updateData({ id: this.slide._id, data });
+    //   }
+
+    //   if (image) {
+    //     this.uploadImage();
+    //   }
+
+    //   return true;
+    // }
   }
 };
 </script>

@@ -68,10 +68,14 @@ export default {
         }
       });
     },
-    removeItem() {
+    removeItem(e) {
+      e.preventDefault();
+
       this.items.pop();
     },
-    addItem() {
+    addItem(e) {
+      e.preventDefault();
+
       const template = {};
 
       for (const key in this.propTemplate) {
@@ -84,12 +88,12 @@ export default {
     },
     navElem(h) {
       return h("div", { class: "menu" }, [
-        h("button", {
+        h("a", {
           class: "btn",
           on: { click: this.removeItem },
           domProps: { innerHTML: "Remove" }
         }),
-        h("button", {
+        h("a", {
           class: "btn",
           on: { click: this.addItem },
           domProps: { innerHTML: "Add" }

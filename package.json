@@ -26,6 +26,7 @@
     "vue": "^2.6.6",
     "vue-picture-input": "^2.1.6",
     "vue-router": "^3.0.1",
+    "vuejs-clipper": "^0.2.9",
     "vuelidate": "^0.7.4",
     "vuex": "^3.1.0",
     "xmlhttprequest": "^1.8.0"

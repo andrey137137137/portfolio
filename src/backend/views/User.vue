@@ -16,16 +16,16 @@
     //-   | {{fileMsg}}
     button
       clipper-upload(v-model="imgURL") upload image
-    button(@click="getResult") clip image
+    button(@click="uploadImage") clip image
     clipperBasic.my-clipper(ref="clipper" :src="imgURL" preview="my-preview")
-        div.placeholder(slot="placeholder") No image
+      div.placeholder(slot="placeholder") No image
     div
-        div preview:
-        clipperPreview.my-clipper(name="my-preview")
-            div.placeholder(slot="placeholder") preview area
+      div preview:
+      clipperPreview.my-clipper(name="my-preview")
+        div.placeholder(slot="placeholder") preview area
     div
-        div result:
-        img.result(:src="resultURL" alt="")
+      div result:
+      img.result(:src="resultURL" alt="")
 </template>
 
 <script>
@@ -61,19 +61,43 @@ export default {
       this.image = "";
     },
     uploadImage() {
+      const canvas = this.$refs.clipper.clip(); //call component's clip method
       let data = new FormData();
-      data.append("image", this.image, this.image.name);
+      let blob;
+
+      this.resultURL = canvas.toDataURL("image/jpg", 1); //canvas->image
+      blob = this.dataURItoBlob(this.resultURL);
+      data.append("image", blob, "avatar.png");
+
+      console.log(blob);
 
       axios.post(this.getUploadPage("avatar"), data).then(response => {
         this.fileMsg = response.data.msg;
 
-        if (response.data.status === "Ok") {
-          this.image = null;
-          this.$refs.upload.value = null;
-        }
+        // if (response.data.status === "Ok") {
+        //   this.resultURL = null;
+        //   this.$refs.upload.value = null;
+        // }
 
         console.log("image upload response > ", response);
       });
+    },
+    dataURItoBlob: function(dataURI) {
+      var byteString = atob(dataURI.split(",")[1]);
+
+      var mimeString = dataURI
+        .split(",")[0]
+        .split(":")[1]
+        .split(";")[0];
+
+      var ab = new ArrayBuffer(byteString.length);
+      var ia = new Uint8Array(ab);
+      for (var i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+      }
+
+      var bb = new Blob([ab], { type: mimeString });
+      return bb;
     },
     getResult: function() {
       const canvas = this.$refs.clipper.clip(); //call component's clip method

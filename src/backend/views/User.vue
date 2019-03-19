@@ -1,19 +1,5 @@
 <template lang="pug">
   PageWrapper(title="Личные данные")
-    //- form#upload.form(enctype="multipart/form-data" @submit.prevent="uploadImage")
-    //-   PictureInput(
-    //-     ref="pictureInput"
-    //-     @change="changeImage"
-    //-     @remove="removeImage"
-    //-     :removable="true"
-    //-     removeButtonClass="ui red button"
-    //-     accept="image/jpeg, image/png, image/gif"
-    //-     buttonClass="ui button primary"
-    //-     :customStrings="{upload: '<h1>Bummer!</h1>', drag: 'Drag a 😺 GIF or GTFO'}")
-    //-   .form__row.form__row-buttons
-    //-     //- input.btn.form__btn(type="reset" value="Очистить")
-    //-     ButtonElem Отправить
-    //-   | {{fileMsg}}
     button
       clipper-upload(v-model="imgURL") upload image
     button(@click="uploadImage") clip image
@@ -82,24 +68,21 @@ export default {
         console.log("image upload response > ", response);
       });
     },
-    dataURItoBlob: function(dataURI) {
-      var byteString = atob(dataURI.split(",")[1]);
-
-      var mimeString = dataURI
+    dataURItoBlob(dataURI) {
+      const byteString = atob(dataURI.split(",")[1]);
+      const mimeString = dataURI
         .split(",")[0]
         .split(":")[1]
         .split(";")[0];
-
-      var ab = new ArrayBuffer(byteString.length);
-      var ia = new Uint8Array(ab);
+      const ab = new ArrayBuffer(byteString.length);
+      const ia = new Uint8Array(ab);
       for (var i = 0; i < byteString.length; i++) {
         ia[i] = byteString.charCodeAt(i);
       }
-
-      var bb = new Blob([ab], { type: mimeString });
+      const bb = new Blob([ab], { type: mimeString });
       return bb;
     },
-    getResult: function() {
+    getResult() {
       const canvas = this.$refs.clipper.clip(); //call component's clip method
       this.resultURL = canvas.toDataURL("image/jpg", 1); //canvas->image
     }

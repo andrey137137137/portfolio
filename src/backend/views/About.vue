@@ -56,7 +56,7 @@ export default {
     },
     uploadImage() {
       let data = new FormData();
-      data.append("image", this.image, this.image.name);
+      data.append("image", this.image, "about.jpg");
 
       axios.post(this.getUploadPage("slider"), data).then(response => {
         this.fileMsg = response.data.msg;

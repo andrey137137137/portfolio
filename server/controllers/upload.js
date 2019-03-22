@@ -29,7 +29,6 @@ function upload(req, res, dir = "") {
       });
     }
 
-    console.log(files);
     fileName = !dir ? `avatar.${getExt(files.image.name)}` : files.image.name;
     filePath = path.join(uploadPath, fileName);
 

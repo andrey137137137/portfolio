@@ -48,22 +48,18 @@ export default {
     },
     uploadImage() {
       const canvas = this.$refs.clipper.clip(); //call component's clip method
-      let data = new FormData();
-      let blob;
+      const data = new FormData();
 
       this.resultURL = canvas.toDataURL("image/jpg", 1); //canvas->image
-      blob = this.dataURItoBlob(this.resultURL);
-      data.append("image", blob, "avatar.png");
-
-      console.log(blob);
+      data.append("image", this.dataURItoBlob(this.resultURL), "avatar.jpg");
 
       axios.post(this.getUploadPage("avatar"), data).then(response => {
         this.fileMsg = response.data.msg;
 
-        // if (response.data.status === "Ok") {
-        //   this.resultURL = null;
-        //   this.$refs.upload.value = null;
-        // }
+        if (response.data.status === "Ok") {
+          this.resultURL = "";
+          // this.$refs.upload.value = null;
+        }
 
         console.log("image upload response > ", response);
       });
@@ -81,10 +77,6 @@ export default {
       }
       const bb = new Blob([ab], { type: mimeString });
       return bb;
-    },
-    getResult() {
-      const canvas = this.$refs.clipper.clip(); //call component's clip method
-      this.resultURL = canvas.toDataURL("image/jpg", 1); //canvas->image
     }
   }
 };

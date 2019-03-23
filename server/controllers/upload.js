@@ -11,7 +11,7 @@ function getExt(name) {
 function upload(req, res, dir = "") {
   const form = new formidable.IncomingForm();
   const rootPath = "public/upload";
-  const uploadPath = dir ? rootPath : `${rootPath}/${dir}`;
+  const uploadPath = path.join(rootPath, dir);
   let fileName;
   let filePath;
 

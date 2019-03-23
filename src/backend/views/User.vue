@@ -1,82 +1,151 @@
 <template lang="pug">
   PageWrapper(title="Личные данные")
-    button
-      clipper-upload(v-model="imgURL") upload image
-    button(@click="uploadImage") clip image
-    clipperBasic.my-clipper(ref="clipper" :src="imgURL" preview="my-preview")
-      div.placeholder(slot="placeholder") No image
-    div
-      div preview:
-      clipperPreview.my-clipper(name="my-preview")
-        div.placeholder(slot="placeholder") preview area
-    div
-      div result:
-      img.result(:src="resultURL" alt="")
+    //- button
+    //-   clipper-upload(v-model="imgURL" accept="image/jpeg") upload image
+    //- button(@click="uploadImage") clip image
+    //- clipper-fixed.my-clipper(
+    //-   ref="clipper"
+    //-   :src="imgURL"
+    //-   preview="my-preview"
+    //-   :ratio="1"
+    //-   :round="true"
+    //- )
+    //-   div.placeholder(slot="placeholder") No image
+    //- div
+    //-   clipper-range
+    //- div
+    //-   div preview:
+    //-   clipperPreview.my-clipper(name="my-preview")
+    //-     div.placeholder(slot="placeholder") preview area
+    //- div
+    //-   div result:
+    //-   img.result(:src="resultURL" alt="")
+    a.btn(@click="toggleShow") set avatar
+    my-upload(
+      field="img"
+      @crop-success="cropSuccess"
+      @crop-upload-success="cropUploadSuccess"
+      @crop-upload-fail="cropUploadFail"
+      v-model="show"
+      :width="141"
+      :height="141"
+      :url="getUploadPage('avatar')"
+      :params="params"
+      langType="ru"
+      img-format="jpg")
+    img(:src="imgDataUrl")
+      //- :headers="headers"
 </template>
 
 <script>
-import axios from "axios";
-import { clipperBasic, clipperPreview } from "vuejs-clipper";
+// import axios from "axios";
 import upload from "@backend/mixins/upload";
-import PictureInput from "vue-picture-input";
+// import { clipperBasic, clipperPreview } from "vuejs-clipper";
+import myUpload from "vue-image-crop-upload";
+// import PictureInput from "vue-picture-input";
 import PageWrapper from "@backCmp/PageWrapper";
 import ButtonElem from "@components/FormElems/ButtonElem";
 
 export default {
   name: "AdminUserView",
   components: {
-    clipperBasic,
-    clipperPreview,
+    // clipperBasic,
+    // clipperPreview,
+    "my-upload": myUpload,
     PageWrapper,
-    PictureInput,
+    // PictureInput,
     ButtonElem
   },
   mixins: [upload],
   data() {
     return {
-      imgURL: "",
-      resultURL: ""
+      // imgURL: "",
+      // resultURL: "",
+      show: false,
+      params: {
+        token: "123456798",
+        name: "avatar"
+      },
+      headers: {
+        smail: "*_~"
+      },
+      imgDataUrl: "" // the datebase64 url of created image
     };
   },
   methods: {
-    changeImage() {
-      this.image = this.$refs.pictureInput.file;
-      console.log(this.image);
+    // changeImage() {
+    //   this.image = this.$refs.pictureInput.file;
+    //   console.log(this.image);
+    // },
+    // removeImage() {
+    //   this.image = "";
+    // },
+    // uploadImage() {
+    //   const canvas = this.$refs.clipper.clip(); //call component's clip method
+    //   const data = new FormData();
+
+    //   this.resultURL = canvas.toDataURL("image/jpg", 1); //canvas->image
+    //   data.append("image", this.dataURItoBlob(this.resultURL), "avatar.jpg");
+
+    //   axios.post(this.getUploadPage("avatar"), data).then(response => {
+    //     this.fileMsg = response.data.msg;
+
+    //     if (response.data.status === "Ok") {
+    //       this.resultURL = "";
+    //       // this.$refs.upload.value = null;
+    //     }
+
+    //     console.log("image upload response > ", response);
+    //   });
+    // },
+    // dataURItoBlob(dataURI) {
+    //   const byteString = atob(dataURI.split(",")[1]);
+    //   const mimeString = dataURI
+    //     .split(",")[0]
+    //     .split(":")[1]
+    //     .split(";")[0];
+    //   const ab = new ArrayBuffer(byteString.length);
+    //   const ia = new Uint8Array(ab);
+    //   for (var i = 0; i < byteString.length; i++) {
+    //     ia[i] = byteString.charCodeAt(i);
+    //   }
+    //   const bb = new Blob([ab], { type: mimeString });
+    //   return bb;
+    // },
+    toggleShow() {
+      this.show = !this.show;
     },
-    removeImage() {
-      this.image = "";
+    /**
+     * crop success
+     *
+     * [param] imgDataUrl
+     * [param] field
+     */
+    cropSuccess(imgDataUrl) {
+      console.log("-------- crop success --------");
+      this.imgDataUrl = imgDataUrl;
     },
-    uploadImage() {
-      const canvas = this.$refs.clipper.clip(); //call component's clip method
-      const data = new FormData();
-
-      this.resultURL = canvas.toDataURL("image/jpg", 1); //canvas->image
-      data.append("image", this.dataURItoBlob(this.resultURL), "avatar.jpg");
-
-      axios.post(this.getUploadPage("avatar"), data).then(response => {
-        this.fileMsg = response.data.msg;
-
-        if (response.data.status === "Ok") {
-          this.resultURL = "";
-          // this.$refs.upload.value = null;
-        }
-
-        console.log("image upload response > ", response);
-      });
+    /**
+     * upload success
+     *
+     * [param] jsonData  server api return data, already json encode
+     * [param] field
+     */
+    cropUploadSuccess(jsonData, field) {
+      console.log("-------- upload success --------");
+      console.log(jsonData);
+      console.log("field: " + field);
     },
-    dataURItoBlob(dataURI) {
-      const byteString = atob(dataURI.split(",")[1]);
-      const mimeString = dataURI
-        .split(",")[0]
-        .split(":")[1]
-        .split(";")[0];
-      const ab = new ArrayBuffer(byteString.length);
-      const ia = new Uint8Array(ab);
-      for (var i = 0; i < byteString.length; i++) {
-        ia[i] = byteString.charCodeAt(i);
-      }
-      const bb = new Blob([ab], { type: mimeString });
-      return bb;
+    /**
+     * upload fail
+     *
+     * [param] status    server api return error status, like 500
+     * [param] field
+     */
+    cropUploadFail(status, field) {
+      console.log("-------- upload fail --------");
+      console.log(status);
+      console.log("field: " + field);
     }
   }
 };

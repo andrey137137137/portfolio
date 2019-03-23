@@ -145,7 +145,7 @@ export default {
       this.submitData = {
         title: this.title,
         link: this.link,
-        image: this.image ? this.image.name : "gyjgfhjfgh",
+        image: this.image ? this.image.name : "",
         techs: this.techs.map(item => item.name)
       };
     },

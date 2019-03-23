@@ -1,7 +1,8 @@
 import Vue from "vue";
+// import VueRx from "vue-rx";
+// import VuejsClipper from "vuejs-clipper";
 import Vuelidate from "vuelidate";
 import axios from "axios";
-import VuejsClipper from "vuejs-clipper";
 
 import interceptor from "../api/interceptor";
 
@@ -11,8 +12,9 @@ import router from "@/router";
 
 interceptor(axios);
 
+// Vue.use(VueRx);
+// Vue.use(VuejsClipper);
 Vue.use(Vuelidate);
-Vue.use(VuejsClipper);
 
 // Vue.config.productionTip = false;
 

@@ -22,7 +22,7 @@
     //-   img.result(:src="resultURL" alt="")
     a.btn(@click="toggleShow") set avatar
     my-upload(
-      field="img"
+      field="image"
       @crop-success="cropSuccess"
       @crop-upload-success="cropUploadSuccess"
       @crop-upload-fail="cropUploadFail"
@@ -35,15 +35,27 @@
       img-format="jpg")
     img(:src="imgDataUrl")
       //- :headers="headers"
+    MultipleElem(
+      :vals="$v.contacts.$each.$iter"
+      :items="contacts"
+      :fields="contactFields"
+      :propTemplate="contactTemplate")
 </template>
 
 <script>
 // import axios from "axios";
+import {
+  required
+  // alphaNum,
+  // minValue,
+  // maxValue
+} from "vuelidate/lib/validators";
 import upload from "@backend/mixins/upload";
 // import { clipperBasic, clipperPreview } from "vuejs-clipper";
 import myUpload from "vue-image-crop-upload";
 // import PictureInput from "vue-picture-input";
 import PageWrapper from "@backCmp/PageWrapper";
+import MultipleElem from "@components/FormElems/MultipleElem";
 import ButtonElem from "@components/FormElems/ButtonElem";
 
 export default {
@@ -54,6 +66,7 @@ export default {
     "my-upload": myUpload,
     PageWrapper,
     // PictureInput,
+    MultipleElem,
     ButtonElem
   },
   mixins: [upload],
@@ -69,8 +82,49 @@ export default {
       headers: {
         smail: "*_~"
       },
-      imgDataUrl: "" // the datebase64 url of created image
+      imgDataUrl: "", // the datebase64 url of created image
+      contacts: [
+        {
+          name: "git",
+          value: "andrey137137137",
+          icon: "git"
+        }
+      ],
+      contactFields: [
+        {
+          name: "name",
+          type: "text",
+          placeholder: "Контакт"
+        },
+        {
+          name: "value",
+          type: "text",
+          placeholder: "Значение"
+        },
+        {
+          name: "icon",
+          type: "text",
+          placeholder: "Иконка"
+        }
+      ],
+      contactTemplate: { name: "", value: "", icon: "" }
     };
+  },
+  validations: {
+    contacts: {
+      required,
+      $each: {
+        name: {
+          required
+        },
+        value: {
+          required
+        },
+        icon: {
+          required
+        }
+      }
+    }
   },
   methods: {
     // changeImage() {
@@ -121,7 +175,7 @@ export default {
      * [param] imgDataUrl
      * [param] field
      */
-    cropSuccess(imgDataUrl) {
+    cropSuccess(imgDataUrl, field) {
       console.log("-------- crop success --------");
       this.imgDataUrl = imgDataUrl;
     },

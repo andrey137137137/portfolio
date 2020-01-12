@@ -1,7 +1,7 @@
 <template lang="pug">
   FullPageWrapper
     TopWrapper
-      SliderCmp(:items="dbData")
+      //- SliderCmp(:items="dbData")
     BottomWrapper(:addClasses="bottomWrapClass")
       CommentCmp(:items="dbData")
       FeedbackForm

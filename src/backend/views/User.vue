@@ -175,10 +175,10 @@ export default {
      * [param] imgDataUrl
      * [param] field
      */
-    cropSuccess(imgDataUrl, field) {
-      console.log("-------- crop success --------");
-      this.imgDataUrl = imgDataUrl;
-    },
+    // cropSuccess(imgDataUrl, field) {
+    //   console.log("-------- crop success --------");
+    //   this.imgDataUrl = imgDataUrl;
+    // },
     /**
      * upload success
      *

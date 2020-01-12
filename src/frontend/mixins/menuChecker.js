@@ -17,8 +17,8 @@ export default {
           visibleMenuItem: "menu__link-visible"
         },
         delay: 700,
-        itemDelay: 200,
-        process: false
+        itemDelay: 200
+        // process: false
       }
     };
   },
@@ -29,8 +29,8 @@ export default {
       checkerClasses,
       menuClasses,
       delay,
-      itemDelay,
-      process
+      itemDelay
+      // process
     } = $vm.menuChecker;
 
     $(document).ready(() => {
@@ -39,18 +39,21 @@ export default {
       $("#menu_checker").click(function(event) {
         event.preventDefault();
 
-        if (process) {
-          return;
-        }
+        // if (process) {
+        //   return;
+        // }
 
         let $checker = $(this);
+        console.log(checkerClasses);
 
         if ($checker.hasClass(checkerClasses.open)) {
           itemDelay = 200;
 
           $menu
             .queue(function() {
-              $checker.toggleClass([checkerClasses.open, checkerClasses.close]);
+              $checker.toggleClass(
+                `${checkerClasses.open} ${checkerClasses.close}`
+              );
               $(this).dequeue();
             })
             .queue(function() {
@@ -83,7 +86,9 @@ export default {
 
           $menu
             .queue(function() {
-              $checker.toggleClass([checkerClasses.close, checkerClasses.open]);
+              $checker.toggleClass(
+                `${checkerClasses.close} ${checkerClasses.open}`
+              );
               $(this).dequeue();
             })
             .queue(function() {
@@ -108,16 +113,16 @@ export default {
             })
             .delay(delay)
             .queue(function() {
-              $menu.removeClass([
-                menuClasses.visibleBg,
-                menuClasses.opened,
-                menuClasses.hidden
-              ]);
+              $menu.removeClass(`
+              ${menuClasses.visibleBg}
+              ${menuClasses.opened}
+              ${menuClasses.hidden}
+            `);
               $(this).dequeue();
             });
         }
 
-        process = false;
+        // process = false;
       });
     });
   }

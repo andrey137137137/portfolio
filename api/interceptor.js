@@ -3,9 +3,7 @@ const myConfig = require("./config");
 module.exports = function(axios) {
   axios.interceptors.request.use(
     config => {
-      config.baseURL = `${myConfig.server.protocol}://${myConfig.server.host}:${
-        myConfig.server.port
-      }/db/`;
+      config.baseURL = `${myConfig.server.protocol}://${myConfig.server.host}:${myConfig.server.port}/db/`;
       console.log(config.baseURL);
       config.timeout = 5000;
       config.headers = { "Content-Type": "application/json" };

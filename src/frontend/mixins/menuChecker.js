@@ -4,6 +4,7 @@ export default {
   data() {
     return {
       menuChecker: {
+        $checker: null,
         $menu: null,
         checkerClasses: {
           open: "header__menu_checker-open",
@@ -17,34 +18,40 @@ export default {
           visibleMenuItem: "menu__link-visible"
         },
         delay: 700,
-        itemDelay: 200
-        // process: false
+        itemDelay: 200,
+        process: false
       }
     };
   },
   mounted() {
-    const $vm = this;
-    let {
-      $menu,
-      checkerClasses,
-      menuClasses,
-      delay,
-      itemDelay
-      // process
-    } = $vm.menuChecker;
+    this.$nextTick(() => {
+      const $vm = this;
 
-    $(document).ready(() => {
-      $menu = $("#main_menu");
+      $vm.menuChecker.$checker = $("body").find("#menu_checker");
+      $vm.menuChecker.$menu = $("body").find("#main_menu");
 
-      $("#menu_checker").click(function(event) {
+      let {
+        $checker,
+        $menu,
+        checkerClasses,
+        menuClasses,
+        delay,
+        itemDelay,
+        process
+      } = $vm.menuChecker;
+
+      console.log("Menu");
+      console.log($checker);
+      console.log($menu);
+
+      // $(document).ready(() => {
+
+      $checker.click(function(event) {
         event.preventDefault();
 
-        // if (process) {
-        //   return;
-        // }
-
-        let $checker = $(this);
-        console.log(checkerClasses);
+        if (process) {
+          return;
+        }
 
         if ($checker.hasClass(checkerClasses.open)) {
           itemDelay = 200;
@@ -122,8 +129,17 @@ export default {
             });
         }
 
-        // process = false;
+        process = false;
       });
+      // });
     });
+  },
+  beforeDestroy() {
+    this.menuChecker.$checker.off("click");
+    this.menuChecker.$checker.remove();
+    this.menuChecker.$menu.remove();
+    console.log("Menu destroyed");
+    console.log(this.menuChecker.$checker);
+    console.log(this.menuChecker.$menu);
   }
 };

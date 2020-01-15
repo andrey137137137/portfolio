@@ -1,6 +1,6 @@
 .DS_Store
 node_modules
-/dist
+dist
 api/config.json
 public
 public/upload
@@ -25,3 +25,5 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw*
+
+package-lock.json

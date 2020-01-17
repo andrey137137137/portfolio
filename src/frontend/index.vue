@@ -1,61 +1,79 @@
 <template lang="pug">
-  transition(name="fade")
-    div(:class="classes")
-      //- PreloaderCmp
-      ParallaxCmp
-      HeaderWrapper(v-if="config.isContent")
-        NavCmp
+  HeaderWrapper
+    a#flip_2_back.btn.btn-opacity.authorization(href="#login") Авторизоваться
+    #flip_container.container.header__container.header__container-framed
+      .header__flip_wrap
         HeaderContent
-        ScrollButton
-      router-view
-      FooterWrapper
-      MainMenu(v-if="config.isContent")
+        NavCmp
+      LoginForm(:addClasses="formClasses")
 </template>
 
 <script>
-import menuChecker from "@frontend/mixins/menuChecker";
-import PreloaderCmp from "@frontCmp/PageWrapper/PreloaderCmp";
-import ParallaxCmp from "@frontCmp/PageWrapper/ParallaxCmp";
-import HeaderWrapper from "@frontCmp/Header/HeaderWrapper";
-import NavCmp from "@frontCmp/NavCmp";
-import HeaderContent from "@frontCmp/Header/HeaderContent";
-import ScrollButton from "@frontCmp/ScrollButton";
-import FooterWrapper from "@frontCmp/FooterWrapper";
-import MainMenu from "@frontCmp/NavCmp/MainMenu";
+import $ from "jQuery";
 
-import { createNamespacedHelpers } from "vuex";
-const { mapGetters } = createNamespacedHelpers("frontView");
+import PageWrapper from "@frontCmp/PageWrapper";
+import HeaderWrapper from "@frontCmp/Header/HeaderWrapper";
+import HeaderContent from "@frontCmp/Header/HeaderContent";
+import NavCmp from "@frontCmp/NavCmp";
+import LoginForm from "@frontCmp/Forms/LoginForm";
+import FooterWrapper from "@frontCmp/FooterWrapper";
+
+// import { createNamespacedHelpers } from "vuex";
+// const { mapActions } = createNamespacedHelpers("frontView");
 
 export default {
-  name: "SiteApp",
+  name: "Home",
   components: {
-    PreloaderCmp,
-    ParallaxCmp,
+    PageWrapper,
     HeaderWrapper,
-    NavCmp,
     HeaderContent,
-    ScrollButton,
-    FooterWrapper,
-    MainMenu
+    NavCmp,
+    LoginForm,
+    FooterWrapper
   },
-  mixins: [menuChecker],
-  computed: {
-    ...mapGetters(["config"]),
-    classes() {
-      return {
-        full_screen: !this.config.isContent,
-        main_wrap: this.config.isContent
-      };
-    }
+  data() {
+    return {
+      $flipBtn: null,
+      $container: null,
+      // btnHiddenClass: "authorization-hidden",
+      flippedClass: "header__container-flipped",
+      formClasses: {
+        header__flip_wrap: true,
+        "header__flip_wrap-back": true
+      }
+    };
+  },
+  // methods: {
+  //   ...mapActions(["setConfig"])
+  // },
+  // created() {
+  //   this.setConfig({
+  //     name: "Главная"
+  //   });
+  // },
+  mounted() {
+    const $vm = this;
+
+    $(document).ready(() => {
+      $vm.$flipBtn = $("#flip_2_back");
+      $vm.$container = $("#flip_container");
+
+      $vm.$flipBtn.click(function(event) {
+        event.preventDefault();
+
+        $vm.$flipBtn.fadeOut();
+        $vm.$container.addClass($vm.flippedClass);
+      });
+
+      $("#flip_2_front").click(function(event) {
+        event.preventDefault();
+
+        $vm.$container.removeClass($vm.flippedClass);
+        $vm.$flipBtn.fadeIn();
+      });
+    });
   }
 };
 </script>
 
-<style lang="scss">
-@import "@frontStyles/common.scss";
-@import "@frontStylesCmp/preloader.scss";
-@import "@frontStylesCmp/parallax.scss";
-@import "@frontStylesCmp/header.scss";
-@import "@frontStylesCmp/socialMenu.scss";
-@import "@frontStylesCmp/footer.scss";
-</style>
+<style lang="scss" src="@frontStylesPgs/Home.scss"></style>

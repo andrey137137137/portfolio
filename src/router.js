@@ -20,20 +20,20 @@ function pageConfig(config, dbPage = "") {
 
 export default new VueRouter({
   mode: "history",
-  // base: process.env.BASE_URL,
+  base: process.env.BASE_URL,
   routes: [
     {
       path: "/",
-      component: () => import("@frontend"),
+      name: "home",
+      props: () => {
+        pageConfig({ name: "Главная" });
+      },
+      component: () => import("@frontend")
+    },
+    {
+      path: "/",
+      component: () => import("@frontViews"),
       children: [
-        {
-          path: "/",
-          name: "home",
-          props: () => {
-            pageConfig({ name: "Главная" });
-          },
-          component: () => import("@frontViews/Home.vue")
-        },
         {
           path: "/works",
           name: "works",
@@ -66,8 +66,7 @@ export default new VueRouter({
           // route level code-splitting
           // this generates a separate chunk (about.[hash].js) for this route
           // which is lazy-loaded when the route is visited.
-          component: () =>
-            import(/* webpackChunkName: "about" */ "@frontViews/About.vue")
+          component: () => import("@frontViews/About.vue")
         },
         {
           path: "/blog",

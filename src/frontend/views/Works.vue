@@ -1,5 +1,5 @@
 <template lang="pug">
-  FullPageWrapper
+  div
     TopWrapper
       SliderCmp(:items="dbData")
     BottomWrapper(:addClasses="bottomWrapClass")

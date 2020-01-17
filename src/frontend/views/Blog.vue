@@ -1,5 +1,5 @@
 <template lang="pug">
-  FullPageWrapper
+  div
     TopWrapper
       aside.tabs
         #scroll_menu.container.tabs__container

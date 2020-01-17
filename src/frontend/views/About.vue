@@ -1,5 +1,5 @@
 <template lang="pug">
-  FullPageWrapper
+  div
     TopWrapper
       SectionWrapper(
         name="about"

@@ -23,12 +23,67 @@ export default {
       }
     };
   },
+  methods: {
+    closeMenu() {
+      let {
+        $checker,
+        $menu,
+        checkerClasses,
+        menuClasses,
+        delay,
+        itemDelay
+      } = this.menuChecker;
+
+      if ($checker.hasClass(checkerClasses.close)) {
+        itemDelay = 100;
+
+        $menu
+          .queue(function() {
+            $checker.toggleClass(
+              `${checkerClasses.close} ${checkerClasses.open}`
+            );
+            $(this).dequeue();
+          })
+          .queue(function() {
+            var delay = 0;
+
+            $menu.find("." + menuClasses.item).each(function() {
+              $(this)
+                .delay(delay)
+                .queue(function() {
+                  $(this).removeClass(menuClasses.visibleMenuItem);
+                  $(this).dequeue();
+                });
+
+              delay += itemDelay;
+            });
+            $(this).dequeue();
+          })
+          .delay(delay + itemDelay)
+          .queue(function() {
+            $menu.addClass(menuClasses.hidden);
+            $(this).dequeue();
+          })
+          .delay(delay)
+          .queue(function() {
+            $menu.removeClass(`
+          ${menuClasses.visibleBg}
+          ${menuClasses.opened}
+          ${menuClasses.hidden}
+        `);
+            $(this).dequeue();
+          });
+      }
+    }
+  },
   mounted() {
-    this.$nextTick(() => {
+    this.$nextTick(function() {
       const $vm = this;
 
       $vm.menuChecker.$checker = $("body").find("#menu_checker");
       $vm.menuChecker.$menu = $("body").find("#main_menu");
+
+      $vm.closeMenu();
 
       let {
         $checker,
@@ -45,6 +100,11 @@ export default {
       console.log($menu);
 
       // $(document).ready(() => {
+
+      // $menu.find("menu__link").click(function(event) {
+      //   event.preventDefault();
+      //   $vm.closeMenu();
+      // });
 
       $checker.click(function(event) {
         event.preventDefault();
@@ -88,45 +148,8 @@ export default {
               });
               $(this).dequeue();
             });
-        } else if ($checker.hasClass(checkerClasses.close)) {
-          itemDelay = 100;
-
-          $menu
-            .queue(function() {
-              $checker.toggleClass(
-                `${checkerClasses.close} ${checkerClasses.open}`
-              );
-              $(this).dequeue();
-            })
-            .queue(function() {
-              var delay = 0;
-
-              $menu.find("." + menuClasses.item).each(function() {
-                $(this)
-                  .delay(delay)
-                  .queue(function() {
-                    $(this).removeClass(menuClasses.visibleMenuItem);
-                    $(this).dequeue();
-                  });
-
-                delay += itemDelay;
-              });
-              $(this).dequeue();
-            })
-            .delay(delay + itemDelay)
-            .queue(function() {
-              $menu.addClass(menuClasses.hidden);
-              $(this).dequeue();
-            })
-            .delay(delay)
-            .queue(function() {
-              $menu.removeClass(`
-              ${menuClasses.visibleBg}
-              ${menuClasses.opened}
-              ${menuClasses.hidden}
-            `);
-              $(this).dequeue();
-            });
+        } else {
+          $vm.closeMenu();
         }
 
         process = false;
@@ -134,12 +157,19 @@ export default {
       // });
     });
   },
-  beforeDestroy() {
-    this.menuChecker.$checker.off("click");
-    this.menuChecker.$checker.remove();
-    this.menuChecker.$menu.remove();
-    console.log("Menu destroyed");
-    console.log(this.menuChecker.$checker);
-    console.log(this.menuChecker.$menu);
+  updated() {
+    this.$nextTick(function() {
+      // Код, который будет запущен только после
+      // обновления всех представлений
+      this.closeMenu();
+    });
   }
+  // beforeDestroy() {
+  //   this.menuChecker.$checker.off("click");
+  //   this.menuChecker.$checker.remove();
+  //   this.menuChecker.$menu.remove();
+  //   console.log("Menu destroyed");
+  //   console.log(this.menuChecker.$checker);
+  //   console.log(this.menuChecker.$menu);
+  // }
 };

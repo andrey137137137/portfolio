@@ -1,9 +1,9 @@
 <template lang="pug">
   div
     TopWrapper
-      SliderCmp(:items="dbData")
+      SliderCmp(:slides="slides")
     BottomWrapper(:addClasses="bottomWrapClass")
-      CommentCmp(:items="dbData")
+      //- CommentCmp(:items="dbData")
       FeedbackForm
 </template>
 
@@ -33,6 +33,19 @@ export default {
         "bottom_wrap-bg": true
       }
     };
+  },
+  computed: {
+    slides() {
+      let obj = [];
+
+      for (const key in this.dbData) {
+        if (this.dbData.hasOwnProperty(key)) {
+          obj.push(this.dbData[key]);
+        }
+      }
+
+      return obj;
+    }
   }
 };
 </script>

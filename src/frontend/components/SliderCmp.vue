@@ -1,13 +1,14 @@
 <template lang="pug">
   SectionWrapper(:name="id" :isFullWidth="true" :isOwnContainerClass="true")
+
+    ul.menu
+      li.menu__item(v-for="item in slides") item.title
+
     ul.slider__demo
       transition(:name="transitionName")
         li.img_wrap.slider__item.slider__demo_item(:key="curIndex")
           img.img_wrap__img(src="demoImg" alt="")
           .slider__item_number.slider__demo_item_number {{curIndex + 1}}
-
-    ul.menu
-      li.menu__item(v-for="item in items") {{item.title}}
 
     article.slider__text_wrap
       AnimateStr(
@@ -17,16 +18,16 @@
         :commonKey="curIndex"
         :addClasses="titleClasses"
       )
-      AnimateStr(
-        transitionName="slider__techs"
-        rootElem="p"
-        :str="techs"
-        :commonKey="curIndex"
-        :addClasses="techsClasses"
-      )
-      a.clearfix.btn.slider__btn(:href="link" target="_blank")
-        span.icon.icon-link.slider__btn_icon
-        span.slider__btn_text Посмотреть сайт
+    AnimateStr(
+      transitionName="slider__techs"
+      rootElem="p"
+      :str="techs"
+      :commonKey="curIndex"
+      :addClasses="techsClasses"
+    )
+    a.clearfix.btn.slider__btn(:href="link" target="_blank")
+      span.icon.icon-link.slider__btn_icon
+      span.slider__btn_text Посмотреть сайт
 
     .clearfix.slider__nav
       a.icon.icon-chevron_down.slider__arrow.slider__arrow-prev(
@@ -65,7 +66,7 @@ export default {
     AnimateStr
   },
   props: {
-    items: {
+    slides: {
       // type: Array,
       required: true
     },
@@ -75,11 +76,14 @@ export default {
     }
   },
   data() {
+    console.log("Slider");
+    console.log(this.slides);
+
     return {
       transitionMethod: "scroll_up",
       duration: 500,
       curIndex: 0,
-      count: this.items.length,
+      // count: this.slides.length,
       titleClasses: {
         section__title: true,
         "section__title-uppercase": true,
@@ -97,25 +101,25 @@ export default {
       return `slider__item-${this.transitionMethod}`;
     },
     demoImg() {
-      // return getImg(this.items[this.curIndex].image, images);
-      return "/upload/slider/" + this.items[this.curIndex].image;
+      // return getImg(this.slides[this.curIndex].image, images);
+      return "/upload/slider/" + this.slides[this.curIndex].image;
     },
     prevImg() {
-      // return getImg(this.items[this.getPrevIndex()].image, images);
-      return "/upload/slider/" + this.items[this.getPrevIndex()].image;
+      // return getImg(this.slides[this.getPrevIndex()].image, images);
+      return "/upload/slider/" + this.slides[this.getPrevIndex()].image;
     },
     nextImg() {
-      // return getImg(this.items[this.getNextIndex()].image, images);
-      return "/upload/slider/" + this.items[this.getNextIndex()].image;
+      // return getImg(this.slides[this.getNextIndex()].image, images);
+      return "/upload/slider/" + this.slides[this.getNextIndex()].image;
     },
     title() {
-      return this.items[this.curIndex].title;
+      return this.slides[this.curIndex].title;
     },
     techs() {
-      return this.items[this.curIndex].techs.join(", ");
+      return this.slides[this.curIndex].techs.join(", ");
     },
     link() {
-      return this.items[this.curIndex].link;
+      return this.slides[this.curIndex].link;
     }
   },
   methods: {
@@ -123,13 +127,15 @@ export default {
       let tempIndex = this.curIndex - 1;
 
       if (tempIndex < 0) {
-        return this.count - 1;
+        // return this.count - 1;
+        return this.slides.length - 1;
       }
 
       return tempIndex;
     },
     getNextIndex() {
-      return (this.curIndex + 1) % this.count;
+      // return (this.curIndex + 1) % this.count;
+      return (this.curIndex + 1) % this.slides.length;
     },
     handlePrev() {
       this.curIndex = this.getPrevIndex();
@@ -139,9 +145,6 @@ export default {
       this.curIndex = this.getNextIndex();
       this.transitionMethod = "scroll_up";
     }
-  },
-  created() {
-    console.log(this.items.map((item, index) => item[index].title));
   }
 };
 </script>

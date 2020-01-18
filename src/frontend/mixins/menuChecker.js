@@ -95,9 +95,9 @@ export default {
         process
       } = $vm.menuChecker;
 
-      console.log("Menu");
-      console.log($checker);
-      console.log($menu);
+      // console.log("Menu");
+      // console.log($checker);
+      // console.log($menu);
 
       // $(document).ready(() => {
 

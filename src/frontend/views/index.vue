@@ -1,7 +1,5 @@
 <template lang="pug">
-  div(:class="classes")
-    //- PreloaderCmp
-    //- ParallaxCmp
+  PageWrapper
     HeaderWrapper
       NavCmp
       HeaderContent
@@ -13,8 +11,7 @@
 
 <script>
 import menuChecker from "@frontend/mixins/menuChecker";
-import PreloaderCmp from "@frontCmp/PageWrapper/PreloaderCmp";
-import ParallaxCmp from "@frontCmp/PageWrapper/ParallaxCmp";
+import PageWrapper from "@frontCmp/PageWrapper";
 import HeaderWrapper from "@frontCmp/Header/HeaderWrapper";
 import NavCmp from "@frontCmp/NavCmp";
 import HeaderContent from "@frontCmp/Header/HeaderContent";
@@ -22,14 +19,10 @@ import ScrollButton from "@frontCmp/ScrollButton";
 import FooterWrapper from "@frontCmp/FooterWrapper";
 import MainMenu from "@frontCmp/NavCmp/MainMenu";
 
-import { createNamespacedHelpers } from "vuex";
-const { mapGetters } = createNamespacedHelpers("frontView");
-
 export default {
   name: "SiteApp",
   components: {
-    PreloaderCmp,
-    ParallaxCmp,
+    PageWrapper,
     HeaderWrapper,
     NavCmp,
     HeaderContent,
@@ -37,24 +30,6 @@ export default {
     FooterWrapper,
     MainMenu
   },
-  mixins: [menuChecker],
-  computed: {
-    ...mapGetters(["config"]),
-    classes() {
-      return {
-        full_screen: !this.config.isContent,
-        main_wrap: this.config.isContent
-      };
-    }
-  }
+  mixins: [menuChecker]
 };
 </script>
-
-<style lang="scss">
-@import "@frontStyles/common.scss";
-@import "@frontStylesCmp/preloader.scss";
-@import "@frontStylesCmp/parallax.scss";
-@import "@frontStylesCmp/header.scss";
-@import "@frontStylesCmp/socialMenu.scss";
-@import "@frontStylesCmp/footer.scss";
-</style>

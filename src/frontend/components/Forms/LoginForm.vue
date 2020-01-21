@@ -1,5 +1,6 @@
 <template lang="pug">
   FormWrapper#login_form.login_form(
+    action="/admin"
     :class="addClasses"
     @submit.prevent.native="handleSubmit")
 
@@ -98,6 +99,11 @@ export default {
     },
     notRobot: {
       required
+    }
+  },
+  methods: {
+    handleSubmit() {
+      return true;
     }
   }
 };

@@ -63,7 +63,7 @@
 
 // import getImg from "@common/helpers/getImg";
 import SectionWrapper from "@frontCmp/SectionWrapper";
-import AnimateStr from "@frontCmp/AnimateStr";
+import AnimateStr from "./AnimateStr";
 
 export default {
   name: "SliderCmp",

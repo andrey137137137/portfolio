@@ -88,15 +88,15 @@ export default {
     },
     navElem(h) {
       return h("div", { class: "menu" }, [
-        h("a", {
+        h("button", {
           class: "btn",
           on: { click: this.removeItem },
-          domProps: { innerHTML: "Remove" }
+          domProps: { type: "button", innerHTML: "Remove" }
         }),
-        h("a", {
+        h("button", {
           class: "btn",
           on: { click: this.addItem },
-          domProps: { innerHTML: "Add" }
+          domProps: { type: "button", innerHTML: "Add" }
         })
       ]);
     }

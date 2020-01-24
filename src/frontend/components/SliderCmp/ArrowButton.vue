@@ -1,8 +1,8 @@
 <template lang="pug">
-  a(href="" :class="classes" @click.prevent="handle")
+  a(href="#" :class="classes" @click.prevent="handle")
     transition(:name="transitionName")
-      .img_wrap.slider__item(:key="curIndex")
-        img.img_wrap__img(src="newImg" :alt="curIndex + 1")
+      .img_wrap.slider__item(:key="index")
+        img.img_wrap__img(src="newImg" :alt="index + 1")
         .slider__item_number.slider__arrow_number {{this.newIndex + 1}}
 </template>
 
@@ -14,16 +14,24 @@ export default {
       type: Array,
       required: true
     },
+    index: {
+      type: Number,
+      required: true
+    },
+    handle: {
+      type: Function,
+      required: true
+    },
     isNext: {
       type: Boolean,
       default: true
     }
   },
-  data() {
-    return {
-      curIndex: 0
-    };
-  },
+  // data() {
+  //   return {
+  //     index: 0
+  //   };
+  // },
   computed: {
     classes() {
       return {
@@ -41,10 +49,10 @@ export default {
     },
     newIndex() {
       if (this.isNext) {
-        return (this.curIndex + 1) % this.slides.length;
+        return (this.index + 1) % this.slides.length;
       }
 
-      const tempIndex = this.curIndex - 1;
+      const tempIndex = this.index - 1;
 
       if (tempIndex < 0) {
         return this.slides.length - 1;
@@ -55,17 +63,17 @@ export default {
     newImg() {
       return "/upload/slider/" + this.slides[this.newIndex].image;
     }
-  },
-  methods: {
-    handle() {
-      this.curIndex = this.newIndex;
-
-      if (this.isNext) {
-        this.$emit.transitionMethod = "scroll_up";
-      } else {
-        this.$emit.transitionMethod = "scroll_down";
-      }
-    }
   }
+  // methods: {
+  //   handle() {
+  //     this.index = this.newIndex;
+
+  //     if (this.isNext) {
+  //       this.$emit("transition-method", "scroll_up");
+  //     } else {
+  //       this.$emit("transition-method", "scroll_down");
+  //     }
+  //   }
+  // }
 };
 </script>

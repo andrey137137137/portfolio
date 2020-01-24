@@ -28,31 +28,39 @@
       :commonKey="curIndex"
       :addClasses="techsClasses"
     )
-    a.clearfix.btn.slider__btn(
-      :href="link"
-      target="_blank"
-    )
+    a.clearfix.btn.slider__btn(:href="link" target="_blank")
       span.icon.icon-link.slider__btn_icon
       span.slider__btn_text Посмотреть сайт
 
     .clearfix.slider__nav
-      a.icon.icon-chevron_down.slider__arrow.slider__arrow-prev(
-        href=""
-        @click.prevent="handlePrev"
+      ArrowButton(
+        :slides="slides"
+        :index="curIndex"
+        :handle="handlePrev"
+        :isNext="false"
       )
-        transition(name="slider__arrow-scroll_down")
-          .img_wrap.slider__item(:key="curIndex")
-            img.img_wrap__img(src="prevImg" :alt="curIndex + 1")
-            .slider__item_number.slider__arrow_number {{this.getPrevIndex() + 1}}
+      ArrowButton(
+        :slides="slides"
+        :index="curIndex"
+        :handle="handleNext"
+      )
+      //- a.icon.icon-chevron_down.slider__arrow.slider__arrow-prev(
+      //-   href=""
+      //-   @click.prevent="handlePrev"
+      //- )
+      //-   transition(name="slider__arrow-scroll_down")
+      //-     .img_wrap.slider__item(:key="curIndex")
+      //-       img.img_wrap__img(src="prevImg" :alt="curIndex + 1")
+      //-       .slider__item_number.slider__arrow_number this.getPrevIndex() + 1}}
 
-      a.icon.icon-chevron_up.slider__arrow.slider__arrow-next(
-        href=""
-        @click.prevent="handleNext"
-      )
-        transition(name="slider__arrow-scroll_up")
-          .img_wrap.slider__item(:key="curIndex")
-            img.img_wrap__img(src="nextImg" :alt="curIndex + 1")
-            .slider__item_number.slider__arrow_number {{this.getNextIndex() + 1}}
+      //- a.icon.icon-chevron_up.slider__arrow.slider__arrow-next(
+      //-   href=""
+      //-   @click.prevent="handleNext"
+      //- )
+      //-   transition(name="slider__arrow-scroll_up")
+      //-     .img_wrap.slider__item(:key="curIndex")
+      //-       img.img_wrap__img(src="nextImg" :alt="curIndex + 1")
+      //-       .slider__item_number.slider__arrow_number this.getNextIndex() + 1}}
 </template>
 
 <script>
@@ -64,12 +72,14 @@
 // import getImg from "@common/helpers/getImg";
 import SectionWrapper from "@frontCmp/SectionWrapper";
 import AnimateStr from "./AnimateStr";
+import ArrowButton from "./ArrowButton";
 
 export default {
   name: "SliderCmp",
   components: {
     SectionWrapper,
-    AnimateStr
+    AnimateStr,
+    ArrowButton
   },
   props: {
     slides: {
@@ -151,6 +161,9 @@ export default {
       this.curIndex = this.getNextIndex();
       this.transitionMethod = "scroll_up";
     }
+    // handleTransition(method) {
+    //   this.transitionMethod = method;
+    // }
   }
 };
 </script>

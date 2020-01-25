@@ -34,15 +34,17 @@
 
     .clearfix.slider__nav
       ArrowButton(
-        :slides="slides"
         :index="curIndex"
+        :newIndex="prevIndex"
         :handle="handlePrev"
+        :imgSrc="prevImg"
         :isNext="false"
       )
       ArrowButton(
-        :slides="slides"
         :index="curIndex"
+        :newIndex="nextIndex"
         :handle="handleNext"
+        :imgSrc="nextImg"
       )
       //- a.icon.icon-chevron_down.slider__arrow.slider__arrow-prev(
       //-   href=""
@@ -51,7 +53,7 @@
       //-   transition(name="slider__arrow-scroll_down")
       //-     .img_wrap.slider__item(:key="curIndex")
       //-       img.img_wrap__img(src="prevImg" :alt="curIndex + 1")
-      //-       .slider__item_number.slider__arrow_number this.getPrevIndex() + 1}}
+      //-       .slider__item_number.slider__arrow_number prevIndex + 1}}
 
       //- a.icon.icon-chevron_up.slider__arrow.slider__arrow-next(
       //-   href=""
@@ -60,7 +62,7 @@
       //-   transition(name="slider__arrow-scroll_up")
       //-     .img_wrap.slider__item(:key="curIndex")
       //-       img.img_wrap__img(src="nextImg" :alt="curIndex + 1")
-      //-       .slider__item_number.slider__arrow_number this.getNextIndex() + 1}}
+      //-       .slider__item_number.slider__arrow_number nextIndex + 1}}
 </template>
 
 <script>
@@ -92,9 +94,6 @@ export default {
     }
   },
   data() {
-    // console.log("Slider");
-    // console.log(this.$props.slides);
-
     return {
       transitionMethod: "scroll_up",
       duration: 500,
@@ -116,17 +115,31 @@ export default {
     transitionName() {
       return `slider__item-${this.transitionMethod}`;
     },
+    prevIndex() {
+      let tempIndex = this.curIndex - 1;
+
+      if (tempIndex < 0) {
+        // return this.count - 1;
+        return this.slides.length - 1;
+      }
+
+      return tempIndex;
+    },
+    nextIndex() {
+      // return (this.curIndex + 1) % this.count;
+      return (this.curIndex + 1) % this.slides.length;
+    },
     demoImg() {
       // return getImg(this.slides[this.curIndex].image, images);
       return "/upload/slider/" + this.slides[this.curIndex].image;
     },
     prevImg() {
-      // return getImg(this.slides[this.getPrevIndex()].image, images);
-      return "/upload/slider/" + this.slides[this.getPrevIndex()].image;
+      // return getImg(this.slides[this.prevIndex].image, images);
+      return "/upload/slider/" + this.slides[this.prevIndex].image;
     },
     nextImg() {
-      // return getImg(this.slides[this.getNextIndex()].image, images);
-      return "/upload/slider/" + this.slides[this.getNextIndex()].image;
+      // return getImg(this.slides[this.nextIndex()].image, images);
+      return "/upload/slider/" + this.slides[this.nextIndex].image;
     },
     title() {
       return this.slides[this.curIndex].title;
@@ -139,31 +152,14 @@ export default {
     }
   },
   methods: {
-    getPrevIndex() {
-      let tempIndex = this.curIndex - 1;
-
-      if (tempIndex < 0) {
-        // return this.count - 1;
-        return this.slides.length - 1;
-      }
-
-      return tempIndex;
-    },
-    getNextIndex() {
-      // return (this.curIndex + 1) % this.count;
-      return (this.curIndex + 1) % this.slides.length;
-    },
     handlePrev() {
-      this.curIndex = this.getPrevIndex();
+      this.curIndex = this.prevIndex;
       this.transitionMethod = "scroll_down";
     },
     handleNext() {
-      this.curIndex = this.getNextIndex();
+      this.curIndex = this.nextIndex;
       this.transitionMethod = "scroll_up";
     }
-    // handleTransition(method) {
-    //   this.transitionMethod = method;
-    // }
   }
 };
 </script>

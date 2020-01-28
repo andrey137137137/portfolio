@@ -1,14 +1,14 @@
 <template lang="pug">
   SectionWrapper(:name="id" :isFullWidth="true" :isOwnContainerClass="true")
 
+    ul.menu(style="display:none")
+      li.menu__item(v-for="item in slides") {{item.title}}
+
     ul.slider__demo
       transition(:name="transitionName")
         li.img_wrap.slider__item.slider__demo_item(:key="curIndex")
-          img.img_wrap__img(src="demoImg" alt="")
+          img.img_wrap__img(:src="demoImg" :alt="title")
           .slider__item_number.slider__demo_item_number {{curIndex + 1}}
-
-    ul.menu
-      li.menu__item(v-for="item in slides") {{item.title}}
 
     article.slider__text_wrap
       AnimateStr(

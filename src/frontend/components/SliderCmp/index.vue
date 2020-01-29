@@ -1,7 +1,7 @@
 <template lang="pug">
   SectionWrapper(:name="id" :isFullWidth="true" :isOwnContainerClass="true")
 
-    ul.menu(style="display:none")
+    ul.menu
       li.menu__item(v-for="item in slides") {{item.title}}
 
     ul.slider__demo
@@ -86,7 +86,23 @@ export default {
   props: {
     slides: {
       type: Array,
-      required: true
+      // required: true,
+      default() {
+        return [
+          {
+            image: "test1.jpg",
+            link: "http://test1.link/",
+            techs: ["html 1", "css 1", "js 1"],
+            title: "Test Title 1"
+          },
+          {
+            image: "test2.jpg",
+            link: "http://test2.link/",
+            techs: ["html 2", "css 2", "js 2"],
+            title: "Test Title 2"
+          }
+        ];
+      }
     },
     id: {
       type: String,

@@ -112,9 +112,10 @@ export default {
   data() {
     return {
       transitionMethod: "scroll_up",
-      duration: 500,
+      duration: 3000,
       curIndex: 0,
       // count: this.slides.length,
+      intervalID: null,
       titleClasses: {
         section__title: true,
         "section__title-uppercase": true,
@@ -168,14 +169,34 @@ export default {
     }
   },
   methods: {
+    changeSlide(direction = 1) {
+      if (direction < 0) {
+        this.curIndex = this.prevIndex;
+        this.transitionMethod = "scroll_down";
+      } else {
+        this.curIndex = this.nextIndex;
+        this.transitionMethod = "scroll_up";
+      }
+    },
+    resetInterval(direction = 1) {
+      const $vm = this;
+
+      clearInterval(this.intervalID);
+      this.intervalID = setInterval(() => {
+        $vm.changeSlide(direction);
+      }, $vm.duration);
+    },
     handlePrev() {
-      this.curIndex = this.prevIndex;
-      this.transitionMethod = "scroll_down";
+      this.changeSlide(-1);
+      this.resetInterval(-1);
     },
     handleNext() {
-      this.curIndex = this.nextIndex;
-      this.transitionMethod = "scroll_up";
+      this.changeSlide();
+      this.resetInterval();
     }
+  },
+  created() {
+    this.resetInterval();
   }
 };
 </script>

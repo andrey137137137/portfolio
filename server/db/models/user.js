@@ -22,7 +22,7 @@ const UserSchema = new Schema({
     type: String,
     required: [true, "Укажите описание картинки"]
   },
-  login: {
+  userName: {
     type: String,
     required: [true, "Укажите описание картинки"]
   },

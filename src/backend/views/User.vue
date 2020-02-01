@@ -1,52 +1,74 @@
 <template lang="pug">
   PageWrapper(title="Личные данные")
-    //- button
-    //-   clipper-upload(v-model="imgURL" accept="image/jpeg") upload image
-    //- button(@click="uploadImage") clip image
-    //- clipper-fixed.my-clipper(
-    //-   ref="clipper"
-    //-   :src="imgURL"
-    //-   preview="my-preview"
-    //-   :ratio="1"
-    //-   :round="true"
-    //- )
-    //-   div.placeholder(slot="placeholder") No image
-    //- div
-    //-   clipper-range
-    //- div
-    //-   div preview:
-    //-   clipperPreview.my-clipper(name="my-preview")
-    //-     div.placeholder(slot="placeholder") preview area
-    //- div
-    //-   div result:
-    //-   img.result(:src="resultURL" alt="")
-    a.btn(@click="toggleShow") set avatar
-    my-upload(
-      field="image"
-      @crop-success="cropSuccess"
-      @crop-upload-success="cropUploadSuccess"
-      @crop-upload-fail="cropUploadFail"
-      v-model="show"
-      :width="141"
-      :height="141"
-      :url="getUploadPage('avatar')"
-      :params="params"
-      langType="ru"
-      img-format="jpg")
-    img(:src="imgDataUrl")
-      //- :headers="headers"
-    MultipleElem(
-      :vals="$v.contacts.$each.$iter"
-      :items="contacts"
-      :fields="contactFields"
-      :propTemplate="contactTemplate")
+    ItemForm(
+      :handleSubmit="submit"
+      :handleDelete="removeItem"
+      :id="id"
+      :disabled="disabled"
+    )
+      //- button
+      //-   clipper-upload(v-model="imgURL" accept="image/jpeg") upload image
+      //- button(@click="uploadImage") clip image
+      //- clipper-fixed.my-clipper(
+      //-   ref="clipper"
+      //-   :src="imgURL"
+      //-   preview="my-preview"
+      //-   :ratio="1"
+      //-   :round="true"
+      //- )
+      //-   div.placeholder(slot="placeholder") No image
+      //- div
+      //-   clipper-range
+      //- div
+      //-   div preview:
+      //-   clipperPreview.my-clipper(name="my-preview")
+      //-     div.placeholder(slot="placeholder") preview area
+      //- div
+      //-   div result:
+      //-   img.result(:src="resultURL" alt="")
+      a.btn(@click="toggleShow") set avatar
+      my-upload(
+        field="image"
+        @crop-success="cropSuccess"
+        @crop-upload-success="cropUploadSuccess"
+        @crop-upload-fail="cropUploadFail"
+        v-model="show"
+        :width="141"
+        :height="141"
+        :url="getUploadPage('avatar')"
+        :params="params"
+        langType="ru"
+        img-format="jpg")
+      img(:src="imgDataUrl")
+        //- :headers="headers"
+      InputEventElem(
+        v-model="firstName"
+        :val="$v.firstName"
+        placeholder="Имя")
+      InputEventElem(
+        v-model="lastName"
+        :val="$v.lastName"
+        placeholder="Фамилия")
+      InputEventElem(
+        v-model="userName"
+        :val="$v.userName"
+        placeholder="Логин")
+      InputEventElem(
+        v-model="password"
+        :val="$v.password"
+        placeholder="Пароль")
+      MultipleElem(
+        :vals="$v.contacts.$each.$iter"
+        :items="contacts"
+        :fields="contactFields"
+        :propTemplate="contactTemplate")
 </template>
 
 <script>
 // import axios from "axios";
 import {
-  required
-  // alphaNum,
+  required,
+  alphaNum
   // minValue,
   // maxValue
 } from "vuelidate/lib/validators";
@@ -54,7 +76,10 @@ import upload from "@backend/mixins/upload";
 // import { clipperBasic, clipperPreview } from "vuejs-clipper";
 import myUpload from "vue-image-crop-upload";
 // import PictureInput from "vue-picture-input";
+import form from "@backend/mixins/form";
 import PageWrapper from "@backCmp/PageWrapper";
+import ItemForm from "@backCmp/Forms/ItemForm";
+import InputEventElem from "@components/FormElems/InputEventElem";
 import MultipleElem from "@components/FormElems/MultipleElem";
 import ButtonElem from "@components/FormElems/ButtonElem";
 
@@ -65,11 +90,13 @@ export default {
     // clipperPreview,
     "my-upload": myUpload,
     PageWrapper,
+    ItemForm,
+    InputEventElem,
     // PictureInput,
     MultipleElem,
     ButtonElem
   },
-  mixins: [upload],
+  mixins: [upload, form],
   data() {
     return {
       // imgURL: "",
@@ -83,6 +110,10 @@ export default {
         smail: "*_~"
       },
       imgDataUrl: "", // the datebase64 url of created image
+      firstName: "",
+      lastName: "",
+      userName: "",
+      password: "",
       contacts: [
         {
           name: "git",
@@ -111,6 +142,19 @@ export default {
     };
   },
   validations: {
+    firstName: {
+      required
+    },
+    lastName: {
+      required
+    },
+    userName: {
+      required
+    },
+    password: {
+      required,
+      alphaNum
+    },
     contacts: {
       required,
       $each: {

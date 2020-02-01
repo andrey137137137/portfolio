@@ -169,3 +169,42 @@ module.exports.updateSlide = function(req, res) {
 module.exports.deleteSlide = function(req, res) {
   deleteItem("slide", req.params.id, res);
 };
+
+module.exports.getUser = function(req, res) {
+  getItems("user", res);
+};
+
+module.exports.createUser = function(req, res) {
+  createItem(
+    "user",
+    {
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      userName: req.body.userName,
+      password: req.body.password,
+      avatar: req.body.avatar,
+      contacts: req.body.contacts
+    },
+    res
+  );
+};
+
+module.exports.updateUser = function(req, res) {
+  updateItem(
+    "user",
+    req.params.id,
+    {
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      userName: req.body.userName,
+      password: req.body.password,
+      avatar: req.body.avatar,
+      contacts: req.body.contacts
+    },
+    res
+  );
+};
+
+module.exports.deleteUser = function(req, res) {
+  deleteItem("user", req.params.id, res);
+};

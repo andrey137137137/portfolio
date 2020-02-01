@@ -178,17 +178,17 @@ export default {
         this.transitionMethod = "scroll_up";
       }
     },
-    resetInterval(direction = 1) {
+    resetInterval() {
       const $vm = this;
 
       clearInterval(this.intervalID);
       this.intervalID = setInterval(() => {
-        $vm.changeSlide(direction);
+        $vm.changeSlide();
       }, $vm.duration);
     },
     handlePrev() {
       this.changeSlide(-1);
-      this.resetInterval(-1);
+      this.resetInterval();
     },
     handleNext() {
       this.changeSlide();

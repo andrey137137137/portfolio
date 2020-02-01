@@ -2,7 +2,7 @@
   FormWrapper#login_form.login_form(
     action="/admin"
     :class="addClasses"
-    @submit.prevent.native="handleSubmit")
+    @submit.native="handleSubmit")
 
     .login_form__top_wrap
       h2.section__title.section__title-uppercase.login_form__title Авторизуйтесь
@@ -45,7 +45,7 @@
               .form__error(v-show="!$v.notRobot.required") form__error
 
     .menu.header__menu.header__menu-float.form__menu.login_form__menu
-      a#flip_2_front.menu__link.btn(href="index.html") На главную
+      a#flip_2_front.menu__link.btn(href="#") На главную
       input.menu__link.btn(type="submit", value="Войти")
       //- li.menu__item.menu__item-for_main
       //-   a#flip_2_front.menu__link.btn(href="index.html") На главную
@@ -61,7 +61,7 @@ import {
   maxLength
 } from "vuelidate/lib/validators";
 import { checked } from "@common/helpers/validators";
-import addClasses from "@/common/mixins/addClasses";
+import addClasses from "@common/mixins/addClasses";
 import FormWrapper from "@components/FormElems/FormWrapper";
 import InputEventElem from "@components/FormElems/InputEventElem";
 import ChangeEventElem from "@components/FormElems/ChangeEventElem";
@@ -103,6 +103,8 @@ export default {
   },
   methods: {
     handleSubmit() {
+      console.log("oergkjergjfdjidosf");
+
       return true;
     }
   }

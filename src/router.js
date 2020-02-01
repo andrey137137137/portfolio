@@ -26,12 +26,15 @@ export default new VueRouter({
       path: "/",
       name: "home",
       props: () => {
-        pageConfig({ name: "Главная" });
+        pageConfig({ name: "Главная" }, "user");
       },
       component: () => import("@frontend")
     },
     {
       path: "/",
+      // props: () => {
+      //   setDbPage("user");
+      // },
       component: () => import("@frontViews"),
       children: [
         {
@@ -107,7 +110,7 @@ export default new VueRouter({
         {
           path: "user",
           props: () => {
-            setDbPage("");
+            setDbPage("user");
           },
           component: () => import("@backViews/User.vue")
         },

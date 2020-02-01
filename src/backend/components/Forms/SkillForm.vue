@@ -38,7 +38,6 @@ import {
   minValue,
   maxValue
 } from "vuelidate/lib/validators";
-import exist from "@common/helpers/exist";
 import form from "@backend/mixins/form";
 import ItemForm from "@backCmp/Forms/ItemForm";
 import InputEventElem from "@components/FormElems/InputEventElem";
@@ -76,11 +75,12 @@ export default {
     return {
       ...data,
       category: this.item.category,
-      items: exist("items", this.item)
-        ? this.item.items.map(item => {
-            return { name: item.name, percents: item.percents };
-          })
-        : []
+      // items: exist("items", this.item)
+      //   ? this.item.items.map(item => {
+      //       return { name: item.name, percents: item.percents };
+      //     })
+      //   : [],
+      items: this.getMultipleArray(this.item, "items", data.propTemplate)
     };
   },
   validations: {
@@ -127,9 +127,10 @@ export default {
     prepareData() {
       this.submitData = {
         category: this.category,
-        items: this.items.map(item => {
-          return { name: item.name, percents: item.percents };
-        })
+        // items: this.items.map(item => {
+        //   return { name: item.name, percents: item.percents };
+        // }),
+        items: this.cloneMultipleArray(this.items, this.propTemplate)
       };
     }
   }

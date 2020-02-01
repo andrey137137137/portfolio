@@ -94,6 +94,8 @@ export default {
   },
   mixins: [upload, form],
   data() {
+    const contactTemplate = { name: "", value: "", icon: "" };
+
     return {
       // imgURL: "",
       // resultURL: "",
@@ -106,17 +108,11 @@ export default {
         smail: "*_~"
       },
       imgDataUrl: "", // the datebase64 url of created image
-      firstName: "",
-      lastName: "",
-      userName: "",
+      firstName: this.item.firstName,
+      lastName: this.item.lastName,
+      userName: this.item.userName,
       password: "",
-      contacts: [
-        {
-          name: "git",
-          value: "andrey137137137",
-          icon: "git"
-        }
-      ],
+      contacts: this.item.contacts,
       contactFields: [
         {
           name: "name",
@@ -134,7 +130,7 @@ export default {
           placeholder: "Иконка"
         }
       ],
-      contactTemplate: { name: "", value: "", icon: "" }
+      contactTemplate
     };
   },
   validations: {
@@ -173,7 +169,7 @@ export default {
         lastName: this.lastName,
         userName: this.userName,
         password: this.password,
-        contacts: this.contacts.map(item => item.name)
+        contacts: this.cloneMultipleArray(this.contacts, this.contactTemplate)
       };
     },
     // changeImage() {

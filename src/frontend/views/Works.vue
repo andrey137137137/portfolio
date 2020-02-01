@@ -1,7 +1,6 @@
 <template lang="pug">
   div
     TopWrapper
-      SliderCmp
       SliderCmp(:slides="slides")
       swiper(:options="swiperOption")
         swiper-slide I'm Slide 1

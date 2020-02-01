@@ -1,3 +1,4 @@
+import exist from "@common/helpers/exist";
 import { mapActions } from "vuex";
 
 export default {
@@ -29,13 +30,29 @@ export default {
 
       if (
         confirm(
-          `Вы уверены, что хотите удалить ${this.removeTitle}: "${
-            this.removeValue
-          }"?`
+          `Вы уверены, что хотите удалить ${this.removeTitle}: "${this.removeValue}"?`
         )
       ) {
         this.deleteData(this.id);
       }
+    },
+    cloneMultipleArray(array, props) {
+      return array.map(item => {
+        const object = {};
+
+        for (const key in props) {
+          if (props.hasOwnProperty(key)) {
+            object[key] = item[key];
+          }
+        }
+
+        return object;
+      });
+    },
+    getMultipleArray(root, arrayKey, props) {
+      return exist(arrayKey, root)
+        ? this.cloneMultipleArray(root[arrayKey], props)
+        : [];
     },
     defaultFields() {
       return {};

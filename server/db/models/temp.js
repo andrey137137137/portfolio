@@ -4,39 +4,8 @@ const jwt = require("jsonwebtoken");
 
 const { Schema } = mongoose;
 
-const ContactSchema = new Schema({
-  icon: {
-    type: String
-  },
-  name: {
-    type: String
-  },
-  value: {
-    type: String
-  }
-});
-
 const UserSchema = new Schema({
-  firstName: {
-    type: String,
-    required: [true, "Укажите описание картинки"]
-  },
-  lastName: {
-    type: String,
-    required: [true, "Укажите описание картинки"]
-  },
-  userName: {
-    type: String,
-    required: [true, "Укажите описание картинки"]
-  },
-  // password: {
-  //   type: String,
-  //   required: [true, "Укажите описание картинки"]
-  // },
-  contacts: {
-    type: Array,
-    children: [ContactSchema]
-  },
+  email: String,
   hash: String,
   salt: String
 });

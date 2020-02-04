@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 
+router.use("/api", require("./api"));
+
 const ctrlCrud = require("../controllers/crud");
 const ctrlAvatar = require("../controllers/avatar");
 

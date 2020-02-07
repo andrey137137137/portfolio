@@ -1,11 +1,12 @@
 const mongoose = require("mongoose");
+// const self = this;
 let Model;
 
 function setModel(model) {
   Model = mongoose.model(model);
 }
 
-function getItems(model, res) {
+module.exports.getItems = function(model, res) {
   setModel(model);
   Model.find()
     .then(items => {
@@ -16,9 +17,9 @@ function getItems(model, res) {
         status: "При чтении записей произошла ошибка: " + err
       });
     });
-}
+};
 
-function createItem(model, data, res) {
+module.exports.createItem = function(model, data, res) {
   setModel(model);
   // создаем новую запись блога и передаем в нее поля из формы
   const item = new Model(data);
@@ -34,9 +35,9 @@ function createItem(model, data, res) {
         status: "При добавление записи произошла ошибка: " + err
       });
     });
-}
+};
 
-function updateItem(model, id, data, res) {
+module.exports.updateItem = function(model, id, data, res) {
   setModel(model);
   Model.findByIdAndUpdate(id, { $set: data })
     .then(item => {
@@ -51,9 +52,9 @@ function updateItem(model, id, data, res) {
         status: "При обновлении записи произошла ошибка: " + err
       });
     });
-}
+};
 
-function deleteItem(model, id, res) {
+module.exports.deleteItem = function(model, id, res) {
   setModel(model);
   Model.findByIdAndRemove(id).then(
     item => {
@@ -69,142 +70,142 @@ function deleteItem(model, id, res) {
       });
     }
   );
-}
-
-module.exports.getPosts = function(req, res) {
-  getItems("post", res);
 };
 
-module.exports.createPost = function(req, res) {
-  createItem(
-    "post",
-    {
-      title: req.body.title,
-      date: new Date(),
-      body: req.body.text
-    },
-    res
-  );
-};
+// module.exports.getPosts = function(req, res) {
+//   self.getItems("post", res);
+// };
 
-module.exports.updatePost = function(req, res) {
-  updateItem(
-    "post",
-    req.params.id,
-    {
-      title: req.body.title,
-      date: new Date(req.body.date),
-      body: req.body.text
-    },
-    res
-  );
-};
+// module.exports.createPost = function(req, res) {
+//   self.createItem(
+//     "post",
+//     {
+//       title: req.body.title,
+//       date: new Date(),
+//       body: req.body.text
+//     },
+//     res
+//   );
+// };
 
-module.exports.deletePost = function(req, res) {
-  deleteItem("post", req.params.id, res);
-};
+// module.exports.updatePost = function(req, res) {
+//   self.updateItem(
+//     "post",
+//     req.params.id,
+//     {
+//       title: req.body.title,
+//       date: new Date(req.body.date),
+//       body: req.body.text
+//     },
+//     res
+//   );
+// };
 
-module.exports.getSkills = function(req, res) {
-  getItems("skill", res);
-};
+// module.exports.deletePost = function(req, res) {
+//   self.deleteItem("post", req.params.id, res);
+// };
 
-module.exports.createSkill = function(req, res) {
-  createItem(
-    "skill",
-    {
-      category: req.body.category,
-      items: req.body.items
-    },
-    res
-  );
-};
+// module.exports.getSkills = function(req, res) {
+//   self.getItems("skill", res);
+// };
 
-module.exports.updateSkill = function(req, res) {
-  updateItem(
-    "skill",
-    req.params.id,
-    {
-      category: req.body.category,
-      items: req.body.items
-    },
-    res
-  );
-};
+// module.exports.createSkill = function(req, res) {
+//   self.createItem(
+//     "skill",
+//     {
+//       category: req.body.category,
+//       items: req.body.items
+//     },
+//     res
+//   );
+// };
 
-module.exports.deleteSkill = function(req, res) {
-  deleteItem("skill", req.params.id, res);
-};
+// module.exports.updateSkill = function(req, res) {
+//   self.updateItem(
+//     "skill",
+//     req.params.id,
+//     {
+//       category: req.body.category,
+//       items: req.body.items
+//     },
+//     res
+//   );
+// };
 
-module.exports.getSlides = function(req, res) {
-  getItems("slide", res);
-};
+// module.exports.deleteSkill = function(req, res) {
+//   self.deleteItem("skill", req.params.id, res);
+// };
 
-module.exports.createSlide = function(req, res) {
-  createItem(
-    "slide",
-    {
-      title: req.body.title,
-      link: req.body.link,
-      image: req.body.image,
-      techs: req.body.techs
-    },
-    res
-  );
-};
+// module.exports.getSlides = function(req, res) {
+//   self.getItems("slide", res);
+// };
 
-module.exports.updateSlide = function(req, res) {
-  updateItem(
-    "slide",
-    req.params.id,
-    {
-      title: req.body.title,
-      link: req.body.link,
-      image: req.body.image,
-      techs: req.body.techs
-    },
-    res
-  );
-};
+// module.exports.createSlide = function(req, res) {
+//   self.createItem(
+//     "slide",
+//     {
+//       title: req.body.title,
+//       link: req.body.link,
+//       image: req.body.image,
+//       techs: req.body.techs
+//     },
+//     res
+//   );
+// };
 
-module.exports.deleteSlide = function(req, res) {
-  deleteItem("slide", req.params.id, res);
-};
+// module.exports.updateSlide = function(req, res) {
+//   self.updateItem(
+//     "slide",
+//     req.params.id,
+//     {
+//       title: req.body.title,
+//       link: req.body.link,
+//       image: req.body.image,
+//       techs: req.body.techs
+//     },
+//     res
+//   );
+// };
 
-module.exports.getUser = function(req, res) {
-  getItems("user", res);
-};
+// module.exports.deleteSlide = function(req, res) {
+//   self.deleteItem("slide", req.params.id, res);
+// };
 
-module.exports.createUser = function(req, res) {
-  createItem(
-    "user",
-    {
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      userName: req.body.userName,
-      password: req.body.password,
-      avatar: req.body.avatar,
-      contacts: req.body.contacts
-    },
-    res
-  );
-};
+// module.exports.getUser = function(req, res) {
+//   self.getItems("user", res);
+// };
 
-module.exports.updateUser = function(req, res) {
-  updateItem(
-    "user",
-    req.params.id,
-    {
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      userName: req.body.userName,
-      password: req.body.password,
-      avatar: req.body.avatar,
-      contacts: req.body.contacts
-    },
-    res
-  );
-};
+// module.exports.createUser = function(req, res) {
+//   self.createItem(
+//     "user",
+//     {
+//       firstName: req.body.firstName,
+//       lastName: req.body.lastName,
+//       userName: req.body.userName,
+//       password: req.body.password,
+//       avatar: req.body.avatar,
+//       contacts: req.body.contacts
+//     },
+//     res
+//   );
+// };
 
-module.exports.deleteUser = function(req, res) {
-  deleteItem("user", req.params.id, res);
-};
+// module.exports.updateUser = function(req, res) {
+//   self.updateItem(
+//     "user",
+//     req.params.id,
+//     {
+//       firstName: req.body.firstName,
+//       lastName: req.body.lastName,
+//       userName: req.body.userName,
+//       password: req.body.password,
+//       avatar: req.body.avatar,
+//       contacts: req.body.contacts
+//     },
+//     res
+//   );
+// };
+
+// module.exports.deleteUser = function(req, res) {
+//   self.deleteItem("user", req.params.id, res);
+// };

@@ -26,8 +26,8 @@ router.post("/avatar", ctrlUpload.avatar);
 router.post("/slider", ctrlUpload.slider);
 router.post("/comments", ctrlUpload.comments);
 
-router.get("*", (req, res) => {
-  res.status(404).json({ msg: "Not found", err: 404 });
-});
+// router.get("*", (req, res) => {
+//   res.status(404).json({ msg: "Not found", err: 404 });
+// });
 
 module.exports = router;

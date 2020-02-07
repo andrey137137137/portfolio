@@ -64,24 +64,24 @@ if (!isProduction) {
 
 //Error handlers & middlewares
 if (!isProduction) {
-  app.use((err, req, res) => {
+  app.use((err, req, res, next) => {
     // set locals, only providing error in development
+    console.log(err);
     res.locals.message = err.message;
     res.locals.error = req.app.get("env") === "development" ? err : {};
     console.log(res.locals.error);
-
     // render the error page
     res.status(err.status || 500);
     res.render("error");
   });
 }
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  var err = new Error("Not Found");
-  err.status = 404;
-  next(err);
-});
+// // catch 404 and forward to error handler
+// app.use(function(req, res, next) {
+//   var err = new Error("Not Found");
+//   err.status = 404;
+//   next(err);
+// });
 
 app.listen(process.env.PORT || config.server.port, () => {
   console.log(`server is running on port: ${config.server.port}`);

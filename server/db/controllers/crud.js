@@ -1,13 +1,13 @@
-const mongoose = require("mongoose");
+// const mongoose = require("mongoose");
 // const self = this;
-let Model;
+// let Model;
 
-function setModel(model) {
-  Model = mongoose.model(model);
-}
+// function setModel(model) {
+//   Model = mongoose.model(model);
+// }
 
-module.exports.getItems = function(model, res) {
-  setModel(model);
+module.exports.getItems = function(Model, res) {
+  // setModel(model);
   Model.find()
     .then(items => {
       res.status(200).json({ items });
@@ -19,8 +19,8 @@ module.exports.getItems = function(model, res) {
     });
 };
 
-module.exports.createItem = function(model, data, res) {
-  setModel(model);
+module.exports.createItem = function(Model, data, res) {
+  // setModel(model);
   // создаем новую запись блога и передаем в нее поля из формы
   const item = new Model(data);
   // сохраняем запись в базе
@@ -37,8 +37,8 @@ module.exports.createItem = function(model, data, res) {
     });
 };
 
-module.exports.updateItem = function(model, id, data, res) {
-  setModel(model);
+module.exports.updateItem = function(Model, id, data, res) {
+  // setModel(model);
   Model.findByIdAndUpdate(id, { $set: data })
     .then(item => {
       if (item) {
@@ -54,8 +54,8 @@ module.exports.updateItem = function(model, id, data, res) {
     });
 };
 
-module.exports.deleteItem = function(model, id, res) {
-  setModel(model);
+module.exports.deleteItem = function(Model, id, res) {
+  // setModel(model);
   Model.findByIdAndRemove(id).then(
     item => {
       if (item) {

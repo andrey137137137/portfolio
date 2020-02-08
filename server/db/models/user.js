@@ -29,10 +29,10 @@ const UserSchema = new Schema({
     type: String,
     required: [true, "Укажите описание картинки"]
   },
-  // password: {
-  //   type: String,
-  //   required: [true, "Укажите описание картинки"]
-  // },
+  password: {
+    type: String
+    // required: [true, "Укажите описание картинки"]
+  },
   contacts: {
     type: Array,
     children: [ContactSchema]

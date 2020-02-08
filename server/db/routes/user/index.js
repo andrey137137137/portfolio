@@ -2,8 +2,8 @@
 const router = require("express").Router();
 const Model = require("mongoose").model("user");
 
-// const auth = require("./auth");
-const ctrlCrud = require("../../controllers/crud");
+const auth = require("../api/auth");
+const crud = require("../api/crud");
 
 // //POST new user route (optional, everyone has access)
 // router.post("/", auth.optional, (req, res, next) => {
@@ -36,27 +36,26 @@ const ctrlCrud = require("../../controllers/crud");
 //     .then(() => res.json({ user: finalUser.toAuthJSON() }));
 // });
 
-router.get("/", (req, res) => {
-  ctrlCrud.getItems(Model, res);
+router.get("/", auth.optional, (req, res) => {
+  crud.getItems(Model, res);
 }); // READ
 
-router.post("/", (req, res) => {
-  ctrlCrud.createItem(
+router.post("/", auth.required, (req, res) => {
+  crud.createItem(
     Model,
     {
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       userName: req.body.userName,
       password: req.body.password,
-      avatar: req.body.avatar,
       contacts: req.body.contacts
     },
     res
   );
 }); // CREATE
 
-router.put("/:id", (req, res) => {
-  ctrlCrud.updateItem(
+router.put("/:id", auth.required, (req, res) => {
+  crud.updateItem(
     Model,
     req.params.id,
     {
@@ -64,15 +63,14 @@ router.put("/:id", (req, res) => {
       lastName: req.body.lastName,
       userName: req.body.userName,
       password: req.body.password,
-      avatar: req.body.avatar,
       contacts: req.body.contacts
     },
     res
   );
 }); // UPDATE
 
-router.delete("/:id", (req, res) => {
-  ctrlCrud.deleteItem(Model, req.params.id, res);
+router.delete("/:id", auth.required, (req, res) => {
+  crud.deleteItem(Model, req.params.id, res);
 }); // DELETE
 
 // //POST login route (optional, everyone has access)

@@ -25,21 +25,21 @@
     //- div
     //-   div result:
     //-   img.result(:src="resultURL" alt="")
-    a.btn(@click="toggleShow") set avatar
-    my-upload(
-      field="image"
-      @crop-success="cropSuccess"
-      @crop-upload-success="cropUploadSuccess"
-      @crop-upload-fail="cropUploadFail"
-      v-model="show"
-      :width="141"
-      :height="141"
-      :url="getUploadPage('avatar')"
-      :params="params"
-      langType="ru"
-      img-format="jpg")
-    img(:src="imgDataUrl")
-      //- :headers="headers"
+    //- a.btn(@click="toggleShow") set avatar
+    //- my-upload(
+    //-   field="image"
+    //-   @crop-success="cropSuccess"
+    //-   @crop-upload-success="cropUploadSuccess"
+    //-   @crop-upload-fail="cropUploadFail"
+    //-   v-model="show"
+    //-   :width="141"
+    //-   :height="141"
+    //-   :url="getUploadPage('avatar')"
+    //-   :params="params"
+    //-   langType="ru"
+    //-   img-format="jpg")
+    //- img(:src="imgDataUrl")
+    //-   //- :headers="headers"
     InputEventElem(
       v-model="firstName"
       :val="$v.firstName"
@@ -86,7 +86,7 @@ export default {
   components: {
     // clipperBasic,
     // clipperPreview,
-    "my-upload": myUpload,
+    // "my-upload": myUpload,
     ItemForm,
     InputEventElem,
     // PictureInput,

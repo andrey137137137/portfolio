@@ -1,14 +1,15 @@
 const router = require("express").Router();
 const Model = require("mongoose").model("slide");
 
-const ctrlCrud = require("../../controllers/crud");
+const auth = require("../api/auth");
+const crud = require("../api/crud");
 
 router.get("/", (req, res) => {
-  ctrlCrud.getItems(Model, res);
+  crud.getItems(Model, res);
 }); // READ
 
 router.post("/", (req, res) => {
-  ctrlCrud.createItem(
+  crud.createItem(
     Model,
     {
       title: req.body.title,
@@ -21,7 +22,7 @@ router.post("/", (req, res) => {
 }); // CREATE
 
 router.put("/:id", (req, res) => {
-  ctrlCrud.updateItem(
+  crud.updateItem(
     Model,
     req.params.id,
     {
@@ -35,7 +36,7 @@ router.put("/:id", (req, res) => {
 }); // UPDATE
 
 router.delete("/:id", (req, res) => {
-  ctrlCrud.deleteItem(Model, req.params.id, res);
+  crud.deleteItem(Model, req.params.id, res);
 }); // DELETE
 
 module.exports = router;

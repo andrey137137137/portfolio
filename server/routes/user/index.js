@@ -2,8 +2,8 @@
 const router = require("express").Router();
 const Model = require("mongoose").model("user");
 
-const auth = require("../api/auth");
-const crud = require("../api/crud");
+const auth = require("../auth");
+const crud = require("../../controllers/crud");
 
 // //POST new user route (optional, everyone has access)
 // router.post("/", auth.optional, (req, res, next) => {

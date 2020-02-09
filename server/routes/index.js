@@ -1,10 +1,10 @@
 const router = require("express").Router();
 
-const ctrlUpload = require("../controllers/upload");
-
-router.post("/avatar", ctrlUpload.avatar);
-router.post("/slider", ctrlUpload.slider);
-router.post("/comments", ctrlUpload.comments);
+router.use("/image", require("./image"));
+router.use("/slide", require("./slide"));
+router.use("/skill", require("./skill"));
+router.use("/post", require("./post"));
+router.use("/user", require("./user"));
 
 // router.get("*", (req, res) => {
 //   res.status(404).json({ msg: "Not found", err: 404 });

@@ -5,8 +5,8 @@ const session = require("express-session");
 const cors = require("cors");
 const axios = require("axios");
 const config = require("../api/config");
-require("./db/db");
-const mongoose = require("mongoose");
+require("./db");
+// const mongoose = require("mongoose");
 const errorHandler = require("errorhandler");
 
 //Configure isProduction variable
@@ -14,11 +14,10 @@ const isProduction = process.env.NODE_ENV === "production";
 
 //Initiate our app
 const app = express();
-const index = require("./routes/index");
-const indexDB = require("./db/routes/index");
-const interceptor = require("../api/interceptor");
+// const index = require("./routes/index");
+// const interceptor = require("../api/interceptor");
 
-interceptor(axios);
+require("../api/interceptor")(axios);
 
 app.use(async (req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", ["*"]);
@@ -55,8 +54,7 @@ app.use(
 //   res.sendFile(path.join(__dirname, "admin", "index.html"));
 // });
 
-app.use("/db", indexDB);
-app.use("/", index);
+app.use("/", require("./routes/index"));
 
 if (!isProduction) {
   app.use(errorHandler());

@@ -8,7 +8,7 @@ export default {
   },
   methods: {
     getUploadPage(page) {
-      return `${this.uploadHost}/${page}`;
+      return `${this.uploadHost}/image/${page}`;
     }
   }
 };

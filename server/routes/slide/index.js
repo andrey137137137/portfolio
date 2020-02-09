@@ -1,8 +1,8 @@
 const router = require("express").Router();
 const Model = require("mongoose").model("slide");
 
-const auth = require("../api/auth");
-const crud = require("../api/crud");
+const auth = require("../auth");
+const crud = require("../../controllers/crud");
 
 router.get("/", (req, res) => {
   crud.getItems(Model, res);

@@ -1,8 +1,11 @@
+import axios from "axios";
+
 import {
   AUTH_LOGIN,
   AUTH_SUCCESS,
   AUTH_ERROR,
-  AUTH_LOGOUT
+  AUTH_LOGOUT,
+  USER_SUCCESS
 } from "@common/store/mutation-types";
 
 const mocks = {
@@ -41,7 +44,8 @@ export default {
       return new Promise((resolve, reject) => {
         // The Promise used for router redirect in login
         commit(AUTH_LOGIN);
-        axios({ url: "auth", data: user, method: "POST" })
+        axios
+          .post("auth", user)
           .then(resp => {
             const token = resp.data.token;
             localStorage.setItem("user-token", token); // store the token in localstorage
@@ -53,7 +57,7 @@ export default {
               .catch(() => {
                 commit(AUTH_ERROR);
                 // if resp is unauthorized, logout, to
-                dispatch(AUTH_LOGOUT);
+                dispatch("logout");
               });
             commit(AUTH_SUCCESS, token);
             resolve(resp);
@@ -65,7 +69,7 @@ export default {
           });
       });
     },
-    logout: ({ commit, dispatch }) => {
+    logout: ({ commit }) => {
       return new Promise((resolve, reject) => {
         commit(AUTH_LOGOUT);
         localStorage.removeItem("user-token"); // clear your user's token from localstorage

@@ -4,7 +4,8 @@ import axios from "axios";
 
 Vue.use(Vuex);
 
-import * as types from "@common/store/common-mutation-types";
+import { SET, SETPAGE, ADD, DELETE } from "@common/store/mutation-types";
+import auth from "@common/store/modules/auth";
 import frontView from "@common/store/modules/frontView";
 import comments from "@common/store/modules/comments";
 // import works from "@common/store/data/works";
@@ -55,16 +56,16 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-    [types.SETPAGE](state, page) {
+    [SETPAGE](state, page) {
       state.data.page = page;
     },
-    [types.SET](state, data) {
+    [SET](state, data) {
       state.data.items = data;
     },
-    [types.ADD](state, newItem) {
+    [ADD](state, newItem) {
       state.data.items.push(newItem);
     },
-    [types.DELETE](state, id) {
+    [DELETE](state, id) {
       state.data.items = state.data.items.filter(item => item.id !== id);
     }
   },

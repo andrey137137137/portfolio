@@ -1,4 +1,4 @@
-import { SET } from "@common/store/common-mutation-types";
+import { SET } from "@common/store/mutation-types";
 
 const defaultData = {
   name: "",

@@ -1,0 +1,9 @@
+export const SET = "set";
+export const SETPAGE = "setPage";
+export const ADD = "add";
+export const DELETE = "delete";
+export const AUTH_LOGIN = "login";
+export const AUTH_SUCCESS = "success";
+export const AUTH_ERROR = "error";
+export const AUTH_LOGOUT = "logout";
+export const USER_SUCCESS = "userSuccess";

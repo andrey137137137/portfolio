@@ -10,8 +10,8 @@
       InputEventElem(
         wrapClass="icon_label"
         label="Пользователь"
-        v-model="name"
-        :val="$v.name"
+        v-model="userName"
+        :val="$v.userName"
         placeholder="Пользователь")
 
       InputEventElem(
@@ -76,14 +76,14 @@ export default {
   mixins: [addClasses],
   data() {
     return {
-      name: "",
+      userName: "",
       password: "",
       isHuman: false,
       notRobot: ""
     };
   },
   validations: {
-    name: {
+    userName: {
       required,
       alphaNum,
       minLength: minLength(7)
@@ -102,7 +102,25 @@ export default {
     }
   },
   methods: {
+    getToken(user) {
+      new Promise((resolve, reject) => {
+        axios({ url: "auth", data: user, method: "POST" })
+          .then(resp => {
+            const token = resp.data.token;
+            localStorage.setItem("user-token", token); // store the token in localstorage
+            resolve(resp);
+          })
+          .catch(err => {
+            localStorage.removeItem("user-token"); // if the request fails, remove any possible user token if possible
+            reject(err);
+          });
+      });
+    },
     handleSubmit() {
+      if (this.$v.$invalid) {
+        return false;
+      }
+
       console.log("oergkjergjfdjidosf");
 
       return true;

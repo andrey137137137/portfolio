@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import * as types from "@common/store/common-mutation-types";
+import { SET, ADD, DELETE } from "@common/store/mutation-types";
 import reviews from "@common/store/data/reviews.json";
 
 const dbPage = "comment";
@@ -46,13 +46,13 @@ export default {
     }
   },
   mutations: {
-    [types.SET](state, data) {
+    [SET](state, data) {
       state.data = data;
     },
-    [types.ADD](state, newItem) {
+    [ADD](state, newItem) {
       state.data.push(newItem);
     },
-    [types.DELETE](state, id) {
+    [DELETE](state, id) {
       state.data = state.data.filter(item => item.id !== id);
     }
   }

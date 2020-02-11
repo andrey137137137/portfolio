@@ -4,11 +4,11 @@ const Model = require("mongoose").model("post");
 const auth = require("../auth");
 const crud = require("../../controllers/crud");
 
-router.get("/", (req, res) => {
+router.get("/", auth.optional, (req, res) => {
   crud.getItems(Model, res);
 }); // READ
 
-router.post("/", (req, res) => {
+router.post("/", auth.required, (req, res) => {
   crud.createItem(
     Model,
     {
@@ -20,7 +20,7 @@ router.post("/", (req, res) => {
   );
 }); // CREATE
 
-router.put("/:id", (req, res) => {
+router.put("/:id", auth.required, (req, res) => {
   crud.updateItem(
     Model,
     req.params.id,
@@ -33,7 +33,7 @@ router.put("/:id", (req, res) => {
   );
 }); // UPDATE
 
-router.delete("/:id", (req, res) => {
+router.delete("/:id", auth.required, (req, res) => {
   crud.deleteItem(Model, req.params.id, res);
 }); // DELETE
 

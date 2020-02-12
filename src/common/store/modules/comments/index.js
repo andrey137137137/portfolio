@@ -27,7 +27,7 @@ export default {
       //   });
 
       console.log(reviews);
-      commit(types.SET, reviews);
+      commit(SET, reviews);
     },
     insertComment({ dispatch }, payload) {
       axios.post(dbPage, payload.data).then(() => {

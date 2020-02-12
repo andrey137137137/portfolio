@@ -2,7 +2,7 @@
   FormWrapper#login_form.login_form(
     action="/admin"
     :class="addClasses"
-    @submit.native="handleSubmit")
+    @submit.prevent.native="handleSubmit")
 
     .login_form__top_wrap
       h2.section__title.section__title-uppercase.login_form__title Авторизуйтесь
@@ -60,11 +60,16 @@ import {
   minLength,
   maxLength
 } from "vuelidate/lib/validators";
+import axios from "axios";
 import { checked } from "@common/helpers/validators";
 import addClasses from "@common/mixins/addClasses";
 import FormWrapper from "@components/FormElems/FormWrapper";
 import InputEventElem from "@components/FormElems/InputEventElem";
 import ChangeEventElem from "@components/FormElems/ChangeEventElem";
+
+import { createNamespacedHelpers } from "vuex";
+const authMapGetters = createNamespacedHelpers("auth").mapGetters;
+const authMapActions = createNamespacedHelpers("auth").mapActions;
 
 export default {
   name: "LoginForm",
@@ -91,7 +96,7 @@ export default {
     password: {
       required,
       alphaNum,
-      minLength: minLength(7),
+      minLength: minLength(6),
       maxLength: maxLength(15)
     },
     isHuman: {
@@ -102,26 +107,16 @@ export default {
     }
   },
   methods: {
-    getToken(user) {
-      new Promise((resolve, reject) => {
-        axios({ url: "auth", data: user, method: "POST" })
-          .then(resp => {
-            const token = resp.data.token;
-            localStorage.setItem("user-token", token); // store the token in localstorage
-            resolve(resp);
-          })
-          .catch(err => {
-            localStorage.removeItem("user-token"); // if the request fails, remove any possible user token if possible
-            reject(err);
-          });
-      });
-    },
+    ...authMapActions(["login"]),
     handleSubmit() {
       if (this.$v.$invalid) {
         return false;
       }
 
-      console.log("oergkjergjfdjidosf");
+      const { userName, password } = this;
+
+      // this.login({ userName, password });
+      axios.post("user/auth", { username: userName, password });
 
       return true;
     }

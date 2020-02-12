@@ -28,14 +28,14 @@ export default new Vuex.Store({
   },
   actions: {
     setPage({ commit }, page) {
-      commit(types.SETPAGE, page);
+      commit(SETPAGE, page);
     },
     readData({ state, commit }) {
       // if (state.data.page == "slide") {
-      //   commit(types.SET, works);
+      //   commit(SET, works);
       // } else {
       axios.get(state.data.page).then(response => {
-        commit(types.SET, response.data.items);
+        commit(SET, response.data.items);
       });
       // }
     },

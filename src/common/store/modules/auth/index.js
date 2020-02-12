@@ -45,20 +45,21 @@ export default {
         // The Promise used for router redirect in login
         commit(AUTH_LOGIN);
         axios
-          .post("auth", user)
+          .post("user/auth", user)
           .then(resp => {
             const token = resp.data.token;
+
             localStorage.setItem("user-token", token); // store the token in localstorage
             // you have your token, now log in your user :)
-            apiCall({ url: "user/me" })
-              .then(resp => {
-                commit(USER_SUCCESS, resp);
-              })
-              .catch(() => {
-                commit(AUTH_ERROR);
-                // if resp is unauthorized, logout, to
-                dispatch("logout");
-              });
+            // apiCall({ url: "user/me" })
+            //   .then(resp => {
+            //     commit(USER_SUCCESS, resp);
+            //   })
+            //   .catch(() => {
+            //     commit(AUTH_ERROR);
+            //     // if resp is unauthorized, logout, to
+            //     dispatch("logout");
+            //   });
             commit(AUTH_SUCCESS, token);
             resolve(resp);
           })
@@ -94,7 +95,7 @@ export default {
     },
     [USER_SUCCESS]: (state, resp) => {
       state.status = "success";
-      Vue.set(state, "profile", resp);
+      // Vue.set(state, "profile", resp);
     }
   }
 };

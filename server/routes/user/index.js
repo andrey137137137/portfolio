@@ -73,28 +73,38 @@ router.delete("/:id", auth.required, (req, res) => {
   crud.deleteItem(Model, req.params.id, res);
 }); // DELETE
 
-//POST login route (optional, everyone has access)
-router.get("/auth/:username/:password", auth.optional, (req, res, next) => {
-  const { username, password } = req.params;
-  // router.post("/auth", auth.optional, (req, res, next) => {
-  //   const { userName, password } = req.body;
-  console.log(req);
+router.get("/test", (req, res) => {
+  res.send("hello world");
+});
 
-  if (!username) {
+// const authenticate = passport.authenticate("local", { session: false });
+
+//POST login route (optional, everyone has access)
+router.get("/auth/:username/:password", (req, res, next) => {
+  const user = {
+    userName: req.params.username,
+    password: req.params.password
+  };
+
+  console.log(user);
+
+  if (!user.userName) {
     return res.status(422).json({
       errors: {
-        username: "is required"
+        userName: "is required"
       }
     });
   }
 
-  if (!password) {
+  if (!user.password) {
     return res.status(422).json({
       errors: {
         password: "is required"
       }
     });
   }
+
+  // res.send(`hello user ${username}`);
 
   return passport.authenticate(
     "local",
@@ -108,10 +118,11 @@ router.get("/auth/:username/:password", auth.optional, (req, res, next) => {
         const user = passportUser;
         user.token = passportUser.generateJWT();
 
-        return res.json({ user: user.toAuthJSON() });
+        return res.status(200).json({ user: user.toAuthJSON() });
       }
 
-      return res.status(400).info;
+      console.log(info);
+      return res.status(400).send(info);
     }
   )(req, res, next);
 });

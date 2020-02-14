@@ -7,7 +7,7 @@
     "serve": "vue-cli-service serve --open",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "server": "nodemon server/server.js"
+    "server": "nodemon server/app.js"
   },
   "dependencies": {
     "axios": "^0.18.0",
@@ -28,6 +28,7 @@
     "navigator": "^1.0.1",
     "nodemailer": "^5.1.1",
     "passport": "^0.4.1",
+    "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
     "request": "^2.88.0",
     "rx-js": "0.0.0",

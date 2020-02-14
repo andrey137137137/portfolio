@@ -5,6 +5,7 @@ const session = require("express-session");
 const cors = require("cors");
 const axios = require("axios");
 const config = require("../api/config");
+const passport = require("passport");
 require("./db");
 // const mongoose = require("mongoose");
 const errorHandler = require("errorhandler");
@@ -29,8 +30,8 @@ app.use(async (req, res, next) => {
   next();
 });
 
-app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "pug");
+// app.set("views", path.join(__dirname, "views"));
+// app.set("view engine", "pug");
 
 //Configure our app
 app.use(cors());
@@ -39,16 +40,20 @@ app.use(require("morgan")("dev"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use(express.static(path.join(__dirname, "site", "public")));
-app.use(express.static(path.join(__dirname, "admin", "public")));
-app.use(
-  session({
-    secret: "passport-tutorial",
-    cookie: { maxAge: 60000 },
-    resave: false,
-    saveUninitialized: false
-  })
-);
+// app.use(express.static(path.join(__dirname, "site", "public")));
+// app.use(express.static(path.join(__dirname, "admin", "public")));
+// app.use(cookieParser());
+// app.use(
+//   session({
+//     secret: "passport-tutorial",
+//     resave: true,
+//     rolling: true,
+//     saveUninitialized: false,
+//     cookie: { maxAge: 60000 }
+//   })
+// );
+app.use(passport.initialize());
+// app.use(passport.session());
 
 // app.use("/admin", (req, res) => {
 //   res.sendFile(path.join(__dirname, "admin", "index.html"));

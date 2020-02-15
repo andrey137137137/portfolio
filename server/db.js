@@ -42,5 +42,3 @@ require("./models/post");
 require("./models/skill");
 require("./models/slide");
 require("./models/user");
-
-require("./passport");

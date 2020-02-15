@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "concurrently \"nodemon server/server.js\" \"vue-cli-service serve --open\"",
+    "start": "concurrently \"nodemon server/app.js\" \"vue-cli-service serve --open\"",
     "serve": "vue-cli-service serve --open",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
@@ -12,6 +12,8 @@
   "dependencies": {
     "axios": "^0.18.0",
     "body-parser": "^1.18.3",
+    "concurrently": "^5.1.0",
+    "cookie-parser": "^1.4.4",
     "cors": "^2.8.5",
     "errorhandler": "^1.5.1",
     "express": "^4.16.4",

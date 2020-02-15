@@ -1,22 +1,21 @@
 const express = require("express");
-const path = require("path");
+// const path = require("path");
 const bodyParser = require("body-parser");
-const session = require("express-session");
-const cors = require("cors");
+// const session = require("express-session");
+// const cors = require("cors");
 const axios = require("axios");
-const config = require("../api/config");
 const passport = require("passport");
-require("./db");
-// const mongoose = require("mongoose");
 const errorHandler = require("errorhandler");
+const config = require("../api/config");
+
+require("./db");
+require("./passport");
 
 //Configure isProduction variable
 const isProduction = process.env.NODE_ENV === "production";
 
 //Initiate our app
 const app = express();
-// const index = require("./routes/index");
-// const interceptor = require("../api/interceptor");
 
 require("../api/interceptor")(axios);
 
@@ -30,11 +29,8 @@ app.use(async (req, res, next) => {
   next();
 });
 
-// app.set("views", path.join(__dirname, "views"));
-// app.set("view engine", "pug");
-
 //Configure our app
-app.use(cors());
+app.use(require("cors")());
 app.use(require("morgan")("dev"));
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -42,9 +38,10 @@ app.use(bodyParser.json());
 
 // app.use(express.static(path.join(__dirname, "site", "public")));
 // app.use(express.static(path.join(__dirname, "admin", "public")));
-// app.use(cookieParser());
+
+// app.use(require("cookie-parser")());
 // app.use(
-//   session({
+//   require("express-session")({
 //     secret: "passport-tutorial",
 //     resave: true,
 //     rolling: true,
@@ -54,10 +51,6 @@ app.use(bodyParser.json());
 // );
 app.use(passport.initialize());
 // app.use(passport.session());
-
-// app.use("/admin", (req, res) => {
-//   res.sendFile(path.join(__dirname, "admin", "index.html"));
-// });
 
 app.use("/", require("./routes/index"));
 

@@ -77,54 +77,50 @@ router.get("/test", (req, res) => {
   res.send("hello world");
 });
 
-// const authenticate = passport.authenticate("local", { session: false });
+const authenticate = passport.authenticate("local", {
+  session: false,
+  successRedirect: "/home",
+  failureRedirect: "/login"
+});
 
 //POST login route (optional, everyone has access)
-router.get("/auth/:username/:password", (req, res, next) => {
-  const user = {
-    userName: req.params.username,
-    password: req.params.password
-  };
-
-  console.log(user);
-
-  if (!user.userName) {
-    return res.status(422).json({
-      errors: {
-        userName: "is required"
-      }
-    });
-  }
-
-  if (!user.password) {
-    return res.status(422).json({
-      errors: {
-        password: "is required"
-      }
-    });
-  }
-
-  // res.send(`hello user ${username}`);
-
-  return passport.authenticate(
-    "local",
-    { session: false },
-    (err, passportUser, info) => {
-      if (err) {
-        return next(err);
-      }
-
-      if (passportUser) {
-        const user = passportUser;
-        user.token = passportUser.generateJWT();
-
-        return res.status(200).json({ user: user.toAuthJSON() });
-      }
-
-      console.log(info);
-      return res.status(400).send(info);
-    }
-  )(req, res, next);
+router.get("/auth", authenticate, (req, res, next) => {
+  // const user = {
+  //   userName: req.params.username,
+  //   password: req.params.password
+  // };
+  // console.log(user);
+  // if (!user.userName) {
+  //   return res.status(422).json({
+  //     errors: {
+  //       userName: "is required"
+  //     }
+  //   });
+  // }
+  // if (!user.password) {
+  //   return res.status(422).json({
+  //     errors: {
+  //       password: "is required"
+  //     }
+  //   });
+  // }
+  // // res.send(`hello user ${username}`);
+  // return passport.authenticate(
+  //   "local",
+  //   { session: false },
+  //   (err, passportUser, info) => {
+  //     if (err) {
+  //       return next(err);
+  //     }
+  //     if (passportUser) {
+  //       const user = passportUser;
+  //       user.token = passportUser.generateJWT();
+  //       return res.status(200).json({ user: user.toAuthJSON() });
+  //     }
+  //     console.log(info);
+  //     return res.status(400).send(info);
+  //   }
+  // )(req, res, next);
 });
 
 //GET current route (required, only authenticated users have access)

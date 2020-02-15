@@ -8,6 +8,8 @@ public/userfiles
 src/assets/img/parallax
 src/assets/img
 
+package-lock.json
+
 # local env files
 .env.local
 .env.*.local
@@ -25,5 +27,3 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw*
-
-package-lock.json

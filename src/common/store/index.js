@@ -8,7 +8,6 @@ import { SET, SET_PAGE, ADD, DELETE } from "@common/store/mutation-types";
 import auth from "@common/store/modules/auth";
 import frontView from "@common/store/modules/frontView";
 import comments from "@common/store/modules/comments";
-// import works from "@common/store/data/works";
 
 export default new Vuex.Store({
   strict: true,

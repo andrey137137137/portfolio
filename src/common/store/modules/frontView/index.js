@@ -16,13 +16,17 @@ export default {
   namespaced: true,
   state: {
     pageConfig: {
-      // name: defaultData.name,
-      // isTopWrapTitle: defaultData.isTopWrapTitle,
-      // isBlog: defaultData.isBlog,
-      // isContent: defaultData.isContent,
-      // sections: defaultData.sections
+      name: defaultData.name,
+      isTopWrapTitle: defaultData.isTopWrapTitle,
+      isBlog: defaultData.isBlog,
+      isContent: defaultData.isContent,
+      sections: defaultData.sections
     },
-    userProfile: {}
+    userProfile: {
+      firstName: "",
+      lastName: "",
+      contacts: []
+    }
   },
   getters: {
     config(state) {

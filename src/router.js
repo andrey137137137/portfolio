@@ -26,7 +26,7 @@ export default new VueRouter({
       path: "/",
       name: "home",
       props: () => {
-        pageConfig({ name: "Главная" }, "user");
+        pageConfig({ name: "Главная" });
       },
       component: () => import("@frontend")
     },

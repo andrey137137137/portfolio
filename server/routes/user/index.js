@@ -84,7 +84,7 @@ const authenticate = passport.authenticate("local", {
 });
 
 //POST login route (optional, everyone has access)
-router.get("/auth", authenticate, (req, res, next) => {
+router.post("/auth", authenticate, (req, res, next) => {
   // const user = {
   //   userName: req.params.username,
   //   password: req.params.password

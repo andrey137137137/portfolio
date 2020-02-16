@@ -1,8 +1,5 @@
 const express = require("express");
-// const path = require("path");
 const bodyParser = require("body-parser");
-// const session = require("express-session");
-// const cors = require("cors");
 const axios = require("axios");
 const passport = require("passport");
 const errorHandler = require("errorhandler");
@@ -36,21 +33,28 @@ app.use(require("morgan")("dev"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// app.use(express.static(path.join(__dirname, "site", "public")));
-// app.use(express.static(path.join(__dirname, "admin", "public")));
+passport.serializeUser(function(user, done) {
+  done(null, user.id);
+});
 
-// app.use(require("cookie-parser")());
-// app.use(
-//   require("express-session")({
-//     secret: "passport-tutorial",
-//     resave: true,
-//     rolling: true,
-//     saveUninitialized: false,
-//     cookie: { maxAge: 60000 }
-//   })
-// );
+passport.deserializeUser(function(id, done) {
+  User.findById(id, function(err, user) {
+    done(err, user);
+  });
+});
+
+app.use(require("cookie-parser")());
+app.use(
+  require("express-session")({
+    secret: "passport-tutorial",
+    resave: true,
+    rolling: true,
+    saveUninitialized: false,
+    cookie: { maxAge: 60000 }
+  })
+);
 app.use(passport.initialize());
-// app.use(passport.session());
+app.use(passport.session());
 
 app.use("/", require("./routes/index"));
 

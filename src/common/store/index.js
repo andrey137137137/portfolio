@@ -4,7 +4,7 @@ import axios from "axios";
 
 Vue.use(Vuex);
 
-import { SET, SETPAGE, ADD, DELETE } from "@common/store/mutation-types";
+import { SET, SET_PAGE, ADD, DELETE } from "@common/store/mutation-types";
 import auth from "@common/store/modules/auth";
 import frontView from "@common/store/modules/frontView";
 import comments from "@common/store/modules/comments";
@@ -28,14 +28,14 @@ export default new Vuex.Store({
   },
   actions: {
     setPage({ commit }, page) {
-      commit(SETPAGE, page);
+      commit(SET_PAGE, page);
     },
     readData({ state, commit }) {
       // if (state.data.page == "slide") {
       //   commit(SET, works);
       // } else {
-      axios.get(state.data.page).then(response => {
-        commit(SET, response.data.items);
+      axios.get(state.data.page).then(res => {
+        commit(SET, res.data.items);
       });
       // }
     },
@@ -56,7 +56,7 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-    [SETPAGE](state, page) {
+    [SET_PAGE](state, page) {
       state.data.page = page;
     },
     [SET](state, data) {

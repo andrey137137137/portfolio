@@ -1,42 +1,65 @@
-import { SET } from "@common/store/mutation-types";
+import axios from "axios";
+
+import { SET_CONFIG, SET_PROFILE } from "@common/store/mutation-types";
 
 const defaultData = {
-  name: "",
-  isTopWrapTitle: false,
-  isBlog: false,
-  isContent: false,
-  sections: 0
+  pageConfig: {
+    name: "",
+    isTopWrapTitle: false,
+    isBlog: false,
+    isContent: false,
+    sections: 0
+  }
 };
 
 export default {
   namespaced: true,
   state: {
-    data: {
+    pageConfig: {
       // name: defaultData.name,
       // isTopWrapTitle: defaultData.isTopWrapTitle,
       // isBlog: defaultData.isBlog,
       // isContent: defaultData.isContent,
       // sections: defaultData.sections
-    }
+    },
+    userProfile: {}
   },
   getters: {
     config(state) {
-      return state.data;
+      return state.pageConfig;
+    },
+    profile(state) {
+      return state.userProfile;
     }
   },
   actions: {
     setConfig({ commit }, data) {
-      commit(SET, data);
+      commit(SET_CONFIG, data);
+      axios.get("user").then(res => {
+        commit(SET_PROFILE, res.data.items[0].profile);
+      });
     }
+    // setProfile({ commit }) {
+    //   axios.get("user").then(res => {
+    //     commit(SET_PROFILE, res.data.items[0].profile);
+    //   });
+    // }
   },
   mutations: {
-    [SET](state, data) {
-      const tempData = { ...defaultData, ...data };
+    [SET_CONFIG](state, data) {
+      const tempData = { ...defaultData.pageConfig, ...data };
 
-      for (var key in tempData) {
+      for (const key in tempData) {
         // if (state.data.hasOwnProperty(key)) {
-        state.data[key] = tempData[key];
+        state.pageConfig[key] = tempData[key];
         // }
+      }
+    },
+    [SET_PROFILE](state, data) {
+      for (const key in data) {
+        if (data.hasOwnProperty(key)) {
+          state.userProfile[key] = data[key];
+        }
       }
     }
   }

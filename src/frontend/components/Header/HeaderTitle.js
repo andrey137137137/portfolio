@@ -7,7 +7,7 @@ export default {
     return h("div", {}, [this.titleElem(h), this.descElem()]);
   },
   computed: {
-    ...mapGetters(["config"]),
+    ...mapGetters(["config", "profile"]),
     isRelative() {
       return this.config.isContent;
     },
@@ -38,7 +38,9 @@ export default {
       };
     },
     title() {
-      return this.config.isBlog ? "Блог" : "Банников Андрей";
+      return this.config.isBlog
+        ? "Блог"
+        : `${this.profile.lastName} ${this.profile.firstName}`;
     },
     desc() {
       return this.config.isBlog

@@ -10,8 +10,8 @@
       InputEventElem(
         wrapClass="icon_label"
         label="Пользователь"
-        v-model="userName"
-        :val="$v.userName"
+        v-model="username"
+        :val="$v.username"
         placeholder="Пользователь")
 
       InputEventElem(
@@ -81,14 +81,14 @@ export default {
   mixins: [addClasses],
   data() {
     return {
-      userName: "",
+      username: "",
       password: "",
       isHuman: false,
       notRobot: ""
     };
   },
   validations: {
-    userName: {
+    username: {
       required,
       alphaNum,
       minLength: minLength(7)
@@ -100,10 +100,10 @@ export default {
       maxLength: maxLength(15)
     },
     isHuman: {
-      checked
+      // checked
     },
     notRobot: {
-      required
+      // required
     }
   },
   methods: {
@@ -113,10 +113,10 @@ export default {
         return false;
       }
 
-      const { userName, password } = this;
+      const { username, password } = this;
 
-      // this.login({ userName, password });
-      axios.post("user/auth", { username: userName, password });
+      // this.login({ username, password });
+      axios.post("user/auth", { username, password });
 
       return true;
     }

@@ -17,13 +17,19 @@ const ContactSchema = new Schema({
 });
 
 const UserSchema = new Schema({
-  firstName: {
-    type: String,
-    required: [true, "Укажите описание картинки"]
-  },
-  lastName: {
-    type: String,
-    required: [true, "Укажите описание картинки"]
+  profile: {
+    firstName: {
+      type: String,
+      required: [true, "Укажите описание картинки"]
+    },
+    lastName: {
+      type: String,
+      required: [true, "Укажите описание картинки"]
+    },
+    contacts: {
+      type: Array,
+      children: [ContactSchema]
+    }
   },
   username: {
     type: String,
@@ -32,10 +38,6 @@ const UserSchema = new Schema({
   password: {
     type: String
     // required: [true, "Укажите описание картинки"]
-  },
-  contacts: {
-    type: Array,
-    children: [ContactSchema]
   }
   // hash: String,
   // salt: String

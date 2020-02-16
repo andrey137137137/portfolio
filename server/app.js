@@ -16,6 +16,14 @@ const app = express();
 
 require("../api/interceptor")(axios);
 
+const secret = "jrqkwle85903gi89gsdjhfsg83473";
+const cookieExpirationDate = new Date();
+const cookieExpirationDays = 365;
+
+cookieExpirationDate.setDate(
+  cookieExpirationDate.getDate() + cookieExpirationDays
+);
+
 app.use(async (req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", ["*"]);
   res.setHeader("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
@@ -30,27 +38,24 @@ app.use(async (req, res, next) => {
 app.use(require("cors")());
 app.use(require("morgan")("dev"));
 
+app.use(require("cookie-parser")(secret));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-passport.serializeUser(function(user, done) {
-  done(null, user.id);
-});
-
-passport.deserializeUser(function(id, done) {
-  User.findById(id, function(err, user) {
-    done(err, user);
-  });
-});
-
-app.use(require("cookie-parser")());
+// app.enable("trust proxy"); // add this line
 app.use(
   require("express-session")({
-    secret: "passport-tutorial",
+    secret,
     resave: true,
-    rolling: true,
-    saveUninitialized: false,
-    cookie: { maxAge: 60000 }
+    // rolling: true,
+    saveUninitialized: true,
+    // proxy: true, // add this line
+    cookie: {
+      // secure: true,
+      httpOnly: true,
+      expires: cookieExpirationDate
+      // maxAge: 60 * 60 * 1000
+    }
   })
 );
 app.use(passport.initialize());

@@ -1,14 +1,14 @@
 const router = require("express").Router();
 const Model = require("mongoose").model("skill");
 
-const auth = require("../auth");
+const { isAuth } = require("../auth");
 const crud = require("../../controllers/crud");
 
-router.get("/", auth.optional, (req, res) => {
+router.get("/", (req, res) => {
   crud.getItems(Model, res);
 }); // READ
 
-router.post("/", auth.required, (req, res) => {
+router.post("/", isAuth, (req, res) => {
   crud.createItem(
     Model,
     {
@@ -19,7 +19,7 @@ router.post("/", auth.required, (req, res) => {
   );
 }); // CREATE
 
-router.put("/:id", auth.required, (req, res) => {
+router.put("/:id", isAuth, (req, res) => {
   crud.updateItem(
     Model,
     req.params.id,
@@ -31,7 +31,7 @@ router.put("/:id", auth.required, (req, res) => {
   );
 }); // UPDATE
 
-router.delete("/:id", auth.required, (req, res) => {
+router.delete("/:id", isAuth, (req, res) => {
   crud.deleteItem(Model, req.params.id, res);
 }); // DELETE
 

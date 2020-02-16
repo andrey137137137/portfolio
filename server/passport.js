@@ -4,6 +4,17 @@ const LocalStrategy = require("passport-local").Strategy;
 
 const User = mongoose.model("user");
 
+passport.serializeUser(function(user, done) {
+  // console.log(user);
+  done(null, user.id);
+});
+
+passport.deserializeUser(function(id, done) {
+  User.findById(id, function(err, user) {
+    done(err, user);
+  });
+});
+
 passport.use(
   new LocalStrategy(function(username, password, done) {
     User.findOne({ username: username }, function(err, user) {

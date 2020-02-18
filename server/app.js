@@ -1,15 +1,24 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const axios = require("axios");
+const session = require("express-session");
 const passport = require("passport");
+const MongoDBStore = require("connect-mongodb-session")(session);
 const errorHandler = require("errorhandler");
 const config = require("../api/config");
 
 require("./db");
-require("./passport");
+require("./passport")(passport);
 
 //Configure isProduction variable
 const isProduction = process.env.NODE_ENV === "production";
+
+const store = new MongoDBStore({
+  uri: `mongodb://${config.db.user}:${config.db.password}@${config.db.host}:${config.db.port}/${config.db.name}`,
+  collection: "sessions"
+});
+
+store.on("error", error => console.log(error));
 
 //Initiate our app
 const app = express();
@@ -38,21 +47,24 @@ app.use(async (req, res, next) => {
 app.use(require("cors")());
 app.use(require("morgan")("dev"));
 
-app.use(require("cookie-parser")(secret));
+// app.use(require("cookie-parser")(secret));
+app.use(require("cookie-parser")());
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // app.enable("trust proxy"); // add this line
 app.use(
   require("express-session")({
+    store,
     secret,
     resave: true,
     // rolling: true,
-    saveUninitialized: true,
+    saveUninitialized: false,
     // proxy: true, // add this line
     cookie: {
       // secure: true,
-      httpOnly: true,
+      httpOnly: false,
       expires: cookieExpirationDate
       // maxAge: 60 * 60 * 1000
     }

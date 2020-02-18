@@ -36,7 +36,7 @@ const crud = require("../../controllers/crud");
 //     .then(() => res.json({ user: finalUser.toAuthJSON() }));
 // });
 
-router.get("/", isAuth, (req, res) => {
+router.get("/", passport.authenticationMiddleware, (req, res) => {
   crud.getItems(Model, res);
 }); // READ
 
@@ -74,6 +74,7 @@ router.delete("/:id", isAuth, (req, res) => {
 }); // DELETE
 
 router.get("/test", (req, res) => {
+  console.log(req.session);
   res.send("hello world");
 });
 
@@ -123,10 +124,10 @@ router.post(
           // const user = passportUser;
           // user.token = passportUser.generateJWT();
           // return res.status(200).json({ user: user.toAuthJSON() });
-          console.log("Cookies: ", req);
-          return res.status(200).json({ Cookies: req.cookies });
+          console.log(req.session);
+          return res.status(200).json({ Cookies: req.cookie });
         }
-        console.log("Cookies: ", req.cookies);
+        console.log("Cookies: ", req.cookie);
         return res.status(400).send(info);
       }
     )(req, res, next);

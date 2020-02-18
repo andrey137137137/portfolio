@@ -27,7 +27,7 @@
 // };
 
 module.exports.isAuth = function(req, res, next) {
-  // console.log(req.isAuthenticated());
+  console.log(req.session);
 
   // if user is authenticated in the session, carry on
   if (req.isAuthenticated()) {

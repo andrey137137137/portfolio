@@ -46,10 +46,10 @@ module.exports.isAuth = function(req, res, next) {
           });
         }
 
-        request.session.authorized = true;
-        request.session.username = request.body.username;
+        req.session.authorized = true;
+        req.session.username = username;
 
-        console.log(request.session);
+        console.log(req.session);
         res.status(200);
       })
       .catch(function(err) {

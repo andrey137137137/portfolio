@@ -2,13 +2,13 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const axios = require("axios");
 const session = require("express-session");
-const passport = require("passport");
+// const passport = require("passport");
 const MongoDBStore = require("connect-mongodb-session")(session);
 const errorHandler = require("errorhandler");
 const config = require("../api/config");
 
 require("./db");
-require("./passport")(passport);
+// require("./passport")(passport);
 
 //Configure isProduction variable
 const isProduction = process.env.NODE_ENV === "production";
@@ -47,8 +47,8 @@ app.use(async (req, res, next) => {
 app.use(require("cors")());
 app.use(require("morgan")("dev"));
 
-// app.use(require("cookie-parser")(secret));
-app.use(require("cookie-parser")());
+app.use(require("cookie-parser")(secret));
+// app.use(require("cookie-parser")());
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -70,8 +70,8 @@ app.use(
     }
   })
 );
-app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.initialize());
+// app.use(passport.session());
 
 app.use("/", require("./routes/index"));
 

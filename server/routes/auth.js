@@ -28,36 +28,38 @@ const User = mongoose.model("user");
 //   })
 // };
 
-module.exports.isAuth = function(req, res, next) {
+module.exports.isAuth = (req, res, next) => {
   console.log(req.session);
-
-  if (req.isAuthenticated()) {
+  if (req.session.user) {
     return next();
   }
 
   const { username, password } = req.body;
 
   if (username && password) {
-    User.findOne({ username: username })
-      .then(function(user) {
+    User.findOne({ username })
+      .then(user => {
         if (!user || !user.validatePassword(password)) {
           res.status(500).json({
-            status: "При чтении записей произошла ошибка: "
+            status: "Не совпадает имя или пароль!"
           });
         }
 
-        req.session.authorized = true;
-        req.session.username = username;
+        // req.session.authorized = true;
+        req.session.user = user._id;
+        req.session.save();
 
         console.log(req.session);
-        res.status(200);
+        res.status(200).json({
+          profile: user.profile
+        });
       })
-      .catch(function(err) {
+      .catch(err => {
         res.status(500).json({
-          status: "При чтении записей произошла ошибка: " + err
+          status: "При авторизации произошла ошибка: " + err
         });
       });
+  } else {
+    res.status(400).send({ success: false, message: "Session Expired" });
   }
-
-  res.status(400).send({ success: false, message: "Session Expired" });
 };

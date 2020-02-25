@@ -1,6 +1,7 @@
 import Vue from "vue";
 // import VueRx from "vue-rx";
 // import VuejsClipper from "vuejs-clipper";
+import VueCookie from "vue-cookie";
 import Vuelidate from "vuelidate";
 import axios from "axios";
 
@@ -14,6 +15,7 @@ interceptor(axios);
 
 // Vue.use(VueRx);
 // Vue.use(VuejsClipper);
+Vue.use(VueCookie);
 Vue.use(Vuelidate);
 
 // Vue.config.productionTip = false;

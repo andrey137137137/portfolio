@@ -1,11 +1,15 @@
 const express = require("express");
+const logger = require("morgan");
 const bodyParser = require("body-parser");
 const axios = require("axios");
+const config = require("../api/config");
+const cookieParser = require("cookie-parser");
 const session = require("express-session");
 // const passport = require("passport");
-const MongoDBStore = require("connect-mongodb-session")(session);
+// const MongoDBStore = require("connect-mongodb-session")(session);
+const mongoose = require("mongoose");
+const MongoStore = require("connect-mongo")(session);
 const errorHandler = require("errorhandler");
-const config = require("../api/config");
 
 require("./db");
 // require("./passport")(passport);
@@ -13,25 +17,26 @@ require("./db");
 //Configure isProduction variable
 const isProduction = process.env.NODE_ENV === "production";
 
-const store = new MongoDBStore({
-  uri: `mongodb://${config.db.user}:${config.db.password}@${config.db.host}:${config.db.port}/${config.db.name}`,
-  collection: "sessions"
-});
+// const store = new MongoDBStore({
+//   uri: `mongodb://${config.db.user}:${config.db.password}@${config.db.host}:${config.db.port}/${config.db.name}`,
+//   collection: "sessions"
+// });
 
-store.on("error", error => console.log(error));
+// store.on("error", error => console.log(error));
 
 //Initiate our app
 const app = express();
+const interceptor = require("./../api/interceptor");
 
-require("../api/interceptor")(axios);
+interceptor(axios);
 
-const secret = "jrqkwle85903gi89gsdjhfsg83473";
-const cookieExpirationDate = new Date();
-const cookieExpirationDays = 365;
+// const secret = "jrqkwle85903gi89gsdjhfsg83473";
+// const cookieExpirationDate = new Date();
+// const cookieExpirationDays = 365;
 
-cookieExpirationDate.setDate(
-  cookieExpirationDate.getDate() + cookieExpirationDays
-);
+// cookieExpirationDate.setDate(
+//   cookieExpirationDate.getDate() + cookieExpirationDays
+// );
 
 app.use(async (req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", ["*"]);
@@ -44,32 +49,29 @@ app.use(async (req, res, next) => {
 });
 
 //Configure our app
-app.use(require("cors")());
-app.use(require("morgan")("dev"));
+// app.use(require("cors")());
 
-app.use(require("cookie-parser")(secret));
-// app.use(require("cookie-parser")());
-
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(logger("dev"));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
-// app.enable("trust proxy"); // add this line
+app.use(cookieParser());
+
 app.use(
-  require("express-session")({
-    store,
-    secret,
+  session({
+    secret: "kjfnksbfksdbkfej",
+    key: "testing_key",
+    store: new MongoStore({
+      mongooseConnection: mongoose.connection
+    }),
     resave: true,
-    // rolling: true,
     saveUninitialized: false,
-    // proxy: true, // add this line
     cookie: {
-      // secure: true,
-      httpOnly: false,
-      expires: cookieExpirationDate
-      // maxAge: 60 * 60 * 1000
+      httpOnly: false
     }
   })
 );
+
 // app.use(passport.initialize());
 // app.use(passport.session());
 
@@ -78,6 +80,13 @@ app.use("/", require("./routes/index"));
 if (!isProduction) {
   app.use(errorHandler());
 }
+
+// catch 404 and forward to error handler
+// app.use(function(req, res, next) {
+//   var err = new Error("Not Found");
+//   err.status = 404;
+//   next(err);
+// });
 
 //Error handlers & middlewares
 if (!isProduction) {
@@ -92,13 +101,6 @@ if (!isProduction) {
     res.render("error");
   });
 }
-
-// // catch 404 and forward to error handler
-// app.use(function(req, res, next) {
-//   var err = new Error("Not Found");
-//   err.status = 404;
-//   next(err);
-// });
 
 app.listen(process.env.PORT || config.server.port, () => {
   console.log(`server is running on port: ${config.server.port}`);

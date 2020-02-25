@@ -73,6 +73,9 @@ export default {
         $vm.$flipBtn.fadeIn();
       });
     });
+  },
+  created() {
+    console.log(this.$cookie);
   }
 };
 </script>

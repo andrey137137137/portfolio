@@ -1,4 +1,5 @@
 // const jwt = require("express-jwt");
+const waterfall = require("async/waterfall");
 const mongoose = require("mongoose");
 const User = mongoose.model("user");
 
@@ -30,36 +31,36 @@ const User = mongoose.model("user");
 
 module.exports.isAuth = (req, res, next) => {
   console.log(req.session);
+  console.log(req.body);
   if (req.session.user) {
     return next();
   }
 
   const { username, password } = req.body;
 
-  if (username && password) {
-    User.findOne({ username })
-      .then(user => {
+  waterfall(
+    [
+      callback => {
+        console.log(username);
+        User.findOne({ username }, callback);
+      },
+      (user, callback) => {
+        console.log(user);
         if (!user || !user.validatePassword(password)) {
-          res.status(500).json({
-            status: "Не совпадает имя или пароль!"
-          });
+          console.log(user);
+          return res.status(400).send("Имя пользователя или пароль неверны");
         }
 
-        // req.session.authorized = true;
-        req.session.user = user._id;
-        req.session.save();
+        callback(null, user);
+      }
+    ],
+    (err, user) => {
+      if (err) {
+        next(err);
+      }
 
-        console.log(req.session);
-        res.status(200).json({
-          profile: user.profile
-        });
-      })
-      .catch(err => {
-        res.status(500).json({
-          status: "При авторизации произошла ошибка: " + err
-        });
-      });
-  } else {
-    res.status(400).send({ success: false, message: "Session Expired" });
-  }
+      req.session.user = user._id;
+      res.send(user);
+    }
+  );
 };

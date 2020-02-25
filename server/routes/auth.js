@@ -32,6 +32,7 @@ const User = mongoose.model("user");
 module.exports.isAuth = (req, res, next) => {
   console.log(req.session);
   console.log(req.body);
+
   if (req.session.user) {
     return next();
   }

@@ -64,16 +64,22 @@ app.use(
     store: new MongoStore({
       mongooseConnection: mongoose.connection
     }),
-    resave: true,
+    resave: false,
     saveUninitialized: false,
     cookie: {
-      httpOnly: false
+      httpOnly: true
     }
   })
 );
 
 // app.use(passport.initialize());
 // app.use(passport.session());
+
+app.use((req, res, next) => {
+  req.session.visitNumber = req.session.visitNumber + 1 || 1;
+  // res.send("Visits: " + req.session.visitNumber);
+  next();
+});
 
 app.use("/", require("./routes/index"));
 

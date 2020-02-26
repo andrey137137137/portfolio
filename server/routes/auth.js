@@ -33,9 +33,9 @@ module.exports.isAuth = (req, res, next) => {
   console.log(req.session);
   console.log(req.body);
 
-  if (req.session.user) {
-    return next();
-  }
+  // if (req.session.user) {
+  //   return next();
+  // }
 
   const { username, password } = req.body;
 
@@ -61,6 +61,7 @@ module.exports.isAuth = (req, res, next) => {
       }
 
       req.session.user = user._id;
+      req.session.save();
       res.send(user);
     }
   );

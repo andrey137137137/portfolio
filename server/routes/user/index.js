@@ -36,7 +36,7 @@ const crud = require("../../controllers/crud");
 //     .then(() => res.json({ user: finalUser.toAuthJSON() }));
 // });
 
-router.get("/", isAuth, (req, res) => {
+router.get("/", (req, res) => {
   crud.getItems(Model, res);
 }); // READ
 

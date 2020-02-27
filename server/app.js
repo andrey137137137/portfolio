@@ -10,7 +10,13 @@ const mongoose = require("mongoose");
 const MongoStore = require("connect-mongo")(session);
 const errorHandler = require("errorhandler");
 
-const { port, url } = require("../api/config").server;
+const {
+  protocol,
+  host,
+  port,
+  front_port,
+  url
+} = require("../api/config").server;
 require("./db");
 // require("./passport")(passport);
 
@@ -43,7 +49,12 @@ const app = express();
 //   next();
 // });
 
-app.use(cors());
+app.use(
+  cors({
+    origin: `${protocol}://${host}:${front_port}`,
+    credentials: true
+  })
+);
 app.use(logger("dev"));
 
 app.use(bodyParser.json());
@@ -69,7 +80,8 @@ app.use(
 // app.use(passport.session());
 
 app.use((req, res, next) => {
-  req.session.test = req.session.test + 1 || 1;
+  console.log(req.session);
+  // req.session.test = req.session.test + 1 || 1;
   // res.send("Visits: " + req.session.test);
   next();
 });

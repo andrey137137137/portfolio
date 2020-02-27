@@ -18,7 +18,7 @@ axios.interceptors.request.use(
     config.baseURL = `${protocol}://${host}:${port}${url}`;
     config.timeout = 5000;
     config.headers = { "Content-Type": "application/json" };
-    // config.withCredentials = true;
+    config.withCredentials = true;
     console.log(config);
     return config;
   },

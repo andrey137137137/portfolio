@@ -1,7 +1,7 @@
 const router = require("express").Router();
 
 router.use("/image", require("./image"));
-router.use("/slide", require("./slide"));
+router.use("/work", require("./work"));
 router.use("/skill", require("./skill"));
 router.use("/post", require("./post"));
 router.use("/user", require("./user"));

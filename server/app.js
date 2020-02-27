@@ -1,8 +1,7 @@
 const express = require("express");
+const cors = require("cors");
 const logger = require("morgan");
 const bodyParser = require("body-parser");
-const axios = require("axios");
-const config = require("../api/config");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 // const passport = require("passport");
@@ -11,10 +10,10 @@ const mongoose = require("mongoose");
 const MongoStore = require("connect-mongo")(session);
 const errorHandler = require("errorhandler");
 
+const { port, url } = require("../api/config").server;
 require("./db");
 // require("./passport")(passport);
 
-//Configure isProduction variable
 const isProduction = process.env.NODE_ENV === "production";
 
 // const store = new MongoDBStore({
@@ -24,11 +23,7 @@ const isProduction = process.env.NODE_ENV === "production";
 
 // store.on("error", error => console.log(error));
 
-//Initiate our app
 const app = express();
-const interceptor = require("./../api/interceptor");
-
-interceptor(axios);
 
 // const secret = "jrqkwle85903gi89gsdjhfsg83473";
 // const cookieExpirationDate = new Date();
@@ -38,25 +33,23 @@ interceptor(axios);
 //   cookieExpirationDate.getDate() + cookieExpirationDays
 // );
 
-app.use(async (req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", ["*"]);
-  res.setHeader("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-  );
-  next();
-});
+// app.use(async (req, res, next) => {
+//   res.setHeader("Access-Control-Allow-Origin", ["*"]);
+//   res.setHeader("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
+//   res.setHeader(
+//     "Access-Control-Allow-Headers",
+//     "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+//   );
+//   next();
+// });
 
-//Configure our app
-// app.use(require("cors")());
-
+app.use(cors());
 app.use(logger("dev"));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(cookieParser());
-
 app.use(
   session({
     secret: "kjfnksbfksdbkfej",
@@ -76,12 +69,12 @@ app.use(
 // app.use(passport.session());
 
 app.use((req, res, next) => {
-  req.session.visitNumber = req.session.visitNumber + 1 || 1;
-  // res.send("Visits: " + req.session.visitNumber);
+  req.session.test = req.session.test + 1 || 1;
+  // res.send("Visits: " + req.session.test);
   next();
 });
 
-app.use("/", require("./routes/index"));
+app.use(url, require("./routes/index"));
 
 if (!isProduction) {
   app.use(errorHandler());
@@ -108,6 +101,6 @@ if (!isProduction) {
   });
 }
 
-app.listen(process.env.PORT || config.server.port, () => {
-  console.log(`server is running on port: ${config.server.port}`);
+app.listen(process.env.PORT || port, () => {
+  console.log(`server is running on port: ${port}`);
 });

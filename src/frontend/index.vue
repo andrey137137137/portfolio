@@ -75,7 +75,8 @@ export default {
     });
   },
   created() {
-    console.log(this.$cookie);
+    // console.log(this.$cookies.get("testing_key"));
+    console.log("Cookies: " + document.cookie);
   }
 };
 </script>

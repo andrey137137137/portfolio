@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const SlideSchema = new Schema({
+const WorkSchema = new Schema({
   title: {
     type: String,
     required: [true, "Укажите заголовок работы"]
@@ -22,4 +22,4 @@ const SlideSchema = new Schema({
 });
 
 // просим mongoose сохранить модель для ее дальнейшего использования
-mongoose.model("slide", SlideSchema);
+mongoose.model("work", WorkSchema);

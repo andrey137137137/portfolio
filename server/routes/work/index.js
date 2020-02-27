@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const Model = require("mongoose").model("slide");
+const Model = require("mongoose").model("work");
 
 const { isAuth } = require("../auth");
 const crud = require("../../controllers/crud");

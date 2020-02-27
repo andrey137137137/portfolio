@@ -48,7 +48,7 @@ export default new VueRouter({
                 isContent: true,
                 sections: 3
               },
-              "slide"
+              "work"
             );
           },
           component: () => import("@frontViews/Works.vue")

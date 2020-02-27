@@ -1,12 +1,10 @@
 const mongoose = require("mongoose");
-const config = require("../api/config");
+const { user, password, host, port, name } = require("../api/config").db;
 
 mongoose.Promise = global.Promise;
 
 mongoose
-  .connect(
-    `mongodb://${config.db.user}:${config.db.password}@${config.db.host}:${config.db.port}/${config.db.name}`
-  )
+  .connect(`mongodb://${user}:${password}@${host}:${port}/${name}`)
   .catch(e => {
     console.error(e);
     throw e;
@@ -14,7 +12,7 @@ mongoose
 
 mongoose.connection.on("connected", function() {
   console.log(
-    `Mongoose default connection open mongodb://${config.db.host}:${config.db.port}/${config.db.name}`
+    `Mongoose default connection open mongodb://${host}:${port}/${name}`
   );
 });
 
@@ -40,5 +38,5 @@ process.on("SIGINT", function() {
 
 require("./models/post");
 require("./models/skill");
-require("./models/slide");
+require("./models/work");
 require("./models/user");

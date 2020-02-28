@@ -107,7 +107,7 @@ export default {
     }
   },
   methods: {
-    ...authMapActions(["login"]),
+    // ...authMapActions(["login"]),
     handleSubmit() {
       if (this.$v.$invalid) {
         return false;
@@ -116,7 +116,9 @@ export default {
       const { username, password } = this;
 
       // this.login({ username, password });
-      axios.post("user/auth", { username, password });
+      axios.post("user/auth", { username, password }).then(resp => {
+        localStorage.setItem("user-token", resp.data.token);
+      });
 
       return true;
     }

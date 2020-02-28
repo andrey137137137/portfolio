@@ -32,7 +32,7 @@ const User = mongoose.model("user");
 module.exports.isAuth = (req, res, next) => {
   console.log(req.body);
 
-  if (req.session.user) {
+  if (req.session.token) {
     return next();
   }
 
@@ -59,9 +59,9 @@ module.exports.isAuth = (req, res, next) => {
         next(err);
       }
 
-      req.session.user = user._id;
+      req.session.token = user._id;
       req.session.save();
-      res.send(user);
+      res.send({ token: req.session.token });
     }
   );
 };

@@ -84,6 +84,10 @@ router.get("/test", (req, res) => {
 //   failureRedirect: "/login"
 // });
 
+router.get("/auth", (req, res) => {
+  res.send({ token: req.session.token });
+});
+
 //POST login route (optional, everyone has access)
 router.post(
   "/auth",

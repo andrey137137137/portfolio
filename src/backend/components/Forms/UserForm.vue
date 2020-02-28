@@ -49,8 +49,8 @@
       :val="$v.lastName"
       placeholder="Фамилия")
     InputEventElem(
-      v-model="userName"
-      :val="$v.userName"
+      v-model="username"
+      :val="$v.username"
       placeholder="Логин")
     InputEventElem(
       v-model="password"
@@ -108,11 +108,11 @@ export default {
         smail: "*_~"
       },
       imgDataUrl: "", // the datebase64 url of created image
-      firstName: this.item.firstName,
-      lastName: this.item.lastName,
-      userName: this.item.userName,
+      firstName: this.item.profile.firstName,
+      lastName: this.item.profile.lastName,
+      username: this.item.username,
       password: "",
-      contacts: this.item.contacts,
+      contacts: this.item.profile.contacts,
       contactFields: [
         {
           name: "name",
@@ -140,7 +140,7 @@ export default {
     lastName: {
       required
     },
-    userName: {
+    username: {
       required
     },
     password: {
@@ -165,11 +165,13 @@ export default {
   methods: {
     prepareData() {
       this.submitData = {
-        firstName: this.firstName,
-        lastName: this.lastName,
-        userName: this.userName,
-        password: this.password,
-        contacts: this.cloneMultipleArray(this.contacts, this.contactTemplate)
+        profile: {
+          firstName: this.firstName,
+          lastName: this.lastName,
+          contacts: this.cloneMultipleArray(this.contacts, this.contactTemplate)
+        },
+        username: this.username,
+        password: this.password
       };
     },
     // changeImage() {

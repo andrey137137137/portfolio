@@ -3,10 +3,12 @@
     AdminHeader
     AdminNav
     main.section.main
-      router-view
+      router-view(v-if="isAuth")
+      h3(v-else) Вы не авторизированы
 </template>
 
 <script>
+import axios from "axios";
 import AdminHeader from "@backCmp/AdminHeader";
 import AdminNav from "@backCmp/AdminNav";
 
@@ -15,6 +17,23 @@ export default {
   components: {
     AdminHeader,
     AdminNav
+  },
+  // data() {
+  //   return {
+  //     isAuth: false
+  //   };
+  // },
+  computed: {
+    isAuth() {
+      return !!localStorage.getItem("user-token");
+    }
+  },
+  mounted() {
+    if (!localStorage.getItem("user-token")) {
+      axios.get("user/auth").then(resp => {
+        localStorage.setItem("user-token", resp.data.token);
+      });
+    }
   }
 };
 </script>

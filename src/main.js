@@ -36,7 +36,8 @@ Vue.use(Vuelidate);
 // Vue.config.productionTip = false;
 
 // Vue.$cookies.config("7d");
-// console.log(Vue.$cookies);
+// localStorage.clear();
+console.log(localStorage.getItem("user-token"));
 
 new Vue({
   el: "#app",

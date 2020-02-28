@@ -39,22 +39,13 @@ const app = express();
 //   cookieExpirationDate.getDate() + cookieExpirationDays
 // );
 
-// app.use(async (req, res, next) => {
-//   res.setHeader("Access-Control-Allow-Origin", ["*"]);
-//   res.setHeader("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
-//   res.setHeader(
-//     "Access-Control-Allow-Headers",
-//     "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-//   );
-//   next();
-// });
-
 app.use(
   cors({
     origin: `${protocol}://${host}:${front_port}`,
     credentials: true
   })
 );
+
 app.use(logger("dev"));
 
 app.use(bodyParser.json());

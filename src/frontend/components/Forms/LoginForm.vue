@@ -117,7 +117,7 @@ export default {
 
       // this.login({ username, password });
       axios.post("user/auth", { username, password }).then(resp => {
-        localStorage.setItem("user-token", resp.data.token);
+        document.cookie = "user-token=" + resp.data.token;
       });
 
       return true;

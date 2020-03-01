@@ -1,4 +1,5 @@
 // const jwt = require("express-jwt");
+const jwt = require("jsonwebtoken");
 const waterfall = require("async/waterfall");
 const mongoose = require("mongoose");
 const User = mongoose.model("user");
@@ -37,6 +38,8 @@ module.exports.isAuth = (req, res, next) => {
   }
 
   const { username, password } = req.body;
+  const signature = "test";
+  const expiration = "7h";
 
   waterfall(
     [
@@ -59,7 +62,9 @@ module.exports.isAuth = (req, res, next) => {
         next(err);
       }
 
-      req.session.token = user._id;
+      req.session.token = jwt.sign({ id: user._id }, signature, {
+        expiresIn: expiration
+      });
       req.session.save();
       res.send({ token: req.session.token });
     }

@@ -71,7 +71,6 @@ import {
   // minValue,
   // maxValue
 } from "vuelidate/lib/validators";
-import axios from "axios";
 import upload from "@backend/mixins/upload";
 // import { clipperBasic, clipperPreview } from "vuejs-clipper";
 import myUpload from "vue-image-crop-upload";

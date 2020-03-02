@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 // const crypto = require("crypto");
 // const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
+const { salt } = require("../../api/config").session;
 
 const { Schema } = mongoose;
 
@@ -33,30 +35,53 @@ const UserSchema = new Schema({
   },
   username: {
     type: String,
+    // unique: true,
     required: [true, "Укажите описание картинки"]
   },
   password: {
     type: String
     // required: [true, "Укажите описание картинки"]
   }
-  // hash: String,
-  // salt: String
 });
 
-UserSchema.methods.setPassword = function(password) {
-  // this.salt = crypto.randomBytes(16).toString("hex");
-  // this.hash = crypto
-  //   .pbkdf2Sync(password, this.salt, 10000, 512, "sha512")
-  //   .toString("hex");
-  this.password = password;
-};
+UserSchema.pre("save", function(next) {
+  var user = this;
 
-UserSchema.methods.validatePassword = function(password) {
+  // only hash the password if it has been modified (or is new)
+  if (!user.isModified("password")) return next();
+
+  // generate a salt
+  // bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
+  //   if (err) return next(err);
+
+  // hash the password using our new salt
+  bcrypt.hash(user.password, salt, function(err, hash) {
+    if (err) return next(err);
+
+    // override the cleartext password with the hashed one
+    user.password = hash;
+    next();
+  });
+  // });
+});
+
+// UserSchema.methods.setPassword = function(password) {
+//   this.salt = crypto.randomBytes(16).toString("hex");
+//   this.hash = crypto
+//     .pbkdf2Sync(password, this.salt, 10000, 512, "sha512")
+//     .toString("hex");
+// };
+
+UserSchema.methods.validatePassword = function(password, cb) {
   // const hash = crypto
   //   .pbkdf2Sync(password, this.salt, 10000, 512, "sha512")
   //   .toString("hex");
   // return this.hash === hash;
-  return this.password === password;
+
+  bcrypt.compare(password, this.password, function(err, isMatch) {
+    if (err) return cb(err);
+    cb(null, isMatch);
+  });
 };
 
 // UserSchema.methods.generateJWT = function() {

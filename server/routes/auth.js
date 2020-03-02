@@ -31,42 +31,7 @@ const User = mongoose.model("user");
 // };
 
 module.exports.isAuth = (req, res, next) => {
-  console.log(req.body);
-
   if (req.session.token) {
     return next();
   }
-
-  const { username, password } = req.body;
-  const signature = "test";
-  const expiration = "7h";
-
-  waterfall(
-    [
-      callback => {
-        console.log(username);
-        User.findOne({ username }, callback);
-      },
-      (user, callback) => {
-        console.log(user);
-        if (!user || !user.validatePassword(password)) {
-          console.log(user);
-          return res.status(400).send("Имя пользователя или пароль неверны");
-        }
-
-        callback(null, user);
-      }
-    ],
-    (err, user) => {
-      if (err) {
-        next(err);
-      }
-
-      req.session.token = jwt.sign({ id: user._id }, signature, {
-        expiresIn: expiration
-      });
-      req.session.save();
-      res.send({ token: req.session.token });
-    }
-  );
 };

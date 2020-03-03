@@ -1,5 +1,6 @@
 // const passport = require("passport");
-const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const waterfall = require("async/waterfall");
 const router = require("express").Router();
 const Model = require("mongoose").model("user");
 
@@ -17,47 +18,37 @@ const crud = require("../../controllers/crud");
 //     password: ""
 //   });
 
-//   // User.setPassword(User.password);
-
 //   return User.save().then(() => res.json({ user: User }));
 // });
 
-router.get("/", (req, res) => {
+router.get("/", isAuth, (req, res) => {
   crud.getItems(Model, res);
 }); // READ
 
-router.post("/", (req, res) => {
+router.post("/", isAuth, (req, res) => {
   crud.createItem(
     Model,
     {
-      // firstName: req.body.firstName,
-      // lastName: req.body.lastName,
-      // contacts: req.body.contacts,
       profile: req.body.profile,
-      username: req.body.username,
-      password: req.body.password
+      username: req.body.username
     },
     res
   );
 }); // CREATE
 
-router.put("/:id", (req, res) => {
+router.put("/:id", isAuth, (req, res) => {
   crud.updateItem(
     Model,
     req.params.id,
     {
-      // firstName: req.body.firstName,
-      // lastName: req.body.lastName,
-      // contacts: req.body.contacts,
       profile: req.body.profile,
-      username: req.body.username,
-      password: req.body.password
+      username: req.body.username
     },
     res
   );
 }); // UPDATE
 
-router.delete("/:id", (req, res) => {
+router.delete("/:id", isAuth, (req, res) => {
   crud.deleteItem(Model, req.params.id, res);
 }); // DELETE
 
@@ -74,33 +65,45 @@ router.get("/auth", isAuth, (req, res) => {
 router.post("/auth", (req, res, next) => {
   const { username, password } = req.body;
   const signature = "test";
-  const expiration = "7h";
+  // const expiration = "7h";
 
   waterfall(
     [
       callback => {
         console.log(username);
-        User.findOne({ username }, callback);
+        Model.findOne({ username }, callback);
       },
       (user, callback) => {
         console.log(user);
-        if (!user || !user.validatePassword(password)) {
+        if (
+          !user
+          // || !user.validatePassword(password)
+        ) {
           console.log(user);
           return res.status(400).send("Имя пользователя или пароль неверны");
         }
 
-        callback(null, user);
+        user.validatePassword(password, function(err, isMatch) {
+          if (err) throw err;
+
+          console.log(password + ":", isMatch);
+
+          if (!isMatch) {
+            return res.status(400).send("Имя пользователя или пароль неверны");
+          }
+
+          callback(null, user);
+        });
       }
     ],
     (err, user) => {
-      if (err) {
-        next(err);
-      }
+      if (err) next(err);
 
-      req.session.token = jwt.sign({ id: user._id }, signature, {
-        expiresIn: expiration
-      });
-      req.session.save();
+      req.session.token = jwt.sign(
+        { id: user._id },
+        signature
+        // { expiresIn: expiration }
+      );
       res.send({ token: req.session.token });
     }
   );
@@ -117,7 +120,7 @@ router.get("/current", isAuth, (req, res, next) => {
       return res.sendStatus(400);
     }
 
-    return res.json({ user: user.toAuthJSON() });
+    return res.json({ user });
   });
 });
 

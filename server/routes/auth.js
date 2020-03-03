@@ -1,8 +1,7 @@
 // const jwt = require("express-jwt");
-const jwt = require("jsonwebtoken");
-const waterfall = require("async/waterfall");
-const mongoose = require("mongoose");
-const User = mongoose.model("user");
+// const jwt = require("jsonwebtoken");
+// const mongoose = require("mongoose");
+// const User = mongoose.model("user");
 
 // const getTokenFromHeaders = req => {
 //   const {

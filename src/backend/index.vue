@@ -3,9 +3,9 @@
     AdminHeader
     AdminNav
     main.section.main
-      router-view
-      //- router-view(v-if="isAuth")
-      //- h3(v-else) Вы не авторизированы
+      router-view(v-if="isAuth")
+      h3(v-else) Вы не авторизированы
+      //- router-view
 </template>
 
 <script>
@@ -19,11 +19,6 @@ export default {
     AdminHeader,
     AdminNav
   },
-  // data() {
-  //   return {
-  //     isAuth: false
-  //   };
-  // },
   computed: {
     isAuth() {
       return !!this.getCookie("user-token");
@@ -43,7 +38,6 @@ export default {
     setCookie(name, value, options = {}) {
       options = {
         path: "/",
-        // при необходимости добавьте другие значения по умолчанию
         ...options
       };
 
@@ -64,14 +58,14 @@ export default {
 
       document.cookie = updatedCookie;
     }
+  },
+  mounted() {
+    if (!this.getCookie("user-token")) {
+      axios.get("user/auth").then(resp => {
+        this.setCookie("user-token", resp.data.token);
+      });
+    }
   }
-  // mounted() {
-  //   if (!this.getCookie("user-token")) {
-  //     axios.get("user/auth").then(resp => {
-  //       this.setCookie("user-token", resp.data.token);
-  //     });
-  //   }
-  // }
 };
 </script>
 

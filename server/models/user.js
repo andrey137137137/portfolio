@@ -1,8 +1,6 @@
 const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
-// const crypto = require("crypto");
-// const jwt = require("jsonwebtoken");
-const { salt } = require("../../api/config").session;
+const crypto = require("crypto-js/hmac-sha512");
+const { SALT } = require("@config").db;
 
 const { Schema } = mongoose;
 
@@ -35,7 +33,7 @@ const UserSchema = new Schema({
   },
   username: {
     type: String,
-    // unique: true,
+    unique: true,
     required: [true, "Укажите описание картинки"]
   },
   password: {
@@ -45,26 +43,10 @@ const UserSchema = new Schema({
 });
 
 UserSchema.pre("save", function(next) {
-  var user = this;
+  if (!this.isModified("password")) return next();
 
-  // only hash the password if it has been modified (or is new)
-  if (!user.isModified("password")) return next();
-
-  // generate a salt
-  // bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
-  //   if (err) return next(err);
-
-  // hash the password using our new salt
-  bcrypt.hash(user.password, salt, function(err, hash) {
-    if (err) {
-      return next(err);
-    }
-
-    // override the cleartext password with the hashed one
-    user.password = hash;
-    next();
-  });
-  // });
+  this.password = crypto(this.password, SALT);
+  next();
 });
 
 // UserSchema.methods.setPassword = function(password) {
@@ -74,42 +56,13 @@ UserSchema.pre("save", function(next) {
 //     .toString("hex");
 // };
 
-UserSchema.methods.validatePassword = function(password, cb) {
+UserSchema.methods.validatePassword = function(password) {
   // const hash = crypto
   //   .pbkdf2Sync(password, this.salt, 10000, 512, "sha512")
   //   .toString("hex");
   // return this.hash === hash;
 
-  bcrypt.compare(password, this.password, function(err, isMatch) {
-    if (err) {
-      return cb(err);
-    }
-
-    cb(null, isMatch);
-  });
+  return this.password === crypto(password, SALT);
 };
-
-// UserSchema.methods.generateJWT = function() {
-//   const today = new Date();
-//   const expirationDate = new Date(today);
-//   expirationDate.setDate(today.getDate() + 60);
-
-//   return jwt.sign(
-//     {
-//       email: this.email,
-//       id: this._id,
-//       exp: parseInt(expirationDate.getTime() / 1000, 10)
-//     },
-//     "secret"
-//   );
-// };
-
-// UserSchema.methods.toAuthJSON = function() {
-//   return {
-//     _id: this._id,
-//     email: this.email,
-//     token: this.generateJWT()
-//   };
-// };
 
 mongoose.model("user", UserSchema);

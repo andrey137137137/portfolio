@@ -1,7 +1,6 @@
 import Vue from "vue";
 // import VueRx from "vue-rx";
 // import VuejsClipper from "vuejs-clipper";
-import VueCookie from "vue-cookie";
 import Vuelidate from "vuelidate";
 import axios from "axios";
 
@@ -13,30 +12,27 @@ import router from "@/router";
 
 axios.interceptors.request.use(
   config => {
-    const { protocol, host, port, url } = myConfig.server;
+    const { PROTOCOL, HOST, PORT, URL } = myConfig.server;
 
-    config.baseURL = `${protocol}://${host}:${port}${url}`;
+    config.baseURL = `${PROTOCOL}://${HOST}:${PORT}${URL}`;
     config.timeout = 5000;
     config.headers = { "Content-Type": "application/json" };
     config.withCredentials = true;
-    console.log(config);
+    // console.log(config);
     return config;
   },
   error => {
-    console.log(error.response.status);
+    // console.log(error.response.status);
     return Promise.reject();
   }
 );
 
 // Vue.use(VueRx);
 // Vue.use(VuejsClipper);
-Vue.use(VueCookie);
 Vue.use(Vuelidate);
 
 // Vue.config.productionTip = false;
 
-// Vue.$cookies.config("7d");
-// localStorage.clear();
 console.log(document.cookie);
 
 new Vue({

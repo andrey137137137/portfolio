@@ -1,29 +1,24 @@
+require("module-alias/register");
+
 const express = require("express");
 const cors = require("cors");
 const logger = require("morgan");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
-// const passport = require("passport");
 // const MongoDBStore = require("connect-mongodb-session")(session);
 const mongoose = require("mongoose");
 const MongoStore = require("connect-mongo")(session);
 const errorHandler = require("errorhandler");
 
-const {
-  protocol,
-  host,
-  port,
-  front_port,
-  url
-} = require("../api/config").server;
+const { PROTOCOL, HOST, PORT, FRONT_PORT, URL } = require("@config").server;
+const { SECRET, KEY } = require("@config").session;
 require("./db");
-// require("./passport")(passport);
 
 const isProduction = process.env.NODE_ENV === "production";
 
 // const store = new MongoDBStore({
-//   uri: `mongodb://${config.db.user}:${config.db.password}@${config.db.host}:${config.db.port}/${config.db.name}`,
+//   uri: `mongodb://${config.db.user}:${config.db.password}@${config.db.HOST}:${config.db.PORT}/${config.db.name}`,
 //   collection: "sessions"
 // });
 
@@ -31,7 +26,6 @@ const isProduction = process.env.NODE_ENV === "production";
 
 const app = express();
 
-// const secret = "jrqkwle85903gi89gsdjhfsg83473";
 // const cookieExpirationDate = new Date();
 // const cookieExpirationDays = 365;
 
@@ -41,7 +35,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: `${protocol}://${host}:${front_port}`,
+    origin: `${PROTOCOL}://${HOST}:${FRONT_PORT}`,
     credentials: true
   })
 );
@@ -54,8 +48,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(
   session({
-    secret: "kjfnksbfksdbkfej",
-    key: "testing_key",
+    secret: SECRET,
+    key: KEY,
     store: new MongoStore({
       mongooseConnection: mongoose.connection
     }),
@@ -67,9 +61,6 @@ app.use(
   })
 );
 
-// app.use(passport.initialize());
-// app.use(passport.session());
-
 app.use((req, res, next) => {
   console.log(req.session);
   // req.session.test = req.session.test + 1 || 1;
@@ -77,7 +68,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(url, require("./routes/index"));
+app.use(URL, require("./routes/index"));
 
 if (!isProduction) {
   app.use(errorHandler());
@@ -104,6 +95,6 @@ if (!isProduction) {
   });
 }
 
-app.listen(process.env.PORT || port, () => {
-  console.log(`server is running on port: ${port}`);
+app.listen(process.env.PORT || PORT, () => {
+  console.log(`server is running on port: ${PORT}`);
 });

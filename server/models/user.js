@@ -62,7 +62,7 @@ UserSchema.methods.validatePassword = function(password) {
   //   .toString("hex");
   // return this.hash === hash;
 
-  return this.password === crypto(password, SALT);
+  return this.password === crypto(password, SALT).toString();
 };
 
 mongoose.model("user", UserSchema);

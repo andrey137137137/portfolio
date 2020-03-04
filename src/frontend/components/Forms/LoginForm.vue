@@ -67,10 +67,6 @@ import FormWrapper from "@components/FormElems/FormWrapper";
 import InputEventElem from "@components/FormElems/InputEventElem";
 import ChangeEventElem from "@components/FormElems/ChangeEventElem";
 
-import { createNamespacedHelpers } from "vuex";
-const authMapGetters = createNamespacedHelpers("auth").mapGetters;
-const authMapActions = createNamespacedHelpers("auth").mapActions;
-
 export default {
   name: "LoginForm",
   components: {
@@ -107,17 +103,23 @@ export default {
     }
   },
   methods: {
-    // ...authMapActions(["login"]),
     handleSubmit() {
       if (this.$v.$invalid) {
         return false;
       }
 
+      const $vm = this;
       const { username, password } = this;
 
-      // this.login({ username, password });
-      axios.post("user/auth", { username, password }).then(resp => {
-        document.cookie = "user-token=" + resp.data.token;
+      axios.post("user/auth", { username, password }).then(res => {
+        if (res.data.success) {
+          document.cookie = "user-token=" + res.data.success;
+          return $vm.$router.push("/admin");
+        }
+
+        console.log(res);
+
+        return false;
       });
 
       return true;

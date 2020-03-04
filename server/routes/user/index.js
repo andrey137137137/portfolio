@@ -6,7 +6,7 @@ const Model = require("mongoose").model("user");
 const {
   SIGNATURE
   // EXPIRATION
-} = require("@config").session;
+} = require("@config").jwt;
 const { isAuth } = require("../auth");
 const crud = require("../../controllers/crud");
 
@@ -65,21 +65,17 @@ router.post("/auth", (req, res, next) => {
   waterfall(
     [
       cb => {
-        console.log(username);
+        console.log(username, password);
         Model.findOne({ username }, cb);
       },
       (user, cb) => {
         console.log(user);
-        if (
-          !user
-          // || !user.validatePassword(password)
-        ) {
+        if (!user || !user.validatePassword(password)) {
           console.log(user);
           return res.status(400).send("Имя пользователя или пароль неверны");
         }
 
-        user.validatePassword(password);
-
+        console.log(user.validatePassword(password));
         cb(null, user);
       }
     ],
@@ -91,9 +87,21 @@ router.post("/auth", (req, res, next) => {
         SIGNATURE
         // { expiresIn: EXPIRATION }
       );
-      res.send({ token: req.session.token });
+      res.send({ success: req.session.token });
     }
   );
+});
+
+router.get("/logout", (req, res) => {
+  const { token } = req.session;
+
+  if (!token) {
+    return res.send({ status: "Вы не заходили" });
+  }
+
+  req.session.destroy(() => {
+    res.send({ status: `Сессия ${token} удалена` });
+  });
 });
 
 module.exports = router;

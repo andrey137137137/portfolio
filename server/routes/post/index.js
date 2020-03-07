@@ -4,7 +4,7 @@ const Model = require("mongoose").model("post");
 const { isAuth } = require("../auth");
 const crud = require("../../controllers/crud");
 
-router.get("/", isAuth, (req, res) => {
+router.get("/", (req, res) => {
   crud.getItems(Model, res);
 }); // READ
 

@@ -10,7 +10,7 @@ const {
 const { isAuth } = require("../auth");
 const crud = require("../../controllers/crud");
 
-router.get("/", isAuth, (req, res) => {
+router.get("/", (req, res) => {
   crud.getItems(Model, res);
 }); // READ
 
@@ -55,9 +55,9 @@ router.get("/reg", (req, res) => {
   return User.save().then(() => res.json({ user: User }));
 });
 
-router.get("/auth", isAuth, (req, res) => {
-  res.send({ token: req.session.token });
-});
+// router.get("/auth", isAuth, (req, res) => {
+//   res.send({ token: req.session.token });
+// });
 
 router.post("/auth", (req, res, next) => {
   const { username, password } = req.body;

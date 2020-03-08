@@ -10,7 +10,8 @@
     "server": "nodemon server/app.js"
   },
   "_moduleAliases": {
-    "@config": "api/config.json"
+    "@config": "api/config.json",
+    "@assets": "src/assets"
   },
   "dependencies": {
     "async": "^3.2.0",

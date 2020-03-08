@@ -1,4 +1,5 @@
-@media only screen and (min-width: 768px) {
+// @media only screen and (min-width: 768px) {
+@include md {
   .section {
     &__title {
       $elem: &;

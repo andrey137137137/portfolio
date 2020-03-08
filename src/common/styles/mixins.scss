@@ -1,3 +1,33 @@
+@mixin breakpoint($value) {
+  $breakpoints: (
+    "md": 768px,
+    "lg": 1200px,
+    "xl": 1800px
+  );
+
+  @media only screen and (min-width: map-get($breakpoints, $value)) {
+    @content;
+  }
+}
+
+@mixin md {
+  @include breakpoint("md") {
+    @content;
+  }
+}
+
+@mixin lg {
+  @include breakpoint("lg") {
+    @content;
+  }
+}
+
+@mixin xl {
+  @include breakpoint("xl") {
+    @content;
+  }
+}
+
 @mixin pixelPerfect($device, $page: "", $top: 0) {
   #pixel_perfect {
     $img: "";

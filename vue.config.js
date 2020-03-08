@@ -42,6 +42,7 @@ module.exports = {
     }
   },
   chainWebpack: config => {
+    // config.resolve.alias.set("@assets", resolveSrc("assets"));
     config.resolve.alias.set("@common", resolveSrc("common"));
     config.resolve.alias.set("@frontend", resolveSrc("frontend"));
     config.resolve.alias.set("@backend", resolveSrc("backend"));

@@ -44,4 +44,4 @@ export default {
 };
 </script>
 
-<style lang="scss" src="@frontStylesPgs/Blog.scss"></style>
+<style lang="scss" src="@frontStylesPgs/Blog/import.scss"></style>

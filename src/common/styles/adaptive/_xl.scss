@@ -1,4 +1,5 @@
-@media only screen and (min-width: 1800px) {
+// @media only screen and (min-width: 1800px) {
+@include xl {
   .top_wrap {
     &__corner_border {
       @include border("102px  50vw  0  50vw  / * / *");

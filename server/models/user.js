@@ -45,7 +45,7 @@ const UserSchema = new Schema({
 UserSchema.pre("save", function(next) {
   if (!this.isModified("password")) return next();
 
-  this.password = crypto(this.password, SALT);
+  this.password = crypto(this.password, SALT).toString();
   next();
 });
 

@@ -1,5 +1,5 @@
 <template lang="pug">
-  PageWrapper(title="Личные данные")
+  PageWrapper(page="Личные данные")
     UserForm(
       v-for="user in dbData"
       :key="user._id"

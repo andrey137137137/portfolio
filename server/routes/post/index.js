@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const Model = require("mongoose").model("post");
 
-const isAuth = require("@auth");
+const { isAuth } = require("@auth");
 const crud = require("@contr/crud");
 
 router.get("/", (req, res) => {

@@ -1,6 +1,6 @@
 <template lang="pug">
   .container
-    h1.section__title.section__main_title.main__big_title Страница "{{title}}"
+    h1.section__title.section__main_title.main__big_title {{title}}
     slot
 </template>
 
@@ -8,9 +8,18 @@
 export default {
   name: "PageWrapper",
   props: {
-    title: {
+    isAuth: {
+      type: Boolean,
+      default: true
+    },
+    page: {
       type: String,
-      required: true
+      default: ""
+    }
+  },
+  computed: {
+    title() {
+      return !this.isAuth ? "Вы не авторизированы!" : `Страница "${this.page}"`;
     }
   }
 };

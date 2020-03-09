@@ -7,7 +7,7 @@ const {
   SIGNATURE
   // EXPIRATION
 } = require("@config").jwt;
-const isAuth = require("@auth");
+const { isAuth } = require("@auth");
 
 router.get("/auth", isAuth, (req, res) => {
   res.send({ success: true });

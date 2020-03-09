@@ -1,6 +1,6 @@
 const router = require("express").Router();
 
-const isAuth = require("@auth");
+const { isAuth } = require("@auth");
 const upload = require("@contr/upload");
 
 router.post("/avatar", isAuth, upload.avatar);

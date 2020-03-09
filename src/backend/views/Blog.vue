@@ -1,5 +1,5 @@
 <template lang="pug">
-  PageWrapper(title="Блог")
+  PageWrapper(page="Блог")
     PostForm(
       v-for="post in dbData"
       :key="post._id"

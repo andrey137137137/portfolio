@@ -1,5 +1,5 @@
 <template lang="pug">
-  PageWrapper(title="Обо мне")
+  PageWrapper(page="Обо мне")
     form#upload.form(enctype="multipart/form-data" @submit.prevent="uploadImage")
       PictureInput(
         ref="pictureInput"

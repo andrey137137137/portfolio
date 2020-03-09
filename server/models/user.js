@@ -31,6 +31,11 @@ const UserSchema = new Schema({
       children: [ContactSchema]
     }
   },
+  email: {
+    type: String,
+    unique: true,
+    required: [true, "Укажите описание картинки"]
+  },
   username: {
     type: String,
     unique: true,

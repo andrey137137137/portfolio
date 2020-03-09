@@ -1,5 +1,5 @@
 <template lang="pug">
-  PageWrapper(title="Мои работы")
+  PageWrapper(page="Мои работы")
     SlideForm(
       v-for="slide in dbData"
       :key="slide._id"

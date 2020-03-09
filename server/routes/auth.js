@@ -1,7 +1,7 @@
-module.exports.isAuth = (req, res, next) => {
+module.exports.default = (req, res, next) => {
   if (req.session.token) {
     return next();
   }
 
-  res.status(400).send();
+  res.status(400).send({ success: false });
 };

@@ -6,7 +6,6 @@ const logger = require("morgan");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
-// const MongoDBStore = require("connect-mongodb-session")(session);
 const mongoose = require("mongoose");
 const MongoStore = require("connect-mongo")(session);
 const errorHandler = require("errorhandler");
@@ -16,13 +15,6 @@ const { SECRET, KEY } = require("@config").session;
 require("./db");
 
 const isProduction = process.env.NODE_ENV === "production";
-
-// const store = new MongoDBStore({
-//   uri: `mongodb://${config.db.user}:${config.db.password}@${config.db.HOST}:${config.db.PORT}/${config.db.name}`,
-//   collection: "sessions"
-// });
-
-// store.on("error", error => console.log(error));
 
 const app = express();
 
@@ -63,8 +55,6 @@ app.use(
 
 app.use((req, res, next) => {
   console.log(req.session);
-  // req.session.test = req.session.test + 1 || 1;
-  // res.send("Visits: " + req.session.test);
   next();
 });
 

@@ -1,5 +1,5 @@
-module.exports.getItems = function(Model, res) {
-  Model.find()
+module.exports.getItems = (Model, res, fields = {}) => {
+  Model.find(fields)
     .then(items => {
       res.status(200).json({ items });
     })
@@ -10,7 +10,7 @@ module.exports.getItems = function(Model, res) {
     });
 };
 
-module.exports.createItem = function(Model, data, res) {
+module.exports.createItem = (Model, data, res) => {
   // создаем новую запись блога и передаем в нее поля из формы
   const item = new Model(data);
   // сохраняем запись в базе
@@ -27,7 +27,7 @@ module.exports.createItem = function(Model, data, res) {
     });
 };
 
-module.exports.updateItem = function(Model, id, data, res) {
+module.exports.updateItem = (Model, id, data, res) => {
   Model.findByIdAndUpdate(id, { $set: data })
     .then(item => {
       if (item) {
@@ -43,7 +43,7 @@ module.exports.updateItem = function(Model, id, data, res) {
     });
 };
 
-module.exports.deleteItem = function(Model, id, res) {
+module.exports.deleteItem = (Model, id, res) => {
   Model.findByIdAndRemove(id).then(
     item => {
       if (item) {

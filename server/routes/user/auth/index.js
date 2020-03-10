@@ -37,11 +37,7 @@ router.post("/", (req, res, next) => {
       if (err) next(err);
 
       req.session.token = jwt.sign(
-        {
-          id: user._id,
-          email: user.email,
-          username: user.username
-        },
+        { id: user._id },
         SIGNATURE
         // { expiresIn: EXPIRATION }
       );

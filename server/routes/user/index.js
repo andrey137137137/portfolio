@@ -17,6 +17,6 @@ router.get("/reg", (req, res) => {
 
 router.use("/auth", require("./auth"));
 router.use("/profile", require("./profile"));
-router.use("/password", require("./password"));
+router.use("/config", require("./config"));
 
 module.exports = router;

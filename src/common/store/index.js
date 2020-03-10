@@ -30,13 +30,9 @@ export default new Vuex.Store({
       commit(SET_PAGE, page);
     },
     readData({ state, commit }) {
-      // if (state.data.page == "slide") {
-      //   commit(SET, works);
-      // } else {
       axios.get(state.data.page).then(res => {
-        commit(SET, res.data.items);
+        commit(SET, res.data.result);
       });
-      // }
     },
     insertData({ state, dispatch }, data) {
       axios.post(state.data.page, data).then(() => {

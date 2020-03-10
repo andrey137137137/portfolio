@@ -40,7 +40,7 @@ export default {
     setConfig({ commit }, data) {
       commit(SET_CONFIG, data);
       axios.get("user/profile").then(res => {
-        commit(SET_PROFILE, res.data.item.profile);
+        commit(SET_PROFILE, res.data.result.profile);
       });
     }
   },

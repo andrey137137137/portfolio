@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
-const crypto = require("crypto-js/hmac-sha512");
+const hmacSha512 = require("crypto-js/hmac-sha512");
+
 const { SALT } = require("@config").db;
 
 const { Schema } = mongoose;
@@ -50,7 +51,7 @@ const UserSchema = new Schema({
 UserSchema.pre("save", function(next) {
   if (!this.isModified("password")) return next();
 
-  this.password = crypto(this.password, SALT).toString();
+  this.password = hmacSha512(this.password, SALT).toString();
   next();
 });
 
@@ -67,7 +68,7 @@ UserSchema.methods.validatePassword = function(password) {
   //   .toString("hex");
   // return this.hash === hash;
 
-  return this.password === crypto(password, SALT).toString();
+  return this.password === hmacSha512(password, SALT).toString();
 };
 
 mongoose.model("user", UserSchema);

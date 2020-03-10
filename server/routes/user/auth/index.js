@@ -1,13 +1,8 @@
-const jwt = require("jsonwebtoken");
 const waterfall = require("async/waterfall");
 const router = require("express").Router();
 const Model = require("mongoose").model("user");
 
-const {
-  SIGNATURE
-  // EXPIRATION
-} = require("@config").jwt;
-const { isAuth } = require("@auth");
+const { isAuth, setToken } = require("@auth");
 
 router.get("/", isAuth, (req, res) => {
   res.send({ success: true });
@@ -36,11 +31,7 @@ router.post("/", (req, res, next) => {
     (err, user) => {
       if (err) next(err);
 
-      req.session.token = jwt.sign(
-        { id: user._id },
-        SIGNATURE
-        // { expiresIn: EXPIRATION }
-      );
+      req.session.token = setToken(user._id, next);
       res.send({ success: true });
     }
   );

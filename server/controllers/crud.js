@@ -1,14 +1,20 @@
-function get(Model, res, fields, oneItem = false) {
-  const FUNC = oneItem ? "findOne" : "find";
+function get(Model, res, filter, fields, mode = "many") {
+  const types = {
+    many: "find",
+    one: "findOne",
+    id: "findById"
+  };
+  const FUNC = types[mode];
 
-  Model[FUNC]({}, fields)
+  Model[FUNC](filter, fields)
     .then(result => {
       res.status(200).json({ result });
     })
     .catch(err => {
-      const errStr = oneItem
-        ? "При чтении записи произошла ошибка"
-        : "При чтении записей произошла ошибка";
+      const errStr =
+        mode == "many"
+          ? "При чтении записей произошла ошибка"
+          : "При чтении записи произошла ошибка";
 
       res.status(500).json({
         status: errStr + ": " + err
@@ -35,16 +41,21 @@ function update(Model, query, data, res) {
     });
 }
 
-module.exports.getItem = (Model, res, fields = {}) => {
-  get(Model, res, fields, true);
+module.exports.getItemById = (Model, res, id, fields = {}) => {
+  get(Model, res, id, fields, "id");
 };
 
-module.exports.getItems = (Model, res, fields = {}) => {
-  get(Model, res, fields);
+module.exports.getItem = (Model, res, filter = {}, fields = {}) => {
+  get(Model, res, filter, fields, "one");
+};
+
+module.exports.getItems = (Model, res, filter = {}, fields = {}) => {
+  get(Model, res, filter, fields);
 };
 
 module.exports.createItem = (Model, data, res) => {
   const item = new Model(data);
+
   item
     .save()
     .then(result => {

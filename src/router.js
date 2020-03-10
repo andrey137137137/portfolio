@@ -108,16 +108,16 @@ export default new VueRouter({
           component: () => import("@backViews/Blog.vue")
         },
         {
-          path: "user",
+          path: "profile",
           props: () => {
-            setDbPage("user");
+            setDbPage("user/profile");
           },
-          component: () => import("@backViews/User.vue")
+          component: () => import("@backViews/Profile.vue")
         },
         {
           path: "works",
           props: () => {
-            setDbPage("slide");
+            setDbPage("work");
           },
           component: () => import("@backViews/Works.vue")
         }

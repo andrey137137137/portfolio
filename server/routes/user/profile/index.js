@@ -5,7 +5,7 @@ const { isAuth } = require("@auth");
 const crud = require("@contr/crud");
 
 router.get("/", (req, res) => {
-  crud.getItems(Model, res, { profile });
+  crud.getItem(Model, res, { _id: false, profile: true });
 }); // READ
 
 router.put("/:id", isAuth, (req, res) => {

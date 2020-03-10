@@ -9,11 +9,11 @@ const {
 } = require("@config").jwt;
 const { isAuth } = require("@auth");
 
-router.get("/auth", isAuth, (req, res) => {
+router.get("/", isAuth, (req, res) => {
   res.send({ success: true });
 });
 
-router.post("/auth", (req, res, next) => {
+router.post("/", (req, res, next) => {
   const { username, password } = req.body;
 
   waterfall(
@@ -50,7 +50,7 @@ router.post("/auth", (req, res, next) => {
   );
 });
 
-router.delete("/auth", isAuth, (req, res) => {
+router.delete("/", isAuth, (req, res) => {
   const { token } = req.session;
 
   if (!token) {

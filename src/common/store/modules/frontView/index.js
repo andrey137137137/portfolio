@@ -39,24 +39,17 @@ export default {
   actions: {
     setConfig({ commit }, data) {
       commit(SET_CONFIG, data);
-      axios.get("user").then(res => {
-        commit(SET_PROFILE, res.data.items[0].profile);
+      axios.get("user/profile").then(res => {
+        commit(SET_PROFILE, res.data.item.profile);
       });
     }
-    // setProfile({ commit }) {
-    //   axios.get("user").then(res => {
-    //     commit(SET_PROFILE, res.data.items[0].profile);
-    //   });
-    // }
   },
   mutations: {
     [SET_CONFIG](state, data) {
       const tempData = { ...defaultData.pageConfig, ...data };
 
       for (const key in tempData) {
-        // if (state.data.hasOwnProperty(key)) {
         state.pageConfig[key] = tempData[key];
-        // }
       }
     },
     [SET_PROFILE](state, data) {

@@ -1,5 +1,17 @@
+module.exports.getItem = (Model, res, fields = {}) => {
+  Model.findOne({}, fields)
+    .then(item => {
+      res.status(200).json({ item });
+    })
+    .catch(err => {
+      res.status(500).json({
+        status: "При чтении записей произошла ошибка: " + err
+      });
+    });
+};
+
 module.exports.getItems = (Model, res, fields = {}) => {
-  Model.find(fields)
+  Model.find({}, fields)
     .then(items => {
       res.status(200).json({ items });
     })
@@ -11,16 +23,13 @@ module.exports.getItems = (Model, res, fields = {}) => {
 };
 
 module.exports.createItem = (Model, data, res) => {
-  // создаем новую запись блога и передаем в нее поля из формы
   const item = new Model(data);
-  // сохраняем запись в базе
   item
     .save()
     .then(item => {
       return res.status(200).json({ status: "Запись успешно добавлена" });
     })
     .catch(err => {
-      // обрабатываем  и отправляем
       res.status(500).json({
         status: "При добавление записи произошла ошибка: " + err
       });

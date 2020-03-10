@@ -4,7 +4,7 @@
     AdminNav
     main.section.main
       router-view(v-if="isAuth")
-      PageWrapper(v-else :isAuth="isAuth")
+      PageWrapper(v-else)
 </template>
 
 <script>
@@ -13,6 +13,9 @@ import AdminHeader from "@backCmp/AdminHeader";
 import AdminNav from "@backCmp/AdminNav";
 import PageWrapper from "@backCmp/PageWrapper";
 
+import { createNamespacedHelpers } from "vuex";
+const { mapGetters, mapActions } = createNamespacedHelpers("auth");
+
 export default {
   name: "AdminApp",
   components: {
@@ -20,15 +23,14 @@ export default {
     AdminNav,
     PageWrapper
   },
-  data() {
-    return {
-      isAuth: false
-    };
+  computed: {
+    ...mapGetters(["isAuth"])
+  },
+  methods: {
+    ...mapActions(["getAuthStatus"])
   },
   created() {
-    axios.get("user/auth").then(resp => {
-      if (resp.data.success) this.isAuth = resp.data.success;
-    });
+    this.getAuthStatus();
   }
 };
 </script>

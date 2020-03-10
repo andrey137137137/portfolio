@@ -67,6 +67,9 @@ import FormWrapper from "@components/FormElems/FormWrapper";
 import InputEventElem from "@components/FormElems/InputEventElem";
 import ChangeEventElem from "@components/FormElems/ChangeEventElem";
 
+import { createNamespacedHelpers } from "vuex";
+const { mapActions } = createNamespacedHelpers("auth");
+
 export default {
   name: "LoginForm",
   components: {
@@ -103,6 +106,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(["setAuthStatus"]),
     handleSubmit() {
       if (this.$v.$invalid) {
         return false;
@@ -113,16 +117,12 @@ export default {
 
       axios.post("user/auth", { username, password }).then(res => {
         if (res.data.success) {
-          document.cookie = "user-token=" + res.data.success;
+          $vm.setAuthStatus(res.data.success);
           return $vm.$router.push("/admin");
         }
 
-        console.log(res);
-
         return false;
       });
-
-      return true;
     }
   }
 };

@@ -5,19 +5,19 @@
 </template>
 
 <script>
+import { createNamespacedHelpers } from "vuex";
+const { mapGetters } = createNamespacedHelpers("auth");
+
 export default {
   name: "PageWrapper",
   props: {
-    isAuth: {
-      type: Boolean,
-      default: true
-    },
     page: {
       type: String,
       default: ""
     }
   },
   computed: {
+    ...mapGetters(["isAuth"]),
     title() {
       return !this.isAuth ? "Вы не авторизированы!" : `Страница "${this.page}"`;
     }

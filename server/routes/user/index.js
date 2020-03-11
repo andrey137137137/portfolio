@@ -10,7 +10,7 @@ router.get("/reg", (req, res) => {
     },
     email: "andrey27x777@gmail.com",
     username: "andrey21",
-    password: "postel"
+    password: ""
   });
 
   return User.save().then(() => res.json({ user: User }));

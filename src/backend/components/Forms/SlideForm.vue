@@ -39,7 +39,8 @@ import {
 import axios from "axios";
 import exist from "@common/helpers/exist";
 import upload from "@backend/mixins/upload";
-import form from "@backend/mixins/form";
+import formMxn from "@backend/mixins/form";
+import itemFormMxn from "@backend/mixins/itemForm";
 import PictureInput from "vue-picture-input";
 import ItemForm from "@backCmp/Forms/ItemForm";
 import InputEventElem from "@components/FormElems/InputEventElem";
@@ -53,7 +54,7 @@ export default {
     InputEventElem,
     MultipleElem
   },
-  mixins: [upload, form],
+  mixins: [upload, formMxn, itemFormMxn],
   data() {
     const data = {
       image: null,

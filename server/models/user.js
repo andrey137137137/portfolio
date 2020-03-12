@@ -18,19 +18,17 @@ const ContactSchema = new Schema({
 });
 
 const UserSchema = new Schema({
-  profile: {
-    firstName: {
-      type: String,
-      required: [true, "Укажите описание картинки"]
-    },
-    lastName: {
-      type: String,
-      required: [true, "Укажите описание картинки"]
-    },
-    contacts: {
-      type: Array,
-      children: [ContactSchema]
-    }
+  firstName: {
+    type: String,
+    required: [true, "Укажите описание картинки"]
+  },
+  lastName: {
+    type: String,
+    required: [true, "Укажите описание картинки"]
+  },
+  contacts: {
+    type: Array,
+    children: [ContactSchema]
   },
   email: {
     type: String,

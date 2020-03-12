@@ -3,14 +3,12 @@ const Model = require("mongoose").model("user");
 
 router.get("/reg", (req, res) => {
   const User = new Model({
-    profile: {
-      firstName: "Андрей",
-      lastName: "Банников",
-      contacts: []
-    },
+    firstName: "Андрей",
+    lastName: "Банников",
+    contacts: [],
     email: "andrey27x777@gmail.com",
     username: "andrey21",
-    password: ""
+    password: "rassada"
   });
 
   return User.save().then(() => res.json({ user: User }));

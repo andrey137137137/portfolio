@@ -53,10 +53,10 @@ app.use(
   })
 );
 
-app.use((req, res, next) => {
-  console.log(req.session);
-  next();
-});
+// app.use((req, res, next) => {
+//   console.log(req.session);
+//   next();
+// });
 
 app.use(URL, require("./routes/index"));
 

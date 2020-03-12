@@ -6,9 +6,9 @@ const crud = require("@contr/crud");
 
 router.get("/", isAuth, (req, res, next) => {
   crud.getItemById(Model, res, userId(req.session.token, next), {
-    _id: false,
-    email: true,
-    username: true
+    _id: 0,
+    email: 1,
+    username: 1
   });
 });
 

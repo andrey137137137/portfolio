@@ -1,6 +1,14 @@
 <template lang="pug">
   PageWrapper(page="Личные данные")
-    ProfileForm(:item="dbData")
+    //- ProfileForm(
+    //-   v-for="user in dbData"
+    //-   :key="user.email"
+    //-   :item="user")
+    ProfileForm(
+      :firstName="dbData.firstName"
+      :lastName="dbData.lastName"
+      :contacts="dbData.contacts"
+      :email="dbData.email")
 </template>
 
 <script>

@@ -1,8 +1,6 @@
 <template lang="pug">
-  ItemForm(
+  UserForm(
     :handleSubmit="submit"
-    :handleDelete="removeItem"
-    :id="id"
     :disabled="disabled"
   )
     //- button
@@ -49,13 +47,9 @@
       :val="$v.lastName"
       placeholder="Фамилия")
     InputEventElem(
-      v-model="username"
-      :val="$v.username"
-      placeholder="Логин")
-    InputEventElem(
-      v-model="password"
-      :val="$v.password"
-      placeholder="Пароль")
+      v-model="email"
+      :val="$v.email"
+      placeholder="Email")
     MultipleElem(
       :vals="$v.contacts.$each.$iter"
       :items="contacts"
@@ -67,16 +61,18 @@
 // import axios from "axios";
 import {
   required,
-  alphaNum
+  alphaNum,
+  email
   // minValue,
   // maxValue
 } from "vuelidate/lib/validators";
 import upload from "@backend/mixins/upload";
 // import { clipperBasic, clipperPreview } from "vuejs-clipper";
-import myUpload from "vue-image-crop-upload";
+// import myUpload from "vue-image-crop-upload";
 // import PictureInput from "vue-picture-input";
-import form from "@backend/mixins/form";
-import ItemForm from "@backCmp/Forms/ItemForm";
+import formMxn from "@backend/mixins/form";
+import userFormMxn from "@backend/mixins/userForm";
+import UserForm from "@backCmp/Forms/UserForm";
 import InputEventElem from "@components/FormElems/InputEventElem";
 import MultipleElem from "@components/FormElems/MultipleElem";
 
@@ -86,12 +82,12 @@ export default {
     // clipperBasic,
     // clipperPreview,
     // "my-upload": myUpload,
-    ItemForm,
+    UserForm,
     InputEventElem,
     // PictureInput,
     MultipleElem
   },
-  mixins: [upload, form],
+  mixins: [upload, formMxn, userFormMxn],
   data() {
     const contactTemplate = { name: "", value: "", icon: "" };
 
@@ -107,11 +103,6 @@ export default {
         smail: "*_~"
       },
       imgDataUrl: "", // the datebase64 url of created image
-      firstName: this.item.profile.firstName,
-      lastName: this.item.profile.lastName,
-      username: this.item.username,
-      password: "",
-      contacts: this.item.profile.contacts,
       contactFields: [
         {
           name: "name",
@@ -139,24 +130,23 @@ export default {
     lastName: {
       required
     },
-    username: {
-      required
-    },
-    password: {
+    email: {
       required,
-      alphaNum
+      email
     },
     contacts: {
-      required,
       $each: {
         name: {
-          required
+          required,
+          alphaNum
         },
         value: {
-          required
+          required,
+          alphaNum
         },
         icon: {
-          required
+          required,
+          alphaNum
         }
       }
     }
@@ -164,13 +154,10 @@ export default {
   methods: {
     prepareData() {
       this.submitData = {
-        profile: {
-          firstName: this.firstName,
-          lastName: this.lastName,
-          contacts: this.cloneMultipleArray(this.contacts, this.contactTemplate)
-        },
-        username: this.username,
-        password: this.password
+        firstName: this.firstName,
+        lastName: this.lastName,
+        contacts: this.cloneMultipleArray(this.contacts, this.contactTemplate),
+        email: this.email
       };
     },
     // changeImage() {

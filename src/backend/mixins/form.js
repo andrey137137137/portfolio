@@ -10,32 +10,16 @@ export default {
   },
   data() {
     return {
-      submitData: {},
-      removeTitle: "запись",
-      removeValue: ""
+      submitData: {}
     };
   },
   computed: {
-    id() {
-      return this.item ? this.item._id : 0;
-    },
     disabled() {
       return this.$v.$pending || this.$v.$invalid;
     }
   },
   methods: {
-    ...mapActions(["deleteData", "updateData", "insertData"]),
-    removeItem() {
-      console.log(this.id);
-
-      if (
-        confirm(
-          `Вы уверены, что хотите удалить ${this.removeTitle}: "${this.removeValue}"?`
-        )
-      ) {
-        this.deleteData(this.id);
-      }
-    },
+    ...mapActions(["updateData"]),
     cloneMultipleArray(array, props) {
       return array.map(item => {
         const object = {};
@@ -75,14 +59,7 @@ export default {
       }
 
       this.prepareData();
-
-      if (!this.item) {
-        console.log(this.submitData);
-        this.insertData(this.submitData);
-        this.reset();
-      } else {
-        this.updateData({ id: this.item._id, data: this.submitData });
-      }
+      this.updateData({ id: this.item._id, data: this.submitData });
 
       return true;
     }

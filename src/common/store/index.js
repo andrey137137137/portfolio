@@ -14,7 +14,7 @@ export default new Vuex.Store({
   state: {
     data: {
       page: "",
-      items: []
+      result: []
     }
   },
   getters: {
@@ -22,7 +22,7 @@ export default new Vuex.Store({
       return state.data.page;
     },
     dbData(state) {
-      return state.data.items;
+      return state.data.result;
     }
   },
   actions: {
@@ -40,8 +40,17 @@ export default new Vuex.Store({
       });
     },
     updateData({ state, dispatch }, payload) {
-      axios.put(`${state.data.page}/${payload.id}`, payload.data).then(() => {
-        dispatch("readData", state.data.page);
+      const { page } = state.data;
+      let method = "put";
+      let url = `${page}/${payload.id}`;
+
+      if (page.slice(0, 4) == "user") {
+        method = "post";
+        url = page;
+      }
+
+      axios[method](url, payload.data).then(() => {
+        dispatch("readData", page);
       });
     },
     deleteData({ state, dispatch }, id) {
@@ -55,13 +64,13 @@ export default new Vuex.Store({
       state.data.page = page;
     },
     [SET](state, data) {
-      state.data.items = data;
+      state.data.result = data;
     },
     [ADD](state, newItem) {
-      state.data.items.push(newItem);
+      state.data.result.push(newItem);
     },
     [DELETE](state, id) {
-      state.data.items = state.data.items.filter(item => item.id !== id);
+      state.data.result = state.data.result.filter(item => item.id !== id);
     }
   },
   modules: {

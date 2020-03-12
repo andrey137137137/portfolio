@@ -4,9 +4,9 @@ function get(Model, res, filter, fields, mode = "many") {
     one: "findOne",
     id: "findById"
   };
-  const FUNC = types[mode];
+  const method = types[mode];
 
-  Model[FUNC](filter, fields)
+  Model[method](filter, fields)
     .then(result => {
       res.status(200).json({ result });
     })

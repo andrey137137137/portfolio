@@ -108,6 +108,13 @@ export default new VueRouter({
           component: () => import("@backViews/Blog.vue")
         },
         {
+          path: "works",
+          props: () => {
+            setDbPage("work");
+          },
+          component: () => import("@backViews/Works.vue")
+        },
+        {
           path: "profile",
           props: () => {
             setDbPage("user/profile");
@@ -115,11 +122,11 @@ export default new VueRouter({
           component: () => import("@backViews/Profile.vue")
         },
         {
-          path: "works",
+          path: "authConfig",
           props: () => {
-            setDbPage("work");
+            setDbPage("user/config");
           },
-          component: () => import("@backViews/Works.vue")
+          component: () => import("@backViews/AuthConfig.vue")
         }
       ]
     }

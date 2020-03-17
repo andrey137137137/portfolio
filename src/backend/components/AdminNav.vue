@@ -16,7 +16,8 @@ export default {
         { name: "Обо мне", href: "/admin/about" },
         { name: "Блог", href: "/admin/blog" },
         { name: "Мои работы", href: "/admin/works" },
-        { name: "Личные данные", href: "/admin/profile" }
+        { name: "Личные данные", href: "/admin/profile" },
+        { name: "Имя пользователя и email", href: "/admin/authConfig" }
       ]
     };
   },

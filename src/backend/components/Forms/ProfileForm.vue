@@ -46,10 +46,6 @@
       v-model="lastName"
       :val="$v.lastName"
       placeholder="Фамилия")
-    InputEventElem(
-      v-model="email"
-      :val="$v.email"
-      placeholder="Email")
     MultipleElem(
       :vals="$v.contacts.$each.$iter"
       :items="contacts"
@@ -61,12 +57,11 @@
 // import axios from "axios";
 import {
   required,
-  alphaNum,
-  email
+  alphaNum
   // minValue,
   // maxValue
 } from "vuelidate/lib/validators";
-import upload from "@backend/mixins/upload";
+// import upload from "@backend/mixins/upload";
 // import { clipperBasic, clipperPreview } from "vuejs-clipper";
 // import myUpload from "vue-image-crop-upload";
 // import PictureInput from "vue-picture-input";
@@ -87,10 +82,12 @@ export default {
     // PictureInput,
     MultipleElem
   },
-  mixins: [upload, formMxn, userFormMxn],
+  mixins: [
+    // upload,
+    formMxn,
+    userFormMxn
+  ],
   data() {
-    const contactTemplate = { name: "", value: "", icon: "" };
-
     return {
       // imgURL: "",
       // resultURL: "",
@@ -120,7 +117,11 @@ export default {
           placeholder: "Иконка"
         }
       ],
-      contactTemplate
+      contactTemplate: {
+        name: "",
+        value: "",
+        icon: ""
+      }
     };
   },
   validations: {
@@ -129,10 +130,6 @@ export default {
     },
     lastName: {
       required
-    },
-    email: {
-      required,
-      email
     },
     contacts: {
       $each: {
@@ -156,10 +153,9 @@ export default {
       this.submitData = {
         firstName: this.firstName,
         lastName: this.lastName,
-        contacts: this.cloneMultipleArray(this.contacts, this.contactTemplate),
-        email: this.email
+        contacts: this.cloneMultipleArray(this.contacts, this.contactTemplate)
       };
-    },
+    }
     // changeImage() {
     //   this.image = this.$refs.pictureInput.file;
     //   console.log(this.image);
@@ -199,9 +195,9 @@ export default {
     //   const bb = new Blob([ab], { type: mimeString });
     //   return bb;
     // },
-    toggleShow() {
-      this.show = !this.show;
-    },
+    // toggleShow() {
+    //   this.show = !this.show;
+    // },
     /**
      * crop success
      *
@@ -218,35 +214,35 @@ export default {
      * [param] jsonData  server api return data, already json encode
      * [param] field
      */
-    cropUploadSuccess(jsonData, field) {
-      console.log("-------- upload success --------");
-      console.log(jsonData);
-      console.log("field: " + field);
-    },
+    // cropUploadSuccess(jsonData, field) {
+    //   console.log("-------- upload success --------");
+    //   console.log(jsonData);
+    //   console.log("field: " + field);
+    // },
     /**
      * upload fail
      *
      * [param] status    server api return error status, like 500
      * [param] field
      */
-    cropUploadFail(status, field) {
-      console.log("-------- upload fail --------");
-      console.log(status);
-      console.log("field: " + field);
-    }
+    // cropUploadFail(status, field) {
+    //   console.log("-------- upload fail --------");
+    //   console.log(status);
+    //   console.log("field: " + field);
+    // }
   }
 };
 </script>
 
 <style lang="scss">
-.my-clipper {
-  width: 100%;
-  max-width: 700px;
-}
+// .my-clipper {
+//   width: 100%;
+//   max-width: 700px;
+// }
 
-.placeholder {
-  text-align: center;
-  padding: 20px;
-  background-color: lightgray;
-}
+// .placeholder {
+//   text-align: center;
+//   padding: 20px;
+//   background-color: lightgray;
+// }
 </style>

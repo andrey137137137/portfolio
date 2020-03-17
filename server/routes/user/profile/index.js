@@ -27,7 +27,6 @@ router.post("/", isAuth, (req, res, next) => {
     {
       firstName,
       lastName,
-      email,
       contacts
     },
     res

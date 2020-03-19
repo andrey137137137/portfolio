@@ -45,15 +45,14 @@
               .form__error(v-show="!$v.notRobot.required") form__error
 
     .menu.header__menu.header__menu-float.form__menu.login_form__menu
+      //- li.menu__item.menu__item-for_main
       a#flip_2_front.menu__link.btn(href="#") На главную
+      //- li.menu__item.menu__item-for_main
       input.menu__link.btn(type="submit", value="Войти")
-      //- li.menu__item.menu__item-for_main
-      //-   a#flip_2_front.menu__link.btn(href="index.html") На главную
-      //- li.menu__item.menu__item-for_main
-      //-   input.menu__link.btn(type="submit", value="Войти")
 </template>
 
 <script>
+import { validationMixin } from "vuelidate";
 import {
   required,
   alphaNum,
@@ -61,7 +60,7 @@ import {
   maxLength
 } from "vuelidate/lib/validators";
 import axios from "axios";
-import { checked } from "@common/helpers/validators";
+// import { checked } from "@common/helpers/validators";
 import addClasses from "@common/mixins/addClasses";
 import FormWrapper from "@components/FormElems/FormWrapper";
 import InputEventElem from "@components/FormElems/InputEventElem";
@@ -77,7 +76,7 @@ export default {
     InputEventElem,
     ChangeEventElem
   },
-  mixins: [addClasses],
+  mixins: [validationMixin, addClasses],
   data() {
     return {
       username: "",
@@ -96,7 +95,7 @@ export default {
       required,
       alphaNum,
       minLength: minLength(6),
-      maxLength: maxLength(15)
+      maxLength: maxLength(16)
     },
     isHuman: {
       // checked
@@ -108,9 +107,7 @@ export default {
   methods: {
     ...mapActions(["setAuthStatus"]),
     handleSubmit() {
-      if (this.$v.$invalid) {
-        return false;
-      }
+      if (this.$v.$invalid) return false;
 
       const $vm = this;
       const { username, password } = this;

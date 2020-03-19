@@ -24,7 +24,15 @@
 </template>
 
 <script>
-import { required, alphaNum, email } from "vuelidate/lib/validators";
+import { validationMixin } from "vuelidate";
+import {
+  required,
+  alphaNum,
+  email,
+  sameAs,
+  minLength,
+  maxLength
+} from "vuelidate/lib/validators";
 import formMxn from "@backend/mixins/form";
 import userFormMxn from "@backend/mixins/userForm";
 import UserForm from "@backCmp/Forms/UserForm";
@@ -36,7 +44,7 @@ export default {
     UserForm,
     InputEventElem
   },
-  mixins: [formMxn, userFormMxn],
+  mixins: [validationMixin, formMxn, userFormMxn],
   data() {
     return {
       password: "",
@@ -53,11 +61,12 @@ export default {
     },
     password: {
       required,
-      alphaNum
+      alphaNum,
+      minLength: minLength(6),
+      maxLength: maxLength(16)
     },
     repPassword: {
-      required,
-      alphaNum
+      sameAsPassword: sameAs("password")
     }
   },
   methods: {

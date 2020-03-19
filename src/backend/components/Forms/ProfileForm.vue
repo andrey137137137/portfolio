@@ -55,6 +55,7 @@
 
 <script>
 // import axios from "axios";
+import { validationMixin } from "vuelidate";
 import {
   required,
   alphaNum
@@ -84,6 +85,7 @@ export default {
   },
   mixins: [
     // upload,
+    validationMixin,
     formMxn,
     userFormMxn
   ],

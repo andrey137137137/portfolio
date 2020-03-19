@@ -73,10 +73,6 @@ export default {
         $vm.$flipBtn.fadeIn();
       });
     });
-  },
-  created() {
-    // console.log(this.$cookies.get("testing_key"));
-    console.log("Cookies: " + document.cookie);
   }
 };
 </script>

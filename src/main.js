@@ -1,7 +1,7 @@
 import Vue from "vue";
 // import VueRx from "vue-rx";
 // import VuejsClipper from "vuejs-clipper";
-import Vuelidate from "vuelidate";
+// import Vuelidate from "vuelidate";
 import axios from "axios";
 
 import myConfig from "../api/config";
@@ -18,22 +18,20 @@ axios.interceptors.request.use(
     config.timeout = 5000;
     config.headers = { "Content-Type": "application/json" };
     config.withCredentials = true;
-    // console.log(config);
+
     return config;
   },
-  error => {
-    // console.log(error.response.status);
+  err => {
+    console.log(err.response.status);
     return Promise.reject();
   }
 );
 
 // Vue.use(VueRx);
 // Vue.use(VuejsClipper);
-Vue.use(Vuelidate);
+// Vue.use(Vuelidate);
 
 // Vue.config.productionTip = false;
-
-console.log(document.cookie);
 
 new Vue({
   el: "#app",

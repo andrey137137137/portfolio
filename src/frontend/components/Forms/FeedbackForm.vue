@@ -43,6 +43,7 @@
 </template>
 
 <script>
+import { validationMixin } from "vuelidate";
 import {
   required,
   alphaNum,
@@ -59,6 +60,7 @@ export default {
     FormWrapper,
     InputEventElem
   },
+  mixins: [validationMixin],
   data() {
     return {
       name: "",

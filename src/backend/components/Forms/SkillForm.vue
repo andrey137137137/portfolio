@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import { validationMixin } from "vuelidate";
 import {
   required,
   // alphaNum,
@@ -51,7 +52,7 @@ export default {
     InputEventElem,
     MultipleElem
   },
-  mixins: [formMxn, itemFormMxn],
+  mixins: [validationMixin, formMxn, itemFormMxn],
   data() {
     const data = {
       fields: [

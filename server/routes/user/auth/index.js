@@ -9,6 +9,8 @@ router.get("/", isAuth, (req, res) => {
 });
 
 router.post("/", (req, res, next) => {
+  if (req.session.token) return res.send({ success: true });
+
   const { username, password } = req.body;
 
   waterfall(

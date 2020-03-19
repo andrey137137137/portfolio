@@ -10,7 +10,7 @@ export default {
     },
     contacts: {
       type: Array,
-      default: []
+      default: () => []
     },
     email: {
       type: String,

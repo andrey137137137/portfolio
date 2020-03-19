@@ -2,12 +2,6 @@ import exist from "@common/helpers/exist";
 import { mapActions } from "vuex";
 
 export default {
-  props: {
-    item: {
-      type: Object,
-      default: null
-    }
-  },
   data() {
     return {
       submitData: {}

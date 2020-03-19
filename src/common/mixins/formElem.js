@@ -182,10 +182,8 @@ export default {
           value: this.value
         },
         on: {
-          input: this.handle
-        },
-        nativeOn: {
-          blur: this.val.$touch()
+          input: this.handle,
+          blur: this.val.$touch
         }
       });
     }

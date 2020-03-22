@@ -23,6 +23,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import "@frontStylesCmp/header.scss";
-@import "@frontStylesCmp/socialMenu.scss";
+@import "@frontStylesCmp/Header/import.scss";
+@import "@frontStylesCmp/SocialMenu/import.scss";
 </style>

@@ -32,9 +32,9 @@ export default {
 
 <style lang="scss">
 @import "@frontStyles/common.scss";
-@import "@frontStylesCmp/preloader.scss";
-@import "@frontStylesCmp/parallax.scss";
-@import "@frontStylesCmp/header.scss";
-@import "@frontStylesCmp/socialMenu.scss";
-@import "@frontStylesCmp/footer.scss";
+@import "@frontStylesCmp/Preloader/import.scss";
+@import "@frontStylesCmp/Parallax/import.scss";
+@import "@frontStylesCmp/Header/import.scss";
+@import "@frontStylesCmp/SocialMenu/import.scss";
+@import "@frontStylesCmp/Footer/import.scss";
 </style>

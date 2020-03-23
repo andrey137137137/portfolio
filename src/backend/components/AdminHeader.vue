@@ -10,22 +10,34 @@
 <script>
 import axios from "axios";
 import { createNamespacedHelpers } from "vuex";
-const { mapActions } = createNamespacedHelpers("auth");
+const { mapGetters, mapActions } = createNamespacedHelpers("auth");
 
 export default {
   name: "AdminHeader",
+  data() {
+    return {
+      homePage: { name: "home" }
+    };
+  },
+  computed: {
+    ...mapGetters(["isAuth"])
+  },
   methods: {
-    ...mapActions(["setAuthStatus"]),
+    ...mapActions(["getAuthStatus", "setAuthStatus"]),
     logout() {
       const $vm = this;
+
+      $vm.getAuthStatus();
+
+      if (!$vm.isAuth) {
+        return $vm.$router.push($vm.homePage);
+      }
 
       axios.delete("user/auth").then(res => {
         if (res.data.success) {
           $vm.setAuthStatus(!res.data.success);
-          return $vm.$router.push("/");
+          return $vm.$router.push($vm.homePage);
         }
-
-        return false;
       });
     }
   }

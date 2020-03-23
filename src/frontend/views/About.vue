@@ -40,7 +40,6 @@
 
 <script>
 import pageConfig from "@frontend/mixins/pageConfig";
-import FullPageWrapper from "@frontCmp/FullPageWrapper";
 import TopWrapper from "@frontCmp/TopWrapper";
 import SectionWrapper from "@frontCmp/SectionWrapper";
 import TitleWrapper from "@frontCmp/TitleWrapper";
@@ -51,7 +50,6 @@ import ContactList from "@frontCmp/ContactList";
 export default {
   name: "AboutView",
   components: {
-    FullPageWrapper,
     TopWrapper,
     SectionWrapper,
     TitleWrapper,

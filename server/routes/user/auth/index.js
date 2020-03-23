@@ -43,11 +43,11 @@ router.delete("/", isAuth, (req, res) => {
   const { token } = req.session;
 
   if (!token) {
-    return res.send({ status: true });
+    return res.send({ success: true });
   }
 
   req.session.destroy(() => {
-    res.send({ status: true });
+    res.send({ success: true });
   });
 });
 

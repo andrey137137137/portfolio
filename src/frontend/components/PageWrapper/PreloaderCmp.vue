@@ -76,3 +76,5 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" src="@frontStylesCmp/Preloader/import.scss" scoped></style>

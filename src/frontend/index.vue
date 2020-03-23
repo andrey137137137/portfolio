@@ -77,4 +77,4 @@ export default {
 };
 </script>
 
-<style lang="scss" src="@frontStylesPgs/Home.scss"></style>
+<style lang="scss" src="@frontStylesPgs/Home.scss" scoped></style>

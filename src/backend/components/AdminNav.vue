@@ -31,4 +31,4 @@ export default {
 };
 </script>
 
-<style lang="scss" src="@backStylesCmp/AdminNav.scss" scoped></style>
+<style lang="scss" src="@backStylesCmp/AdminNav.scss"></style>

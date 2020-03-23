@@ -26,13 +26,11 @@
 
 <script>
 import pageConfig from "@frontend/mixins/pageConfig";
-import FullPageWrapper from "@frontCmp/FullPageWrapper";
 import TopWrapper from "@frontCmp/TopWrapper";
 
 export default {
   name: "BlogView",
   components: {
-    FullPageWrapper,
     TopWrapper
   },
   mixins: [pageConfig],

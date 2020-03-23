@@ -12,8 +12,8 @@ export default {
   },
   actions: {
     getAuthStatus: ({ commit }) => {
-      axios.get("user/auth").then(resp => {
-        if (resp.data.success) commit(AUTH_SET_STATUS, resp.data.success);
+      axios.get("user/auth").then(res => {
+        if (res.data.success) commit(AUTH_SET_STATUS, res.data.success);
       });
     },
     setAuthStatus: ({ commit }, status) => {

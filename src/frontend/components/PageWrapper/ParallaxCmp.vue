@@ -79,9 +79,7 @@ export default {
             $vm.transformString = `translateY(${$vm.positionY}px)`;
           } else {
             $vm.positionX = $vm.initialX * $vm.divider;
-            $vm.transformString = `translate(${$vm.positionX}px, ${
-              $vm.positionY
-            }px)`;
+            $vm.transformString = `translate(${$vm.positionX}px, ${$vm.positionY}px)`;
           }
 
           $layer.style.transform = $vm.transformString;
@@ -121,3 +119,5 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" src="@frontStylesCmp/Parallax/import.scss"></style>

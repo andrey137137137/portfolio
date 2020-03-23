@@ -8,7 +8,6 @@
 </template>
 
 <script>
-import axios from "axios";
 import AdminHeader from "@backCmp/AdminHeader";
 import AdminNav from "@backCmp/AdminNav";
 import PageWrapper from "@backCmp/PageWrapper";
@@ -35,7 +34,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import "@backStyles/common.scss";
 @import "@backStylesCmp/header.scss";
 </style>

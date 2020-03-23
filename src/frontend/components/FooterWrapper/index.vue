@@ -41,3 +41,5 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" src="@frontStylesCmp/Footer/import.scss"></style>

@@ -38,7 +38,7 @@ export default new VueRouter({
       component: () => import("@frontViews"),
       children: [
         {
-          path: "/works",
+          path: "works",
           name: "works",
           props: () => {
             pageConfig(
@@ -54,7 +54,7 @@ export default new VueRouter({
           component: () => import("@frontViews/Works.vue")
         },
         {
-          path: "/about",
+          path: "about",
           name: "about",
           props: () => {
             pageConfig(
@@ -72,7 +72,7 @@ export default new VueRouter({
           component: () => import("@frontViews/About.vue")
         },
         {
-          path: "/blog",
+          path: "blog",
           name: "blog",
           props: () => {
             pageConfig(

@@ -1,0 +1,32 @@
+.top_wrap {
+  $block: &;
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
+  @include borderCornerHeight(102px);
+
+  &__corner_border {
+    $elem: &;
+
+    &#{$elem}-two_colors {
+      // @include border('* / * / * #f4f5f0 * #f2f0e8');
+      @include borderCornerColor(#f4f5f0, #f2f0e8);
+    }
+  }
+
+  &__title_wrap {
+    padding-top: 58px;
+    height: 184px;
+
+    .title_wrap__bg {
+      height: 100%;
+      transform: translate(-20px, -3px) rotate(190deg);
+    }
+
+    // .title_wrap__title {
+    //   padding-top: 40px;
+    // }
+  }
+}

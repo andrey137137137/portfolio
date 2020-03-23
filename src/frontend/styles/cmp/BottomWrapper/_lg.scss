@@ -1,0 +1,7 @@
+.bottom_wrap {
+  $block: &;
+
+  &#{$block}-bg {
+    height: 1355px;
+  }
+}

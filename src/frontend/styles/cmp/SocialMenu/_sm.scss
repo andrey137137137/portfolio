@@ -1,0 +1,11 @@
+.socials {
+  display: table;
+  margin: 0 auto;
+
+  &__link {
+    float: left;
+    width: 59px;
+    text-decoration: none;
+    overflow: hidden;
+  }
+}

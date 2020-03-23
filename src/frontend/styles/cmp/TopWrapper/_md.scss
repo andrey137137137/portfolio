@@ -1,0 +1,22 @@
+.top_wrap {
+  @include borderCornerHeight(65px);
+
+  // @include margin("* auto");
+  // width: 768px;
+
+  // &__corner_border {
+  //   @include borderPx(768px, $cornerBorderHeight);
+  // }
+
+  &__title_wrap {
+    height: 136px;
+
+    // .title_wrap__bg {
+    //   transform: translateX(-5px) rotate(190deg);
+    // }
+
+    // .title_wrap__title {
+    //   padding-top: 40px;
+    // }
+  }
+}

@@ -1,0 +1,141 @@
+.header {
+  $block: &;
+
+  &__container {
+    $elem: &;
+
+    &#{$elem}-framed {
+      width: 348px;
+    }
+  }
+
+  &__title {
+    $elem: &;
+
+    padding-top: 14px;
+
+    &#{$elem}-medium {
+      padding-top: 25px;
+      font-size: 35px;
+    }
+
+    &#{$elem}-large {
+      padding-top: 19px;
+      // font-size: 49px;
+    }
+  }
+
+  &__desc,
+  &__desc#{$block}__desc-after_large_title {
+    padding-top: 2px;
+  }
+
+  &__desc {
+    $elem: &;
+
+    // padding-top: 2px;
+    font-size: 16px;
+
+    &#{$elem}-after_medium_title {
+      padding-top: 4px;
+    }
+
+    &#{$elem}-after_large_title {
+      // padding-top: 2px;
+      font-size: 14px;
+    }
+  }
+
+  &__nav {
+    $elem: &;
+
+    &#{$elem}-fixed {
+      // left: 50%;
+      @include padding("* 19px");
+      // width: 768px;
+      // transform: translateX(-50%);
+    }
+  }
+
+  &__socials {
+    $elem: &;
+
+    padding-bottom: 12px;
+
+    &#{$elem}-left {
+      .socials__link {
+        size: 55px 86px;
+        font-size: 28px/86px;
+      }
+    }
+  }
+
+  &__menu {
+    $elem: &;
+
+    // &#{$elem}-float {
+    //   padding-top: 7px;
+    // }
+
+    &#{$elem}-absolute {
+      padding-top: 178px;
+
+      .menu__link {
+        padding-bottom: 57px;
+
+        &:after {
+          size: 89px 19px;
+          // border-bottom-width: 4px;
+        }
+      }
+    }
+  }
+
+  &__menu_checker {
+    $elem: &;
+
+    top: 16px;
+    // @include padding("12px *");
+    @include margin("12px *");
+    width: 35px;
+
+    &_line {
+      border-radius: 2px;
+      border-top-width: 4px;
+      transform-origin: 2px 2px;
+
+      &:nth-child(2) {
+        @include margin("11px *");
+      }
+    }
+
+    &#{$elem}-close {
+      #{$elem}_line {
+        &:first-child,
+        &:last-child {
+          width: 135%;
+        }
+      }
+    }
+  }
+
+  // &#{$block}-framed {
+  //   @include padding("275px * *");
+  // }
+
+  &#{$block}-wide {
+    height: 504px;
+
+    // #{$block} {
+    //   &__title {
+    //     padding-top: 29px;
+    //     font-size: 35px;
+    //   }
+
+    //   &__desc {
+    //     padding-top: 8px;
+    //     font-size: 16px;
+    //   }
+    // }
+  }
+}

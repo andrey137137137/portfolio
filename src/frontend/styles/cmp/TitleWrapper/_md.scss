@@ -1,0 +1,13 @@
+.title_wrap {
+  padding-top: 40px;
+
+  &__bg {
+    height: 85%;
+    transform: translate(-3px, 5px) rotate(190deg);
+  }
+
+  &__title {
+    @include margin("* auto");
+    width: 50%;
+  }
+}

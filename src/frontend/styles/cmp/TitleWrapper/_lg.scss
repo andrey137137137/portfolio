@@ -1,0 +1,13 @@
+.title_wrap {
+  // padding-top: 40px;
+
+  // &__bg {
+  //   height: 105%;
+  //   // transform: translate(-3px, 5px) rotate(190deg);
+  // }
+
+  &__title {
+    // @include margin("* auto");
+    @include widthToPercents(400, 1200);
+  }
+}

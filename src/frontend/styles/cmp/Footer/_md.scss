@@ -1,0 +1,73 @@
+.footer {
+  &_top {
+    // height: 192px;
+
+    &__desc {
+      @include padding("23px * 0");
+
+      &:after {
+        display: block;
+        border-bottom: 1px solid rgba($white, 0.2);
+        size: 100% 14px;
+        content: "";
+      }
+    }
+
+    &__nav {
+      padding-left: 0;
+
+      &:before,
+      &:after {
+        border-color: rgba($white, 0);
+      }
+
+      &:before {
+        height: 12px;
+      }
+
+      &:after {
+        height: 13px;
+      }
+    }
+
+    &__menu,
+    &__socials {
+      display: block;
+      @include margin("* -12px");
+    }
+
+    &__menu {
+      .menu__link {
+        @include padding("* 15px");
+      }
+    }
+
+    &__contacts {
+      &_list {
+        @include padding("13px * 21px");
+      }
+      &_link {
+        text-align: right;
+      }
+    }
+  }
+
+  &_bottom {
+    // height: 38px;
+    padding-bottom: 9px;
+
+    &__author {
+      width: auto;
+    }
+
+    &__desc {
+      &:before {
+        content: " | ";
+      }
+    }
+
+    &-bg {
+      background-color: rgba(#083c96, 0.85);
+    }
+  }
+}

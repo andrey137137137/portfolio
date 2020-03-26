@@ -1,13 +1,13 @@
 // BLOG
 
 .code {
-  &__list {
+  &-list {
     margin-left: 42px;
     @include padding("14px *");
     font-size: 15px/18px;
   }
 
-  &__item {
+  &-item {
     margin-left: -42px;
 
     &:before {
@@ -16,17 +16,17 @@
     }
   }
 
-  &__text {
+  &-text {
     @include padding("* 4px");
   }
 }
 
 .blog {
-  &__container {
+  &-container {
     @include padding("48px 25px 41px");
   }
 
-  &__post {
+  &-post {
     // height: 846px;
     line-height: 21px;
 
@@ -40,11 +40,11 @@
     }
   }
 
-  &__date {
+  &-date {
     padding-top: 10px;
   }
 
-  &__separator {
+  &-separator {
     @include margin("50px * 42px");
     border-top-width: 5px;
     border-top-color: rgba(#393e42, 0.07);

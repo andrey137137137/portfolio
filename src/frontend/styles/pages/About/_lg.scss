@@ -7,7 +7,7 @@
 
 // ABOUT
 
-#{$titleClass}.about__title {
+#{$titleClass}.about-title {
   &:after {
     height: 21px;
   }
@@ -18,36 +18,36 @@
 
   float: left;
 
-  &__container {
+  &-container {
     padding-bottom: 21px;
 
-    &.container-full_width .col#{$block}__col {
+    &.container-full_width .col#{$block}-col {
       @include padding("* 0");
       width: 443px;
     }
   }
 
-  &__title_wrap {
+  &-title_wrap {
     top: -15px;
     @include padding("22px * 34px");
 
-    .title_wrap__title {
+    .title_wrap-title {
       width: 100%;
     }
   }
 
-  &__img_wrap {
+  &-img_wrap {
     height: 391px;
   }
 
-  &__text_wrap {
+  &-text_wrap {
     padding-top: 9px;
   }
 
-  &__desc {
+  &-desc {
     $elem: &;
 
-    &#{$elem}-first {
+    &#{$elem}--first {
       padding-top: 16px;
     }
   }
@@ -55,7 +55,7 @@
 
 // SKILLS
 
-#{$titleClass}.skills__title {
+#{$titleClass}.skills-title {
   padding-top: 9px;
 
   &:after {
@@ -68,47 +68,47 @@
 
   float: right;
 
-  &__container {
+  &-container {
     @include padding("0 * 61px 29px");
 
-    .col#{$block}__desc {
+    .col#{$block}-desc {
       width: 100%;
     }
   }
 
-  &__desc {
+  &-desc {
     padding-top: 17px;
   }
 
-  &__counters {
+  &-counters {
     $elem: &;
 
     padding-top: 18px;
 
-    &#{$elem}-first {
+    &#{$elem}--first {
       padding-top: 49px;
     }
   }
 
-  &__counters_title {
+  &-counters_title {
     @include padding("* 10px");
     font-size: 28px/32px;
     text-align: left;
   }
 
-  &__list {
+  &-list {
     justify-content: flex-start;
     @include margin("* -21px * -9px");
   }
 
-  &__item_wrap {
+  &-item_wrap {
     @include padding("* 19px");
   }
 }
 
 // CONTACTS
 
-#{$titleClass}.contacts__title {
+#{$titleClass}.contacts-title {
   font-size: 35px/41px;
 
   &:after {
@@ -121,15 +121,15 @@
   width: 580px;
   // height: 293px;
 
-  &__container {
+  &-container {
     @include padding("8px 9px 33px");
   }
 
-  &__list {
+  &-list {
     padding-top: 15px;
   }
 
-  &__item {
+  &-item {
     @include padding("15px 10px");
     width: 50%;
 
@@ -142,12 +142,12 @@
     }
   }
 
-  &__icon,
-  &__link {
+  &-icon,
+  &-link {
     line-height: 45px;
   }
 
-  &__icon {
+  &-icon {
     size: 45px;
     font-size: 28px;
   }

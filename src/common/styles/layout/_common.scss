@@ -37,35 +37,35 @@ body {
 .section {
   overflow: hidden;
 
-  &__title,
-  &__desc {
+  &-title,
+  &-desc {
     @include margin("* auto");
     width: 100%;
     text-align: center;
     color: inherit;
   }
 
-  &__title {
+  &-title {
     $elem: &;
 
     font: 500 21px $mainFont;
 
-    &#{$elem}-uppercase,
-    &#{$elem}-large {
+    &#{$elem}--uppercase,
+    &#{$elem}--large {
       font-family: $sectionTitleFont;
       text-transform: uppercase;
     }
 
-    &#{$elem}-uppercase {
+    &#{$elem}--uppercase {
       @include padding("23px * 8px");
     }
 
-    &#{$elem}-large {
+    &#{$elem}--large {
       padding-top: 21px;
       font-size: 35px/42px;
     }
 
-    &#{$elem}-underlined {
+    &#{$elem}--underlined {
       &:after {
         // display: table;
         display: block;
@@ -76,7 +76,7 @@ body {
       }
     }
 
-    &-large#{$elem}-underlined {
+    &--large#{$elem}--underlined {
       &:after {
         // display: table;
         // margin-bottom: 0;
@@ -118,13 +118,13 @@ a {
   color: $white $blue;
   transition: border-color $trsTime, background-color $trsTime;
 
-  &-opacity {
+  &--opacity {
     border-color: $white;
     padding: 0 20px;
     background-color: unset;
   }
 
-  &-full_opacity {
+  &--full_opacity {
     border-color: rgba($white, 0);
     background-color: unset;
   }
@@ -169,7 +169,7 @@ a {
     width: 100%;
   }
 
-  &#{$block}-full_width {
+  &#{$block}--full_width {
     @include padding("* 0");
   }
 }
@@ -177,7 +177,7 @@ a {
 .img_wrap {
   overflow: hidden;
 
-  &__img {
+  &-img {
     max-width: 100%;
     color: inherit;
   }
@@ -192,7 +192,7 @@ ul {
   flex-wrap: wrap;
   justify-content: space-around;
 
-  &__link {
+  &-link {
     float: left;
     display: block;
     flex-grow: 1;
@@ -201,7 +201,7 @@ ul {
     color: inherit;
   }
 
-  // &__link {
+  // &-link {
   //   display: block;
   //   text-align: center;
   //   text-decoration: none;
@@ -214,31 +214,31 @@ ul {
   font: 28px/78px FontAwesome;
   text-align: center;
 
-  &-github:before {
+  &--github:before {
     content: "\f09b";
   }
 
-  &-github_alt:before {
+  &--github_alt:before {
     content: "\f113";
   }
 
-  &-skype:before {
+  &--skype:before {
     content: "\f17e";
   }
 
-  &-linkedin:before {
+  &--linkedin:before {
     content: "\f0e1";
   }
 
-  &-vk:before {
+  &--vk:before {
     content: "\f189";
   }
 
-  &-check {
+  &--check {
     content: "\f00c";
   }
 
-  &-chevron {
+  &--chevron {
     &_down:before {
       content: "\f078";
     }
@@ -256,31 +256,31 @@ ul {
     }
   }
 
-  &-bars:before {
+  &--bars:before {
     content: "\f0c9";
   }
 
-  &-close:before {
+  &--close:before {
     content: "\f00d";
   }
 
-  &-link:before {
+  &--link:before {
     content: "\f0c1";
   }
 
-  &-quote:before {
+  &--quote:before {
     content: "\f10d";
   }
 
-  &-envelope:before {
+  &--envelope:before {
     content: "\f0e0";
   }
 
-  &-phone:before {
+  &--phone:before {
     content: "\f095";
   }
 
-  &-map_marker:before {
+  &--map_marker:before {
     content: "\f041";
   }
 }

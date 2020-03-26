@@ -2,7 +2,7 @@ form {
   width: 100%;
 }
 
-.form__row-flex {
+.form-row--flex {
   &:after {
     display: block;
     size: 100% 0;
@@ -16,29 +16,29 @@ form {
 
   padding: 0;
 
-  &__group,
-  &__row {
+  &-group,
+  &-row {
     @include padding("* 20px");
   }
 
-  &__group {
+  &-group {
     display: flex;
     flex-wrap: wrap;
   }
 
-  &__row {
+  &-row {
     $elem: &;
 
     margin-bottom: 20px;
 
-    #{$block}__label {
+    #{$block}-label {
       float: left;
       width: auto;
     }
 
-    &-text_wrap,
-    &-textarea_wrap {
-      #{$block}__input {
+    &--text_wrap,
+    &--textarea_wrap {
+      #{$block}-input {
         @include padding("* 20px");
         transition: border, background-color $trsTime;
 
@@ -46,19 +46,19 @@ form {
           @include border("1px 1px 1px 0 / solid / #{$blue}");
         }
 
-        &-error {
+        &--error {
           @include border("1px / solid / #{$red}");
         }
       }
     }
 
-    &-text_wrap {
+    &--text_wrap {
       @include oneLineBlock(45px);
     }
 
-    &-icon_label_wrap {
+    &--icon_label_wrap {
       #{$block} {
-        &__label {
+        &-label {
           width: 45px;
           text-align: center;
           color: #c4cbcd #f0efe9;
@@ -69,23 +69,23 @@ form {
           }
         }
 
-        &__input {
+        &-input {
           float: left;
           width: auto;
         }
       }
     }
 
-    &-textarea_wrap {
+    &--textarea_wrap {
       height: 140px;
 
-      #{$block}__input {
+      #{$block}-input {
         @include padding("10px *");
       }
     }
 
-    &-checkbox_wrap,
-    &-radio_wrap {
+    &--checkbox_wrap,
+    &--radio_wrap {
       position: relative;
       @include margin("* auto");
       size: auto 20px;
@@ -99,27 +99,27 @@ form {
       }
 
       #{$block} {
-        &__input {
+        &-input {
           display: none;
         }
 
-        &__label {
+        &-label {
           cursor: pointer;
         }
 
-        &__checked {
+        &-checked {
           position: absolute;
           opacity: 0;
           transition: opacity 0.5s;
         }
 
-        &__input:checked + #{$block}__checked {
+        &-input:checked + #{$block}-checked {
           opacity: 1;
         }
       }
     }
 
-    &#{$elem}-checkbox_wrap {
+    &#{$elem}--checkbox_wrap {
       display: table;
       margin-bottom: 15px;
       line-height: 18px;
@@ -130,12 +130,12 @@ form {
       }
 
       #{$block} {
-        &__label {
+        &-label {
           padding-top: 2px;
           margin-left: 11px;
         }
 
-        &__checked {
+        &-checked {
           size: 20px;
           font: 11px/20px FontAwesome;
           text-align: center;
@@ -149,12 +149,12 @@ form {
       }
     }
 
-    &-radio_wrap {
+    &--radio_wrap {
       display: flex;
       line-height: 20px;
 
       &:before,
-      #{$block}__checked {
+      #{$block}-checked {
         border-radius: 50%;
       }
 
@@ -163,11 +163,11 @@ form {
       }
 
       #{$block} {
-        &__label {
+        &-label {
           margin-left: 9px;
         }
 
-        &__checked {
+        &-checked {
           @include position("absolute 6px * * 26px");
           size: 8px;
           background-color: $darkBlue;
@@ -176,40 +176,40 @@ form {
     }
   }
 
-  &__label,
-  &__input {
+  &-label,
+  &-input {
     display: block;
     size: 100%;
   }
 
-  &__legend,
-  &__label,
-  &__error {
+  &-legend,
+  &-label,
+  &-error {
     font-size: 16px;
   }
 
-  &__legend {
+  &-legend {
     margin-bottom: 7px;
     font-weight: bold;
     text-align: center;
   }
 
-  &__menu {
-    .menu__link {
+  &-menu {
+    .menu-link {
       font-size: 16px;
       cursor: pointer;
     }
   }
 
-  &__popup {
+  &-popup {
     color: $white $blue;
 
-    &-error_popup {
+    &--error_popup {
       background-color: $red;
     }
   }
 
-  &__error_wrap {
+  &-error_wrap {
     $elem: &;
 
     @include position("absolute * * * 50%");
@@ -228,12 +228,12 @@ form {
       content: "";
     }
 
-    &#{$elem}-active {
+    &#{$elem}--active {
       display: block;
     }
   }
 
-  &__error {
+  &-error {
     padding: 10px 20px 11px;
     border-radius: 5px;
     font-weight: 500;

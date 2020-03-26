@@ -1,4 +1,4 @@
-// .header__corner_border {
+// .header-corner_border {
 //   @include border('* / * / * #f8f9f5 * #f8f9f5');
 // }
 
@@ -10,19 +10,19 @@
   size: 100%;
   text-align: right;
 
-  &__container {
+  &-container {
     $elem: &;
 
     flex-direction: column;
 
-    &#{$elem}-fixed {
+    &#{$elem}--fixed {
       @include position("fixed 0 * * 0");
       // size: 90% 100%;
       width: 90%;
     }
   }
 
-  &__link {
+  &-link {
     @include padding("* 16px * *");
     text-decoration: none;
   }
@@ -34,7 +34,7 @@
   background-color: #e6e5e3;
   overflow: hidden;
 
-  &__list {
+  &-list {
     counter-reset: item;
     list-style: inside none;
     margin-left: 38px;
@@ -44,7 +44,7 @@
     color: $black #f4f2f0;
   }
 
-  &__item {
+  &-item {
     margin-left: -38px;
     // height: 21px;
     font-weight: 700;
@@ -62,7 +62,7 @@
     }
   }
 
-  &__text {
+  &-text {
     float: left;
     @include padding("* 3px");
     // height: 100%;
@@ -73,11 +73,11 @@
 .blog {
   color: $grey #f9f8f0;
 
-  &__container {
+  &-container {
     @include padding("30px * 27px");
   }
 
-  &__post {
+  &-post {
     // height: 846px;
     // font-size: 14px/21px;
     line-height: 21px;
@@ -92,20 +92,20 @@
     }
   }
 
-  &__title {
+  &-title {
     font-family: $sectionTitleFont;
     font-weight: normal;
     text-align: left;
     text-transform: none;
   }
 
-  &__date {
+  &-date {
     display: block;
     padding-top: 9px;
     color: $darkBlue;
   }
 
-  &__separator {
+  &-separator {
     @include margin("27px * 25px");
     border-top: 4px solid rgba(#373e42, 0.07);
     // border-top: 4px solid #373e42;

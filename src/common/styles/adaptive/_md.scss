@@ -1,20 +1,20 @@
 // @media only screen and (min-width: 768px) {
 @include md {
   .section {
-    &__title {
+    &-title {
       $elem: &;
 
       font-size: 30px/36px;
 
-      // &#{$elem}-uppercase {
+      // &#{$elem}--uppercase {
       //   font-size: 30px/36px;
       // }
 
-      &#{$elem}-large {
+      &#{$elem}--large {
         font-size: 49px/56px;
       }
 
-      &#{$elem}-underlined {
+      &#{$elem}--underlined {
         &:after {
           width: 88px;
         }
@@ -31,13 +31,13 @@
       @include padding("* 12px");
 
       &#{$elem} {
-        &-float,
-        &-tb_float {
+        &--float,
+        &--tb_float {
           float: left;
         }
 
-        &-center,
-        &-tb_center {
+        &--center,
+        &--tb_center {
           @include margin("* auto");
         }
       }
@@ -45,12 +45,12 @@
   }
 
   .btn,
-  .form__input {
+  .form-input {
     font-size: 16px;
   }
 
   .btn,
-  .form__row.form__row-text_wrap {
+  .form-row.form-row--text_wrap {
     @include oneLineBlock(45px);
   }
 
@@ -62,19 +62,19 @@
     transform: none;
   }
 
-  #{$titleClass}.login_form__title {
+  #{$titleClass}.login_form-title {
     // @include padding("37px * 34px");
     padding-bottom: 34px;
     // font-size: inherit;
   }
 
   .btn,
-  .login_form__text_input .form__input {
+  .login_form-text_input .form-input {
     line-height: 43px;
   }
 
   .login_form {
-    &__top_wrap {
+    &-top_wrap {
       padding-top: 15px;
     }
   }

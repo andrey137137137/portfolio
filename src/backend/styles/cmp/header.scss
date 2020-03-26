@@ -4,12 +4,12 @@
   height: 80px;
   color: $white $blue;
 
-  &__title,
-  &__link {
+  &-title,
+  &-link {
     float: right;
   }
 
-  &__link {
+  &-link {
     display: block;
     width: 300px;
     text-align: center;

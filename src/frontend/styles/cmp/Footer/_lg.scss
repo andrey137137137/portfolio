@@ -2,11 +2,11 @@
   &_top {
     // height: 147px;
 
-    &__col {
+    &-col {
       @include padding("25px * 18px");
     }
 
-    &__desc {
+    &-desc {
       text-align: left;
 
       &:after {
@@ -14,7 +14,7 @@
       }
     }
 
-    &__nav {
+    &-nav {
       position: relative;
 
       &:before,
@@ -34,24 +34,24 @@
       }
     }
 
-    &__menu,
-    &__socials {
+    &-menu,
+    &-socials {
       margin-right: 0;
     }
 
-    &__menu {
+    &-menu {
       margin-left: 17px;
 
-      .menu__link {
+      .menu-link {
         @include padding("* 20px");
       }
     }
 
-    &__socials {
+    &-socials {
       @include margin("33px * * 21px");
     }
 
-    &__contacts {
+    &-contacts {
       &_list {
         line-height: 26px;
       }

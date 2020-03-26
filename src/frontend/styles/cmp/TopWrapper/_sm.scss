@@ -5,7 +5,7 @@
   width: 100%;
   overflow-y: visible;
 
-  &__corner_border {
+  &-corner_border {
     $elem: &;
 
     position: relative;
@@ -16,7 +16,7 @@
     );
     width: 100%;
 
-    &#{$elem}-half_opacity {
+    &#{$elem}--half_opacity {
       @include borderCornerColor(rgba(#0d1120, 0.85));
 
       // &:before {
@@ -26,30 +26,30 @@
       // }
     }
 
-    &#{$elem}-two_colors {
+    &#{$elem}--two_colors {
       @include borderCornerColor(#f2f0e8);
     }
 
-    &#{$elem}-beige {
+    &#{$elem}--beige {
       @include borderCornerColor(#f9f8f0);
     }
   }
 
-  &__title_wrap {
+  &-title_wrap {
     height: 94px;
     color: $white rgba(#0d1120, 0.85);
     overflow: hidden;
 
-    .title_wrap__bg {
+    .title_wrap-bg {
       transform: translateX(-5px) rotate(190deg);
     }
 
-    // .title_wrap__title {
+    // .title_wrap-title {
     //   padding-top: 20px;
     // }
   }
 
-  &#{$block}-beige {
+  &#{$block}--beige {
     background-color: #f9f8f0;
   }
 }

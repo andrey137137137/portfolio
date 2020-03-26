@@ -3,29 +3,29 @@
 .about {
   // height: 854px;
 
-  &__container {
+  &-container {
     padding-bottom: 42px;
   }
 
-  &__title_wrap {
+  &-title_wrap {
     // @include padding("20px * 34px");
     padding-bottom: 41px;
   }
 
-  // &__img_wrap {
+  // &-img_wrap {
   //   height: 416px;
   // }
 
-  &__text_wrap {
+  &-text_wrap {
     padding-top: 19px;
   }
 
-  &__desc {
+  &-desc {
     $elem: &;
 
     padding-top: 10px;
 
-    &#{$elem}-first {
+    &#{$elem}--first {
       padding-top: 3px;
     }
   }
@@ -37,20 +37,20 @@
   $circleLength: 283;
   // height: 815px;
 
-  &__container {
+  &-container {
     @include padding("20px * 32px");
   }
 
-  &__desc {
+  &-desc {
     padding: 4px 0 0;
   }
 
-  &__counters {
+  &-counters {
     $elem: &;
 
     @include padding("22px * 1px");
 
-    &#{$elem}-first {
+    &#{$elem}--first {
       padding-top: 39px;
     }
   }
@@ -65,7 +65,7 @@
 
 // CONTACTS
 
-#{$titleClass}.contacts__title {
+#{$titleClass}.contacts-title {
   // @include padding("23px * 8px");
   font-size: 30px/36px;
 }
@@ -77,24 +77,24 @@
   width: 348px;
   // height: 374px;
 
-  &__container {
+  &-container {
     @include padding("11px 20px 20px");
   }
 
-  &__list {
+  &-list {
     padding-top: 10px;
   }
 
-  &__item {
+  &-item {
     @include padding("10px *");
   }
 
-  &__icon,
-  &__link {
+  &-icon,
+  &-link {
     line-height: 45px;
   }
 
-  &__icon {
+  &-icon {
     size: 45px;
     font-size: 29px;
   }

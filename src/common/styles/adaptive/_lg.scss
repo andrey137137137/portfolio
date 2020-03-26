@@ -5,20 +5,20 @@
   }
 
   .section {
-    &__title {
+    &-title {
       $elem: &;
 
       font-size: 35px/41px;
 
-      // &#{$elem}-uppercase {
+      // &#{$elem}--uppercase {
       //   font-size: 35px/41px;
       // }
 
-      &#{$elem}-large {
+      &#{$elem}--large {
         font-size: 63px/66px;
       }
 
-      &#{$elem}-underlined {
+      &#{$elem}--underlined {
         &:after {
           width: 89px;
         }
@@ -34,7 +34,7 @@
     .col {
       @include padding("* 10px");
 
-      &#{$elem}-ds {
+      &#{$elem}--ds {
         &_float {
           float: left;
         }
@@ -47,12 +47,12 @@
     }
   }
 
-  #{$titleClass}.login_form__title {
+  #{$titleClass}.login_form-title {
     padding-bottom: 33px;
   }
 
   .login_form {
-    &__top_wrap {
+    &-top_wrap {
       padding-top: 10px;
     }
   }

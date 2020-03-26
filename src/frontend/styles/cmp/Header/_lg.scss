@@ -1,72 +1,72 @@
 .header {
   $block: &;
 
-  &__container {
+  &-container {
     $elem: &;
 
-    &#{$elem}-framed {
+    &#{$elem}--framed {
       width: 380px;
     }
   }
 
-  &__article {
+  &-article {
     $elem: &;
 
-    &#{$elem}-relative {
+    &#{$elem}--relative {
       padding-top: 75px;
     }
   }
 
-  &__logo {
+  &-logo {
     $elem: &;
 
     top: 25px;
     size: 450px 300px;
     transform: translateX(-55%);
 
-    &#{$elem}-for_blog {
+    &#{$elem}--for_blog {
       top: 43px;
     }
   }
 
-  &__title {
+  &-title {
     $elem: &;
 
     padding-top: 8px;
 
-    &#{$elem}-medium {
+    &#{$elem}--medium {
       padding-top: 22px;
     }
   }
 
-  &__desc {
+  &-desc {
     $elem: &;
 
-    &#{$elem}-after_medium_title {
+    &#{$elem}--after_medium_title {
       padding-top: 2px;
     }
 
-    &#{$elem}-after_large_title {
+    &#{$elem}--after_large_title {
       padding-top: 9px;
       font-size: inherit;
     }
   }
 
-  &__socials {
+  &-socials {
     padding-bottom: 13px;
   }
 
-  &__menu {
+  &-menu {
     $elem: &;
 
-    // &#{$elem}-float {
+    // &#{$elem}--float {
     //   padding-top: 7px;
     // }
 
-    &#{$elem}-absolute {
+    &#{$elem}--absolute {
       padding-top: 246px;
 
-      .menu__link {
+      .menu-link {
         padding-bottom: 46px;
 
         &:after {
@@ -76,11 +76,11 @@
     }
   }
 
-  &#{$block}-wide {
+  &#{$block}--wide {
     height: 601px;
   }
 
-  &#{$block}-blog {
+  &#{$block}--blog {
     padding-top: 7px;
     height: 396px;
   }

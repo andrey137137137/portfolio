@@ -5,24 +5,24 @@ body {
 .flex {
   display: flex;
 
-  &-wrap {
+  &--wrap {
     flex-wrap: wrap;
   }
 }
 
 .section {
-  &__title {
+  &-title {
     line-height: 28px;
   }
 }
 
 .form {
-  &__wrap,
-  &__input {
+  &-wrap,
+  &-input {
     @include padding("* 20px");
   }
 
-  &__wrap {
+  &-wrap {
     &:after {
       display: block;
       size: 100% 0;
@@ -31,17 +31,17 @@ body {
     }
   }
 
-  &__error {
+  &-error {
     border-radius: 5px;
     font-weight: 500;
     color: $white $red;
 
-    &-required {
+    &--required {
       background-color: $orange;
     }
   }
 
-  &__legend {
+  &-legend {
     margin-bottom: 7px;
     font-weight: bold;
     text-align: center;

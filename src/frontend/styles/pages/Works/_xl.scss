@@ -3,29 +3,29 @@
 .slider {
   background-color: #f2f0e8;
 
-  &__container {
+  &-container {
     position: relative;
     // padding: 0;
     height: 569px;
   }
 
-  &__item,
-  &__arrow {
+  &-item,
+  &-arrow {
     background: center center no-repeat;
   }
 
-  &__list,
-  &__nav {
+  &-list,
+  &-nav {
     width: 100%;
   }
 
-  &__list {
+  &-list {
     position: relative;
     height: 257px;
     background-color: #e3e2de;
   }
 
-  &__item {
+  &-item {
     @include position("absolute 0 * * 0");
     z-index: 0;
     display: none;
@@ -68,22 +68,22 @@
     }
   }
 
-  &__text_wrap {
+  &-text_wrap {
     @include padding("5px * 30px");
     // height: 219px;
   }
 
-  // &__title {
+  // &-title {
   //   padding-top: 28px;
   // }
 
-  &__desc {
+  &-desc {
     margin-top: 14px;
     font-weight: 500;
     color: #243994;
   }
 
-  &__btn {
+  &-btn {
     display: table;
     margin: 11px auto 0;
     padding: 0 19px;
@@ -102,11 +102,11 @@
     }
   }
 
-  &__nav {
+  &-nav {
     height: 93px;
   }
 
-  &__arrow {
+  &-arrow {
     float: left;
     size: 50% 100%;
     font-size: 50px/88px;
@@ -149,7 +149,7 @@
   // height: 614px;
   color: $white;
 
-  &__title {
+  &-title {
     padding-bottom: 3px;
     line-height: 42px;
 
@@ -158,33 +158,33 @@
     }
   }
 
-  &__article {
+  &-article {
     @include padding("32px * *");
   }
 
-  &__img_wrap {
+  &-img_wrap {
     margin: 0 auto;
     border-radius: 50%;
     size: 51px;
   }
 
-  &__text_wrap {
+  &-text_wrap {
     padding-top: 12px;
     font-style: italic;
   }
 
-  &__desc {
+  &-desc {
     text-align: left;
     padding-bottom: 7px;
   }
 
-  &__author,
-  &__status {
+  &-author,
+  &-status {
     display: block;
     text-align: center;
   }
 
-  &__author {
+  &-author {
     font-weight: bold;
   }
 }
@@ -198,7 +198,7 @@
   // height: 422px;
   color: $white rgba(#dadbd6, 0.05);
 
-  &__title {
+  &-title {
     padding-bottom: 12px;
 
     &:after {
@@ -206,17 +206,17 @@
     }
   }
 
-  &__row {
+  &-row {
     height: 40px;
   }
 
-  &__text_input {
+  &-text_input {
     border-width: 0;
     color: rgba($white, 0.5) rgba($white, 0.07);
   }
 
-  &__menu {
-    .menu__link {
+  &-menu {
+    .menu-link {
       @include oneLineBlock(43px, 1px);
       @include padding("* 36px * 37px");
     }

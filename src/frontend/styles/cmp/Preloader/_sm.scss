@@ -9,7 +9,7 @@
   opacity: 0;
   transition: opacity 1s;
 
-  &__container {
+  &-container {
     @include position("absolute 50% * * 50%");
     // @include position("absolute 229px * * 50%");
     // size: 74.876px;
@@ -20,20 +20,20 @@
     counter-reset: prs - 1;
   }
 
-  &__circles {
+  &-circles {
     // size: 52.586px $svgHeight;
     size: 100%;
   }
 
-  &__satellite_circle,
-  &__center_circle {
+  &-satellite_circle,
+  &-center_circle {
     cx: 25px;
     // cx: 50%;
     transform-origin: 25px 25px;
     transition: all $trsTime;
   }
 
-  &__satellite_circle {
+  &-satellite_circle {
     fill: $white;
     cy: 3px;
     r: 3px;
@@ -42,7 +42,7 @@
     // transform: rotate(720deg);
   }
 
-  &__center_circle {
+  &-center_circle {
     $elem: &;
 
     fill: none;
@@ -58,7 +58,7 @@
     transform: rotate(-90deg);
   }
 
-  &__counter {
+  &-counter {
     @include position("absolute 50% * * *");
     // margin-top: -47px;
     width: 100%;
@@ -72,22 +72,22 @@
     }
   }
 
-  &#{$block}-active {
+  &#{$block}--active {
     opacity: 1;
   }
 
   @for $prs from 1 through 100 {
-    &#{$block}-prs_#{$prs} {
+    &#{$block}--prs_#{$prs} {
       #{$block} {
-        &__satellite_circle {
+        &-satellite_circle {
           transform: rotate(#{$prs * 7.2}deg);
         }
 
-        &__center_circle {
+        &-center_circle {
           @include percentsToCircleLength($prs, $circleLength);
         }
 
-        &__counter:before {
+        &-counter:before {
           counter-increment: prs #{$prs};
         }
       }

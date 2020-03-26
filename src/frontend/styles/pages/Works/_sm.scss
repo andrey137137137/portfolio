@@ -6,22 +6,22 @@
 
   background-color: #f2f0e8;
 
-  &__container {
+  &-container {
     position: relative;
     // height: 569px;
   }
 
-  &__item,
-  &__arrow {
+  &-item,
+  &-arrow {
     background: center center no-repeat;
   }
 
-  &__demo,
-  &__nav {
+  &-demo,
+  &-nav {
     width: 100%;
   }
 
-  &__demo {
+  &-demo {
     position: relative;
     height: $demoHeight;
     background-color: #e3e2de;
@@ -37,7 +37,7 @@
     }
   }
 
-  &__item {
+  &-item {
     @include position("absolute 0 * * 0");
     size: 100%;
     text-align: center;
@@ -45,7 +45,7 @@
     // background: $black;
     // background-size: cover;
 
-    &-scroll_down {
+    &--scroll_down {
       &-enter-active,
       &-leave-active {
         transition: margin-top $trsTime;
@@ -60,7 +60,7 @@
       }
     }
 
-    &-scroll_up {
+    &--scroll_up {
       &-enter-active,
       &-leave-active {
         transition: top $trsTime;
@@ -82,12 +82,12 @@
     }
   }
 
-  &__text_wrap {
+  &-text_wrap {
     @include padding("5px * 30px");
     // height: 219px;
   }
 
-  &__title {
+  &-title {
     // padding-top: 28px;
     height: 103px;
 
@@ -96,13 +96,13 @@
     }
   }
 
-  &__desc {
+  &-desc {
     @include padding("5px * 12px");
     font-weight: 500;
     color: #243994;
   }
 
-  &__btn {
+  &-btn {
     display: table;
     // @include margin("12px auto *");
     @include margin("* auto");
@@ -122,11 +122,11 @@
     }
   }
 
-  &__nav {
+  &-nav {
     height: $navHeight;
   }
 
-  &__arrow {
+  &-arrow {
     position: relative;
     float: left;
     size: 50% 100%;
@@ -134,7 +134,7 @@
     text-decoration: none;
     overflow: hidden;
 
-    &-scroll_down {
+    &--scroll_down {
       &-enter-active,
       &-leave-active {
         transition: margin-top $trsTime;
@@ -149,7 +149,7 @@
       }
     }
 
-    &-scroll_up {
+    &--scroll_up {
       &-enter-active,
       &-leave-active {
         transition: top $trsTime;
@@ -177,11 +177,11 @@
       transition: background-color $trsTime;
     }
 
-    // &-prev {
+    // &--prev {
     //   background-image: url("../../../assets/userfiles/prev.jpg");
     // }
 
-    // &-next {
+    // &--next {
     //   background-image: url("../../../assets/userfiles/next.jpg");
     // }
 
@@ -199,61 +199,61 @@
   // height: 614px;
   color: $white;
 
-  &__title_wrap {
+  &-title_wrap {
     @include padding("21px * 3px");
 
-    .title_wrap__bg {
+    .title_wrap-bg {
       height: 90px;
       transform: translate(-3px, 11px) rotate(26deg);
     }
 
-    .title_wrap__title {
+    .title_wrap-title {
       padding-top: 0;
       line-height: 42px;
     }
   }
 
-  &__article {
+  &-article {
     position: relative;
     @include padding("32px * *");
   }
 
-  &__quote {
+  &-quote {
     @include position("absolute 71px * * 0");
     font-size: 83px;
     color: rgba($white, 0.1);
   }
 
-  &__img_wrap {
+  &-img_wrap {
     margin: 0 auto;
     border-radius: 50%;
     size: 51px;
   }
 
-  &__text_wrap {
+  &-text_wrap {
     padding-top: 11px;
     font-style: italic;
   }
 
-  &__desc {
+  &-desc {
     padding-bottom: 7px;
     text-align: left;
   }
 
-  &__author,
-  &__status {
+  &-author,
+  &-status {
     display: block;
     text-align: center;
   }
 
-  &__author {
+  &-author {
     font-weight: bold;
   }
 }
 
 // FEEDBACK FORM
 
-#{$titleClass}.feedback_form__title {
+#{$titleClass}.feedback_form-title {
   padding-bottom: 20px;
 
   &:after {
@@ -268,18 +268,18 @@
   // height: 422px;
   color: $white rgba(#dadbd6, 0.05);
 
-  // &__row {
+  // &-row {
   //   height: 40px;
   // }
 
-  &__text_input {
+  &-text_input {
     @include oneLineBlock(40px);
     border-width: 0;
     color: rgba($white, 0.5) rgba($white, 0.07);
   }
 
-  &__menu {
-    .menu__link {
+  &-menu {
+    .menu-link {
       @include oneLineBlock(43px, 1px);
       @include padding("* 36px * 37px");
     }

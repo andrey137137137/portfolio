@@ -5,12 +5,12 @@
   @include oneLineBlock(40px);
   transform: translateX(50%);
 
-  // &-hidden {
+  // &--hidden {
   //   display: none;
   // }
 }
 
-#{$titleClass}.login_form__title {
+#{$titleClass}.login_form-title {
   // @include padding("40px * 38px");
   padding-bottom: 38px;
 }
@@ -20,15 +20,15 @@
 
   color: $white;
 
-  &__top_wrap {
+  &-top_wrap {
     padding-top: 17px;
   }
 
-  &__title {
+  &-title {
     font-size: 30px;
   }
 
-  &__radio {
+  &-radio {
     // &_wrap {
     //   padding-bottom: 8px;
     // }
@@ -38,10 +38,10 @@
     }
   }
 
-  #{$headerMenuClass}#{$block}__menu {
+  #{$headerMenuClass}#{$block}-menu {
     // padding-top: 0;
 
-    .menu__link {
+    .menu-link {
       @include padding("* 41px");
 
       &:first-child {
@@ -49,7 +49,7 @@
       }
     }
 
-    // .menu__link {
+    // .menu-link {
     //   @include padding("* 41px");
     // }
   }

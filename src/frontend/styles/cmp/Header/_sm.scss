@@ -5,12 +5,12 @@
   padding-bottom: 42px;
   color: $white;
 
-  &__container {
+  &-container {
     $elem: &;
 
     padding: 0;
 
-    &#{$elem}-framed {
+    &#{$elem}--framed {
       position: relative;
       // @include position('absolute 50% * * *');
       size: 300px 395px;
@@ -22,12 +22,12 @@
       transition: 1s;
     }
 
-    &#{$elem}-flipped {
+    &#{$elem}--flipped {
       transform: rotateY(180deg);
     }
   }
 
-  &__flip_wrap {
+  &-flip_wrap {
     $elem: &;
 
     @include position("absolute 0");
@@ -37,28 +37,28 @@
     size: 100%;
     backface-visibility: hidden;
 
-    &#{$elem}-back {
+    &#{$elem}--back {
       transform: rotateY(180deg);
     }
   }
 
-  &__article {
+  &-article {
     $elem: &;
 
     @include margin("* auto");
 
-    &#{$elem}-padding {
+    &#{$elem}--padding {
       // @include padding("40px * 3px");
       padding-top: 40px;
     }
 
-    &#{$elem}-relative {
+    &#{$elem}--relative {
       position: relative;
       padding-top: 38px;
     }
   }
 
-  &__logo {
+  &-logo {
     @include position("absolute 21px * * 50%");
     display: block;
     // size: 100%;
@@ -69,16 +69,16 @@
     transform: translateX(-50%);
   }
 
-  &__avatar#{$block}__avatar,
-  &__title#{$block}__title,
-  &__desc#{$block}__desc {
-    &-relative {
+  &-avatar#{$block}-avatar,
+  &-title#{$block}-title,
+  &-desc#{$block}-desc {
+    &--relative {
       position: relative;
       z-index: 1;
     }
   }
 
-  &__avatar {
+  &-avatar {
     display: block;
     margin: 0 auto;
     border-radius: 50%;
@@ -86,40 +86,40 @@
     color: inherit;
   }
 
-  &__title {
+  &-title {
     $elem: &;
 
     padding-top: 19px;
     text-transform: capitalize;
 
-    &#{$elem}-medium {
+    &#{$elem}--medium {
       padding-top: 27px;
     }
 
-    &#{$elem}-large {
+    &#{$elem}--large {
       padding-top: 21px;
       text-transform: uppercase;
     }
   }
 
-  &__desc {
+  &-desc {
     $elem: &;
 
     padding-top: 4px;
 
-    &#{$elem}-after_medium_title {
+    &#{$elem}--after_medium_title {
       padding-top: 3px;
     }
 
-    &#{$elem}-after_large_title {
+    &#{$elem}--after_large_title {
       padding-top: 5px;
     }
   }
 
-  &__nav {
+  &-nav {
     $elem: &;
 
-    &#{$elem}-fixed {
+    &#{$elem}--fixed {
       @include position("fixed 0 * * 0");
       // z-index: 10000;
       z-index: $zSuperSuper;
@@ -127,13 +127,13 @@
     }
   }
 
-  &__socials {
+  &-socials {
     $elem: &;
 
     // padding-bottom: 5px;
     padding-bottom: 13px;
 
-    .socials__link {
+    .socials-link {
       color: $darkBlue;
 
       &:hover {
@@ -141,10 +141,10 @@
       }
     }
 
-    &#{$elem}-left {
+    &#{$elem}--left {
       float: left;
 
-      .socials__link {
+      .socials-link {
         size: 50px 44px;
         font-size: 21px/44px;
         color: $white;
@@ -156,15 +156,15 @@
     }
   }
 
-  &__menu {
+  &-menu {
     $elem: &;
 
     color: $white;
 
-    &#{$elem}-float {
+    &#{$elem}--float {
       // padding-top: 8px;
 
-      .menu__link {
+      .menu-link {
         border-left: 2px solid rgba(#dee3e7, 0.5);
         @include padding("0 21px");
         // size: auto 45px;
@@ -176,25 +176,25 @@
           border-width: 0;
           padding-left: 20px;
 
-          // .menu__link {
+          // .menu-link {
           //   padding-left: 20px;
           // }
         }
 
-        // &:last-child .menu__link
+        // &:last-child .menu-link
         // {
         //   padding-right: 21px;
         // }
       }
 
-      // .menu__link {
+      // .menu-link {
       //   padding: 0 21px;
       //   size: auto 45px;
       //   line-height: 43px;
       // }
     }
 
-    &#{$elem}-absolute {
+    &#{$elem}--absolute {
       $trsDelay: 0.5s;
 
       @include position("fixed 0 * * 0");
@@ -223,7 +223,7 @@
         right: -50%;
       }
 
-      .menu__link {
+      .menu-link {
         position: relative;
         z-index: 1;
         float: none;
@@ -242,12 +242,12 @@
           opacity: 1;
         }
 
-        &-visible {
+        &--visible {
           opacity: 1;
         }
       }
 
-      // .menu__link {
+      // .menu-link {
       //   padding-top: 15px;
       //   line-height: 48px;
 
@@ -264,11 +264,11 @@
       // }
     }
 
-    &#{$elem}-opened {
+    &#{$elem}--opened {
       display: block;
     }
 
-    &#{$elem}-visible_bg {
+    &#{$elem}--visible_bg {
       &:before {
         left: 0;
       }
@@ -278,12 +278,12 @@
       }
     }
 
-    &#{$elem}-hidden {
+    &#{$elem}--hidden {
       opacity: 0;
     }
   }
 
-  &__menu_checker {
+  &-menu_checker {
     $elem: &;
 
     position: relative;
@@ -307,7 +307,7 @@
       }
     }
 
-    &#{$elem}-close {
+    &#{$elem}--close {
       #{$elem}_line {
         &:first-child,
         &:last-child {
@@ -329,11 +329,11 @@
     }
   }
 
-  &#{$block}-framed {
+  &#{$block}--framed {
     padding-top: 80px;
   }
 
-  &#{$block}-wide {
+  &#{$block}--wide {
     padding-top: 78px;
     width: 100%;
     height: 557px;

@@ -5,14 +5,14 @@
   padding-top: 20px;
   width: 100%;
 
-  &__bg {
+  &-bg {
     $elem: &;
 
     @include position("absolute 0 * * 0");
     size: 100%;
     opacity: 0.15;
 
-    &#{$elem}-contrast {
+    &#{$elem}--contrast {
       display: none;
       opacity: 0.1;
 
@@ -22,7 +22,7 @@
     }
   }
 
-  #{$titleClass}#{$block}__title {
+  #{$titleClass}#{$block}-title {
     position: relative;
     z-index: 1;
     padding-top: 0;

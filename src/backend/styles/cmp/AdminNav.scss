@@ -1,7 +1,7 @@
 .nav {
   display: block;
 
-  &__item {
+  &-item {
     border-top: 2px solid $white;
 
     &:first-child {
@@ -9,14 +9,14 @@
     }
   }
 
-  &__link {
+  &-link {
     border-width: 0;
     @include oneLineBlock(45px);
     color: $grey #f0efe9;
     transition: color $trsTime, background-color $trsTime;
 
     &:hover,
-    &-active {
+    &--active {
       color: $blue $white;
     }
   }

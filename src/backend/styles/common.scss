@@ -3,27 +3,27 @@
 }
 
 .section {
-  &__title {
+  &-title {
     line-height: 34px;
   }
 }
 
 .form {
-  &__input,
-  &__btn {
+  &-input,
+  &-btn {
     border-radius: 5px;
     @include padding("* 17px");
   }
 
-  &__legend {
+  &-legend {
     line-height: 34px;
   }
 
-  &__error {
+  &-error {
     @include padding("* 10px");
     color: $red;
 
-    &-required {
+    &--required {
       color: $orange;
     }
   }

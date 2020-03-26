@@ -4,18 +4,18 @@
   // @include margin("* auto");
   // width: 768px;
 
-  // &__corner_border {
+  // &-corner_border {
   //   @include borderPx(768px, $cornerBorderHeight);
   // }
 
-  &__title_wrap {
+  &-title_wrap {
     height: 136px;
 
-    // .title_wrap__bg {
+    // .title_wrap-bg {
     //   transform: translateX(-5px) rotate(190deg);
     // }
 
-    // .title_wrap__title {
+    // .title_wrap-title {
     //   padding-top: 40px;
     // }
   }

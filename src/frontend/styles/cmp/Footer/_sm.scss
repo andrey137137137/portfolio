@@ -3,11 +3,11 @@
   width: 100%;
   color: $white;
 
-  &-absolute {
+  &--absolute {
     @include position("absolute * * 0 *");
   }
 
-  &-bg {
+  &--bg {
     background-color: $white;
   }
 
@@ -16,16 +16,16 @@
     // background-color: rgba(#3d3f47, 0.85);
     background-color: rgba(#1c1f29, 0.85);
 
-    &__container {
+    &-container {
       justify-content: space-between;
     }
 
-    &__desc {
+    &-desc {
       @include padding("13px *");
       font-weight: 300;
     }
 
-    &__nav {
+    &-nav {
       &:before,
       &:after {
         display: block;
@@ -44,12 +44,12 @@
       }
     }
 
-    &__menu {
+    &-menu {
       display: table;
       @include margin("* auto");
       font-weight: 500;
 
-      .menu__link {
+      .menu-link {
         @include padding("* 5px");
         color: $white;
 
@@ -60,8 +60,8 @@
       }
     }
 
-    &__socials {
-      .socials__link {
+    &-socials {
+      .socials-link {
         @include oneLineBlock(45px);
         font-size: 27px;
         color: rgba($white, 0.5);
@@ -72,7 +72,7 @@
       }
     }
 
-    &__contacts {
+    &-contacts {
       &_list {
         border-bottom-color: rgba($white, 0);
         @include padding("14px * 12px");
@@ -98,29 +98,29 @@
     // height: 57px;
     font-weight: 300;
 
-    &__container {
+    &-container {
       justify-content: center;
       text-align: center;
     }
 
-    &__col {
+    &-col {
       // float: left;
       flex-grow: 0;
       display: inline-block;
       width: auto;
     }
 
-    &__author {
+    &-author {
       width: 100%;
     }
 
-    &__date {
+    &-date {
       &:before {
         content: " | ";
       }
     }
 
-    &-bg {
+    &--bg {
       // background-color: rgba(#2c58a3, 0.85);
       background-color: rgba(#004cd1, 0.85);
     }

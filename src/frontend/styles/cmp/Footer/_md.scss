@@ -2,7 +2,7 @@
   &_top {
     // height: 192px;
 
-    &__desc {
+    &-desc {
       @include padding("23px * 0");
 
       &:after {
@@ -13,7 +13,7 @@
       }
     }
 
-    &__nav {
+    &-nav {
       padding-left: 0;
 
       &:before,
@@ -30,19 +30,19 @@
       }
     }
 
-    &__menu,
-    &__socials {
+    &-menu,
+    &-socials {
       display: block;
       @include margin("* -12px");
     }
 
-    &__menu {
-      .menu__link {
+    &-menu {
+      .menu-link {
         @include padding("* 15px");
       }
     }
 
-    &__contacts {
+    &-contacts {
       &_list {
         @include padding("13px * 21px");
       }
@@ -56,17 +56,17 @@
     // height: 38px;
     padding-bottom: 9px;
 
-    &__author {
+    &-author {
       width: auto;
     }
 
-    &__desc {
+    &-desc {
       &:before {
         content: " | ";
       }
     }
 
-    &-bg {
+    &--bg {
       background-color: rgba(#083c96, 0.85);
     }
   }

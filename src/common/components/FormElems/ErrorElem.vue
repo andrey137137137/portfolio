@@ -1,7 +1,7 @@
 <template lang="pug">
-  .form__error_wrap
+  .form-error_wrap
     transition(name="fade")
-      .form__error(v-if="type") {{error}}
+      .form-error(v-if="type") {{error}}
 </template>
 
 <script>

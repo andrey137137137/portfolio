@@ -24,8 +24,8 @@ export default {
   computed: {
     containerClasses() {
       return {
-        "container-full_width": this.isFullWidth,
-        [`${this.name}__container`]: this.isOwnContainerClass
+        "container--full_width": this.isFullWidth,
+        [`${this.name}-container`]: this.isOwnContainerClass
       };
     }
   }

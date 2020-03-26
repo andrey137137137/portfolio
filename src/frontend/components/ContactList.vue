@@ -23,7 +23,7 @@ export default {
     },
     classElemSeparator: {
       type: String,
-      default: "__"
+      default: "-"
     },
     addItemClasses: {
       type: Object,
@@ -97,7 +97,7 @@ export default {
   },
   methods: {
     iconClasses(icon) {
-      return [`icon-${icon}`, this.iconClass];
+      return [`icon--${icon}`, this.iconClass];
     }
   }
 };

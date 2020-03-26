@@ -37,16 +37,16 @@ export default {
       return elems;
     },
     wrapInput(h, elems) {
-      return [h("div", { class: "form__row" }, elems)];
+      return [h("div", { class: "form-row" }, elems)];
     },
     labelElem() {
-      return <label class="form__label">{this.label}</label>;
+      return <label class="form-label">{this.label}</label>;
     },
     iconLabelElem() {
-      return <label class="form__label" />;
+      return <label class="form-label" />;
     },
     measureElem() {
-      return <span class="form__measure">{this.measure}</span>;
+      return <span class="form-measure">{this.measure}</span>;
     }
   }
 };

@@ -1,5 +1,5 @@
 <template lang="pug">
-  input.form__input(
+  input.form-input(
     :type="type"
     v-model="state"
     :class="validationClasses"

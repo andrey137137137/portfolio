@@ -1,5 +1,5 @@
 <template lang="pug">
-  button.btn.form__btn(:type="type" :class="extClass")
+  button.btn.form-btn(:type="type" :class="extClass")
     slot
 </template>
 
@@ -21,7 +21,7 @@ export default {
     },
     extClass() {
       return {
-        "form__btn-danger": this.isDanger,
+        "form-btn--danger": this.isDanger,
         ...this.addClasses
       };
     }

@@ -2,7 +2,7 @@
   FormWrapper(@submit.prevent.native="handleSubmit")
     slot
 
-    .form__row.form__row-buttons
+    .form-row.form-row--buttons
       ButtonElem(
         v-if="id"
         :addClasses="buttonWrapperClass"
@@ -45,7 +45,10 @@ export default {
   },
   computed: {
     buttonWrapperClass() {
-      return { form__col: true, "form__btn-disabled": this.disabled };
+      return {
+        "form-col": true,
+        "form-btn--disabled": this.disabled
+      };
     },
     buttonValue() {
       return this.id ? "Обновить" : "Добавить";

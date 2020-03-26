@@ -4,8 +4,8 @@
     :class="addClasses"
     @submit.prevent.native="handleSubmit")
 
-    .login_form__top_wrap
-      h2.section__title.section__title-uppercase.login_form__title Авторизуйтесь
+    .login_form-top_wrap
+      h2.section-title.section-title--uppercase.login_form-title Авторизуйтесь
 
       InputEventElem(
         wrapClass="icon_label"
@@ -28,27 +28,27 @@
         :val="$v.isHuman"
         type="checkbox")
 
-      legend.form__legend Вы точно не робот?
+      legend.form-legend Вы точно не робот?
 
-      .form__wrap.form__wrap-radio.login_form__radio_wrap
-        .form__row.flex.flex-wrap
-          label.form__label.login_form__radio_yes
-            input.form__input(type="radio" value="yes" v-model="$v.notRobot.$model")
-            .form__checked
-            .form__checkbox_text Да
-          label.form__label
-            input.form__input(type="radio" value="no" v-model="$v.notRobot.$model")
-            .form__checked
-            .form__checkbox_text Не уверен
-          .form__error_wrap
+      .form-wrap.form-wrap--radio.login_form-radio_wrap
+        .form-row.flex.flex--wrap
+          label.form-label.login_form-radio_yes
+            input.form-input(type="radio" value="yes" v-model="$v.notRobot.$model")
+            .form-checked
+            .form-checkbox_text Да
+          label.form-label
+            input.form-input(type="radio" value="no" v-model="$v.notRobot.$model")
+            .form-checked
+            .form-checkbox_text Не уверен
+          .form-error_wrap
             transition(name="fade")
-              .form__error(v-show="!$v.notRobot.required") form__error
+              .form-error(v-show="!$v.notRobot.required") form-error
 
-    .menu.header__menu.header__menu-float.form__menu.login_form__menu
-      //- li.menu__item.menu__item-for_main
-      a#flip_2_front.menu__link.btn(href="#") На главную
-      //- li.menu__item.menu__item-for_main
-      input.menu__link.btn(type="submit", value="Войти")
+    .menu.header-menu.header-menu--float.form-menu.login_form-menu
+      //- li.menu-item.menu-item--for_main
+      a#flip_2_front.menu-link.btn(href="#") На главную
+      //- li.menu-item.menu-item--for_main
+      input.menu-link.btn(type="submit", value="Войти")
 </template>
 
 <script>

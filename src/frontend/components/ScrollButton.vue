@@ -14,11 +14,11 @@ export default {
   computed: {
     classes() {
       return {
-        "icon-chevron_up": !this.inHeader,
-        "icon-chevron_down": this.inHeader,
+        "icon--chevron_up": !this.inHeader,
+        "icon--chevron_down": this.inHeader,
         scroll_btn: true,
-        "scroll_btn-to_top": !this.inHeader,
-        "scroll_btn-to_bottom": this.inHeader
+        "scroll_btn--to_top": !this.inHeader,
+        "scroll_btn--to_bottom": this.inHeader
       };
     },
     anchor() {

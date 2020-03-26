@@ -2,17 +2,17 @@
   SectionWrapper(:name="id" :isFullWidth="true" :isOwnContainerClass="true")
 
     ul.menu
-      li.menu__item(v-for="item in slides") {{item.title}}
+      li.menu-item(v-for="item in slides") {{item.title}}
 
-    ul.slider__demo
+    ul.slider-demo
       transition(:name="transitionName")
-        li.img_wrap.slider__item.slider__demo_item(:key="curIndex")
-          img.img_wrap__img(:src="demoImg" :alt="title")
-          .slider__item_number.slider__demo_item_number {{curIndex + 1}}
+        li.img_wrap.slider-item.slider-demo_item(:key="curIndex")
+          img.img_wrap-img(:src="demoImg" :alt="title")
+          .slider-item_number.slider-demo_item_number {{curIndex + 1}}
 
-    article.slider__text_wrap
+    article.slider-text_wrap
       AnimateStr(
-        transitionName="slider__title"
+        transitionName="slider-title"
         rootElem="h2"
         :str="title"
         :commonKey="curIndex"
@@ -22,17 +22,17 @@
         //- v-if="index==curIndex"
         //- :key="index"
     AnimateStr(
-      transitionName="slider__techs"
+      transitionName="slider-techs"
       rootElem="p"
       :str="techs"
       :commonKey="curIndex"
       :addClasses="techsClasses"
     )
-    a.clearfix.btn.slider__btn(:href="link" target="_blank")
-      span.icon.icon-link.slider__btn_icon
-      span.slider__btn_text Посмотреть сайт
+    a.clearfix.btn.slider-btn(:href="link" target="_blank")
+      span.icon.icon--link.slider-btn_icon
+      span.slider-btn_text Посмотреть сайт
 
-    .clearfix.slider__nav
+    .clearfix.slider-nav
       ArrowButton(
         :index="curIndex"
         :newIndex="prevIndex"
@@ -46,23 +46,23 @@
         :handle="handleNext"
         :imgSrc="nextImg"
       )
-      //- a.icon.icon-chevron_down.slider__arrow.slider__arrow-prev(
+      //- a.icon.icon--chevron_down.slider-arrow.slider-arrow--prev(
       //-   href=""
       //-   @click.prevent="handlePrev"
       //- )
-      //-   transition(name="slider__arrow-scroll_down")
-      //-     .img_wrap.slider__item(:key="curIndex")
-      //-       img.img_wrap__img(src="prevImg" :alt="curIndex + 1")
-      //-       .slider__item_number.slider__arrow_number prevIndex + 1}}
+      //-   transition(name="slider-arrow--scroll_down")
+      //-     .img_wrap.slider-item(:key="curIndex")
+      //-       img.img_wrap-img(src="prevImg" :alt="curIndex + 1")
+      //-       .slider-item_number.slider-arrow_number prevIndex + 1}}
 
-      //- a.icon.icon-chevron_up.slider__arrow.slider__arrow-next(
+      //- a.icon.icon--chevron_up.slider-arrow.slider-arrow--next(
       //-   href=""
       //-   @click.prevent="handleNext"
       //- )
-      //-   transition(name="slider__arrow-scroll_up")
-      //-     .img_wrap.slider__item(:key="curIndex")
-      //-       img.img_wrap__img(src="nextImg" :alt="curIndex + 1")
-      //-       .slider__item_number.slider__arrow_number nextIndex + 1}}
+      //-   transition(name="slider-arrow--scroll_up")
+      //-     .img_wrap.slider-item(:key="curIndex")
+      //-       img.img_wrap-img(src="nextImg" :alt="curIndex + 1")
+      //-       .slider-item_number.slider-arrow_number nextIndex + 1}}
 </template>
 
 <script>
@@ -117,20 +117,20 @@ export default {
       // count: this.slides.length,
       intervalID: null,
       titleClasses: {
-        section__title: true,
-        "section__title-uppercase": true,
-        "section__title-underlined": true,
-        slider__title: true
+        "section-title": true,
+        "section-title--uppercase": true,
+        "section-title--underlined": true,
+        "slider-title": true
       },
       techsClasses: {
-        section__desc: true,
-        slider__desc: true
+        "section-desc": true,
+        "slider-desc": true
       }
     };
   },
   computed: {
     transitionName() {
-      return `slider__item-${this.transitionMethod}`;
+      return `slider-item--${this.transitionMethod}`;
     },
     prevIndex() {
       let tempIndex = this.curIndex - 1;

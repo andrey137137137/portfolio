@@ -20,10 +20,10 @@ export default {
       }
 
       return {
-        "section__title-large": this.isLarge,
-        "header__title-relative": true,
-        "header__title-medium": !this.isLarge,
-        "header__title-large": this.isLarge
+        "section-title--large": this.isLarge,
+        "header-title--relative": true,
+        "header-title--medium": !this.isLarge,
+        "header-title--large": this.isLarge
       };
     },
     descClasses() {
@@ -32,9 +32,9 @@ export default {
       }
 
       return {
-        "header__desc-relative": true,
-        "header__desc-after_medium_title": !this.isLarge,
-        "header__desc-after_large_title": this.isLarge
+        "header-desc--relative": true,
+        "header-desc--after_medium_title": !this.isLarge,
+        "header-desc--after_large_title": this.isLarge
       };
     },
     title() {
@@ -56,8 +56,8 @@ export default {
         `h${level}`,
         {
           class: {
-            section__title: true,
-            header__title: true,
+            "section-title": true,
+            "header-title": true,
             ...this.titleClasses
           }
         },
@@ -68,8 +68,8 @@ export default {
       return (
         <p
           class={{
-            section__desc: true,
-            header__desc: true,
+            "section-desc": true,
+            "header-desc": true,
             ...this.descClasses
           }}
         >

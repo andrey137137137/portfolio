@@ -36,20 +36,20 @@ export default {
       if (this.inHeader) {
         return {
           nav: true,
-          header__nav: true,
-          "header__nav-fixed": this.config.isContent
+          "header-nav": true,
+          "header-nav--fixed": this.config.isContent
         };
       }
 
       return {
         col: true,
-        "col-tb_float": true,
-        "col-tb_6": true,
-        "col-ds_5": true,
-        "col-xds_4": true,
-        footer_top__col: true,
+        "col--tb_float": true,
+        "col--tb_6": true,
+        "col--ds_5": true,
+        "col--xds_4": true,
+        "footer_top-col": true,
         nav: true,
-        footer_top__nav: true
+        "footer_top-nav": true
       };
     }
   },
@@ -58,12 +58,12 @@ export default {
       return (
         <a
           id="menu_checker"
-          class="header__menu_checker header__menu_checker-open"
+          class="header-menu_checker header-menu_checker--open"
           href="#"
         >
-          <div class="header__menu_checker_line" />
-          <div class="header__menu_checker_line" />
-          <div class="header__menu_checker_line" />
+          <div class="header-menu_checker_line" />
+          <div class="header-menu_checker_line" />
+          <div class="header-menu_checker_line" />
         </a>
       );
     },

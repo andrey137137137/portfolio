@@ -8,22 +8,22 @@
       )
         TitleWrapper(
           :title="config.name"
-          containerAddClass="about__title_wrap"
-          bgAddClass="title_wrap__bg-contrast"
+          containerAddClass="about-title_wrap"
+          bgAddClass="title_wrap-bg--contrast"
         )
-        .col.col-center.col-tb_8.about__col.img_wrap.about__img_wrap
-          img.img_wrap__img(src="/upload/about.jpg" alt="")
-        article.col.col-center.col-tb_8.about__col.about__text_wrap
-          h2.section__title.section__title-uppercase.section__title-underlined.about__title Кто я
-          p.section__desc.about__desc.about__desc-first Я веб разработчик из Одессы. Мне 31 год. Я учусь разработке современных сайтов и приложений. Мне нравится решать сложные задачи.
-          p.section__desc.about__desc Этот сайт я делаю в рамках обучения в Школе онлайн образования LoftSchool. Чуть позже я освежу в нём свой контент. А пока посмотрите, как тут всё становится красиво!
+        .col.col--center.col--tb_8.about-col.img_wrap.about-img_wrap
+          img.img_wrap-img(src="/upload/about.jpg" alt="")
+        article.col.col--center.col--tb_8.about-col.about-text_wrap
+          h2.section-title.section-title--uppercase.section-title--underlined.about-title Кто я
+          p.section-desc.about-desc.about-desc--first Я веб разработчик из Одессы. Мне 31 год. Я учусь разработке современных сайтов и приложений. Мне нравится решать сложные задачи.
+          p.section-desc.about-desc Этот сайт я делаю в рамках обучения в Школе онлайн образования LoftSchool. Чуть позже я освежу в нём свой контент. А пока посмотрите, как тут всё становится красиво!
 
       SectionWrapper(name="skills" :isOwnContainerClass="true")
-        h2.section__title.section__title-uppercase.section__title-underlined.skills__title
+        h2.section-title.section-title--uppercase.section-title--underlined.skills-title
           | Чем я могу быть
           br
           | Вам полезен
-        p.col.col-center.col-tb_8.section__desc.skills__desc Больше всего меня привлекет Frontend разработка, но я также знаком и могу решать не сложные задачи на Backend. Но давайте по порядку.
+        p.col.col--center.col--tb_8.section-desc.skills-desc Больше всего меня привлекет Frontend разработка, но я также знаком и могу решать не сложные задачи на Backend. Но давайте по порядку.
 
         SkillList(:categories="dbData")
 
@@ -61,7 +61,7 @@ export default {
   data() {
     return {
       bottomWrapClass: {
-        "bottom_wrap-map_wrap": true
+        "bottom_wrap--map_wrap": true
       },
       clearfixClass: {
         clearfix: true

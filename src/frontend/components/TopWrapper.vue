@@ -24,10 +24,10 @@ export default {
       const { isBlog, isTopWrapTitle } = this.config;
 
       return {
-        top_wrap__corner_border: true,
-        "top_wrap__corner_border-half_opacity": isTopWrapTitle,
-        "top_wrap__corner_border-two_colors": !isTopWrapTitle && !isBlog,
-        "top_wrap__corner_border-beige": !isTopWrapTitle && isBlog
+        "top_wrap-corner_border": true,
+        "top_wrap-corner_border--half_opacity": isTopWrapTitle,
+        "top_wrap-corner_border--two_colors": !isTopWrapTitle && !isBlog,
+        "top_wrap-corner_border--beige": !isTopWrapTitle && isBlog
       };
     }
   },
@@ -39,7 +39,7 @@ export default {
       return (
         <TitleWrapper
           title={this.config.name}
-          containerAddClass="top_wrap__title_wrap"
+          containerAddClass="top_wrap-title_wrap"
         />
       );
     }

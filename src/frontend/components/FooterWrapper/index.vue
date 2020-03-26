@@ -6,10 +6,10 @@
     FooterTop(v-if="config.isContent")
 
     ul.section.footer_bottom(:class="footerBottomClasses")
-      li.container.footer_bottom__container
-        p.section__desc.footer_bottom__col.footer_bottom__author &copy; Банников Андрей
-        p.section__desc.footer_bottom__col.footer_bottom__desc Создаю с любовью в LoftSchool
-        p.section__desc.footer_bottom__col.footer_bottom__date 2018
+      li.container.footer_bottom-container
+        p.section-desc.footer_bottom-col.footer_bottom-author &copy; Банников Андрей
+        p.section-desc.footer_bottom-col.footer_bottom-desc Создаю с любовью в LoftSchool
+        p.section-desc.footer_bottom-col.footer_bottom-date 2018
 </template>
 
 <script>
@@ -29,13 +29,13 @@ export default {
     ...mapGetters(["config"]),
     containerClasses() {
       return {
-        "footer-absolute": !this.config.isContent || this.config.sections > 2,
-        "footer-bg": this.config.isBlog
+        "footer--absolute": !this.config.isContent || this.config.sections > 2,
+        "footer--bg": this.config.isBlog
       };
     },
     footerBottomClasses() {
       return {
-        "footer_bottom-bg": this.config.isContent
+        "footer_bottom--bg": this.config.isContent
       };
     }
   }

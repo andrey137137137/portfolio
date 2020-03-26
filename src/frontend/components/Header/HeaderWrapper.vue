@@ -13,9 +13,9 @@ export default {
     ...mapGetters(["config"]),
     classes() {
       return {
-        "header-framed": !this.config.isContent,
-        "header-wide": this.config.isContent,
-        "header-blog": this.config.isBlog
+        "header--framed": !this.config.isContent,
+        "header--wide": this.config.isContent,
+        "header--blog": this.config.isBlog
       };
     }
   }

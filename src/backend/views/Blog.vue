@@ -4,7 +4,7 @@
       v-for="post in dbData"
       :key="post._id"
       :item="post")
-    h3.form__legend Добавить запись
+    h3.form-legend Добавить запись
     PostForm
 </template>
 

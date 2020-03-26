@@ -7,15 +7,15 @@ export default {
         $checker: null,
         $menu: null,
         checkerClasses: {
-          open: "header__menu_checker-open",
-          close: "header__menu_checker-close"
+          open: "header-menu_checker--open",
+          close: "header-menu_checker--close"
         },
         menuClasses: {
-          item: "menu__link",
-          opened: "header__menu-opened",
-          hidden: "header__menu-hidden",
-          visibleBg: "header__menu-visible_bg",
-          visibleMenuItem: "menu__link-visible"
+          item: "menu-link",
+          opened: "header-menu--opened",
+          hidden: "header-menu--hidden",
+          visibleBg: "header-menu--visible_bg",
+          visibleMenuItem: "menu-link--visible"
         },
         delay: 700,
         itemDelay: 200,
@@ -101,7 +101,7 @@ export default {
 
       // $(document).ready(() => {
 
-      // $menu.find("menu__link").click(function(event) {
+      // $menu.find("menu-link").click(function(event) {
       //   event.preventDefault();
       //   $vm.closeMenu();
       // });

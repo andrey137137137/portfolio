@@ -1,6 +1,6 @@
 <template lang="pug">
   .container
-    h1.section__title.section__main_title.main__big_title {{title}}
+    h1.section-title.section-main_title.main-big_title {{title}}
     slot
 </template>
 

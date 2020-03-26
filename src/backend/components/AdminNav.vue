@@ -1,7 +1,7 @@
 <template lang="pug">
   nav.nav
-    .nav__item(v-for="tab in tabs" :key="tab.href")
-      router-link.btn.nav__link(
+    .nav-item(v-for="tab in tabs" :key="tab.href")
+      router-link.btn.nav-link(
         :class="isActiveClass(tab.href)"
         :to="tab.href"
       ) {{tab.name}}
@@ -24,7 +24,7 @@ export default {
   methods: {
     isActiveClass(path) {
       return {
-        "nav__link-active": this.$route.path === path
+        "nav-link--active": this.$route.path === path
       };
     }
   }

@@ -2,9 +2,9 @@
   header.section.header
     .container
       div
-        a.header__link(href="/" target="_blank") Вернуться на сайт
-        a.header__link(href="" @click.prevent="logout") Выйти
-      h2.section__title.header__title Панель администрирования
+        a.header-link(href="/" target="_blank") Вернуться на сайт
+        a.header-link(href="" @click.prevent="logout") Выйти
+      h2.section-title.header-title Панель администрирования
 </template>
 
 <script>

@@ -10,15 +10,15 @@
         accept="image/jpeg, image/png, image/gif"
         buttonClass="ui button primary"
         :customStrings="{upload: '<h1>Bummer!</h1>', drag: 'Обновить фотографию'}")
-      .form__row.form__row-buttons
-        //- input.btn.form__btn(type="reset" value="Очистить")
+      .form-row.form-row--buttons
+        //- input.btn.form-btn(type="reset" value="Очистить")
         ButtonElem Отправить
       | {{fileMsg}}
     SkillForm(
       v-for="skill in dbData"
       :key="skill._id"
       :item="skill")
-    h3.form__legend Добавить навыки
+    h3.form-legend Добавить навыки
     SkillForm
 </template>
 

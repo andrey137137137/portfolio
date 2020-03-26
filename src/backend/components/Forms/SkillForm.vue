@@ -10,7 +10,7 @@
       :val="$v.category"
       placeholder="Категория")
     //- div(v-for="(v, index) in $v.items.$each.$iter")
-    //-   .form__legend Обновить навык
+    //-   .form-legend Обновить навык
     //-   InputEventElem(
     //-     v-model="v.name.$model"
     //-     :val="v.name"

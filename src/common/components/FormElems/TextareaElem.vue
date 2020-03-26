@@ -1,5 +1,5 @@
 <template lang="pug">
-  textarea.form__input(
+  textarea.form-input(
     v-model="state"
     :class="validationClasses"
     :placeholder="placeholder"

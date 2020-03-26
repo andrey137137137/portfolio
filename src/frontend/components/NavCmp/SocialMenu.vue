@@ -1,6 +1,6 @@
 <template lang="pug">
   .socials(:class="containerClasses")
-    a.icon.socials__link(
+    a.icon.socials-link(
       v-for="link in links"
       :key="link.href"
       :class="iconClass(link.icon)"
@@ -50,13 +50,13 @@ export default {
     containerClasses() {
       if (this.inHeader) {
         return {
-          header__socials: true,
-          "header__socials-left": this.config.isContent
+          "header-socials": true,
+          "header-socials--left": this.config.isContent
         };
       }
 
       return {
-        footer_top__socials: true
+        "footer_top-socials": true
       };
     }
   },

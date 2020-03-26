@@ -1,10 +1,10 @@
 <template lang="pug">
-  article.header__article(:class="containerClasses")
+  article.header-article(:class="containerClasses")
 
     SvgCmp(v-if="config.isContent" id="stars1" :addClasses="svgClasses")
 
-    router-link.img_wrap.header__avatar(:class="avatarClasses" to="/")
-      img.img_wrap__img(src="/upload/avatar.jpg" alt="Аватарка")
+    router-link.img_wrap.header-avatar(:class="avatarClasses" to="/")
+      img.img_wrap-img(src="/upload/avatar.jpg" alt="Аватарка")
 
     HeaderTitle
 </template>
@@ -26,18 +26,18 @@ export default {
     ...mapGetters(["config"]),
     containerClasses() {
       return {
-        "header__article-relative": this.config.isContent,
-        "header__article-padding": !this.config.isContent
+        "header-article--relative": this.config.isContent,
+        "header-article--padding": !this.config.isContent
       };
     },
     svgClasses() {
       return {
-        header__logo: true,
-        "header__logo-for_blog": this.config.isBlog
+        "header-logo": true,
+        "header-logo--for_blog": this.config.isBlog
       };
     },
     avatarClasses() {
-      return { "header__avatar-relative": this.config.isContent };
+      return { "header-avatar--relative": this.config.isContent };
     }
   }
 };

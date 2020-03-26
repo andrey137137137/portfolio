@@ -1,11 +1,11 @@
 <template lang="pug">
-  FormWrapper#feedback.section.container.container-full_width.feedback_form(
+  FormWrapper#feedback.section.container.container--full_width.feedback_form(
     @submit.prevent.native="handleSubmit")
 
-    h2.section__title.section__title-uppercase.section__title-underlined.feedback_form__title Связаться со мной
+    h2.section-title.section-title--uppercase.section-title--underlined.feedback_form-title Связаться со мной
 
-    //- .form__row.form__row-text_wrap.feedback_form__row
-    //-   input.form__input.feedback_form__text_input(type="text" name="name")
+    //- .form-row.form-row--text_wrap.feedback_form-row
+    //-   input.form-input.feedback_form-text_input(type="text" name="name")
 
     InputEventElem(
       :addInputClasses="inputClasses"
@@ -13,8 +13,8 @@
       :val="$v.name"
       placeholder="Пользователь")
 
-    //- .form__row.form__row-text_wrap.feedback_form__row
-    //-   input.form__input.feedback_form__text_input(type="email" name="email")
+    //- .form-row.form-row--text_wrap.feedback_form-row
+    //-   input.form-input.feedback_form-text_input(type="email" name="email")
 
     InputEventElem(
       :addInputClasses="inputClasses"
@@ -23,8 +23,8 @@
       :val="$v.email"
       placeholder="Почта")
 
-    //- .form__row.form__row-textarea_wrap
-    //-   textarea.form__input.feedback_form__text_input(name="message")
+    //- .form-row.form-row--textarea_wrap
+    //-   textarea.form-input.feedback_form-text_input(name="message")
 
     InputEventElem(
       :addInputClasses="inputClasses"
@@ -33,13 +33,13 @@
       :val="$v.message"
       placeholder="Сообщение")
 
-    .menu.form__menu.feedback_form__menu
-      input.menu__link.btn(type="submit", value="Отправить")
-      input.menu__link.btn.btn-full_opacity(type="reset" value="Очистить")
-      //- li.menu__item
-      //-   input.menu__link.btn(type="submit", value="Отправить")
-      //- li.menu__item
-      //-   input.menu__link.btn.btn-full_opacity(type="reset" value="Очистить")
+    .menu.form-menu.feedback_form-menu
+      input.menu-link.btn(type="submit", value="Отправить")
+      input.menu-link.btn.btn--full_opacity(type="reset" value="Очистить")
+      //- li.menu-item
+      //-   input.menu-link.btn(type="submit", value="Отправить")
+      //- li.menu-item
+      //-   input.menu-link.btn.btn--full_opacity(type="reset" value="Очистить")
 </template>
 
 <script>
@@ -76,12 +76,12 @@ export default {
     },
     inputWrapClasses() {
       return {
-        feedback_form__row: true
+        "feedback_form-row": true
       };
     },
     inputClasses() {
       return {
-        feedback_form__text_input: true
+        "feedback_form-text_input": true
       };
     }
   },

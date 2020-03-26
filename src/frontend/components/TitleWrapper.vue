@@ -41,15 +41,15 @@ export default {
     },
     bgClasses() {
       return {
-        title_wrap__bg: true,
+        "title_wrap-bg": true,
         [this.bgAddClass]: true
       };
     },
     titleClasses() {
       return [
-        "section__title",
-        "section__title-large",
-        "title_wrap__title",
+        "section-title",
+        "section-title--large",
+        "title_wrap-title",
         this.titleAddClass
       ];
     }

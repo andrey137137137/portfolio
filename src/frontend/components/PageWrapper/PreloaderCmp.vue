@@ -1,12 +1,12 @@
 <template lang="pug">
-  #preloader.preloader.preloader-active
-    .preloader__container
-      //- svg.preloader__circles
+  #preloader.preloader.preloader--active
+    .preloader-container
+      //- svg.preloader-circles
       //-   use(xlink:href="../img/night.svg#preloader")
-      svg.preloader__circles
-        circle.preloader__center_circle
-        circle.preloader__satellite_circle
-      .preloader__counter
+      svg.preloader-circles
+        circle.preloader-center_circle
+        circle.preloader-satellite_circle
+      .preloader-counter
 </template>
 
 <script>
@@ -36,7 +36,7 @@ export default {
       $vm.prs = Math.floor(($vm.counter * 100) / $vm.count);
 
       // setTimeout(function() {
-      $vm.$preloader.classList.add(`preloader-prs_${$vm.prs}`);
+      $vm.$preloader.classList.add(`preloader--prs_${$vm.prs}`);
       // $vm.$satellite.style.transform = `rotate(${$vm.prs * 7.2}deg)`;
       // $vm.$circle.style.strokeDasharray = `${($vm.prs * $vm.circleLength) /
       //   100} ${$vm.circleLength}`;
@@ -45,7 +45,7 @@ export default {
 
       if ($vm.counter >= $vm.count) {
         setTimeout(function() {
-          $vm.$preloader.classList.remove("preloader-active");
+          $vm.$preloader.classList.remove("preloader--active");
         }, 500);
         setTimeout(function() {
           $vm.$preloader.parentElement.removeChild($vm.$preloader);
@@ -59,10 +59,10 @@ export default {
     $(document).ready(() => {
       $vm.$preloader = document.getElementById("preloader");
       $vm.$satellite = $vm.$preloader.querySelector(
-        ".preloader__satellite_circle"
+        ".preloader-satellite_circle"
       );
-      $vm.$circle = $vm.$preloader.querySelector(".preloader__center_circle");
-      $vm.$counter = $vm.$preloader.querySelector(".preloader__counter");
+      $vm.$circle = $vm.$preloader.querySelector(".preloader-center_circle");
+      $vm.$counter = $vm.$preloader.querySelector(".preloader-counter");
       $vm.$images = document.images;
       $vm.count = $vm.$images.length;
 
@@ -77,4 +77,4 @@ export default {
 };
 </script>
 
-<style lang="scss" src="@frontStylesCmp/Preloader/import.scss" scoped></style>
+<style lang="scss" src="@frontStylesCmp/Preloader/import.scss"></style>

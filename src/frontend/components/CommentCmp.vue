@@ -4,20 +4,20 @@
     TitleWrapper(
       title="Что обо мне говорят"
       bgIcon="stars3"
-      containerAddClass="reviews__title_wrap"
-      titleAddClass="reviews__title"
+      containerAddClass="reviews-title_wrap"
+      titleAddClass="reviews-title"
     )
 
-    article.col.col-float.col-tb_6.col-ds_4.reviews__article(v-for="(review, index) in items" class="{'reviews__article-first': !index}")
-      .icon.icon-quote.reviews__quote
-      .img_wrap.reviews__img_wrap
-        img.img_wrap__img(
+    article.col.col--float.col--tb_6.col--ds_4.reviews-article(v-for="(review, index) in items" class="{'reviews-article--first': !index}")
+      .icon.icon--quote.reviews-quote
+      .img_wrap.reviews-img_wrap
+        img.img_wrap-img(
           :src="'userfiles/reviews/m/' + (index + 1) + '.jpg'"
           :alt="review.author")
-      .reviews__text_wrap
-        p.section__desc.reviews__desc {{review.description}}
-        span.reviews__author {{review.author}}
-        span.reviews__status
+      .reviews-text_wrap
+        p.section-desc.reviews-desc {{review.description}}
+        span.reviews-author {{review.author}}
+        span.reviews-status
           | &#8212;
           | {{review.status}}
 

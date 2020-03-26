@@ -1,9 +1,9 @@
 <template lang="pug">
   ul#parallax.parallax(:class="classes")
-    //- .parallax__container
-    li.parallax__layer(v-for="(item, index) in layers" :data-depth="item")
-      img.parallax__img(:src="img(index)")
-    //- .parallax__content
+    //- .parallax-container
+    li.parallax-layer(v-for="(item, index) in layers" :data-depth="item")
+      img.parallax-img(:src="img(index)")
+    //- .parallax-content
 </template>
 
 <script>
@@ -42,7 +42,7 @@ export default {
   computed: {
     ...mapGetters(["config"]),
     classes() {
-      return { "parallax-scroll": this.config.isContent };
+      return { "parallax--scroll": this.config.isContent };
     }
   },
   methods: {
@@ -101,7 +101,7 @@ export default {
       $vm.centerY = window.innerHeight / 2;
 
       if ($vm.$parallaxContainer) {
-        // if ($vm.$parallaxContainer.classList.contains("parallax-scroll")) {
+        // if ($vm.$parallaxContainer.classList.contains("parallax--scroll")) {
         //   isScroll = true;
         // }
 

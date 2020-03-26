@@ -20,13 +20,13 @@ export default {
       return elems;
     },
     wrapInput(h, elems) {
-      return [h("label", { class: "form__label" }, elems)];
+      return [h("label", { class: "form-label" }, elems)];
     },
     checkedElem() {
-      return <div class="form__checked" />;
+      return <div class="form-checked" />;
     },
     checkboxTextElem() {
-      return <div class="form__checkbox_text">{this.label}</div>;
+      return <div class="form-checkbox_text">{this.label}</div>;
     }
   }
 };

@@ -35,8 +35,8 @@ export default {
       "div",
       {
         class: {
-          form__wrap: true,
-          [`form__wrap-${wrapClass}`]: true,
+          "form-wrap": true,
+          [`form-wrap--${wrapClass}`]: true,
           ...this.addClasses
         }
       },
@@ -119,7 +119,7 @@ export default {
       return "";
     },
     validationClasses() {
-      const baseClass = `${this.classes.block}__${this.classes.elem}-`;
+      const baseClass = `${this.classes.block}-${this.classes.elem}--`;
 
       return {
         [baseClass + this.classes.modifs.error]: this.val.$error,
@@ -173,7 +173,7 @@ export default {
 
       return h(formElem, {
         class: {
-          form__input: true,
+          "form-input": true,
           ...this.addInputClasses,
           ...this.validationClasses
         },

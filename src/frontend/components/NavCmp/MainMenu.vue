@@ -1,6 +1,6 @@
 <template lang="pug">
   .menu(:id="id" :class="containerClasses")
-    router-link.menu__link(
+    router-link.menu-link(
       v-for="link in activeLinks"
       :key="link.href"
       :class="linkClasses"
@@ -41,22 +41,22 @@ export default {
     containerClasses() {
       if (this.inHeader) {
         return {
-          header__menu: true,
-          "header__menu-absolute": this.config.isContent,
-          "header__menu-float": !this.config.isContent
+          "header-menu": true,
+          "header-menu--absolute": this.config.isContent,
+          "header-menu--float": !this.config.isContent
         };
       }
 
       return {
-        footer_top__menu: true
+        "footer_top-menu": true
       };
     },
     linkClasses() {
       if (this.inHeader) {
         return {
-          section__title: this.config.isContent,
-          "section__title-large": this.config.isContent,
-          "section__title-underlined": this.config.isContent,
+          "section-title": this.config.isContent,
+          "section-title--large": this.config.isContent,
+          "section-title--underlined": this.config.isContent,
           btn: !this.config.isContent
         };
       }

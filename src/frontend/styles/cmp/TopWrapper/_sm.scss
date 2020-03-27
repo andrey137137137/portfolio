@@ -1,6 +1,7 @@
 .top_wrap {
   $block: &;
 
+  position: relative;
   margin-top: -$cornerBorderHeight;
   width: 100%;
   overflow-y: visible;

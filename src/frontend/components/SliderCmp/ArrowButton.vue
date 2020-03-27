@@ -1,9 +1,9 @@
 <template lang="pug">
   a(href="#" :class="classes" @click.prevent="handle")
     transition(:name="transitionName")
-      .img_wrap.slider__item(:key="index")
-        img.img_wrap__img(:src="imgSrc" :alt="index + 1")
-        .slider__item_number.slider__arrow_number {{newIndex + 1}}
+      .img_wrap.slider-item(:key="index")
+        img.img_wrap-img(:src="imgSrc" :alt="index + 1")
+        .slider-item_number.slider-arrow_number {{newIndex + 1}}
 </template>
 
 <script>
@@ -35,16 +35,16 @@ export default {
     classes() {
       return {
         icon: true,
-        "icon-chevron_down": !this.isNext,
-        "icon-chevron_up": this.isNext,
-        slider__arrow: true,
-        "slider__arrow-prev": !this.isNext,
-        "slider__arrow-next": this.isNext
+        "icon--chevron_down": !this.isNext,
+        "icon--chevron_up": this.isNext,
+        "slider-arrow": true,
+        "slider-arrow--prev": !this.isNext,
+        "slider-arrow--next": this.isNext
       };
     },
     transitionName() {
       const transitionMethod = this.isNext ? "scroll_up" : "scroll_down";
-      return `slider__arrow-${transitionMethod}`;
+      return `slider-arrow--${transitionMethod}`;
     }
   }
 };

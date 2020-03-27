@@ -1,6 +1,8 @@
 .bottom_wrap {
   $block: &;
 
+  position: relative;
+
   &#{$block}--map_wrap {
     position: relative;
   }

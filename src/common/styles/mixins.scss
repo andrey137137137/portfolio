@@ -128,7 +128,7 @@
 @mixin borderCornerHeight($height, $block: "top_wrap") {
   margin-top: -$height;
 
-  .#{$block}__corner_border {
+  .#{$block}-corner_border {
     border-top-width: $height;
   }
 }
@@ -144,7 +144,7 @@
   $colClass: ".col";
 
   @for $col from 1 through $count {
-    #{$colClass}#{$colClass}-#{$postfix}_#{$col} {
+    #{$colClass}#{$colClass}--#{$postfix}_#{$col} {
       @include widthToPercents($col * $colWidth, $totalWidth);
     }
   }
@@ -163,7 +163,7 @@
     @include cols($count - 1, $colWidth, $postfix, $contentWidth);
 
     @if $padding > 0 {
-      &#{$block}-full_width {
+      &#{$block}--full_width {
         @include cols($count, $colWidth, $postfix, $maxWidth);
       }
     }

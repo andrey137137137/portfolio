@@ -28,7 +28,7 @@ export default {
   data() {
     return {
       bottomWrapClass: {
-        "bottom_wrap-bg": true
+        "bottom_wrap--bg": true
       }
     };
   },

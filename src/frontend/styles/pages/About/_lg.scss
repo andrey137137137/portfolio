@@ -21,7 +21,7 @@
   &-container {
     padding-bottom: 21px;
 
-    &.container-full_width .col#{$block}-col {
+    &.container--full_width .col#{$block}-col {
       @include padding("* 0");
       width: 443px;
     }

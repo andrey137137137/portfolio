@@ -1,0 +1,11 @@
+.authorization {
+  @include position("absolute 10px 50% * *");
+  // height: 40px;
+  // line-height: 38px;
+  @include oneLineBlock(40px);
+  transform: translateX(50%);
+
+  // &--hidden {
+  //   display: none;
+  // }
+}

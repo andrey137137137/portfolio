@@ -62,7 +62,7 @@ export default {
   },
   methods: {
     iconClass: icon => {
-      return { [`icon-${icon}`]: true };
+      return { [`icon--${icon}`]: true };
     }
   }
 };

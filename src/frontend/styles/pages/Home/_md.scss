@@ -1,0 +1,7 @@
+.authorization {
+  top: 20px;
+  right: 20px;
+  @include padding("* 30px");
+  // @include oneLineBlock(45px, 1px);
+  transform: none;
+}

@@ -37,10 +37,10 @@ export default {
       $flipBtn: null,
       $container: null,
       // btnHiddenClass: "authorization-hidden",
-      flippedClass: "header__container-flipped",
+      flippedClass: "header-container--flipped",
       formClasses: {
-        header__flip_wrap: true,
-        "header__flip_wrap-back": true
+        "header-flip_wrap": true,
+        "header-flip_wrap--back": true
       }
     };
   },
@@ -77,4 +77,4 @@ export default {
 };
 </script>
 
-<style lang="scss" src="@frontStylesPgs/Home.scss" scoped></style>
+<style lang="scss" src="@frontStylesPgs/Home/import.scss"></style>

@@ -1,0 +1,15 @@
+#{$titleClass}.login_form-title {
+  // @include padding("37px * 34px");
+  padding-bottom: 34px;
+  // font-size: inherit;
+}
+
+.login_form {
+  &-text_input .form-input {
+    line-height: 43px;
+  }
+
+  &-top_wrap {
+    padding-top: 15px;
+  }
+}

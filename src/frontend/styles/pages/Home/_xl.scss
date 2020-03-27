@@ -1,0 +1,47 @@
+// BLOG
+
+// .header-corner_border {
+//   @include border('* / * / * #f8f9f5 * #f8f9f5');
+// }
+
+.blog {
+  color: $grey $white;
+
+  &-container {
+    @include padding("30px * 27px");
+  }
+
+  &-post {
+    // height: 846px;
+    // font-size: 14px/21px;
+    line-height: 21px;
+
+    p {
+      margin-top: 10px;
+    }
+
+    img {
+      margin-top: 14px;
+      background-color: $black;
+    }
+  }
+
+  &-title {
+    font-family: $sectionTitleFont;
+    font-weight: normal;
+    text-align: left;
+    text-transform: none;
+  }
+
+  &-date {
+    display: block;
+    margin-top: 9px;
+    color: $darkBlue;
+  }
+
+  &-separator {
+    @include margin("27px * 25px");
+    border-top: 4px solid rgba(#373e42, 0.07);
+    // border-top: 4px solid #373e42;
+  }
+}

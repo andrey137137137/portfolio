@@ -124,3 +124,5 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" src="@frontStylesCmp/LoginForm/import.scss"></style>

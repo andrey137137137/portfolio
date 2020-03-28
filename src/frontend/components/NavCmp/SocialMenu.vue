@@ -67,3 +67,5 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" src="@frontStylesCmp/SocialMenu/import.scss"></style>

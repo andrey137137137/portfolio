@@ -22,6 +22,7 @@ export default {
     ...mapGetters(["config"]),
     classes() {
       return {
+        bg: true,
         full_screen: !this.config.isContent,
         main_wrap: this.config.isContent
       };
@@ -40,5 +41,3 @@ export default {
 </style>
 
 <style lang="scss" src="@frontStyles/common.scss"></style>
-<style lang="scss" src="@frontStylesCmp/Header/import.scss"></style>
-<style lang="scss" src="@frontStylesCmp/SocialMenu/import.scss"></style>

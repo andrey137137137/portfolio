@@ -22,5 +22,3 @@ export default {
   mixins: [pageData]
 };
 </script>
-
-<style lang="scss" src="../styles/pages/Page.scss" scoped></style>

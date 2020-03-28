@@ -1,7 +1,7 @@
 <template lang="pug">
-  nav.nav
-    .nav-item(v-for="tab in tabs" :key="tab.href")
-      router-link.btn.nav-link(
+  nav.admin_nav
+    .admin_nav-item(v-for="tab in tabs" :key="tab.href")
+      router-link.btn.admin_nav-link(
         :class="isActiveClass(tab.href)"
         :to="tab.href"
       ) {{tab.name}}

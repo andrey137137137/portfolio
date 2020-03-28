@@ -1,10 +1,10 @@
 <template lang="pug">
-  header.section.header
+  header.section.admin_header
     .container
       div
-        a.header-link(href="/" target="_blank") Вернуться на сайт
-        a.header-link(href="" @click.prevent="logout") Выйти
-      h2.section-title.header-title Панель администрирования
+        a.admin_header-link(href="/" target="_blank") Вернуться на сайт
+        a.admin_header-link(href="" @click.prevent="logout") Выйти
+      h2.section-title.admin_header-title Панель администрирования
 </template>
 
 <script>
@@ -43,3 +43,6 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" src="@backStylesCmp/AdminHeader.scss">
+</style>

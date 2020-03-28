@@ -21,3 +21,5 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" src="@frontStylesCmp/HeaderWrapper/import.scss"></style>

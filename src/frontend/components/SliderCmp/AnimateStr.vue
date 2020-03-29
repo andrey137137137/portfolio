@@ -19,7 +19,7 @@
 
 <script>
 // import Velocity from "velocity";
-import $ from "jQuery";
+import $ from "jquery";
 
 import addClasses from "@common/mixins/addClasses";
 

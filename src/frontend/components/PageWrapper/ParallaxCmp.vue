@@ -11,7 +11,7 @@ const images = {
   png: require.context("@/assets/img/parallax/", false, /layer_\d+\.png$/)
 };
 
-import $ from "jQuery";
+import $ from "jquery";
 import getImg from "@common/helpers/getImg";
 
 import { createNamespacedHelpers } from "vuex";

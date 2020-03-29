@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import $ from "jQuery";
+import $ from "jquery";
 
 import PageWrapper from "@frontCmp/PageWrapper";
 import HeaderWrapper from "@frontCmp/Header/HeaderWrapper";

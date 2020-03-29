@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import $ from "jQuery";
+import $ from "jquery";
 
 export default {
   name: "PreloaderCmp",

@@ -44,5 +44,4 @@ export default {
 };
 </script>
 
-<style lang="scss" src="@backStylesCmp/AdminHeader.scss">
-</style>
+<style lang="scss" src="@backStylesCmp/AdminHeader.scss"></style>

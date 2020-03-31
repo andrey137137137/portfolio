@@ -40,7 +40,7 @@ export default {
           ...this.addClasses
         }
       },
-      [...elems, this.errorElem()]
+      this.isRequiredInput ? [...elems, this.errorElem()] : [...elems]
     );
   },
   props: {
@@ -56,7 +56,9 @@ export default {
     },
     val: {
       type: Object,
-      required: true
+      default() {
+        return {};
+      }
     },
     value: {
       // type: String,
@@ -104,6 +106,16 @@ export default {
     //     this.$emit(eventType, value);
     //   }
     // },
+    isRequiredInput() {
+      switch (this.type) {
+        case types.native.checkbox:
+        case types.custom.textarea:
+        case types.custom.toggle:
+          return exist("$error", this.val);
+        default:
+          return true;
+      }
+    },
     isEmptyRequired() {
       return this.val.$error && !this.value;
     },
@@ -152,15 +164,23 @@ export default {
           value = e.target.value;
       }
 
-      this.val.$touch();
+      if (this.isRequiredInput) this.val.$touch();
+
       this.$emit(event, value);
     },
     errorElem() {
       return <ErrorElem type={this.errorType} />;
     },
     inputElem(h) {
+      const on = {
+        input: this.handle
+      };
       const attrs = {
         placeholder: this.placeholder
+      };
+      let classes = {
+        "form-input": true,
+        ...this.addInputClasses
       };
       let formElem = "";
 
@@ -171,20 +191,21 @@ export default {
         attrs.type = this.type;
       }
 
-      return h(formElem, {
-        class: {
-          "form-input": true,
-          ...this.addInputClasses,
+      if (this.isRequiredInput) {
+        classes = {
+          ...classes,
           ...this.validationClasses
-        },
+        };
+        on.blur = this.val.$touch;
+      }
+
+      return h(formElem, {
+        class: classes,
         attrs,
         domProps: {
           value: this.value
         },
-        on: {
-          input: this.handle,
-          blur: this.val.$touch
-        }
+        on
       });
     }
   }

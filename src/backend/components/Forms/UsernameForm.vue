@@ -11,6 +11,11 @@
       v-model="username"
       :val="$v.username"
       placeholder="Имя пользователя")
+    ChangeEventElem(
+      label="Изменить пароль"
+      v-model="changePassword"
+      type="checkbox")
+    div(v-show="changePassword")
     InputEventElem(
       type="password"
       v-model="password"
@@ -37,37 +42,51 @@ import formMxn from "@backend/mixins/form";
 import userFormMxn from "@backend/mixins/userForm";
 import UserForm from "@backCmp/Forms/UserForm";
 import InputEventElem from "@components/FormElems/InputEventElem";
+import ChangeEventElem from "@components/FormElems/ChangeEventElem";
 
 export default {
-  name: "ProfileForm",
+  name: "UsernameForm",
   components: {
     UserForm,
-    InputEventElem
+    InputEventElem,
+    ChangeEventElem
   },
   mixins: [validationMixin, formMxn, userFormMxn],
   data() {
     return {
+      changePassword: false,
       password: "",
       repPassword: ""
     };
   },
-  validations: {
-    email: {
-      required,
-      email
-    },
-    username: {
-      required
-    },
-    password: {
-      required,
-      alphaNum,
-      minLength: minLength(6),
-      maxLength: maxLength(16)
-    },
-    repPassword: {
-      sameAsPassword: sameAs("password")
-    }
+  validations() {
+    const userVals = {
+      email: {
+        required,
+        email
+      },
+      username: {
+        required
+      }
+    };
+    const passwordVals = {
+      password: {
+        required,
+        alphaNum,
+        minLength: minLength(6),
+        maxLength: maxLength(16)
+      },
+      repPassword: {
+        sameAsPassword: sameAs("password")
+      }
+    };
+
+    if (!this.changePassword) return userVals;
+
+    return {
+      ...userVals,
+      ...passwordVals
+    };
   },
   methods: {
     prepareData() {

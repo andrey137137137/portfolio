@@ -23,9 +23,7 @@ router.post("/", isAuth, (req, res, next) => {
       {
         email,
         username,
-        oldPassword,
-        password,
-        repPassword
+        password
       },
       res
     );
@@ -45,7 +43,11 @@ router.post("/", isAuth, (req, res, next) => {
           return res.status(400).send("Повтор пароля неверный");
         }
 
-        cb(null, user);
+        user.email = email;
+        user.username = username;
+        user.password = password;
+
+        user.save(cb);
       }
     ],
     (err, user) => {

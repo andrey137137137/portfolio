@@ -1,3 +1,39 @@
+function getMessage(mode, isError = false) {
+  switch (mode) {
+    case "find":
+      return "чтении записей";
+    case "findOne":
+      return "чтении записи";
+    case "insert":
+      if (isError) return "добавление записи";
+      return "добавлена";
+    case "update":
+      if (isError) return "обновлении записи";
+      return "обновлена";
+    case "delete":
+      if (isError) return "удалении записи";
+      return "удалена";
+  }
+}
+
+function sendResult(result, res, mode = "insert") {
+  if (!result) {
+    if (mode == "insert") {
+      return;
+    }
+
+    return res.status(404).json({ status: "Запись в БД не обнаружена" });
+  }
+
+  res.status(200).json({ status: "Запись успешно " + getMessage(mode) });
+}
+
+function sendError(err, res, mode) {
+  res.status(500).json({
+    status: `При ${getMessage(mode, true)} произошла ошибка: ${err}`
+  });
+}
+
 function get(Model, res, filter, fields, mode = "many") {
   const types = {
     many: "find",
@@ -10,16 +46,7 @@ function get(Model, res, filter, fields, mode = "many") {
     .then(result => {
       res.status(200).json({ result });
     })
-    .catch(err => {
-      const errStr =
-        mode == "many"
-          ? "При чтении записей произошла ошибка"
-          : "При чтении записи произошла ошибка";
-
-      res.status(500).json({
-        status: errStr + ": " + err
-      });
-    });
+    .catch(sendError(err, res, mode == "many" ? "find" : "findOne"));
 }
 
 function update(Model, query, data, res) {
@@ -27,18 +54,8 @@ function update(Model, query, data, res) {
   const filter = query.id ? query.id : query;
 
   Model[FUNC](filter, { $set: data })
-    .then(result => {
-      if (result) {
-        res.status(200).json({ status: "Запись успешно обновлена" });
-      } else {
-        res.status(404).json({ status: "Запись в БД не обнаружена" });
-      }
-    })
-    .catch(err => {
-      res.status(500).json({
-        status: "При обновлении записи произошла ошибка: " + err
-      });
-    });
+    .then(sendResult(result, res, "update"))
+    .catch(sendError(err, res, "update"));
 }
 
 module.exports.getItemById = (Model, res, id, fields = {}) => {
@@ -58,14 +75,8 @@ module.exports.createItem = (Model, data, res) => {
 
   item
     .save()
-    .then(result => {
-      return res.status(200).json({ status: "Запись успешно добавлена" });
-    })
-    .catch(err => {
-      res.status(500).json({
-        status: "При добавление записи произошла ошибка: " + err
-      });
-    });
+    .then(sendResult(result, res, "insert"))
+    .catch(sendError(err, res, "insert"));
 };
 
 module.exports.updateItem = (Model, id, data, res) => {
@@ -78,17 +89,7 @@ module.exports.updateItemByQuery = (Model, query, data, res) => {
 
 module.exports.deleteItem = (Model, id, res) => {
   Model.findByIdAndRemove(id).then(
-    result => {
-      if (result) {
-        res.status(200).json({ status: "Запись успешно удалена" });
-      } else {
-        res.status(404).json({ status: "Запись в БД не обнаружена" });
-      }
-    },
-    err => {
-      res.status(500).json({
-        status: "При удалении записи произошла ошибка: " + err
-      });
-    }
+    sendResult(result, res, "delete"),
+    sendError(err, res, "delete")
   );
 };

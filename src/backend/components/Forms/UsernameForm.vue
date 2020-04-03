@@ -15,17 +15,22 @@
       label="Изменить пароль"
       v-model="changePassword"
       type="checkbox")
-    div(v-show="changePassword")
-    InputEventElem(
-      type="password"
-      v-model="password"
-      :val="$v.password"
-      placeholder="Пароль")
-    InputEventElem(
-      type="password"
-      v-model="repPassword"
-      :val="$v.repPassword"
-      placeholder="Повторите пароль")
+    div(v-if="changePassword")
+      InputEventElem(
+        type="password"
+        v-model="oldPassword"
+        :val="$v.oldPassword"
+        placeholder="Старый пароль")
+      InputEventElem(
+        type="password"
+        v-model="password"
+        :val="$v.password"
+        placeholder="Пароль")
+      InputEventElem(
+        type="password"
+        v-model="repPassword"
+        :val="$v.repPassword"
+        placeholder="Повторите пароль")
 </template>
 
 <script>
@@ -55,12 +60,13 @@ export default {
   data() {
     return {
       changePassword: false,
+      oldPassword: "",
       password: "",
       repPassword: ""
     };
   },
   validations() {
-    const userVals = {
+    const userValids = {
       email: {
         required,
         email
@@ -69,31 +75,37 @@ export default {
         required
       }
     };
-    const passwordVals = {
-      password: {
-        required,
-        alphaNum,
-        minLength: minLength(6),
-        maxLength: maxLength(16)
-      },
+    const passwordValids = {
+      required,
+      alphaNum,
+      minLength: minLength(6),
+      maxLength: maxLength(16)
+    };
+    const changePasswordValids = {
+      oldPassword: passwordValids,
+      password: passwordValids,
       repPassword: {
         sameAsPassword: sameAs("password")
       }
     };
 
-    if (!this.changePassword) return userVals;
+    if (!this.changePassword) return userValids;
 
     return {
-      ...userVals,
-      ...passwordVals
+      ...userValids,
+      ...changePasswordValids
     };
   },
   methods: {
     prepareData() {
+      const { email, username, oldPassword, password, repPassword } = this;
+
       this.submitData = {
-        username: this.username,
-        password: this.password,
-        email: this.email
+        email,
+        username,
+        oldPassword,
+        password,
+        repPassword
       };
     }
   }

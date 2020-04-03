@@ -27,8 +27,7 @@ const app = express();
 
 app.use(
   cors({
-    // origin: `${PROTOCOL}://${HOST}:${FRONT_PORT}`,
-    origin: true,
+    origin: `${PROTOCOL}://${HOST}:${FRONT_PORT}`,
     optionsSuccessStatus: 200,
     credentials: true
   })
@@ -55,11 +54,6 @@ app.use(
   })
 );
 
-// app.use((req, res, next) => {
-//   console.log(req.session);
-//   next();
-// });
-
 app.use(URL, require("./routes/index"));
 
 if (!isProduction) {
@@ -67,11 +61,11 @@ if (!isProduction) {
 }
 
 // catch 404 and forward to error handler
-// app.use(function(req, res, next) {
-//   var err = new Error("Not Found");
-//   err.status = 404;
-//   next(err);
-// });
+app.use((req, res, next) => {
+  const err = new Error("Not Found");
+  err.status = 404;
+  next(err);
+});
 
 //Error handlers & middlewares
 if (!isProduction) {
@@ -82,8 +76,8 @@ if (!isProduction) {
     res.locals.error = req.app.get("env") === "development" ? err : {};
     console.log(res.locals.error);
     // render the error page
-    res.status(err.status || 500);
-    res.render("error");
+    res.send(err.status || 500);
+    // res.render("error");
   });
 }
 

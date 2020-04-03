@@ -35,7 +35,7 @@ function update(Model, query, data, res) {
       }
     })
     .catch(err => {
-      res.status(404).json({
+      res.status(500).json({
         status: "При обновлении записи произошла ошибка: " + err
       });
     });

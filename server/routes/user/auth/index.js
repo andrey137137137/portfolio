@@ -16,17 +16,13 @@ router.post("/", (req, res, next) => {
   waterfall(
     [
       cb => {
-        console.log(username, password);
         Model.findOne({ username }, cb);
       },
       (user, cb) => {
-        console.log(user);
         if (!user || !user.validatePassword(password)) {
-          console.log(user);
           return res.status(400).send("Имя пользователя или пароль неверны");
         }
 
-        console.log(user.validatePassword(password));
         cb(null, user);
       }
     ],

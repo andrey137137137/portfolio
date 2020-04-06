@@ -9,58 +9,24 @@ router.get("/", isAuth, (req, res, next) => {
   crud.getItemById(Model, res, userId(req.session.token, next), {
     _id: 0,
     email: 1,
-    username: 1
+    username: 1,
   });
 });
 
 router.post("/", isAuth, (req, res, next) => {
-  const { email, username, oldPassword, password, repPassword } = req.body;
+  const cond = !req.body.oldPassword && !req.body.password;
+  const FUNC = cond ? "updateItem" : "updateUserPassword";
 
-  if (!oldPassword && !password) {
-    return crud.updateItem(
-      Model,
-      userId(req.session.token, next),
-      {
-        email,
-        username,
-        password
-      },
-      res
-    );
-  }
-
-  waterfall(
-    [
-      cb => {
-        Model.findById(userId(req.session.token, next), cb);
-      },
-      (user, cb) => {
-        if (!user.validatePassword(oldPassword)) {
-          return res.status(400).send("Старый пароль неверный");
+  crud[FUNC](
+    Model,
+    userId(req.session.token, next),
+    cond
+      ? {
+          email: req.body.email,
+          username: req.body.username,
         }
-
-        if (!password || password !== repPassword) {
-          return res.status(400).send("Повтор пароля неверный");
-        }
-
-        user.email = email;
-        user.username = username;
-        user.password = password;
-
-        user.save(cb);
-      }
-    ],
-    (err, user) => {
-      if (err) {
-        err => {
-          return res.status(500).json({
-            status: "При обновлении записи произошла ошибка: " + err
-          });
-        };
-      }
-
-      res.send({ status: "Запись успешно обновлена" });
-    }
+      : req.body,
+    res
   );
 });
 

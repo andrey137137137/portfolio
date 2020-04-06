@@ -1,3 +1,5 @@
+const waterfall = require("async/waterfall");
+
 function getMessage(mode, isError = false) {
   switch (mode) {
     case "find":
@@ -30,7 +32,7 @@ function sendResult(result, res, mode = "insert") {
 
 function sendError(err, res, mode) {
   res.status(500).json({
-    status: `При ${getMessage(mode, true)} произошла ошибка: ${err}`
+    status: `При ${getMessage(mode, true)} произошла ошибка: ${err}`,
   });
 }
 
@@ -38,15 +40,17 @@ function get(Model, res, filter, fields, mode = "many") {
   const types = {
     many: "find",
     one: "findOne",
-    id: "findById"
+    id: "findById",
   };
   const method = types[mode];
 
   Model[method](filter, fields)
-    .then(result => {
+    .then((result) => {
       res.status(200).json({ result });
     })
-    .catch(sendError(err, res, mode == "many" ? "find" : "findOne"));
+    .catch((err) => {
+      sendError(err, res, mode == "many" ? "find" : "findOne");
+    });
 }
 
 function update(Model, query, data, res) {
@@ -54,8 +58,12 @@ function update(Model, query, data, res) {
   const filter = query.id ? query.id : query;
 
   Model[FUNC](filter, { $set: data })
-    .then(sendResult(result, res, "update"))
-    .catch(sendError(err, res, "update"));
+    .then((result) => {
+      sendResult(result, res, "update");
+    })
+    .catch((err) => {
+      sendError(err, res, "update");
+    });
 }
 
 module.exports.getItemById = (Model, res, id, fields = {}) => {
@@ -75,8 +83,12 @@ module.exports.createItem = (Model, data, res) => {
 
   item
     .save()
-    .then(sendResult(result, res, "insert"))
-    .catch(sendError(err, res, "insert"));
+    .then((result) => {
+      sendResult(result, res, "insert");
+    })
+    .catch((err) => {
+      sendError(err, res, "insert");
+    });
 };
 
 module.exports.updateItem = (Model, id, data, res) => {
@@ -87,9 +99,44 @@ module.exports.updateItemByQuery = (Model, query, data, res) => {
   update(Model, query, data, res);
 };
 
+module.exports.updateUserPassword = (Model, id, data, res) => {
+  const { email, username, oldPassword, password, repPassword } = data;
+
+  waterfall(
+    [
+      (cb) => {
+        Model.findById(id, cb);
+      },
+      (user, cb) => {
+        if (!user.validatePassword(oldPassword)) {
+          return res.status(400).send("Старый пароль неверный");
+        }
+
+        if (!password || password !== repPassword) {
+          return res.status(400).send("Повтор пароля неверный");
+        }
+
+        user.email = email;
+        user.username = username;
+        user.password = password;
+
+        user.save(cb);
+      },
+    ],
+    (err, user) => {
+      if (err) sendError(err, res, "update");
+      sendResult(user, res, "update");
+    }
+  );
+};
+
 module.exports.deleteItem = (Model, id, res) => {
   Model.findByIdAndRemove(id).then(
-    sendResult(result, res, "delete"),
-    sendError(err, res, "delete")
+    (result) => {
+      sendResult(result, res, "delete");
+    },
+    (err) => {
+      sendError(err, res, "delete");
+    }
   );
 };

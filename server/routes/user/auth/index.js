@@ -15,7 +15,7 @@ router.post("/", (req, res, next) => {
 
   waterfall(
     [
-      cb => {
+      (cb) => {
         Model.findOne({ username }, cb);
       },
       (user, cb) => {
@@ -24,7 +24,7 @@ router.post("/", (req, res, next) => {
         }
 
         cb(null, user);
-      }
+      },
     ],
     (err, user) => {
       if (err) next(err);

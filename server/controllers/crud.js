@@ -1,3 +1,4 @@
+const { SUCCESS, FORBIDDEN, NOT_FOUND, ERROR } = require("@httpSt");
 const waterfall = require("async/waterfall");
 
 function getMessage(mode, isError = false) {
@@ -7,7 +8,7 @@ function getMessage(mode, isError = false) {
     case "findOne":
       return "чтении записи";
     case "insert":
-      if (isError) return "добавление записи";
+      if (isError) return "добавлении записи";
       return "добавлена";
     case "update":
       if (isError) return "обновлении записи";
@@ -24,14 +25,14 @@ function sendResult(result, res, mode = "insert") {
       return;
     }
 
-    return res.status(404).json({ status: "Запись в БД не обнаружена" });
+    return res.status(NOT_FOUND).json({ status: "Запись в БД не обнаружена" });
   }
 
-  res.status(200).json({ status: "Запись успешно " + getMessage(mode) });
+  res.status(SUCCESS).json({ status: "Запись успешно " + getMessage(mode) });
 }
 
 function sendError(err, res, mode) {
-  res.status(500).json({
+  res.status(ERROR).json({
     status: `При ${getMessage(mode, true)} произошла ошибка: ${err}`,
   });
 }
@@ -46,7 +47,7 @@ function get(Model, res, filter, fields, mode = "many") {
 
   Model[method](filter, fields)
     .then((result) => {
-      res.status(200).json({ result });
+      res.status(SUCCESS).json({ result });
     })
     .catch((err) => {
       sendError(err, res, mode == "many" ? "find" : "findOne");
@@ -109,11 +110,15 @@ module.exports.updateUserPassword = (Model, id, data, res) => {
       },
       (user, cb) => {
         if (!user.validatePassword(oldPassword)) {
-          return res.status(400).send("Старый пароль неверный");
+          return res
+            .status(FORBIDDEN)
+            .json({ message: "Старый пароль неверный" });
         }
 
         if (!password || password !== repPassword) {
-          return res.status(400).send("Повтор пароля неверный");
+          return res
+            .status(FORBIDDEN)
+            .json({ message: "Повтор пароля неверный" });
         }
 
         user.email = email;

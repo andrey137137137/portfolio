@@ -1,4 +1,3 @@
-const waterfall = require("async/waterfall");
 const router = require("express").Router();
 const Model = require("mongoose").model("user");
 

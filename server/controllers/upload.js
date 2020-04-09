@@ -1,3 +1,4 @@
+const { ERROR } = require("@httpSt");
 const formidable = require("formidable");
 const fs = require("fs");
 const path = require("path");
@@ -21,11 +22,10 @@ function upload(req, res, dir = "") {
 
   form.uploadDir = path.join(process.cwd(), uploadPath);
 
-  form.parse(req, function(err, fields, files) {
+  form.parse(req, (err, fields, files) => {
     if (err) {
-      return res.json({
+      return res.status(ERROR).json({
         msg: "Не удалось загрузить картинку",
-        status: "Error"
       });
     }
 
@@ -34,7 +34,7 @@ function upload(req, res, dir = "") {
     fileName = !dir ? `avatar.${getExt(files.image.name)}` : files.image.name;
     filePath = path.join(uploadPath, fileName);
 
-    fs.rename(files.image.path, filePath, function(err) {
+    fs.rename(files.image.path, filePath, (err) => {
       if (err) {
         console.log(err);
         fs.unlink(filePath);
@@ -52,11 +52,11 @@ function upload(req, res, dir = "") {
       //   }
       // };
 
-      // http(requestOptions, function(error, response, body) {
+      // http(requestOptions, (error, response, body) => {
       //   if (error) {
-      //     return res.json({
+      //     return res.status(ERROR).json({
       //       msg: "Картинка не сохранилась в БД " + error,
-      //       status: "Error"
+      //
       //     });
       //   }
       //   res.json({ msg: "Картинка успешно загружена", status: "Ok" });
@@ -65,14 +65,14 @@ function upload(req, res, dir = "") {
   });
 }
 
-module.exports.avatar = function(req, res) {
+module.exports.avatar = (req, res) => {
   upload(req, res);
 };
 
-module.exports.slider = function(req, res) {
+module.exports.slider = (req, res) => {
   upload(req, res, "slider");
 };
 
-module.exports.comments = function(req, res) {
+module.exports.comments = (req, res) => {
   upload(req, res, "comments");
 };

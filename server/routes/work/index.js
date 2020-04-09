@@ -6,7 +6,7 @@ const crud = require("@contr/crud");
 
 router.get("/", (req, res) => {
   crud.getItems(Model, res);
-}); // READ
+});
 
 router.post("/", isAuth, (req, res) => {
   crud.createItem(
@@ -15,11 +15,11 @@ router.post("/", isAuth, (req, res) => {
       title: req.body.title,
       link: req.body.link,
       image: req.body.image,
-      techs: req.body.techs
+      techs: req.body.techs,
     },
     res
   );
-}); // CREATE
+});
 
 router.put("/:id", isAuth, (req, res) => {
   crud.updateItem(
@@ -29,14 +29,14 @@ router.put("/:id", isAuth, (req, res) => {
       title: req.body.title,
       link: req.body.link,
       image: req.body.image,
-      techs: req.body.techs
+      techs: req.body.techs,
     },
     res
   );
-}); // UPDATE
+});
 
 router.delete("/:id", isAuth, (req, res) => {
   crud.deleteItem(Model, req.params.id, res);
-}); // DELETE
+});
 
 module.exports = router;

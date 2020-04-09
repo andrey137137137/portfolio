@@ -1,13 +1,14 @@
+const { FORBIDDEN } = require("@httpSt");
 const jwt = require("jsonwebtoken");
 
 const {
-  SIGNATURE
+  SIGNATURE,
   // EXPIRATION
 } = require("@config").jwt;
 
 module.exports.isAuth = (req, res, next) => {
   if (req.session.token) return next();
-  res.status(400).send({ success: false });
+  res.status(FORBIDDEN).json({ success: false });
 };
 
 module.exports.setToken = (id, cb) => {

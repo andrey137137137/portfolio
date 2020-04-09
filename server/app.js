@@ -1,5 +1,6 @@
 require("module-alias/register");
 
+const { SUCCESS, NOT_FOUND, ERROR } = require("@httpSt");
 const express = require("express");
 const cors = require("cors");
 const logger = require("morgan");
@@ -28,8 +29,8 @@ const app = express();
 app.use(
   cors({
     origin: `${PROTOCOL}://${HOST}:${FRONT_PORT}`,
-    optionsSuccessStatus: 200,
-    credentials: true
+    optionsSuccessStatus: SUCCESS,
+    credentials: true,
   })
 );
 
@@ -44,13 +45,13 @@ app.use(
     secret: SECRET,
     key: KEY,
     store: new MongoStore({
-      mongooseConnection: mongoose.connection
+      mongooseConnection: mongoose.connection,
     }),
     resave: false,
     saveUninitialized: false,
     cookie: {
-      httpOnly: true
-    }
+      httpOnly: true,
+    },
   })
 );
 
@@ -63,7 +64,7 @@ if (!isProduction) {
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
   const err = new Error("Not Found");
-  err.status = 404;
+  err.status = NOT_FOUND;
   next(err);
 });
 
@@ -76,7 +77,7 @@ if (!isProduction) {
     res.locals.error = req.app.get("env") === "development" ? err : {};
     console.log(res.locals.error);
     // render the error page
-    res.send(err.status || 500);
+    res.json(err.status || ERROR);
     // res.render("error");
   });
 }

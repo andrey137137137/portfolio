@@ -13,13 +13,13 @@ router.get("/", (req, res) => {
       _id: 0,
       __v: 0,
       username: 0,
-      password: 0
+      password: 0,
     }
   );
 });
 
 router.post("/", isAuth, (req, res, next) => {
-  const { firstName, lastName, email, contacts } = req.body;
+  const { firstName, lastName, contacts } = req.body;
 
   crud.updateItem(
     Model,
@@ -27,7 +27,7 @@ router.post("/", isAuth, (req, res, next) => {
     {
       firstName,
       lastName,
-      contacts
+      contacts,
     },
     res
   );

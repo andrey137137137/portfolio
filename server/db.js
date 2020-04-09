@@ -5,30 +5,30 @@ mongoose.Promise = global.Promise;
 
 mongoose
   .connect(`mongodb://${USER}:${PASSWORD}@${HOST}:${PORT}/${NAME}`)
-  .catch(e => {
+  .catch((e) => {
     console.error(e);
     throw e;
   });
 
-mongoose.connection.on("connected", function() {
+mongoose.connection.on("connected", () => {
   console.log(
     `Mongoose default connection open mongodb://${HOST}:${PORT}/${NAME}`
   );
 });
 
 // If the connection throws an error
-mongoose.connection.on("error", function(err) {
+mongoose.connection.on("error", (err) => {
   console.log("Mongoose default connection error: " + err);
 });
 
 // When the connection is disconnected
-mongoose.connection.on("disconnected", function() {
+mongoose.connection.on("disconnected", () => {
   console.log("Mongoose default connection disconnected");
 });
 
 // If the Node process ends, close the Mongoose connection
-process.on("SIGINT", function() {
-  mongoose.connection.close(function() {
+process.on("SIGINT", () => {
+  mongoose.connection.close(() => {
     console.log(
       "Mongoose default connection disconnected through app termination"
     );

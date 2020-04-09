@@ -1,3 +1,4 @@
+const { FORBIDDEN } = require("@httpSt");
 const waterfall = require("async/waterfall");
 const router = require("express").Router();
 const Model = require("mongoose").model("user");
@@ -5,11 +6,11 @@ const Model = require("mongoose").model("user");
 const { isAuth, setToken } = require("@auth");
 
 router.get("/", isAuth, (req, res) => {
-  res.send({ success: true });
+  res.json({ success: true });
 });
 
 router.post("/", (req, res, next) => {
-  if (req.session.token) return res.send({ success: true });
+  if (req.session.token) return res.json({ success: true });
 
   const { username, password } = req.body;
 
@@ -20,7 +21,9 @@ router.post("/", (req, res, next) => {
       },
       (user, cb) => {
         if (!user || !user.validatePassword(password)) {
-          return res.status(400).send("Имя пользователя или пароль неверны");
+          return res
+            .status(FORBIDDEN)
+            .json({ message: "Имя пользователя или пароль неверны" });
         }
 
         cb(null, user);
@@ -30,7 +33,7 @@ router.post("/", (req, res, next) => {
       if (err) next(err);
 
       req.session.token = setToken(user._id, next);
-      res.send({ success: true });
+      res.json({ success: true });
     }
   );
 });
@@ -39,11 +42,11 @@ router.delete("/", isAuth, (req, res) => {
   const { token } = req.session;
 
   if (!token) {
-    return res.send({ success: true });
+    return res.json({ success: true });
   }
 
   req.session.destroy(() => {
-    res.send({ success: true });
+    res.json({ success: true });
   });
 });
 

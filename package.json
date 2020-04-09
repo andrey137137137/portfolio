@@ -11,6 +11,7 @@
   },
   "_moduleAliases": {
     "@config": "api/config.json",
+    "@httpSt": "server/httpStatuses.js",
     "@contr": "server/controllers",
     "@auth": "server/routes/auth.js"
   },

@@ -1,3 +1,4 @@
+// const { NOT_FOUND } = require("@httpSt");
 const router = require("express").Router();
 
 router.use("/image", require("./image"));
@@ -7,7 +8,7 @@ router.use("/post", require("./post"));
 router.use("/user", require("./user"));
 
 // router.get("*", (req, res) => {
-//   res.status(404).json({ msg: "Not found", err: 404 });
+//   res.status(NOT_FOUND).json({ msg: "Not found", err: NOT_FOUND });
 // });
 
 module.exports = router;

@@ -1,7 +1,7 @@
 <template lang="pug">
   .socials(:class="containerClasses")
     a.icon.socials-link(
-      v-for="link in links"
+      v-for="link in profile.contacts"
       :key="link.href"
       :class="iconClass(link.icon)"
       target="_blank"
@@ -21,29 +21,29 @@ export default {
       default: true
     }
   },
-  data() {
-    return {
-      links: [
-        {
-          name: "vk",
-          href: "",
-          icon: "vk"
-        },
-        {
-          name: "github",
-          href: "https://github.com/andrey137137137",
-          icon: "github_alt"
-        },
-        {
-          name: "skype",
-          href: "skype:andrey27x777@gmail.com",
-          icon: "skype"
-        }
-      ]
-    };
-  },
+  // data() {
+  //   return {
+  //     links: [
+  //       {
+  //         name: "vk",
+  //         href: "",
+  //         icon: "vk"
+  //       },
+  //       {
+  //         name: "github",
+  //         href: "https://github.com/andrey137137137",
+  //         icon: "github_alt"
+  //       },
+  //       {
+  //         name: "skype",
+  //         href: "skype:andrey27x777@gmail.com",
+  //         icon: "skype"
+  //       }
+  //     ]
+  //   };
+  // },
   computed: {
-    ...mapGetters(["config"]),
+    ...mapGetters(["config", "profile"]),
     id() {
       return this.inHeader && this.config.isContent ? "main_menu" : "";
     },

@@ -62,11 +62,11 @@ if (!isProduction) {
 }
 
 // catch 404 and forward to error handler
-app.use((req, res, next) => {
-  const err = new Error("Not Found");
-  err.status = NOT_FOUND;
-  next(err);
-});
+// app.use((req, res, next) => {
+//   const err = new Error("Not Found");
+//   err.status = NOT_FOUND;
+//   next(err);
+// });
 
 //Error handlers & middlewares
 if (!isProduction) {

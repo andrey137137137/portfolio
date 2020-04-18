@@ -14,7 +14,7 @@ router.get("/", (req, res) => {
       __v: 0,
       username: 0,
       password: 0,
-    }
+    },
   );
 });
 
@@ -29,7 +29,7 @@ router.post("/", isAuth, (req, res, next) => {
       lastName,
       contacts,
     },
-    res
+    res,
   );
 });
 

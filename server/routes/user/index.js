@@ -5,10 +5,21 @@ router.get("/reg", (req, res) => {
   const User = new Model({
     firstName: "Андрей",
     lastName: "Банников",
-    contacts: [],
+    contacts: [
+      {
+        name: "github",
+        href: "https://github.com/andrey137137137",
+        icon: "github_alt",
+      },
+      {
+        name: "skype",
+        href: "skype:andrey27x777@gmail.com",
+        icon: "skype",
+      },
+    ],
     email: "andrey27x777@gmail.com",
     username: "",
-    password: ""
+    password: "",
   });
 
   return User.save().then(() => res.json({ user: User }));

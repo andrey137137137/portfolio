@@ -8,8 +8,8 @@ const defaultData = {
     isTopWrapTitle: false,
     isBlog: false,
     isContent: false,
-    sections: 0
-  }
+    sections: 0,
+  },
 };
 
 export default {
@@ -20,13 +20,14 @@ export default {
       isTopWrapTitle: defaultData.isTopWrapTitle,
       isBlog: defaultData.isBlog,
       isContent: defaultData.isContent,
-      sections: defaultData.sections
+      sections: defaultData.sections,
     },
     userProfile: {
       firstName: "",
       lastName: "",
-      contacts: []
-    }
+      email: "",
+      contacts: [],
+    },
   },
   getters: {
     config(state) {
@@ -34,15 +35,15 @@ export default {
     },
     profile(state) {
       return state.userProfile;
-    }
+    },
   },
   actions: {
     setConfig({ commit }, data) {
       commit(SET_CONFIG, data);
-      axios.get("user/profile").then(res => {
+      axios.get("user/profile").then((res) => {
         commit(SET_PROFILE, res.data.result);
       });
-    }
+    },
   },
   mutations: {
     [SET_CONFIG](state, data) {
@@ -58,6 +59,6 @@ export default {
           state.userProfile[key] = data[key];
         }
       }
-    }
-  }
+    },
+  },
 };

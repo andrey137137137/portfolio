@@ -1,3 +1,4 @@
+const package = require("./package.json");
 const path = require("path");
 
 function resolve(dir) {
@@ -37,12 +38,15 @@ module.exports = {
     // modules: true,
     loaderOptions: {
       sass: {
-        data: `@import "@/common/styles/variables.scss"; @import "@/common/styles/mixins.scss";`
-      }
-    }
+        data: `@import "@/common/styles/variables.scss"; @import "@/common/styles/mixins.scss";`,
+      },
+    },
   },
-  chainWebpack: config => {
-    // config.resolve.alias.set("@assets", resolveSrc("assets"));
+  chainWebpack: (config) => {
+    config.resolve.alias.set(
+      "@config",
+      resolve(package._moduleAliases["@config"])
+    );
     config.resolve.alias.set("@common", resolveSrc("common"));
     config.resolve.alias.set("@frontend", resolveSrc("frontend"));
     config.resolve.alias.set("@backend", resolveSrc("backend"));
@@ -75,5 +79,5 @@ module.exports = {
 
     config.resolve.alias.set("@backCmp", resolveBack("components"));
     config.resolve.alias.set("@backViews", resolveBack("views"));
-  }
+  },
 };

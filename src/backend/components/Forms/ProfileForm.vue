@@ -109,7 +109,7 @@ export default {
           placeholder: "Контакт"
         },
         {
-          name: "value",
+          name: "href",
           type: "text",
           placeholder: "Значение"
         },
@@ -121,7 +121,7 @@ export default {
       ],
       contactTemplate: {
         name: "",
-        value: "",
+        href: "",
         icon: ""
       }
     };
@@ -139,7 +139,7 @@ export default {
           required,
           alphaNum
         },
-        value: {
+        href: {
           required,
           alphaNum
         },

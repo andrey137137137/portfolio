@@ -35,14 +35,8 @@
 
 <script>
 import { validationMixin } from "vuelidate";
-import {
-  required,
-  alphaNum,
-  email,
-  sameAs,
-  minLength,
-  maxLength
-} from "vuelidate/lib/validators";
+import { required, email, sameAs } from "vuelidate/lib/validators";
+import { userAlphaNumValids } from "@common/helpers/validators";
 import formMxn from "@backend/mixins/form";
 import userFormMxn from "@backend/mixins/userForm";
 import UserForm from "@backCmp/Forms/UserForm";
@@ -71,19 +65,11 @@ export default {
         required,
         email
       },
-      username: {
-        required
-      }
-    };
-    const passwordValids = {
-      required,
-      alphaNum,
-      minLength: minLength(6),
-      maxLength: maxLength(16)
+      username: userAlphaNumValids
     };
     const changePasswordValids = {
-      oldPassword: passwordValids,
-      password: passwordValids,
+      oldPassword: userAlphaNumValids,
+      password: userAlphaNumValids,
       repPassword: {
         sameAsPassword: sameAs("password")
       }
@@ -107,6 +93,15 @@ export default {
         password,
         repPassword
       };
+    }
+  },
+  watch: {
+    changePassword(newValue) {
+      if (!newValue) {
+        this.oldPassword = "";
+        this.password = "";
+        this.repPassword = "";
+      }
     }
   }
 };

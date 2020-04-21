@@ -45,22 +45,15 @@
               .form-error(v-show="!$v.notRobot.required") form-error
 
     .menu.header-menu.header-menu--float.form-menu.login_form-menu
-      //- li.menu-item.menu-item--for_main
       a#flip_2_front.menu-link.btn(href="#") На главную
-      //- li.menu-item.menu-item--for_main
       input.menu-link.btn(type="submit", value="Войти")
 </template>
 
 <script>
 import { validationMixin } from "vuelidate";
-import {
-  required,
-  alphaNum,
-  minLength,
-  maxLength
-} from "vuelidate/lib/validators";
+// import { required } from "vuelidate/lib/validators";
 import axios from "axios";
-// import { checked } from "@common/helpers/validators";
+import { userAlphaNumValids, checked } from "@common/helpers/validators";
 import addClasses from "@common/mixins/addClasses";
 import FormWrapper from "@components/FormElems/FormWrapper";
 import InputEventElem from "@components/FormElems/InputEventElem";
@@ -86,19 +79,10 @@ export default {
     };
   },
   validations: {
-    username: {
-      required,
-      alphaNum,
-      minLength: minLength(7)
-    },
-    password: {
-      required,
-      alphaNum,
-      minLength: minLength(6),
-      maxLength: maxLength(16)
-    },
+    username: userAlphaNumValids,
+    password: userAlphaNumValids,
     isHuman: {
-      // checked
+      checked
     },
     notRobot: {
       // required

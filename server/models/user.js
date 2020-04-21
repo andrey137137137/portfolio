@@ -6,43 +6,43 @@ const { SALT } = require("@config").db;
 const { Schema } = mongoose;
 
 const ContactSchema = new Schema({
-  icon: {
-    type: String
-  },
   name: {
-    type: String
+    type: String,
   },
-  value: {
-    type: String
-  }
+  href: {
+    type: String,
+  },
+  icon: {
+    type: String,
+  },
 });
 
 const UserSchema = new Schema({
   firstName: {
     type: String,
-    required: [true, "Укажите описание картинки"]
+    required: [true, "Укажите описание картинки"],
   },
   lastName: {
     type: String,
-    required: [true, "Укажите описание картинки"]
+    required: [true, "Укажите описание картинки"],
   },
   contacts: {
     type: Array,
-    children: [ContactSchema]
+    children: [ContactSchema],
   },
   email: {
     type: String,
     unique: true,
-    required: [true, "Укажите описание картинки"]
+    required: [true, "Укажите описание картинки"],
   },
   username: {
     type: String,
     unique: true,
-    required: [true, "Укажите описание картинки"]
+    required: [true, "Укажите описание картинки"],
   },
   password: {
-    type: String
-  }
+    type: String,
+  },
 });
 
 UserSchema.pre("save", function(next) {

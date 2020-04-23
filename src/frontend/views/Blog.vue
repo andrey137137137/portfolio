@@ -49,7 +49,7 @@ export default {
         $elem: null,
         $items: null
       },
-      positionPost: [],
+      postPositions: [],
       offsetHeight: 0, // верхнее смещение для скролла
       flagAnimation: true
     };
@@ -58,81 +58,79 @@ export default {
     getTabLink(name) {
       return `#${name}`;
     },
-    setPositionPost(elems) {
-      elems.each(function(item) {
-        // $(this) = статья
-        this.positionPost[item] = {};
-        this.positionPost[item].top = $(this).offset().top - this.offsetHeight;
-        this.positionPost[item].bottom =
-          this.positionPost[item].top + $(this).innerHeight();
-
-        console.log(this.positionPost); // positionPost массив объектов с верхним и нижним отступом
+    setPostPositions() {
+      const $vm = this;
+      $vm.$posts.each(function(item) {
+        $vm.postPositions[item] = {};
+        $vm.postPositions[item].top = $(this).offset().top - this.offsetHeight;
+        $vm.postPositions[item].bottom =
+          $vm.postPositions[item].top + $(this).innerHeight();
       });
     },
     scrollPageFixMenu(e) {
-      let scroll = window.pageYOffset;
-      if (scroll < this.$posts.offset().top) {
+      if (window.pageYOffset < this.$posts.offset().top) {
         this.menu.$elem.removeClass(this.menu.modifs.fixed);
       } else {
         this.menu.$elem.addClass(this.menu.modifs.fixed);
       }
-
-      // проверка на отступ сверху, если больше чем нужно ставим добавляем класс fixed
     },
     isFirstVision(elem, current) {
-      let scroll = window.pageYOffset;
       return (
-        scroll >= elem.top &&
-        scroll < elem.bottom &&
+        window.pageYOffset >= elem.top &&
+        window.pageYOffset < elem.bottom &&
         !current.hasClass(this.menu.modifs.itemActive)
       );
     },
     scrollPage(e) {
-      this.positionPost.forEach((elem, index) => {
-        let $currentelem = this.menu.$items.eq(index);
-        if (isFirstVision(elem, $currentelem)) {
+      const $vm = this;
+
+      $vm.postPositions.forEach((elem, index) => {
+        const $currentelem = $vm.menu.$items.eq(index);
+
+        if ($vm.isFirstVision(elem, $currentelem)) {
           $currentelem
-            .addClass(this.menu.modifs.itemActive)
+            .addClass($vm.menu.modifs.itemActive)
             .siblings()
-            .removeClass(this.menu.modifs.itemActive);
+            .removeClass($vm.menu.modifs.itemActive);
         }
       });
     },
     clickMenu(e) {
-      if (this.flagAnimation) {
-        this.flagAnimation = false;
-
-        let $elem = $(e.target);
-        let index = $elem.index();
-        let sectionOffset = Math.ceil(this.positionPost[index].top);
-
-        $(document).off("scroll", scrollPage);
-        $elem.siblings().removeClass(this.menu.modifs.itemActive);
-
-        $("body, html").animate({ scrollTop: sectionOffset }, 1000, () => {
-          $elem.addClass(this.menu.modifs.itemActive);
-          $(document).on("scroll", scrollPage);
-          this.flagAnimation = true;
-        });
+      if (!this.flagAnimation) {
+        return false;
       }
+
+      const $vm = this;
+      const $elem = $(e.target);
+      const index = $elem.index();
+      const sectionOffset = Math.ceil($vm.postPositions[index].top);
+
+      $vm.flagAnimation = false;
+
+      $(document).off("scroll", $vm.scrollPage);
+      $elem.siblings().removeClass($vm.menu.modifs.itemActive);
+
+      $("body, html").animate({ scrollTop: sectionOffset }, 1000, () => {
+        $elem.addClass($vm.menu.modifs.itemActive);
+        $(document).on("scroll", $vm.scrollPage);
+        $vm.flagAnimation = true;
+      });
     }
   },
-  created() {
+  updated() {
     const $vm = this;
 
     $vm.$posts = $(".blog-post");
     $vm.menu.$elem = $("#scroll_menu");
     $vm.menu.$items = $(".tabs-link");
 
-    $(window).one("load", function(e) {
-      $vm.setPositionPost($posts);
-      $vm.menu.$elem.on("click", $vm.clickMenu);
-      $(document).on("scroll", $vm.scrollPage);
-      $(document).on("scroll", $vm.scrollPageFixMenu);
-    });
+    $vm.setPostPositions();
+    $vm.menu.$elem.on("click", $vm.clickMenu);
+    $(document).on("scroll", $vm.scrollPage);
+    $(document).on("scroll", $vm.scrollPageFixMenu);
 
-    $(window).on("resize", function(e) {
-      $vm.setPositionPost($posts);
+    $(window).on("resize", e => {
+      $vm.setPostPositions();
     });
   }
 };

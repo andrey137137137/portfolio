@@ -10,12 +10,12 @@ import frontView from "@common/store/modules/frontView";
 import comments from "@common/store/modules/comments";
 
 export default new Vuex.Store({
-  strict: true,
+  strict: process.env.NODE_ENV !== "production",
   state: {
     data: {
       page: "",
-      result: []
-    }
+      result: [],
+    },
   },
   getters: {
     dbPage(state) {
@@ -23,14 +23,14 @@ export default new Vuex.Store({
     },
     dbData(state) {
       return state.data.result;
-    }
+    },
   },
   actions: {
     setPage({ commit }, page) {
       commit(SET_PAGE, page);
     },
     readData({ state, commit }) {
-      axios.get(state.data.page).then(res => {
+      axios.get(state.data.page).then((res) => {
         commit(SET, res.data.result);
       });
     },
@@ -57,7 +57,7 @@ export default new Vuex.Store({
       axios.delete(`${state.data.page}/${id}`).then(() => {
         dispatch("readData", state.data.page);
       });
-    }
+    },
   },
   mutations: {
     [SET_PAGE](state, page) {
@@ -70,12 +70,12 @@ export default new Vuex.Store({
       state.data.result.push(newItem);
     },
     [DELETE](state, id) {
-      state.data.result = state.data.result.filter(item => item.id !== id);
-    }
+      state.data.result = state.data.result.filter((item) => item.id !== id);
+    },
   },
   modules: {
     auth,
     frontView,
-    comments
-  }
+    comments,
+  },
 });

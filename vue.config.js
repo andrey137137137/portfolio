@@ -32,7 +32,7 @@ module.exports = {
   //       { from: /^\/index/, to: "/index.html" },
   //       { from: /^\/admin\//, to: "/admin.html" }
   //     ]
-  //   }
+  //   },
   // },
   css: {
     // modules: true,
@@ -43,6 +43,14 @@ module.exports = {
     },
   },
   chainWebpack: (config) => {
+    config.plugins.delete("progress");
+    config
+      .plugin("simple-progress-webpack-plugin")
+      .use(require.resolve("simple-progress-webpack-plugin"), [
+        {
+          format: "minimal",
+        },
+      ]);
     config.resolve.alias.set(
       "@config",
       resolve(package._moduleAliases["@config"])

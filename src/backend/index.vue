@@ -35,5 +35,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import "@backStyles/common.scss";
+@import "@backStyles/common";
 </style>

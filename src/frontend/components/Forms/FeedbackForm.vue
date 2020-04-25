@@ -1,5 +1,5 @@
 <template lang="pug">
-  FormWrapper#feedback.section.container.container--full_width.feedback_form(
+  FrontFormWrapper#feedback.section.container.container--full_width.feedback_form(
     @submit.prevent.native="handleSubmit")
 
     h2.section-title.section-title--uppercase.section-title--underlined.feedback_form-title Связаться со мной
@@ -51,13 +51,13 @@ import {
   minLength,
   maxLength
 } from "vuelidate/lib/validators";
-import FormWrapper from "@components/FormElems/FormWrapper";
+import FrontFormWrapper from "@frontCmp/FrontFormWrapper";
 import InputEventElem from "@components/FormElems/InputEventElem";
 
 export default {
   name: "FeedbackForm",
   components: {
-    FormWrapper,
+    FrontFormWrapper,
     InputEventElem
   },
   mixins: [validationMixin],

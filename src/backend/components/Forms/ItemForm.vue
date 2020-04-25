@@ -1,5 +1,5 @@
 <template lang="pug">
-  FormWrapper(@submit.prevent.native="handleSubmit")
+  AdminFormWrapper(@submit.prevent.native="handleSubmit")
     slot
 
     .form-row.form-row--buttons
@@ -16,13 +16,13 @@
 </template>
 
 <script>
-import FormWrapper from "@components/FormElems/FormWrapper";
+import AdminFormWrapper from "@backCmp/AdminFormWrapper";
 import ButtonElem from "@components/FormElems/ButtonElem";
 
 export default {
   name: "ItemForm",
   components: {
-    FormWrapper,
+    AdminFormWrapper,
     ButtonElem
   },
   props: {

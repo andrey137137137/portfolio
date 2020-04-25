@@ -62,19 +62,6 @@ module.exports = {
     config.resolve.alias.set("@styles", resolveCommon("styles"));
     config.resolve.alias.set("@components", resolveCommon("components"));
 
-    config.resolve.alias.set("@frontStyles", resolveFront("styles"));
-    config.resolve.alias.set(
-      "@frontStylesCmp",
-      resolveFront(path.join("styles", "cmp"))
-    );
-    config.resolve.alias.set(
-      "@frontStylesPgs",
-      resolveFront(path.join("styles", "pages"))
-    );
-
-    config.resolve.alias.set("@frontCmp", resolveFront("components"));
-    config.resolve.alias.set("@frontViews", resolveFront("views"));
-
     config.resolve.alias.set("@backStyles", resolveBack("styles"));
     config.resolve.alias.set(
       "@backStylesCmp",
@@ -84,8 +71,19 @@ module.exports = {
       "@backStylesPgs",
       resolveBack(path.join("styles", "pages"))
     );
-
     config.resolve.alias.set("@backCmp", resolveBack("components"));
     config.resolve.alias.set("@backViews", resolveBack("views"));
+
+    config.resolve.alias.set("@frontStyles", resolveFront("styles"));
+    config.resolve.alias.set(
+      "@frontStylesCmp",
+      resolveFront(path.join("styles", "cmp"))
+    );
+    config.resolve.alias.set(
+      "@frontStylesPgs",
+      resolveFront(path.join("styles", "pages"))
+    );
+    config.resolve.alias.set("@frontCmp", resolveFront("components"));
+    config.resolve.alias.set("@frontViews", resolveFront("views"));
   },
 };

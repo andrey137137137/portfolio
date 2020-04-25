@@ -21,33 +21,61 @@ body {
 }
 
 .form {
-  &-wrap,
-  &-input {
-    @include padding("* 20px");
-  }
+  $block: &;
 
-  &-wrap {
-    &:after {
-      display: block;
-      size: 100% 0;
-      clear: both;
-      content: "";
+  &#{$block}--front {
+    #{$block}-wrap,
+    #{$block}-input {
+      @include padding("* 20px");
     }
-  }
 
-  &-error {
-    border-radius: 5px;
-    font-weight: 500;
-    color: $white $red;
-
-    &--required {
-      background-color: $orange;
+    #{$block}-wrap {
+      &:after {
+        display: block;
+        size: 100% 0;
+        clear: both;
+        content: "";
+      }
     }
-  }
 
-  &-legend {
-    margin-bottom: 7px;
-    font-weight: bold;
-    text-align: center;
+    // #{$block}-error_wrap--tip
+    #{$block}-error_wrap {
+      position: relative;
+      overflow: visible;
+
+      &:before {
+        display: block;
+        @include position("absolute 0 * * 50%");
+        z-index: 1;
+        @include border(
+          "* 3px 5px 3px / * solid solid solid / * transparent #{$red} transparent"
+        );
+        transform: translateX(-50%);
+        content: "";
+      }
+    }
+
+    #{$block}-error {
+      border-radius: 5px;
+      font-weight: 500;
+      color: $white $red;
+
+      // &--tip {
+      @include position("absolute 5px * * 50%");
+      z-index: 1;
+      transform: translateX(-50%);
+      min-height: 50px;
+      // }
+
+      &--required {
+        background-color: $orange;
+      }
+    }
+
+    #{$block}-legend {
+      margin-bottom: 7px;
+      font-weight: bold;
+      text-align: center;
+    }
   }
 }

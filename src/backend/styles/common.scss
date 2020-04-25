@@ -13,26 +13,30 @@ body {
 }
 
 .form {
-  &-input,
-  &-btn {
-    border-radius: 5px;
-    @include padding("* 17px");
-  }
+  $block: &;
 
-  &-legend {
-    line-height: 34px;
-  }
+  &#{$block}--admin {
+    #{$block}-input,
+    #{$block}-btn {
+      border-radius: 5px;
+      @include padding("* 17px");
+    }
 
-  &-checked {
-    color: $white;
-  }
+    #{$block}-legend {
+      line-height: 34px;
+    }
 
-  &-error {
-    @include padding("* 10px");
-    color: $red;
+    #{$block}-checked {
+      color: $white;
+    }
 
-    &--required {
-      color: $orange;
+    #{$block}-error {
+      @include padding("* 10px");
+      color: $red;
+
+      &--required {
+        color: $orange;
+      }
     }
   }
 }

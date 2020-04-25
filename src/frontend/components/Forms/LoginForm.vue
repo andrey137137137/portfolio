@@ -1,7 +1,6 @@
 <template lang="pug">
-  FormWrapper#login_form.login_form(
+  FrontFormWrapper#login_form.login_form(
     action="/admin"
-    :class="addClasses"
     @submit.prevent.native="handleSubmit")
 
     .login_form-top_wrap
@@ -54,8 +53,7 @@ import { validationMixin } from "vuelidate";
 // import { required } from "vuelidate/lib/validators";
 import axios from "axios";
 import { userAlphaNumValids, checked } from "@common/helpers/validators";
-import addClasses from "@common/mixins/addClasses";
-import FormWrapper from "@components/FormElems/FormWrapper";
+import FrontFormWrapper from "@frontCmp/FrontFormWrapper";
 import InputEventElem from "@components/FormElems/InputEventElem";
 import ChangeEventElem from "@components/FormElems/ChangeEventElem";
 
@@ -65,11 +63,11 @@ const { mapActions } = createNamespacedHelpers("auth");
 export default {
   name: "LoginForm",
   components: {
-    FormWrapper,
+    FrontFormWrapper,
     InputEventElem,
     ChangeEventElem
   },
-  mixins: [validationMixin, addClasses],
+  mixins: [validationMixin],
   data() {
     return {
       username: "",
@@ -109,4 +107,6 @@ export default {
 };
 </script>
 
-<style lang="scss" src="@frontStylesCmp/LoginForm/import.scss"></style>
+<style lang="scss">
+@import "@frontStylesCmp/LoginForm/import.scss";
+</style>

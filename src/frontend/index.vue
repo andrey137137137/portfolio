@@ -6,7 +6,7 @@
         .header-flip_wrap
           HeaderContent
           NavCmp
-        LoginForm(:addClasses="formClasses")
+        LoginForm.header-flip_wrap.header-flip_wrap--back
 </template>
 
 <script>
@@ -18,9 +18,6 @@ import HeaderContent from "@frontCmp/Header/HeaderContent";
 import NavCmp from "@frontCmp/NavCmp";
 import LoginForm from "@frontCmp/Forms/LoginForm";
 import FooterWrapper from "@frontCmp/FooterWrapper";
-
-// import { createNamespacedHelpers } from "vuex";
-// const { mapActions } = createNamespacedHelpers("frontView");
 
 export default {
   name: "Home",
@@ -37,21 +34,9 @@ export default {
       $flipBtn: null,
       $container: null,
       // btnHiddenClass: "authorization-hidden",
-      flippedClass: "header-container--flipped",
-      formClasses: {
-        "header-flip_wrap": true,
-        "header-flip_wrap--back": true
-      }
+      flippedClass: "header-container--flipped"
     };
   },
-  // methods: {
-  //   ...mapActions(["setConfig"])
-  // },
-  // created() {
-  //   this.setConfig({
-  //     name: "Главная"
-  //   });
-  // },
   mounted() {
     const $vm = this;
 
@@ -77,4 +62,6 @@ export default {
 };
 </script>
 
-<style lang="scss" src="@frontStylesPgs/Home/import.scss"></style>
+<style lang="scss">
+@import "@frontStylesPgs/Home/import";
+</style>

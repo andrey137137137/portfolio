@@ -1,13 +1,10 @@
 <template lang="pug">
-  form.form(:class="addClasses")
+  form.form
     slot
 </template>
 
 <script>
-import addClasses from "@/common/mixins/addClasses";
-
 export default {
-  name: "FormWrapper",
-  mixins: [addClasses]
+  name: "FormWrapper"
 };
 </script>

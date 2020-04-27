@@ -42,6 +42,10 @@ body {
     #{$block}-error_wrap {
       position: relative;
       overflow: visible;
+    }
+
+    #{$block}-error_tip_wrap {
+      position: relative;
 
       &:before {
         display: block;

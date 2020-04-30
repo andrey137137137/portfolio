@@ -4,13 +4,14 @@ import axios from "axios";
 
 Vue.use(Vuex);
 
+import isDev from "@common/helpers/isDev";
 import { SET, SET_PAGE, ADD, DELETE } from "@common/store/mutation-types";
 import auth from "@common/store/modules/auth";
 import frontView from "@common/store/modules/frontView";
 import comments from "@common/store/modules/comments";
 
 export default new Vuex.Store({
-  strict: process.env.NODE_ENV !== "production",
+  strict: isDev(),
   state: {
     data: {
       page: "",

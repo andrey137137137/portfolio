@@ -53,7 +53,11 @@ module.exports = {
       ]);
     config.resolve.alias.set(
       "@config",
-      resolve(package._moduleAliases["@config"])
+      resolve(package._moduleAliases["@config"]),
+    );
+    config.resolve.alias.set(
+      "@httpSt",
+      resolve(package._moduleAliases["@httpSt"]),
     );
     config.resolve.alias.set("@common", resolveSrc("common"));
     config.resolve.alias.set("@frontend", resolveSrc("frontend"));
@@ -65,11 +69,11 @@ module.exports = {
     config.resolve.alias.set("@backStyles", resolveBack("styles"));
     config.resolve.alias.set(
       "@backStylesCmp",
-      resolveBack(path.join("styles", "cmp"))
+      resolveBack(path.join("styles", "cmp")),
     );
     config.resolve.alias.set(
       "@backStylesPgs",
-      resolveBack(path.join("styles", "pages"))
+      resolveBack(path.join("styles", "pages")),
     );
     config.resolve.alias.set("@backCmp", resolveBack("components"));
     config.resolve.alias.set("@backViews", resolveBack("views"));
@@ -77,11 +81,11 @@ module.exports = {
     config.resolve.alias.set("@frontStyles", resolveFront("styles"));
     config.resolve.alias.set(
       "@frontStylesCmp",
-      resolveFront(path.join("styles", "cmp"))
+      resolveFront(path.join("styles", "cmp")),
     );
     config.resolve.alias.set(
       "@frontStylesPgs",
-      resolveFront(path.join("styles", "pages"))
+      resolveFront(path.join("styles", "pages")),
     );
     config.resolve.alias.set("@frontCmp", resolveFront("components"));
     config.resolve.alias.set("@frontViews", resolveFront("views"));

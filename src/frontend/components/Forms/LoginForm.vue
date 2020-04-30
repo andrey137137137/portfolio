@@ -52,7 +52,9 @@
 import { validationMixin } from "vuelidate";
 // import { required } from "vuelidate/lib/validators";
 import axios from "axios";
+import { SUCCESS, FORBIDDEN, NOT_FOUND, ERROR } from "@httpSt";
 import { userAlphaNumValids, checked } from "@common/helpers/validators";
+import form from "@frontend/mixins/form";
 import FrontFormWrapper from "@frontCmp/FrontFormWrapper";
 import InputEventElem from "@components/FormElems/InputEventElem";
 import ChangeEventElem from "@components/FormElems/ChangeEventElem";
@@ -67,7 +69,7 @@ export default {
     InputEventElem,
     ChangeEventElem
   },
-  mixins: [validationMixin],
+  mixins: [validationMixin, form],
   data() {
     return {
       username: "",
@@ -89,19 +91,25 @@ export default {
   methods: {
     ...mapActions(["setAuthStatus"]),
     handleSubmit() {
-      if (this.$v.$invalid) return false;
+      if (!this.touchInvalidElem()) return false;
 
       const $vm = this;
       const { username, password } = this;
 
-      axios.post("user/auth", { username, password }).then(res => {
-        if (res.data.success) {
-          $vm.setAuthStatus(res.data.success);
-          return $vm.$router.push("/admin");
-        }
+      axios
+        .post("user/auth", { username, password })
+        .then(res => {
+          if (res.data.success) {
+            $vm.setAuthStatus(res.data.success);
+            return $vm.$router.push("/admin");
+          }
 
-        return false;
-      });
+          return false;
+        })
+        .catch(err => {
+          const { data, status } = err.response;
+          console.log(data);
+        });
     }
   }
 };

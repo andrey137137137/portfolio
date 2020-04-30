@@ -5,6 +5,7 @@ import axios from "axios";
 
 import myConfig from "@config";
 
+import isDev from "@common/helpers/isDev";
 import store from "@common/store";
 import App from "@/App.vue";
 import router from "@/router";
@@ -21,16 +22,15 @@ axios.interceptors.request.use(
     return config;
   },
   (err) => {
-    console.log(err.response.status);
+    if (isDev()) console.log(err.response.status);
     return Promise.reject();
-  }
+  },
 );
 
 // Vue.use(VueRx);
 // Vue.use(VuejsClipper);
-// Vue.use(Vuelidate);
 
-// Vue.config.productionTip = false;
+// Vue.config.productionTip = !isDev();
 
 new Vue({
   el: "#app",

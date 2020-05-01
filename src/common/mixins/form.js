@@ -1,9 +1,15 @@
+import { FORBIDDEN } from "@httpSt";
 import types from "@common/constants/validation/types.js";
 
 export default {
   // validations() {
   //   return this.fields;
   // },
+  data() {
+    return {
+      error: "",
+    };
+  },
   methods: {
     getValue(value, type) {
       if (typeof value !== "undefined") {
@@ -19,6 +25,13 @@ export default {
           return "";
       }
     },
+    setError(status, message) {
+      if (status === FORBIDDEN) {
+        this.error = message;
+      } else {
+        this.error = "Невозможно подключиться к серверу";
+      }
+    },
     touchInvalidElem() {
       if (!this.$v.$invalid) return true;
 
@@ -28,11 +41,19 @@ export default {
           key.slice(0, 1) !== "$" &&
           this.$v[key].$invalid
         ) {
-          console.log(key);
           this.$v[key].$touch();
           return false;
         }
       }
+    },
+  },
+  watch: {
+    $v(val) {
+      console.log(val);
+
+      if (!this.error) return;
+
+      this.error = "";
     },
   },
 };

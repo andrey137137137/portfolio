@@ -48,4 +48,6 @@ export default {
 };
 </script>
 
-<style lang="scss" src="@frontStylesPgs/Works/import.scss"></style>
+<style lang="scss">
+@import "@frontStylesPgs/Works/import.scss";
+</style>

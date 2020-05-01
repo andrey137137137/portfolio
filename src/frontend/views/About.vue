@@ -71,4 +71,6 @@ export default {
 };
 </script>
 
-<style lang="scss" src="@frontStylesPgs/About/import.scss"></style>
+<style lang="scss">
+@import "@frontStylesPgs/About/import";
+</style>

@@ -32,12 +32,10 @@ export default {
 </script>
 
 <style lang="scss">
-// @import "@frontStyles/common.scss";
+@import "@frontStyles/common.scss";
 // @import "@frontStylesCmp/Preloader/import.scss";
 // @import "@frontStylesCmp/Parallax/import.scss";
 // @import "@frontStylesCmp/Header/import.scss";
 // @import "@frontStylesCmp/SocialMenu/import.scss";
 // @import "@frontStylesCmp/Footer/import.scss";
 </style>
-
-<style lang="scss" src="@frontStyles/common.scss"></style>

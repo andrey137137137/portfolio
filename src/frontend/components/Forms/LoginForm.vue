@@ -7,6 +7,7 @@
       h2.section-title.section-title--uppercase.login_form-title Авторизуйтесь
 
       InputEventElem(
+        @click="console.log('ljfslkdsjfl')"
         wrapClass="icon_label"
         label="Пользователь"
         v-model="username"
@@ -41,7 +42,7 @@
             .form-checkbox_text Не уверен
           .form-error_wrap
             transition(name="fade")
-              .form-error(v-show="!$v.notRobot.required") form-error
+              .form-error(v-if="error") {{error}}
 
     .menu.header-menu.header-menu--float.form-menu.login_form-menu
       a#flip_2_front.menu-link.btn(href="#") На главную
@@ -52,9 +53,8 @@
 import { validationMixin } from "vuelidate";
 // import { required } from "vuelidate/lib/validators";
 import axios from "axios";
-import { SUCCESS, FORBIDDEN, NOT_FOUND, ERROR } from "@httpSt";
 import { userAlphaNumValids, checked } from "@common/helpers/validators";
-import form from "@frontend/mixins/form";
+import form from "@common/mixins/form";
 import FrontFormWrapper from "@frontCmp/FrontFormWrapper";
 import InputEventElem from "@components/FormElems/InputEventElem";
 import ChangeEventElem from "@components/FormElems/ChangeEventElem";
@@ -108,7 +108,7 @@ export default {
         })
         .catch(err => {
           const { data, status } = err.response;
-          console.log(data);
+          this.setError(status, data.message);
         });
     }
   }

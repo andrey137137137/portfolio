@@ -7,7 +7,6 @@
       h2.section-title.section-title--uppercase.login_form-title Авторизуйтесь
 
       InputEventElem(
-        @click="console.log('ljfslkdsjfl')"
         wrapClass="icon_label"
         label="Пользователь"
         v-model="username"
@@ -40,9 +39,7 @@
             input.form-input(type="radio" value="no" v-model="$v.notRobot.$model")
             .form-checked
             .form-checkbox_text Не уверен
-          .form-error_wrap
-            transition(name="fade")
-              .form-error(v-if="error") {{error}}
+          ErrorElem(:message="message")
 
     .menu.header-menu.header-menu--float.form-menu.login_form-menu
       a#flip_2_front.menu-link.btn(href="#") На главную
@@ -56,16 +53,20 @@ import axios from "axios";
 import { userAlphaNumValids, checked } from "@common/helpers/validators";
 import form from "@common/mixins/form";
 import FrontFormWrapper from "@frontCmp/FrontFormWrapper";
+import ErrorElem from "@components/FormElems/ErrorElem";
 import InputEventElem from "@components/FormElems/InputEventElem";
 import ChangeEventElem from "@components/FormElems/ChangeEventElem";
 
 import { createNamespacedHelpers } from "vuex";
-const { mapActions } = createNamespacedHelpers("auth");
+const mapFormMessageActions = createNamespacedHelpers("formMessage").mapActions;
+const { mapGetters } = createNamespacedHelpers("formMessage");
+const mapAuthActions = createNamespacedHelpers("auth").mapActions;
 
 export default {
   name: "LoginForm",
   components: {
     FrontFormWrapper,
+    ErrorElem,
     InputEventElem,
     ChangeEventElem
   },
@@ -88,8 +89,12 @@ export default {
       // required
     }
   },
+  computed: {
+    ...mapGetters(["message"])
+  },
   methods: {
-    ...mapActions(["setAuthStatus"]),
+    ...mapFormMessageActions(["setFormMessage"]),
+    ...mapAuthActions(["setAuthStatus"]),
     handleSubmit() {
       if (!this.touchInvalidElem()) return false;
 
@@ -108,7 +113,7 @@ export default {
         })
         .catch(err => {
           const { data, status } = err.response;
-          this.setError(status, data.message);
+          this.setFormMessage({ status, message: data.message });
         });
     }
   }

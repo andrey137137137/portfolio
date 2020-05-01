@@ -1,4 +1,4 @@
-// import types from "@/common/constants/validation/types";
+// import types from "@common/constants/validation/types";
 import formElem from "@common/mixins/formElem";
 
 export default {

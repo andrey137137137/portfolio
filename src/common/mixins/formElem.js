@@ -3,6 +3,9 @@ import exist from "@common/helpers/exist";
 import addClasses from "@common/mixins/addClasses";
 import ErrorElem from "@components/FormElems/ErrorElem";
 
+import { createNamespacedHelpers } from "vuex";
+const { mapGetters, mapActions } = createNamespacedHelpers("formMessage");
+
 export default {
   mixins: [addClasses],
   render(h) {
@@ -24,7 +27,7 @@ export default {
     let elems = [
       ...this.elemsBeforeInput(h),
       this.inputElem(h),
-      ...this.elemsAfterInput(h)
+      ...this.elemsAfterInput(h),
     ];
 
     if (this.isWrapper()) {
@@ -37,41 +40,41 @@ export default {
         class: {
           "form-wrap": true,
           [`form-wrap--${wrapClass}`]: true,
-          ...this.addClasses
-        }
+          ...this.addClasses,
+        },
       },
-      this.isRequiredInput ? [...elems, this.errorElem()] : [...elems]
+      this.isRequiredInput ? [...elems, this.errorElem()] : elems
     );
   },
   props: {
     wrapClass: {
       type: String,
-      default: ""
+      default: "",
     },
     addInputClasses: {
       type: Object,
       default() {
         return {};
-      }
+      },
     },
     val: {
       type: Object,
       default() {
         return {};
-      }
+      },
     },
     value: {
       // type: String,
-      default: ""
+      default: "",
     },
     type: {
       type: String,
-      default: "text"
+      default: "text",
     },
     label: {
       type: String,
-      default: ""
-    }
+      default: "",
+    },
   },
   data() {
     return {
@@ -81,31 +84,13 @@ export default {
         modifs: {
           required: "required",
           error: "error",
-          valid: "valid"
-        }
-      }
+          valid: "valid",
+        },
+      },
     };
   },
   computed: {
-    // state: {
-    //   get() {
-    //     return this.value;
-    //   },
-    //   set(value) {
-    //     let eventType;
-
-    //     switch (this.type) {
-    //       case "checkbox":
-    //         eventType = "change";
-    //         break;
-    //       default:
-    //         eventType = "input";
-    //     }
-
-    //     this.val.$touch();
-    //     this.$emit(eventType, value);
-    //   }
-    // },
+    ...mapGetters(["message"]),
     isRequiredInput() {
       switch (this.type) {
         case types.native.checkbox:
@@ -135,11 +120,12 @@ export default {
 
       return {
         [baseClass + this.classes.modifs.error]: this.val.$error,
-        [baseClass + this.classes.modifs.valid]: !this.val.$invalid
+        [baseClass + this.classes.modifs.valid]: !this.val.$invalid,
       };
-    }
+    },
   },
   methods: {
+    ...mapActions(["setFormMessage"]),
     elemsBeforeInput() {
       return [];
     },
@@ -152,6 +138,8 @@ export default {
     handle(e) {
       let event;
       let value;
+
+      if (this.message) this.setFormMessage({ status: 0, message: "" });
 
       switch (this.type) {
         case "checkbox":
@@ -173,14 +161,14 @@ export default {
     },
     inputElem(h) {
       const on = {
-        input: this.handle
+        input: this.handle,
       };
       const attrs = {
-        placeholder: this.placeholder
+        placeholder: this.placeholder,
       };
       let classes = {
         "form-input": true,
-        ...this.addInputClasses
+        ...this.addInputClasses,
       };
       let formElem = "";
 
@@ -194,7 +182,7 @@ export default {
       if (this.isRequiredInput) {
         classes = {
           ...classes,
-          ...this.validationClasses
+          ...this.validationClasses,
         };
         on.blur = this.val.$touch;
       }
@@ -203,10 +191,10 @@ export default {
         class: classes,
         attrs,
         domProps: {
-          value: this.value
+          value: this.value,
         },
-        on
+        on,
       });
-    }
-  }
+    },
+  },
 };

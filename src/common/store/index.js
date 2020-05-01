@@ -6,6 +6,7 @@ Vue.use(Vuex);
 
 import isDev from "@common/helpers/isDev";
 import { SET, SET_PAGE, ADD, DELETE } from "@common/store/mutation-types";
+import formMessage from "@common/store/modules/formMessage";
 import auth from "@common/store/modules/auth";
 import frontView from "@common/store/modules/frontView";
 import comments from "@common/store/modules/comments";
@@ -75,6 +76,7 @@ export default new Vuex.Store({
     },
   },
   modules: {
+    formMessage,
     auth,
     frontView,
     comments,

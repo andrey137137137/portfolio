@@ -4,7 +4,12 @@
 </template>
 
 <script>
+import ErrorElem from "@components/FormElems/ErrorElem";
+
 export default {
-  name: "FormWrapper"
+  name: "FormWrapper",
+  components: {
+    ErrorElem
+  }
 };
 </script>

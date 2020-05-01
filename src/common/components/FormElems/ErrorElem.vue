@@ -1,7 +1,7 @@
 <template lang="pug">
   .form-error_wrap
     transition(name="fade")
-      .form-error_tip_wrap(v-if="type")
+      .form-error_tip_wrap(v-if="error")
         .form-error {{error}}
 </template>
 
@@ -14,15 +14,18 @@ export default {
   props: {
     type: {
       type: String,
-      // default: ""
-      required: true
+      default: ""
+      // required: true
+    },
+    message: {
+      type: String,
+      default: ""
     }
   },
   computed: {
     error() {
-      if (!this.type) {
-        return "";
-      }
+      if (this.message) return this.message;
+      if (!this.type) return "";
 
       return exist(this.type, errors) ? errors[this.type] : errors.other;
     },

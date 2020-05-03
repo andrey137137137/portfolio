@@ -18,8 +18,8 @@ router.get("/reg", (req, res) => {
       },
     ],
     email: "andrey27x777@gmail.com",
-    username: "andrey21",
-    password: "stroyka5",
+    username: "",
+    password: "",
   });
 
   return User.save().then(() => res.json({ user: User }));

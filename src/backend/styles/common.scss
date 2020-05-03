@@ -31,7 +31,7 @@ body {
     }
 
     #{$block}-error {
-      @include padding("* 10px");
+      // @include padding("* 10px");
       color: $red;
 
       &--required {

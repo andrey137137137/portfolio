@@ -58,8 +58,8 @@ import InputEventElem from "@components/FormElems/InputEventElem";
 import ChangeEventElem from "@components/FormElems/ChangeEventElem";
 
 import { createNamespacedHelpers } from "vuex";
-const mapFormMessageActions = createNamespacedHelpers("formMessage").mapActions;
 const { mapGetters } = createNamespacedHelpers("formMessage");
+const mapFormMessageActions = createNamespacedHelpers("formMessage").mapActions;
 const mapAuthActions = createNamespacedHelpers("auth").mapActions;
 
 export default {

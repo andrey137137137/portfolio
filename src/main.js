@@ -1,6 +1,4 @@
 import Vue from "vue";
-// import VueRx from "vue-rx";
-// import VuejsClipper from "vuejs-clipper";
 import axios from "axios";
 
 import myConfig from "@config";
@@ -24,13 +22,10 @@ axios.interceptors.request.use(
   (err) => {
     if (isDev()) console.log(err.response.status);
     return Promise.reject();
-  },
+  }
 );
 
-// Vue.use(VueRx);
-// Vue.use(VuejsClipper);
-
-// Vue.config.productionTip = !isDev();
+Vue.config.productionTip = !isDev();
 
 new Vue({
   el: "#app",

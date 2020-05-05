@@ -11,7 +11,8 @@ import SubmitMessage from "@components/FormElems/SubmitMessage";
 export default {
   name: "AdminFormWrapper",
   components: {
-    FormWrapper
+    FormWrapper,
+    SubmitMessage
   }
 };
 </script>

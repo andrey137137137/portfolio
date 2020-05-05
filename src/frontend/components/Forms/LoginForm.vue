@@ -39,7 +39,7 @@
             input.form-input(type="radio" value="no" v-model="$v.notRobot.$model")
             .form-checked
             .form-checkbox_text Не уверен
-          ErrorElem(:message="message")
+          ErrorElem
 
     .menu.header-menu.header-menu--float.form-menu.login_form-menu
       a#flip_2_front.menu-link.btn(href="#") На главную
@@ -58,9 +58,7 @@ import InputEventElem from "@components/FormElems/InputEventElem";
 import ChangeEventElem from "@components/FormElems/ChangeEventElem";
 
 import { createNamespacedHelpers } from "vuex";
-const { mapGetters } = createNamespacedHelpers("formMessage");
-const mapFormMessageActions = createNamespacedHelpers("formMessage").mapActions;
-const mapAuthActions = createNamespacedHelpers("auth").mapActions;
+const { mapActions } = createNamespacedHelpers("auth");
 
 export default {
   name: "LoginForm",
@@ -89,12 +87,8 @@ export default {
       // required
     }
   },
-  computed: {
-    ...mapGetters(["message"])
-  },
   methods: {
-    ...mapFormMessageActions(["setFormMessage"]),
-    ...mapAuthActions(["setAuthStatus"]),
+    ...mapActions(["setAuthStatus"]),
     handleSubmit() {
       if (!this.touchInvalidElem()) return false;
 

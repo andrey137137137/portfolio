@@ -30,12 +30,8 @@ export default {
     },
   },
   getters: {
-    config(state) {
-      return state.pageConfig;
-    },
-    profile(state) {
-      return state.userProfile;
-    },
+    config: (state) => state.pageConfig,
+    profile: (state) => state.userProfile,
   },
   actions: {
     setConfig({ commit }, data) {

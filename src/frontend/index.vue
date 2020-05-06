@@ -1,8 +1,9 @@
 <template lang="pug">
   PageWrapper
     HeaderWrapper
-      a#flip_2_back.btn.btn--opacity.authorization(href="#login" ref="flip_2_back" @click.prevent="fadeButton") Авторизоваться
-      #flip_container.container.header-container.header-container--framed(:class="flippedClass")
+      transition(name="fade")
+        a.btn.btn--opacity.authorization(v-show="!isFlipped" href="#login" @click.prevent="fadeButton") Авторизоваться
+      .container.header-container.header-container--framed(:class="flippedClass")
         .header-flip_wrap
           HeaderContent
           NavCmp
@@ -11,8 +12,7 @@
 </template>
 
 <script>
-import $ from "jquery";
-
+import flipChecker from "@frontend/mixins/flipChecker";
 import PageWrapper from "@frontCmp/PageWrapper";
 import HeaderWrapper from "@frontCmp/Header/HeaderWrapper";
 import HeaderContent from "@frontCmp/Header/HeaderContent";
@@ -32,53 +32,32 @@ export default {
     SubmitMessage,
     FooterWrapper
   },
-  data() {
-    return {
-      // $flipBtn: null,
-      // $container: null,
-      isFlipped: false
-      // btnHiddenClass: "authorization-hidden",
-      // flippedClass: "header-container--flipped"
-    };
-  },
+  mixins: [flipChecker],
   computed: {
     flippedClass() {
       return { "header-container--flipped": this.isFlipped };
     }
-  },
-  methods: {
-    fadeButton() {
-      this.isFlipped = !this.isFlipped;
-
-      if (this.isFlipped) $(this.$refs.flip_2_back).fadeOut();
-      else $(this.$refs.flip_2_back).fadeIn();
-    }
   }
-  // mounted() {
-  //   const $vm = this;
-
-  //   $(document).ready(() => {
-  //     $vm.$flipBtn = $("#flip_2_back");
-  //     $vm.$container = $("#flip_container");
-
-  //     $vm.$flipBtn.click(function(event) {
-  //       event.preventDefault();
-
-  //       $vm.$flipBtn.fadeOut();
-  //       $vm.$container.addClass($vm.flippedClass);
-  //     });
-
-  //     $("#flip_2_front").click(function(event) {
-  //       event.preventDefault();
-
-  //       $vm.$container.removeClass($vm.flippedClass);
-  //       $vm.$flipBtn.fadeIn();
-  //     });
-  //   });
-  // }
 };
 </script>
 
 <style lang="scss">
 @import "@frontStylesPgs/Home/import";
+</style>
+
+<style lang="scss">
+.fade {
+  &-enter-active,
+  &-leave-active {
+    transition: opacity 0.5s;
+  }
+
+  &-enter, &-leave-to /* .fade-leave-active до версии 2.1.8 */ {
+    opacity: 0;
+  }
+
+  &-enter-to, &-leave /* .fade-leave-active до версии 2.1.8 */ {
+    opacity: 1;
+  }
+}
 </style>

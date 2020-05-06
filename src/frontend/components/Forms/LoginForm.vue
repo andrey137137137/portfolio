@@ -42,7 +42,7 @@
           ErrorElem
 
     .menu.header-menu.header-menu--float.form-menu.login_form-menu
-      a#flip_2_front.menu-link.btn(href="#") На главную
+      a#flip_2_front.menu-link.btn(@click.prevent="fadeButton" href="#") На главную
       input.menu-link.btn(type="submit", value="Войти")
 </template>
 
@@ -51,6 +51,7 @@ import { validationMixin } from "vuelidate";
 // import { required } from "vuelidate/lib/validators";
 import axios from "axios";
 import { userAlphaNumValids, checked } from "@common/helpers/validators";
+import flipChecker from "@frontend/mixins/flipChecker";
 import form from "@common/mixins/form";
 import FrontFormWrapper from "@frontCmp/FrontFormWrapper";
 import ErrorElem from "@components/FormElems/ErrorElem";
@@ -68,7 +69,7 @@ export default {
     InputEventElem,
     ChangeEventElem
   },
-  mixins: [validationMixin, form],
+  mixins: [validationMixin, flipChecker, form],
   data() {
     return {
       username: "",

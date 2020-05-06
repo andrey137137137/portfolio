@@ -1,5 +1,5 @@
 import { FORBIDDEN } from "@httpSt";
-import { FORM_SET_MESSAGE } from "@common/store/mutation-types";
+import { SET } from "@common/store/mutation-types";
 
 export default {
   namespaced: true,
@@ -8,20 +8,16 @@ export default {
     message: "",
   },
   getters: {
-    status(state) {
-      return state.status;
-    },
-    message(state) {
-      return state.message;
-    },
+    status: (state) => state.status,
+    message: (state) => state.message,
   },
   actions: {
     setFormMessage({ commit }, data) {
-      commit(FORM_SET_MESSAGE, data);
+      commit(SET, data);
     },
   },
   mutations: {
-    [FORM_SET_MESSAGE](state, data) {
+    [SET](state, data) {
       const { status, message } = data;
 
       switch (status) {

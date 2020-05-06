@@ -1,28 +1,28 @@
 import axios from "axios";
 
-import { AUTH_SET_STATUS } from "@common/store/mutation-types";
+import { SET } from "@common/store/mutation-types";
 
 export default {
   namespaced: true,
   state: {
-    status: false
+    status: false,
   },
   getters: {
-    isAuth: state => state.status
+    isAuth: (state) => state.status,
   },
   actions: {
-    getAuthStatus: ({ commit }) => {
-      axios.get("user/auth").then(res => {
-        if (res.data.success) commit(AUTH_SET_STATUS, res.data.success);
+    getAuthStatus({ commit }) {
+      axios.get("user/auth").then((res) => {
+        if (res.data.success) commit(SET, res.data.success);
       });
     },
-    setAuthStatus: ({ commit }, status) => {
-      commit(AUTH_SET_STATUS, status);
-    }
+    setAuthStatus({ commit }, status) {
+      commit(SET, status);
+    },
   },
   mutations: {
-    [AUTH_SET_STATUS]: (state, status) => {
+    [SET](state, status) {
       state.status = status;
-    }
-  }
+    },
+  },
 };

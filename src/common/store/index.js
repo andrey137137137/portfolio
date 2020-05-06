@@ -6,6 +6,7 @@ Vue.use(Vuex);
 
 import isDev from "@common/helpers/isDev";
 import { SET, SET_PAGE, ADD, DELETE } from "@common/store/mutation-types";
+import flipChecker from "@common/store/modules/flipChecker";
 import formMessage from "@common/store/modules/formMessage";
 import auth from "@common/store/modules/auth";
 import frontView from "@common/store/modules/frontView";
@@ -20,12 +21,8 @@ export default new Vuex.Store({
     },
   },
   getters: {
-    dbPage(state) {
-      return state.data.page;
-    },
-    dbData(state) {
-      return state.data.result;
-    },
+    dbPage: (state) => state.data.page,
+    dbData: (state) => state.data.result,
   },
   actions: {
     setPage({ commit }, page) {
@@ -76,6 +73,7 @@ export default new Vuex.Store({
     },
   },
   modules: {
+    flipChecker,
     formMessage,
     auth,
     frontView,

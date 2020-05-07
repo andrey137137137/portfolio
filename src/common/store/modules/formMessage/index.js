@@ -1,4 +1,4 @@
-import { FORBIDDEN } from "@httpSt";
+import { FORBIDDEN, ERROR } from "@httpSt";
 import { SET } from "@common/store/mutation-types";
 
 export default {
@@ -17,19 +17,19 @@ export default {
     },
   },
   mutations: {
-    [SET](state, data) {
-      const { status, message } = data;
+    [SET](state, status, message = "") {
+      // const { status, message } = data;
 
       switch (status) {
         case FORBIDDEN:
           state.message = message;
           break;
+        case ERROR:
+          state.message = "Невозможно подключиться к серверу";
+          break;
         case 0:
           state.message = "";
           break;
-
-        default:
-          state.message = "Невозможно подключиться к серверу";
       }
 
       state.status = status;

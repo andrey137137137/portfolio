@@ -139,7 +139,7 @@ export default {
       let event;
       let value;
 
-      if (this.message) this.setFormMessage({ status: 0, message: "" });
+      if (this.message) this.setFormMessage(0);
 
       switch (this.type) {
         case "checkbox":

@@ -7,19 +7,75 @@
         .header-flip_wrap
           HeaderContent
           NavCmp
-        LoginForm.header-flip_wrap.header-flip_wrap--back
+        FrontFormWrapper#login_form.header-flip_wrap.header-flip_wrap--back.login_form(
+          action="/admin"
+          @submit.prevent.native="handleSubmit")
+
+          .login_form-top_wrap
+            h2.section-title.section-title--uppercase.login_form-title Авторизуйтесь
+
+            InputEventElem(
+              wrapClass="icon_label"
+              label="Пользователь"
+              v-model="username"
+              :val="$v.username"
+              placeholder="Пользователь")
+
+            InputEventElem(
+              wrapClass="icon_label"
+              label="Пароль"
+              v-model="password"
+              :val="$v.password"
+              type="password"
+              placeholder="Пароль")
+
+            ChangeEventElem(
+              label="Я человек"
+              v-model="isHuman"
+              :val="$v.isHuman"
+              type="checkbox")
+
+            legend.form-legend Вы точно не робот?
+
+            .form-wrap.form-wrap--radio.login_form-radio_wrap
+              .form-row.flex.flex--wrap
+                label.form-label.login_form-radio_yes
+                  input.form-input(type="radio" value="yes" v-model="$v.notRobot.$model")
+                  .form-checked
+                  .form-checkbox_text Да
+                label.form-label
+                  input.form-input(type="radio" value="no" v-model="$v.notRobot.$model")
+                  .form-checked
+                  .form-checkbox_text Не уверен
+                ErrorElem
+
+          .menu.header-menu.header-menu--float.form-menu.login_form-menu
+            a#flip_2_front.menu-link.btn(@click.prevent="fadeButton" href="#") На главную
+            input.menu-link.btn(type="submit", value="Войти")
     SubmitMessage
 </template>
 
 <script>
-import flipChecker from "@frontend/mixins/flipChecker";
+import axios from "axios";
+import { validationMixin } from "vuelidate";
+// import { required } from "vuelidate/lib/validators";
+import { userAlphaNumValids, checked } from "@common/helpers/validators";
+import { ERROR } from "@httpSt";
+import form from "@common/mixins/form";
 import PageWrapper from "@frontCmp/PageWrapper";
 import HeaderWrapper from "@frontCmp/Header/HeaderWrapper";
 import HeaderContent from "@frontCmp/Header/HeaderContent";
 import NavCmp from "@frontCmp/NavCmp";
-import LoginForm from "@frontCmp/Forms/LoginForm";
+import FrontFormWrapper from "@frontCmp/FrontFormWrapper";
+import ErrorElem from "@components/FormElems/ErrorElem";
+import InputEventElem from "@components/FormElems/InputEventElem";
+import ChangeEventElem from "@components/FormElems/ChangeEventElem";
 import SubmitMessage from "@components/FormElems/SubmitMessage";
 import FooterWrapper from "@frontCmp/FooterWrapper";
+
+import { createNamespacedHelpers } from "vuex";
+const mapAuthActions = createNamespacedHelpers("auth").mapActions;
+const mapFormMessageActions = createNamespacedHelpers("formMessage").mapActions;
 
 export default {
   name: "Home",
@@ -28,14 +84,70 @@ export default {
     HeaderWrapper,
     HeaderContent,
     NavCmp,
-    LoginForm,
+    FrontFormWrapper,
+    ErrorElem,
+    InputEventElem,
+    ChangeEventElem,
     SubmitMessage,
     FooterWrapper
   },
-  mixins: [flipChecker],
+  mixins: [validationMixin, form],
+  data() {
+    return {
+      isFlipped: false,
+      username: "",
+      password: "",
+      isHuman: false,
+      notRobot: ""
+    };
+  },
+  validations: {
+    username: userAlphaNumValids,
+    password: userAlphaNumValids,
+    isHuman: {
+      checked
+    },
+    notRobot: {
+      // required
+    }
+  },
   computed: {
     flippedClass() {
       return { "header-container--flipped": this.isFlipped };
+    }
+  },
+  methods: {
+    ...mapAuthActions(["setAuthStatus"]),
+    ...mapFormMessageActions(["setFormMessage"]),
+    fadeButton() {
+      this.isFlipped = !this.isFlipped;
+    },
+    handleSubmit() {
+      if (!this.touchInvalidElem()) return false;
+
+      const $vm = this;
+      const { username, password } = this;
+
+      axios
+        .post("user/auth", { username, password })
+        .then(res => {
+          if (res.data.success) {
+            $vm.setAuthStatus(res.data.success);
+            return $vm.$router.push("/admin");
+          }
+
+          return false;
+        })
+        .catch(err => {
+          if (!err.response) {
+            $vm.setFormMessage(ERROR);
+            return;
+          }
+
+          const status = err.response.status;
+          const message = err.response.data.message;
+          $vm.setFormMessage(status, message);
+        });
     }
   }
 };
@@ -43,6 +155,7 @@ export default {
 
 <style lang="scss">
 @import "@frontStylesPgs/Home/import";
+@import "@frontStylesCmp/LoginForm/import";
 </style>
 
 <style lang="scss">
@@ -51,11 +164,9 @@ export default {
   &-leave-active {
     transition: opacity 0.5s;
   }
-
   &-enter, &-leave-to /* .fade-leave-active до версии 2.1.8 */ {
     opacity: 0;
   }
-
   &-enter-to, &-leave /* .fade-leave-active до версии 2.1.8 */ {
     opacity: 1;
   }

@@ -1,8 +1,7 @@
 <template lang="pug">
   PageWrapper
     HeaderWrapper
-      transition(name="fade")
-        a.btn.btn--opacity.authorization(v-show="!isFlipped" href="#login" @click.prevent="fadeButton") Авторизоваться
+      a.btn.btn--opacity.authorization(href="#login" ref="flipBtn" @click.prevent="fadeButton") Авторизоваться
       .container.header-container.header-container--framed(:class="flippedClass")
         .header-flip_wrap
           HeaderContent
@@ -56,6 +55,7 @@
 </template>
 
 <script>
+import $ from "jquery";
 import axios from "axios";
 import { validationMixin } from "vuelidate";
 // import { required } from "vuelidate/lib/validators";
@@ -89,7 +89,7 @@ export default {
     InputEventElem,
     ChangeEventElem,
     SubmitMessage,
-    FooterWrapper
+    FooterWrapper,
   },
   mixins: [validationMixin, form],
   data() {
@@ -98,29 +98,33 @@ export default {
       username: "",
       password: "",
       isHuman: false,
-      notRobot: ""
+      notRobot: "",
     };
   },
   validations: {
     username: userAlphaNumValids,
     password: userAlphaNumValids,
     isHuman: {
-      checked
+      checked,
     },
     notRobot: {
       // required
-    }
+    },
   },
   computed: {
     flippedClass() {
       return { "header-container--flipped": this.isFlipped };
-    }
+    },
   },
   methods: {
     ...mapAuthActions(["setAuthStatus"]),
     ...mapFormMessageActions(["setFormMessage"]),
     fadeButton() {
+      const $flipBtn = $(this.$refs.flipBtn);
       this.isFlipped = !this.isFlipped;
+
+      const FUNC = this.isFlipped ? "fadeOut" : "fadeIn";
+      $flipBtn[FUNC]();
     },
     handleSubmit() {
       if (!this.touchInvalidElem()) return false;
@@ -130,7 +134,7 @@ export default {
 
       axios
         .post("user/auth", { username, password })
-        .then(res => {
+        .then((res) => {
           if (res.data.success) {
             $vm.setAuthStatus(res.data.success);
             return $vm.$router.push("/admin");
@@ -138,37 +142,24 @@ export default {
 
           return false;
         })
-        .catch(err => {
+        .catch((err) => {
           if (!err.response) {
-            $vm.setFormMessage(ERROR);
+            $vm.setFormMessage({ status: ERROR, message: "" });
             return;
           }
 
+          console.log(err.response.data.message);
+
           const status = err.response.status;
           const message = err.response.data.message;
-          $vm.setFormMessage(status, message);
+          $vm.setFormMessage({ status, message });
         });
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style lang="scss">
 @import "@frontStylesPgs/Home/import";
 @import "@frontStylesCmp/LoginForm/import";
-</style>
-
-<style lang="scss">
-.fade {
-  &-enter-active,
-  &-leave-active {
-    transition: opacity 0.5s;
-  }
-  &-enter, &-leave-to /* .fade-leave-active до версии 2.1.8 */ {
-    opacity: 0;
-  }
-  &-enter-to, &-leave /* .fade-leave-active до версии 2.1.8 */ {
-    opacity: 1;
-  }
-}
 </style>

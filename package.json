@@ -4,14 +4,14 @@
   "private": true,
   "scripts": {
     "start": "concurrently \"nodemon server/app.js\" \"vue-cli-service serve --open\"",
-    "serve": "vue-cli-service serve --open",
+    "client": "vue-cli-service serve --open",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "server": "nodemon server/app.js"
   },
   "_moduleAliases": {
     "@config": "api/config.json",
-    "@httpSt": "server/httpStatuses.js",
+    "@httpSt": "api/httpStatuses.js",
     "@contr": "server/controllers",
     "@auth": "server/routes/auth.js"
   },

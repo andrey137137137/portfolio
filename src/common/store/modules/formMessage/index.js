@@ -17,8 +17,8 @@ export default {
     },
   },
   mutations: {
-    [SET](state, status, message = "") {
-      // const { status, message } = data;
+    [SET](state, data) {
+      const { status, message } = data;
 
       switch (status) {
         case FORBIDDEN:

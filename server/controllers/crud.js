@@ -25,15 +25,15 @@ function sendResult(result, res, mode = "insert") {
       return;
     }
 
-    return res.status(NOT_FOUND).json({ status: "Запись в БД не обнаружена" });
+    return res.status(NOT_FOUND).json({ message: "Запись в БД не обнаружена" });
   }
 
-  res.status(SUCCESS).json({ status: "Запись успешно " + getMessage(mode) });
+  res.status(SUCCESS).json({ message: "Запись успешно " + getMessage(mode) });
 }
 
 function sendError(err, res, mode) {
   res.status(ERROR).json({
-    status: `При ${getMessage(mode, true)} произошла ошибка: ${err}`,
+    message: `При ${getMessage(mode, true)} произошла ошибка: ${err}`,
   });
 }
 

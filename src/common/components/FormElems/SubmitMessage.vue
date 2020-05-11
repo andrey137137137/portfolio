@@ -4,8 +4,7 @@
 </template>
 
 <script>
-import { createNamespacedHelpers } from "vuex";
-const { mapGetters } = createNamespacedHelpers("formMessage");
+import { mapGetters } from "vuex";
 
 export default {
   name: "SubmitMessage",

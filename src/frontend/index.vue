@@ -73,9 +73,8 @@ import ChangeEventElem from "@components/FormElems/ChangeEventElem";
 import SubmitMessage from "@components/FormElems/SubmitMessage";
 import FooterWrapper from "@frontCmp/FooterWrapper";
 
-import { createNamespacedHelpers } from "vuex";
+import { createNamespacedHelpers, mapActions } from "vuex";
 const mapAuthActions = createNamespacedHelpers("auth").mapActions;
-const mapFormMessageActions = createNamespacedHelpers("formMessage").mapActions;
 
 export default {
   name: "Home",
@@ -89,7 +88,7 @@ export default {
     InputEventElem,
     ChangeEventElem,
     SubmitMessage,
-    FooterWrapper,
+    FooterWrapper
   },
   mixins: [validationMixin, form],
   data() {
@@ -98,27 +97,27 @@ export default {
       username: "",
       password: "",
       isHuman: false,
-      notRobot: "",
+      notRobot: ""
     };
   },
   validations: {
     username: userAlphaNumValids,
     password: userAlphaNumValids,
     isHuman: {
-      checked,
+      checked
     },
     notRobot: {
       // required
-    },
+    }
   },
   computed: {
     flippedClass() {
       return { "header-container--flipped": this.isFlipped };
-    },
+    }
   },
   methods: {
     ...mapAuthActions(["setAuthStatus"]),
-    ...mapFormMessageActions(["setFormMessage"]),
+    ...mapActions(["setFormMessage"]),
     fadeButton() {
       const $flipBtn = $(this.$refs.flipBtn);
       this.isFlipped = !this.isFlipped;
@@ -134,7 +133,7 @@ export default {
 
       axios
         .post("user/auth", { username, password })
-        .then((res) => {
+        .then(res => {
           if (res.data.success) {
             $vm.setAuthStatus(res.data.success);
             return $vm.$router.push("/admin");
@@ -142,20 +141,18 @@ export default {
 
           return false;
         })
-        .catch((err) => {
+        .catch(err => {
           if (!err.response) {
             $vm.setFormMessage({ status: ERROR, message: "" });
             return;
           }
 
-          console.log(err.response.data.message);
-
           const status = err.response.status;
           const message = err.response.data.message;
           $vm.setFormMessage({ status, message });
         });
-    },
-  },
+    }
+  }
 };
 </script>
 

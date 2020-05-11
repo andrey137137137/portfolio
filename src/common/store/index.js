@@ -4,7 +4,7 @@ import axios from "axios";
 
 Vue.use(Vuex);
 
-import { FORBIDDEN, ERROR } from "@httpSt";
+import { SUCCESS, ERROR } from "@httpSt";
 import isDev from "@common/helpers/isDev";
 import {
   SET,
@@ -38,13 +38,23 @@ export default new Vuex.Store({
     setPage({ commit }, page) {
       commit(SET_PAGE, page);
     },
+    setSuccessMessage({ commit }, message) {
+      commit(SET_FORM_MESSAGE, {
+        status: SUCCESS,
+        message,
+      });
+    },
+    setFormMessage({ commit }, data) {
+      commit(SET_FORM_MESSAGE, data);
+    },
     readData({ state, commit }) {
       axios.get(state.data.page).then((res) => {
         commit(SET, res.data.result);
       });
     },
     insertData({ state, dispatch, commit }, data) {
-      axios.post(state.data.page, data).then(() => {
+      axios.post(state.data.page, data).then((res) => {
+        dispatch("setSuccessMessage", res.data.message);
         commit(ADD, data);
       });
     },
@@ -58,12 +68,14 @@ export default new Vuex.Store({
         url = page;
       }
 
-      axios[method](url, payload.data).then(() => {
+      axios[method](url, payload.data).then((res) => {
+        dispatch("setSuccessMessage", res.data.message);
         commit(SET, payload.data);
       });
     },
     deleteData({ state, dispatch, commit }, id) {
-      axios.delete(`${state.data.page}/${id}`).then(() => {
+      axios.delete(`${state.data.page}/${id}`).then((res) => {
+        dispatch("setSuccessMessage", res.data.message);
         commit(DELETE, id);
       });
     },
@@ -76,15 +88,14 @@ export default new Vuex.Store({
       const { status, message } = data;
 
       switch (status) {
-        case FORBIDDEN:
-          state.message = message;
-          break;
         case ERROR:
           state.message = "Невозможно подключиться к серверу";
           break;
         case 0:
           state.message = "";
           break;
+        default:
+          state.message = message;
       }
 
       state.status = status;
@@ -100,7 +111,6 @@ export default new Vuex.Store({
     },
   },
   modules: {
-    formMessage,
     auth,
     frontView,
     comments,

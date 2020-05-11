@@ -4,8 +4,15 @@ import axios from "axios";
 
 Vue.use(Vuex);
 
+import { FORBIDDEN, ERROR } from "@httpSt";
 import isDev from "@common/helpers/isDev";
-import { SET, SET_PAGE, ADD, DELETE } from "@common/store/mutation-types";
+import {
+  SET,
+  SET_PAGE,
+  SET_FORM_MESSAGE,
+  ADD,
+  DELETE,
+} from "@common/store/mutation-types";
 import formMessage from "@common/store/modules/formMessage";
 import auth from "@common/store/modules/auth";
 import frontView from "@common/store/modules/frontView";
@@ -17,11 +24,15 @@ export default new Vuex.Store({
     data: {
       page: "",
       result: [],
+      status: 0,
+      message: "",
     },
   },
   getters: {
     dbPage: (state) => state.data.page,
     dbData: (state) => state.data.result,
+    status: (state) => state.status,
+    message: (state) => state.message,
   },
   actions: {
     setPage({ commit }, page) {
@@ -32,12 +43,12 @@ export default new Vuex.Store({
         commit(SET, res.data.result);
       });
     },
-    insertData({ state, dispatch }, data) {
+    insertData({ state, dispatch, commit }, data) {
       axios.post(state.data.page, data).then(() => {
-        dispatch("readData", state.data.page);
+        commit(ADD, data);
       });
     },
-    updateData({ state, dispatch }, payload) {
+    updateData({ state, dispatch, commit }, payload) {
       const { page } = state.data;
       let method = "put";
       let url = `${page}/${payload.id}`;
@@ -48,18 +59,35 @@ export default new Vuex.Store({
       }
 
       axios[method](url, payload.data).then(() => {
-        dispatch("readData", page);
+        commit(SET, payload.data);
       });
     },
-    deleteData({ state, dispatch }, id) {
+    deleteData({ state, dispatch, commit }, id) {
       axios.delete(`${state.data.page}/${id}`).then(() => {
-        dispatch("readData", state.data.page);
+        commit(DELETE, id);
       });
     },
   },
   mutations: {
     [SET_PAGE](state, page) {
       state.data.page = page;
+    },
+    [SET_FORM_MESSAGE](state, data) {
+      const { status, message } = data;
+
+      switch (status) {
+        case FORBIDDEN:
+          state.message = message;
+          break;
+        case ERROR:
+          state.message = "Невозможно подключиться к серверу";
+          break;
+        case 0:
+          state.message = "";
+          break;
+      }
+
+      state.status = status;
     },
     [SET](state, data) {
       state.data.result = data;

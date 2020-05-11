@@ -25,8 +25,10 @@ export default {
     userProfile: {
       firstName: "",
       lastName: "",
+      old: 0,
       email: "",
       contacts: [],
+      footerDesc: "Дизайн сайта взят от Школы онлайн образования LoftSchool.",
     },
   },
   getters: {

@@ -26,6 +26,10 @@ const UserSchema = new Schema({
     type: String,
     required: [true, "Укажите описание картинки"],
   },
+  old: {
+    type: Number,
+    required: [true, "Укажите описание картинки"],
+  },
   contacts: {
     type: Array,
     children: [ContactSchema],

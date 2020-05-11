@@ -5,6 +5,7 @@ router.get("/reg", (req, res) => {
   const User = new Model({
     firstName: "Андрей",
     lastName: "Банников",
+    old: 33,
     contacts: [
       {
         name: "github",

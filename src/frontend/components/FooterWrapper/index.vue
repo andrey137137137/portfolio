@@ -7,9 +7,9 @@
 
     ul.section.footer_bottom(:class="footerBottomClasses")
       li.container.footer_bottom-container
-        p.section-desc.footer_bottom-col.footer_bottom-author &copy; Банников Андрей
-        p.section-desc.footer_bottom-col.footer_bottom-desc Создаю с любовью в LoftSchool
-        p.section-desc.footer_bottom-col.footer_bottom-date 2018
+        p.section-desc.footer_bottom-col.footer_bottom-author &copy; {{fullName}} 
+        p.section-desc.footer_bottom-col.footer_bottom-desc Мой сайт-портфолио 
+        p.section-desc.footer_bottom-col.footer_bottom-date 2020
 </template>
 
 <script>
@@ -26,7 +26,7 @@ export default {
     FooterTop
   },
   computed: {
-    ...mapGetters(["config"]),
+    ...mapGetters(["config", "profile"]),
     containerClasses() {
       return {
         "footer--absolute": !this.config.isContent || this.config.sections > 2,
@@ -37,6 +37,9 @@ export default {
       return {
         "footer_bottom--bg": this.config.isContent
       };
+    },
+    fullName() {
+      return `${this.profile.lastName} ${this.profile.firstName}`;
     }
   }
 };

@@ -2,7 +2,7 @@
   ul.section.footer_top
     li.container.footer_top-container
 
-      p.col.col--ds_float.col--ds_4.col--xds_4.section-desc.footer_top-col.footer_top-desc Этот сайт я делаю в рамках обучения в Школе онлайн образования LoftSchool.
+      p.col.col--ds_float.col--ds_4.col--xds_4.section-desc.footer_top-col.footer_top-desc {{profile.footerDesc}}
 
       NavCmp(:inHeader="false")
 
@@ -15,6 +15,9 @@
 <script>
 import NavCmp from "@frontCmp/NavCmp";
 import ContactList from "@frontCmp/ContactList";
+
+import { createNamespacedHelpers } from "vuex";
+const { mapGetters } = createNamespacedHelpers("frontView");
 
 export default {
   name: "FooterTop",
@@ -33,6 +36,9 @@ export default {
         "footer_top-col": true
       }
     };
+  },
+  computed: {
+    ...mapGetters(["profile"])
   }
 };
 </script>

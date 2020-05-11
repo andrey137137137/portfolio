@@ -29,7 +29,8 @@ import {
   minLength
   // maxLength
 } from "vuelidate/lib/validators";
-import formMxn from "@backend/mixins/form";
+import formMxn from "@common/mixins/form";
+import backFormMxn from "@backend/mixins/form";
 import itemFormMxn from "@backend/mixins/itemForm";
 // import exist from "@common/helpers/exist";
 import ItemForm from "@backCmp/Forms/ItemForm";
@@ -41,7 +42,7 @@ export default {
     ItemForm,
     InputEventElem
   },
-  mixins: [validationMixin, formMxn, itemFormMxn],
+  mixins: [validationMixin, formMxn, backFormMxn, itemFormMxn],
   data() {
     const data = {
       dbPage: "post"

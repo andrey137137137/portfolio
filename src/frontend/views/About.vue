@@ -15,8 +15,8 @@
           img.img_wrap-img(src="/upload/about.jpg" alt="")
         article.col.col--center.col--tb_8.about-col.about-text_wrap
           h2.section-title.section-title--uppercase.section-title--underlined.about-title Кто я
-          p.section-desc.about-desc.about-desc--first Я веб разработчик из Одессы. Мне 31 год. Я учусь разработке современных сайтов и приложений. Мне нравится решать сложные задачи.
-          p.section-desc.about-desc Этот сайт я делаю в рамках обучения в Школе онлайн образования LoftSchool. Чуть позже я освежу в нём свой контент. А пока посмотрите, как тут всё становится красиво!
+          p.section-desc.about-desc.about-desc--first Я веб разработчик из Одессы. Мне {{old}}. Я учусь разработке современных сайтов и приложений. Мне нравится решать сложные задачи.
+          p.section-desc.about-desc {{profile.footerDesc}} Я периодически обновляю в нём свой контент.
 
       SectionWrapper(name="skills" :isOwnContainerClass="true")
         h2.section-title.section-title--uppercase.section-title--underlined.skills-title
@@ -47,6 +47,9 @@ import SkillList from "@frontCmp/SkillList";
 import BottomWrapper from "@frontCmp/BottomWrapper";
 import ContactList from "@frontCmp/ContactList";
 
+import { createNamespacedHelpers } from "vuex";
+const { mapGetters } = createNamespacedHelpers("frontView");
+
 export default {
   name: "AboutView",
   components: {
@@ -67,6 +70,12 @@ export default {
         clearfix: true
       }
     };
+  },
+  computed: {
+    ...mapGetters(["profile"]),
+    old() {
+      return this.profile.old;
+    }
   }
 };
 </script>

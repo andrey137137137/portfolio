@@ -8,8 +8,7 @@
 <script>
 import SubmitMessage from "@components/FormElems/SubmitMessage";
 
-import { createNamespacedHelpers } from "vuex";
-const { mapGetters } = createNamespacedHelpers("auth");
+import { mapGetters } from "vuex";
 
 export default {
   name: "PageWrapper",

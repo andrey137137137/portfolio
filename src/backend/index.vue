@@ -12,8 +12,7 @@ import AdminHeader from "@backCmp/AdminHeader";
 import AdminNav from "@backCmp/AdminNav";
 import PageWrapper from "@backCmp/PageWrapper";
 
-import { createNamespacedHelpers } from "vuex";
-const { mapGetters, mapActions } = createNamespacedHelpers("auth");
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "AdminApp",

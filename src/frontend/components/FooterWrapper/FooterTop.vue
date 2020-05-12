@@ -6,7 +6,7 @@
 
       NavCmp(:inHeader="false")
 
-      ContactList(
+      //- ContactList(
         classBlock="footer_top-contacts"
         classElemSeparator="_"
         :addClasses="contactClasses")

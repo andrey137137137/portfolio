@@ -15,6 +15,7 @@ function pageConfig(config, dbPage = "") {
   }
 
   store.dispatch("frontView/setConfig", config);
+  store.dispatch("frontView/setProfile");
   return {};
 }
 
@@ -28,7 +29,7 @@ export default new VueRouter({
       props: () => {
         pageConfig({ name: "Главная" });
       },
-      component: () => import("@frontend")
+      component: () => import("@frontend"),
     },
     {
       path: "/",
@@ -46,12 +47,12 @@ export default new VueRouter({
                 name: "Мои работы",
                 isTopWrapTitle: true,
                 isContent: true,
-                sections: 3
+                sections: 3,
               },
               "work"
             );
           },
-          component: () => import("@frontViews/Works.vue")
+          component: () => import("@frontViews/Works.vue"),
         },
         {
           path: "about",
@@ -61,7 +62,7 @@ export default new VueRouter({
               {
                 name: "Обо мне",
                 isContent: true,
-                sections: 4
+                sections: 4,
               },
               "skill"
             );
@@ -69,7 +70,7 @@ export default new VueRouter({
           // route level code-splitting
           // this generates a separate chunk (about.[hash].js) for this route
           // which is lazy-loaded when the route is visited.
-          component: () => import("@frontViews/About.vue")
+          component: () => import("@frontViews/About.vue"),
         },
         {
           path: "blog",
@@ -80,14 +81,14 @@ export default new VueRouter({
                 name: "Блог",
                 isBlog: true,
                 isContent: true,
-                sections: 2
+                sections: 2,
               },
               "post"
             );
           },
-          component: () => import("@frontViews/Blog.vue")
-        }
-      ]
+          component: () => import("@frontViews/Blog.vue"),
+        },
+      ],
     },
     {
       path: "/admin",
@@ -98,37 +99,37 @@ export default new VueRouter({
           props: () => {
             setDbPage("skill");
           },
-          component: () => import("@backViews/About.vue")
+          component: () => import("@backViews/About.vue"),
         },
         {
           path: "blog",
           props: () => {
             setDbPage("post");
           },
-          component: () => import("@backViews/Blog.vue")
+          component: () => import("@backViews/Blog.vue"),
         },
         {
           path: "works",
           props: () => {
             setDbPage("work");
           },
-          component: () => import("@backViews/Works.vue")
+          component: () => import("@backViews/Works.vue"),
         },
         {
           path: "profile",
           props: () => {
             setDbPage("user/profile");
           },
-          component: () => import("@backViews/Profile.vue")
+          component: () => import("@backViews/Profile.vue"),
         },
         {
           path: "authConfig",
           props: () => {
             setDbPage("user/config");
           },
-          component: () => import("@backViews/AuthConfig.vue")
-        }
-      ]
-    }
-  ]
+          component: () => import("@backViews/AuthConfig.vue"),
+        },
+      ],
+    },
+  ],
 });

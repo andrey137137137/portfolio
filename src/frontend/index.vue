@@ -73,8 +73,7 @@ import ChangeEventElem from "@components/FormElems/ChangeEventElem";
 import SubmitMessage from "@components/FormElems/SubmitMessage";
 import FooterWrapper from "@frontCmp/FooterWrapper";
 
-import { createNamespacedHelpers, mapActions } from "vuex";
-const mapAuthActions = createNamespacedHelpers("auth").mapActions;
+import { mapActions } from "vuex";
 
 export default {
   name: "Home",
@@ -116,8 +115,7 @@ export default {
     }
   },
   methods: {
-    ...mapAuthActions(["setAuthStatus"]),
-    ...mapActions(["setFormMessage"]),
+    ...mapActions(["setAuthStatus", "setFormMessage"]),
     fadeButton() {
       const $flipBtn = $(this.$refs.flipBtn);
       this.isFlipped = !this.isFlipped;

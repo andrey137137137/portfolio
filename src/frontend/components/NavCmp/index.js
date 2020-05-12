@@ -10,7 +10,7 @@ export default {
     const elems = [];
 
     if (this.inHeader) {
-      elems.push(this.socialMenuElem());
+      // elems.push(this.socialMenuElem());
 
       if (this.config.isContent) {
         elems.push(this.checkerElem());
@@ -19,7 +19,7 @@ export default {
       }
     } else {
       elems.push(this.mainMenuElem());
-      elems.push(this.socialMenuElem());
+      // elems.push(this.socialMenuElem());
     }
 
     return h("nav", { class: this.classes }, elems);

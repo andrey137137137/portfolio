@@ -1,5 +1,4 @@
 import axios from "axios";
-
 import { SET_CONFIG, SET_PROFILE } from "@common/store/mutation-types";
 
 const defaultData = {
@@ -38,6 +37,8 @@ export default {
   actions: {
     setConfig({ commit }, data) {
       commit(SET_CONFIG, data);
+    },
+    setProfile({ commit }) {
       axios.get("user/profile").then((res) => {
         commit(SET_PROFILE, res.data.result);
       });

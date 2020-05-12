@@ -3,8 +3,7 @@ import exist from "@common/helpers/exist";
 import addClasses from "@common/mixins/addClasses";
 import ErrorElem from "@components/FormElems/ErrorElem";
 
-import { createNamespacedHelpers } from "vuex";
-const { mapGetters, mapActions } = createNamespacedHelpers("formMessage");
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   mixins: [addClasses],

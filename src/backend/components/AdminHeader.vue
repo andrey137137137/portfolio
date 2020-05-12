@@ -9,8 +9,7 @@
 
 <script>
 import axios from "axios";
-import { createNamespacedHelpers } from "vuex";
-const { mapGetters, mapActions } = createNamespacedHelpers("auth");
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "AdminHeader",

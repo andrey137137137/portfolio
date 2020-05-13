@@ -131,7 +131,7 @@ module.exports.updateUserPassword = (Model, id, data, res) => {
     (err, user) => {
       if (err) sendError(err, res, "update");
       sendResult(user, res, "update");
-    }
+    },
   );
 };
 
@@ -142,6 +142,6 @@ module.exports.deleteItem = (Model, id, res) => {
     },
     (err) => {
       sendError(err, res, "delete");
-    }
+    },
   );
 };

@@ -118,11 +118,13 @@ export default new Vuex.Store({
       state.data.result.push(newItem);
     },
     [UPDATE](state, data) {
-      const index = state.data.result.findIndex((item) => item.id == data.id);
+      const index = state.data.result.findIndex((item) => item._id == data.id);
       state.data.result.splice(index, 1, data);
     },
     [DELETE](state, id) {
-      state.data.result = state.data.result.filter((item) => item.id !== id);
+      console.log(state.data.result);
+
+      state.data.result = state.data.result.filter((item) => item._id !== id);
     },
     [SET_AUTH_STATUS](state, authStatus) {
       state.authStatus = authStatus;

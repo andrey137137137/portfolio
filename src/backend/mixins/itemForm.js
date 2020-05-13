@@ -4,28 +4,26 @@ export default {
   props: {
     item: {
       type: Object,
-      default: null
-    }
+      default: null,
+    },
   },
   data() {
     return {
       removeTitle: "запись",
-      removeValue: ""
+      removeValue: "",
     };
   },
   computed: {
     id() {
       return this.item ? this.item._id : 0;
-    }
+    },
   },
   methods: {
     ...mapActions(["deleteData", "insertData"]),
     removeItem() {
-      console.log(this.id);
-
       if (
         confirm(
-          `Вы уверены, что хотите удалить ${this.removeTitle}: "${this.removeValue}"?`
+          `Вы уверены, что хотите удалить ${this.removeTitle}: "${this.id}"?`,
         )
       ) {
         this.deleteData(this.id);
@@ -47,6 +45,6 @@ export default {
       }
 
       return true;
-    }
-  }
+    },
+  },
 };

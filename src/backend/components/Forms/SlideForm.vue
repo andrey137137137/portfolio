@@ -132,10 +132,10 @@ export default {
         link: "",
         techs: [
           {
-            name: "Html"
+            name: "HTML"
           },
           {
-            name: "Css"
+            name: "CSS"
           },
           {
             name: "JavaScript"

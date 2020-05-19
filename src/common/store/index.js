@@ -57,23 +57,34 @@ export default new Vuex.Store({
     },
     insertData({ state, dispatch, commit }, data) {
       axios.post(state.data.page, data).then((res) => {
+        data._id = res.data._id;
         dispatch(SET_SUCCESS_MESSAGE, res.data.message);
         commit(ADD, data);
       });
     },
     updateData({ state, dispatch, commit }, payload) {
       const { page } = state.data;
+      const { data, id } = payload;
+
+      let isUser = false;
       let method = "put";
-      let url = `${page}/${payload.id}`;
+      let url = `${page}/${id}`;
 
       if (page.slice(0, 4) == "user") {
+        isUser = true;
         method = "post";
         url = page;
       }
 
-      axios[method](url, payload.data).then((res) => {
+      axios[method](url, data).then((res) => {
+        const commitPayload = { id: 0, data };
+
+        if (!isUser) {
+          commitPayload.id = id;
+        }
+
         dispatch(SET_SUCCESS_MESSAGE, res.data.message);
-        commit(UPDATE, payload.data);
+        commit(UPDATE, commitPayload);
       });
     },
     deleteData({ state, dispatch, commit }, id) {
@@ -117,13 +128,18 @@ export default new Vuex.Store({
     [ADD](state, newItem) {
       state.data.result.push(newItem);
     },
-    [UPDATE](state, data) {
-      const index = state.data.result.findIndex((item) => item._id == data.id);
-      state.data.result.splice(index, 1, data);
+    [UPDATE](state, payload) {
+      const { id, data } = payload;
+
+      if (id) {
+        const index = state.data.result.findIndex((item) => item._id == id);
+        data._id = id;
+        state.data.result.splice(index, 1, data);
+      } else {
+        state.data.result = data;
+      }
     },
     [DELETE](state, id) {
-      console.log(state.data.result);
-
       state.data.result = state.data.result.filter((item) => item._id !== id);
     },
     [SET_AUTH_STATUS](state, authStatus) {

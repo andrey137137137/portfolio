@@ -33,7 +33,7 @@ function sendResult(result, res, mode = "insert") {
   const data = { message: "Запись успешно " + getMessage(mode) };
 
   if (mode == "insert") {
-    data.id = result._id;
+    data._id = result._id;
   }
 
   res.status(SUCCESS).json(data);

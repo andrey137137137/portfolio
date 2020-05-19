@@ -112,11 +112,11 @@ export default {
         category: "",
         items: [
           {
-            name: "Html",
+            name: "HTML",
             percents: 1
           },
           {
-            name: "Css",
+            name: "CSS",
             percents: 1
           },
           {

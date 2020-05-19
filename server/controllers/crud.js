@@ -21,14 +21,22 @@ function getMessage(mode, isError = false) {
 
 function sendResult(result, res, mode = "insert") {
   if (!result) {
+    let message = "Запись в БД не обнаружена";
+
     if (mode == "insert") {
-      return;
+      message = "Невозможно добавить новую запись в БД";
     }
 
-    return res.status(NOT_FOUND).json({ message: "Запись в БД не обнаружена" });
+    return res.status(NOT_FOUND).json({ message });
   }
 
-  res.status(SUCCESS).json({ message: "Запись успешно " + getMessage(mode) });
+  const data = { message: "Запись успешно " + getMessage(mode) };
+
+  if (mode == "insert") {
+    data.id = result._id;
+  }
+
+  res.status(SUCCESS).json(data);
 }
 
 function sendError(err, res, mode) {

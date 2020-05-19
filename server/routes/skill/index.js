@@ -15,7 +15,7 @@ router.post("/", isAuth, (req, res) => {
       category: req.body.category,
       items: req.body.items,
     },
-    res
+    res,
   );
 });
 
@@ -27,7 +27,7 @@ router.put("/:id", isAuth, (req, res) => {
       category: req.body.category,
       items: req.body.items,
     },
-    res
+    res,
   );
 });
 

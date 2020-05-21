@@ -1,4 +1,3 @@
-// import types from "@common/constants/validation/types";
 import formElem from "@common/mixins/formElem";
 
 export default {
@@ -6,12 +5,12 @@ export default {
   props: {
     placeholder: {
       type: String,
-      default: "",
+      default: ""
     },
     measure: {
       type: String,
-      default: "",
-    },
+      default: ""
+    }
   },
   methods: {
     elemsBeforeInput() {
@@ -47,6 +46,6 @@ export default {
     },
     measureElem() {
       return <span class="form-measure">{this.measure}</span>;
-    },
-  },
+    }
+  }
 };

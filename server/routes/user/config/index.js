@@ -8,7 +8,7 @@ router.get("/", isAuth, (req, res, next) => {
   crud.getItemById(Model, res, userId(req.session.token, next), {
     _id: 0,
     email: 1,
-    username: 1,
+    username: 1
   });
 });
 
@@ -22,7 +22,7 @@ router.post("/", isAuth, (req, res, next) => {
     cond
       ? {
           email: req.body.email,
-          username: req.body.username,
+          username: req.body.username
         }
       : req.body,
     res

@@ -25,7 +25,7 @@ function upload(req, res, dir = "") {
   form.parse(req, (err, fields, files) => {
     if (err) {
       return res.status(ERROR).json({
-        msg: "Не удалось загрузить картинку",
+        msg: "Не удалось загрузить картинку"
       });
     }
 
@@ -34,7 +34,7 @@ function upload(req, res, dir = "") {
     fileName = !dir ? `avatar.${getExt(files.image.name)}` : files.image.name;
     filePath = path.join(uploadPath, fileName);
 
-    fs.rename(files.image.path, filePath, (err) => {
+    fs.rename(files.image.path, filePath, err => {
       if (err) {
         console.log(err);
         fs.unlink(filePath);

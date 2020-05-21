@@ -15,7 +15,7 @@ router.post("/", isAuth, (req, res) => {
       title: req.body.title,
       link: req.body.link,
       image: req.body.image,
-      techs: req.body.techs,
+      techs: req.body.techs
     },
     res
   );
@@ -29,7 +29,7 @@ router.put("/:id", isAuth, (req, res) => {
       title: req.body.title,
       link: req.body.link,
       image: req.body.image,
-      techs: req.body.techs,
+      techs: req.body.techs
     },
     res
   );

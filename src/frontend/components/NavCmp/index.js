@@ -10,7 +10,7 @@ export default {
     const elems = [];
 
     if (this.inHeader) {
-      // elems.push(this.socialMenuElem());
+      elems.push(this.socialMenuElem());
 
       if (this.config.isContent) {
         elems.push(this.checkerElem());
@@ -27,8 +27,8 @@ export default {
   props: {
     inHeader: {
       type: Boolean,
-      default: true,
-    },
+      default: true
+    }
   },
   computed: {
     ...mapGetters(["config"]),
@@ -37,7 +37,7 @@ export default {
         return {
           nav: true,
           "header-nav": true,
-          "header-nav--fixed": this.config.isContent,
+          "header-nav--fixed": this.config.isContent
         };
       }
 
@@ -49,9 +49,9 @@ export default {
         "col--xds_4": true,
         "footer_top-col": true,
         nav: true,
-        "footer_top-nav": true,
+        "footer_top-nav": true
       };
-    },
+    }
   },
   methods: {
     checkerElem() {
@@ -72,6 +72,6 @@ export default {
     },
     socialMenuElem() {
       return <SocialMenu inHeader={this.inHeader} />;
-    },
-  },
+    }
+  }
 };

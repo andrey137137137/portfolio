@@ -5,7 +5,7 @@ mongoose.Promise = global.Promise;
 
 mongoose
   .connect(`mongodb://${USER}:${PASSWORD}@${HOST}:${PORT}/${NAME}`)
-  .catch((e) => {
+  .catch(e => {
     console.error(e);
     throw e;
   });
@@ -17,7 +17,7 @@ mongoose.connection.on("connected", () => {
 });
 
 // If the connection throws an error
-mongoose.connection.on("error", (err) => {
+mongoose.connection.on("error", err => {
   console.log("Mongoose default connection error: " + err);
 });
 

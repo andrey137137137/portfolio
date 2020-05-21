@@ -26,7 +26,7 @@ export default {
     let elems = [
       ...this.elemsBeforeInput(h),
       this.inputElem(h),
-      ...this.elemsAfterInput(h),
+      ...this.elemsAfterInput(h)
     ];
 
     if (this.isWrapper()) {
@@ -39,8 +39,8 @@ export default {
         class: {
           "form-wrap": true,
           [`form-wrap--${wrapClass}`]: true,
-          ...this.addClasses,
-        },
+          ...this.addClasses
+        }
       },
       this.isRequiredInput ? [...elems, this.errorElem()] : elems
     );
@@ -48,32 +48,32 @@ export default {
   props: {
     wrapClass: {
       type: String,
-      default: "",
+      default: ""
     },
     addInputClasses: {
       type: Object,
       default() {
         return {};
-      },
+      }
     },
     val: {
       type: Object,
       default() {
         return {};
-      },
+      }
     },
     value: {
       // type: String,
-      default: "",
+      default: ""
     },
     type: {
       type: String,
-      default: "text",
+      default: "text"
     },
     label: {
       type: String,
-      default: "",
-    },
+      default: ""
+    }
   },
   data() {
     return {
@@ -83,9 +83,9 @@ export default {
         modifs: {
           required: "required",
           error: "error",
-          valid: "valid",
-        },
-      },
+          valid: "valid"
+        }
+      }
     };
   },
   computed: {
@@ -119,9 +119,9 @@ export default {
 
       return {
         [baseClass + this.classes.modifs.error]: this.val.$error,
-        [baseClass + this.classes.modifs.valid]: !this.val.$invalid,
+        [baseClass + this.classes.modifs.valid]: !this.val.$invalid
       };
-    },
+    }
   },
   methods: {
     ...mapActions(["setFormMessage"]),
@@ -160,14 +160,14 @@ export default {
     },
     inputElem(h) {
       const on = {
-        input: this.handle,
+        input: this.handle
       };
       const attrs = {
-        placeholder: this.placeholder,
+        placeholder: this.placeholder
       };
       let classes = {
         "form-input": true,
-        ...this.addInputClasses,
+        ...this.addInputClasses
       };
       let formElem = "";
 
@@ -181,7 +181,7 @@ export default {
       if (this.isRequiredInput) {
         classes = {
           ...classes,
-          ...this.validationClasses,
+          ...this.validationClasses
         };
         on.blur = this.val.$touch;
       }
@@ -190,10 +190,10 @@ export default {
         class: classes,
         attrs,
         domProps: {
-          value: this.value,
+          value: this.value
         },
-        on,
+        on
       });
-    },
-  },
+    }
+  }
 };

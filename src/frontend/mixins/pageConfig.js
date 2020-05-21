@@ -4,12 +4,12 @@ const viewMapGetters = createNamespacedHelpers("frontView").mapGetters;
 export default {
   computed: {
     ...mapGetters(["dbData"]),
-    ...viewMapGetters(["config"]),
+    ...viewMapGetters(["config"])
   },
   methods: {
-    ...mapActions(["readData"]),
+    ...mapActions(["readData"])
   },
   created() {
     this.readData();
-  },
+  }
 };

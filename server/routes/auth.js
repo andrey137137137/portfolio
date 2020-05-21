@@ -2,7 +2,7 @@ const { FORBIDDEN } = require("@httpSt");
 const jwt = require("jsonwebtoken");
 
 const {
-  SIGNATURE,
+  SIGNATURE
   // EXPIRATION
 } = require("@config").jwt;
 
@@ -25,7 +25,7 @@ module.exports.setToken = (id, cb) => {
 
 module.exports.userId = (token, cb) => {
   try {
-    decoded = jwt.verify(token, SIGNATURE);
+    const decoded = jwt.verify(token, SIGNATURE);
     return decoded.id;
   } catch (err) {
     cb(err);

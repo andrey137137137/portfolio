@@ -14,7 +14,7 @@ import {
   SET_AUTH_STATUS,
   ADD,
   UPDATE,
-  DELETE,
+  DELETE
 } from "@common/store/mutation-types";
 import frontView from "@common/store/modules/frontView";
 import comments from "@common/store/modules/comments";
@@ -24,18 +24,18 @@ export default new Vuex.Store({
   state: {
     data: {
       page: "",
-      result: [],
+      result: []
     },
     status: 0,
     message: "",
-    authStatus: false,
+    authStatus: false
   },
   getters: {
-    dbPage: (state) => state.data.page,
-    dbData: (state) => state.data.result,
-    status: (state) => state.status,
-    message: (state) => state.message,
-    isAuth: (state) => state.authStatus,
+    dbPage: state => state.data.page,
+    dbData: state => state.data.result,
+    status: state => state.status,
+    message: state => state.message,
+    isAuth: state => state.authStatus
   },
   actions: {
     setPage({ commit }, page) {
@@ -44,19 +44,19 @@ export default new Vuex.Store({
     [SET_SUCCESS_MESSAGE]({ commit }, message) {
       commit(SET_FORM_MESSAGE, {
         status: SUCCESS,
-        message,
+        message
       });
     },
     setFormMessage({ commit }, data) {
       commit(SET_FORM_MESSAGE, data);
     },
     readData({ state, commit }) {
-      axios.get(state.data.page).then((res) => {
+      axios.get(state.data.page).then(res => {
         commit(SET, res.data.result);
       });
     },
     insertData({ state, dispatch, commit }, data) {
-      axios.post(state.data.page, data).then((res) => {
+      axios.post(state.data.page, data).then(res => {
         data._id = res.data._id;
         dispatch(SET_SUCCESS_MESSAGE, res.data.message);
         commit(ADD, data);
@@ -76,7 +76,7 @@ export default new Vuex.Store({
         url = page;
       }
 
-      axios[method](url, data).then((res) => {
+      axios[method](url, data).then(res => {
         const commitPayload = { id: 0, data };
 
         if (!isUser) {
@@ -88,19 +88,19 @@ export default new Vuex.Store({
       });
     },
     deleteData({ state, dispatch, commit }, id) {
-      axios.delete(`${state.data.page}/${id}`).then((res) => {
+      axios.delete(`${state.data.page}/${id}`).then(res => {
         dispatch(SET_SUCCESS_MESSAGE, res.data.message);
         commit(DELETE, id);
       });
     },
     getAuthStatus({ commit }) {
-      axios.get("user/auth").then((res) => {
+      axios.get("user/auth").then(res => {
         if (res.data.success) commit(SET_AUTH_STATUS, res.data.success);
       });
     },
     setAuthStatus({ commit }, authStatus) {
       commit(SET_AUTH_STATUS, authStatus);
-    },
+    }
   },
   mutations: {
     [SET_PAGE](state, page) {
@@ -132,7 +132,7 @@ export default new Vuex.Store({
       const { id, data } = payload;
 
       if (id) {
-        const index = state.data.result.findIndex((item) => item._id == id);
+        const index = state.data.result.findIndex(item => item._id == id);
         data._id = id;
         state.data.result.splice(index, 1, data);
       } else {
@@ -140,14 +140,14 @@ export default new Vuex.Store({
       }
     },
     [DELETE](state, id) {
-      state.data.result = state.data.result.filter((item) => item._id !== id);
+      state.data.result = state.data.result.filter(item => item._id !== id);
     },
     [SET_AUTH_STATUS](state, authStatus) {
       state.authStatus = authStatus;
-    },
+    }
   },
   modules: {
     frontView,
-    comments,
-  },
+    comments
+  }
 });

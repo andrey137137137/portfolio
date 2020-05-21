@@ -9,21 +9,6 @@
       v-model="category"
       :val="$v.category"
       placeholder="Категория")
-    //- div(v-for="(v, index) in $v.items.$each.$iter")
-    //-   .form-legend Обновить навык
-    //-   InputEventElem(
-    //-     v-model="v.name.$model"
-    //-     :val="v.name"
-    //-     :placeholder="`Навык ${getIndex(index)}`")
-    //-   InputEventElem(
-    //-     type="number"
-    //-     v-model="v.percents.$model"
-    //-     :val="v.percents"
-    //-     :placeholder="`Владение ${getIndex(index)}`"
-    //-     measure="%")
-    //- .menu
-    //-   button.btn(@click="items.pop()") Remove
-    //-   button.btn(@click="items.push({name: '', percents: ''})") Add
     MultipleElem(
       :vals="$v.items.$each.$iter"
       :items="items"
@@ -33,12 +18,7 @@
 
 <script>
 import { validationMixin } from "vuelidate";
-import {
-  required,
-  // alphaNum,
-  minValue,
-  maxValue
-} from "vuelidate/lib/validators";
+import { required, minValue, maxValue } from "vuelidate/lib/validators";
 import formMxn from "@backend/mixins/form";
 import itemFormMxn from "@backend/mixins/itemForm";
 import ItemForm from "@backCmp/Forms/ItemForm";
@@ -77,11 +57,6 @@ export default {
     return {
       ...data,
       category: this.item.category,
-      // items: exist("items", this.item)
-      //   ? this.item.items.map(item => {
-      //       return { name: item.name, percents: item.percents };
-      //     })
-      //   : [],
       items: this.getMultipleArray(this.item, "items", data.propTemplate)
     };
   },
@@ -104,9 +79,6 @@ export default {
     }
   },
   methods: {
-    // getIndex(index) {
-    //   return parseInt(index) + 1;
-    // },
     defaultFields() {
       return {
         category: "",
@@ -129,9 +101,6 @@ export default {
     prepareData() {
       this.submitData = {
         category: this.category,
-        // items: this.items.map(item => {
-        //   return { name: item.name, percents: item.percents };
-        // }),
         items: this.cloneMultipleArray(this.items, this.propTemplate)
       };
     }

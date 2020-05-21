@@ -1,6 +1,10 @@
 require("module-alias/register");
 
-const { SUCCESS, NOT_FOUND, ERROR } = require("@httpSt");
+const {
+  SUCCESS,
+  // NOT_FOUND,
+  ERROR
+} = require("@httpSt");
 const express = require("express");
 const cors = require("cors");
 const logger = require("morgan");
@@ -30,7 +34,7 @@ app.use(
   cors({
     origin: `${PROTOCOL}://${HOST}:${FRONT_PORT}`,
     optionsSuccessStatus: SUCCESS,
-    credentials: true,
+    credentials: true
   })
 );
 
@@ -45,13 +49,13 @@ app.use(
     secret: SECRET,
     key: KEY,
     store: new MongoStore({
-      mongooseConnection: mongoose.connection,
+      mongooseConnection: mongoose.connection
     }),
     resave: false,
     saveUninitialized: false,
     cookie: {
-      httpOnly: true,
-    },
+      httpOnly: true
+    }
   })
 );
 
@@ -70,7 +74,7 @@ if (!isProduction) {
 
 //Error handlers & middlewares
 if (!isProduction) {
-  app.use((err, req, res, next) => {
+  app.use((err, req, res) => {
     // set locals, only providing error in development
     console.log(err);
     res.locals.message = err.message;

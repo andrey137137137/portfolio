@@ -4,20 +4,20 @@ const Schema = mongoose.Schema;
 const WorkSchema = new Schema({
   title: {
     type: String,
-    required: [true, "Укажите заголовок работы"],
+    required: [true, "Укажите заголовок работы"]
   },
   link: {
     type: String,
-    required: [true, "Укажите ссылку работы"],
+    required: [true, "Укажите ссылку работы"]
   },
   image: {
     type: String,
-    default: "",
+    default: ""
   },
   techs: {
     type: Array,
-    required: [true, "Укажите картинку работы"],
-  },
+    required: [true, "Укажите картинку работы"]
+  }
 });
 
 mongoose.model("work", WorkSchema);

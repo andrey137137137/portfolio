@@ -14,7 +14,7 @@ router.post("/", isAuth, (req, res) => {
     {
       title: req.body.title,
       date: new Date(),
-      body: req.body.text,
+      body: req.body.text
     },
     res
   );
@@ -27,7 +27,7 @@ router.put("/:id", isAuth, (req, res) => {
     {
       title: req.body.title,
       date: new Date(req.body.date),
-      body: req.body.text,
+      body: req.body.text
     },
     res
   );

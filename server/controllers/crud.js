@@ -41,7 +41,7 @@ function sendResult(result, res, mode = "insert") {
 
 function sendError(err, res, mode) {
   res.status(ERROR).json({
-    message: `При ${getMessage(mode, true)} произошла ошибка: ${err}`,
+    message: `При ${getMessage(mode, true)} произошла ошибка: ${err}`
   });
 }
 
@@ -49,15 +49,15 @@ function get(Model, res, filter, fields, mode = "many") {
   const types = {
     many: "find",
     one: "findOne",
-    id: "findById",
+    id: "findById"
   };
   const method = types[mode];
 
   Model[method](filter, fields)
-    .then((result) => {
+    .then(result => {
       res.status(SUCCESS).json({ result });
     })
-    .catch((err) => {
+    .catch(err => {
       sendError(err, res, mode == "many" ? "find" : "findOne");
     });
 }
@@ -67,10 +67,10 @@ function update(Model, query, data, res) {
   const filter = query.id ? query.id : query;
 
   Model[FUNC](filter, { $set: data })
-    .then((result) => {
+    .then(result => {
       sendResult(result, res, "update");
     })
-    .catch((err) => {
+    .catch(err => {
       sendError(err, res, "update");
     });
 }
@@ -92,10 +92,10 @@ module.exports.createItem = (Model, data, res) => {
 
   item
     .save()
-    .then((result) => {
+    .then(result => {
       sendResult(result, res, "insert");
     })
-    .catch((err) => {
+    .catch(err => {
       sendError(err, res, "insert");
     });
 };
@@ -113,7 +113,7 @@ module.exports.updateUserPassword = (Model, id, data, res) => {
 
   waterfall(
     [
-      (cb) => {
+      cb => {
         Model.findById(id, cb);
       },
       (user, cb) => {
@@ -134,22 +134,22 @@ module.exports.updateUserPassword = (Model, id, data, res) => {
         user.password = password;
 
         user.save(cb);
-      },
+      }
     ],
     (err, user) => {
       if (err) sendError(err, res, "update");
       sendResult(user, res, "update");
-    },
+    }
   );
 };
 
 module.exports.deleteItem = (Model, id, res) => {
   Model.findByIdAndRemove(id).then(
-    (result) => {
+    result => {
       sendResult(result, res, "delete");
     },
-    (err) => {
+    err => {
       sendError(err, res, "delete");
-    },
+    }
   );
 };

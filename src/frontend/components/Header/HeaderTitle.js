@@ -23,7 +23,7 @@ export default {
         "section-title--large": this.isLarge,
         "header-title--relative": true,
         "header-title--medium": !this.isLarge,
-        "header-title--large": this.isLarge,
+        "header-title--large": this.isLarge
       };
     },
     descClasses() {
@@ -34,7 +34,7 @@ export default {
       return {
         "header-desc--relative": true,
         "header-desc--after_medium_title": !this.isLarge,
-        "header-desc--after_large_title": this.isLarge,
+        "header-desc--after_large_title": this.isLarge
       };
     },
     title() {
@@ -46,7 +46,7 @@ export default {
       return this.config.isBlog
         ? "Статьи, которые я написал"
         : "Личный сайт веб разработчика";
-    },
+    }
   },
   methods: {
     titleElem(h) {
@@ -58,10 +58,10 @@ export default {
           class: {
             "section-title": true,
             "header-title": true,
-            ...this.titleClasses,
-          },
+            ...this.titleClasses
+          }
         },
-        [this.title],
+        [this.title]
       );
     },
     descElem() {
@@ -70,12 +70,12 @@ export default {
           class={{
             "section-desc": true,
             "header-desc": true,
-            ...this.descClasses,
+            ...this.descClasses
           }}
         >
           {this.desc}
         </p>
       );
-    },
-  },
+    }
+  }
 };

@@ -13,8 +13,8 @@ router.get("/", (req, res) => {
       _id: 0,
       __v: 0,
       username: 0,
-      password: 0,
-    },
+      password: 0
+    }
   );
 });
 
@@ -27,9 +27,9 @@ router.post("/", isAuth, (req, res, next) => {
     {
       firstName,
       lastName,
-      contacts,
+      contacts
     },
-    res,
+    res
   );
 });
 

@@ -130,9 +130,6 @@
   &-socials {
     $elem: &;
 
-    // padding-bottom: 5px;
-    padding-bottom: 13px;
-
     .socials-link {
       color: $darkBlue;
 
@@ -331,11 +328,24 @@
 
   &#{$block}--framed {
     padding-top: 80px;
+
+    #{$block}-socials {
+      justify-content: center;
+      // padding-bottom: 5px;
+      padding-bottom: 13px;
+      height: 91px;
+      overflow: hidden;
+    }
   }
 
   &#{$block}--wide {
     padding-top: 78px;
     width: 100%;
     height: 557px;
+
+    #{$block}-socials {
+      width: 85.3125%;
+      overflow: hidden;
+    }
   }
 }

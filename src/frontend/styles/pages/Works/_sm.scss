@@ -83,13 +83,14 @@
   }
 
   &-text_wrap {
-    @include padding("5px * 30px");
+    // @include padding("5px * 30px");
+    padding-top: 5px;
     // height: 219px;
   }
 
   &-title {
     // padding-top: 28px;
-    height: 103px;
+    // height: 103px;
 
     &:after {
       transition: all $trsTime;
@@ -105,7 +106,7 @@
   &-btn {
     display: table;
     // @include margin("12px auto *");
-    @include margin("* auto");
+    @include margin("* auto 30px");
     padding: 0 19px;
     height: 40px;
     line-height: 38px;

@@ -19,7 +19,7 @@ export default {
       }
     } else {
       elems.push(this.mainMenuElem());
-      // elems.push(this.socialMenuElem());
+      elems.push(this.socialMenuElem());
     }
 
     return h("nav", { class: this.classes }, elems);

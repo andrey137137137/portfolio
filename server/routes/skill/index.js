@@ -5,7 +5,7 @@ const { isAuth } = require("@auth");
 const crud = require("@contr/crud");
 
 router.get("/", (req, res) => {
-  crud.getItems(Model, res);
+  crud.getItems(Model, res, { _id: 1 });
 });
 
 router.post("/", isAuth, (req, res) => {

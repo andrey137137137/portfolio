@@ -45,7 +45,7 @@ function sendError(err, res, mode) {
   });
 }
 
-function get(Model, res, filter, fields, mode = "many") {
+function get(Model, res, filter, fields, options, mode = "many") {
   const types = {
     many: "find",
     one: "findOne",
@@ -53,7 +53,7 @@ function get(Model, res, filter, fields, mode = "many") {
   };
   const method = types[mode];
 
-  Model[method](filter, fields)
+  Model[method](filter, fields, options)
     .then(result => {
       res.status(SUCCESS).json({ result });
     })
@@ -75,16 +75,22 @@ function update(Model, query, data, res) {
     });
 }
 
-module.exports.getItemById = (Model, res, id, fields = {}) => {
-  get(Model, res, id, fields, "id");
+module.exports.getItemById = (Model, res, id, fields = {}, options = {}) => {
+  get(Model, res, id, fields, options, "id");
 };
 
-module.exports.getItem = (Model, res, filter = {}, fields = {}) => {
-  get(Model, res, filter, fields, "one");
+module.exports.getItem = (
+  Model,
+  res,
+  filter = {},
+  fields = {},
+  options = {}
+) => {
+  get(Model, res, filter, fields, options, "one");
 };
 
-module.exports.getItems = (Model, res, filter = {}, fields = {}) => {
-  get(Model, res, filter, fields);
+module.exports.getItems = (Model, res, sort, filter = {}, fields = {}) => {
+  get(Model, res, filter, fields, { sort });
 };
 
 module.exports.createItem = (Model, data, res) => {

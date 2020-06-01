@@ -25,14 +25,23 @@ form {
     //   width: auto;
     // }
 
-    &--icon_label {
-      #{$block} {
-        &-label,
-        &-input {
-          float: left;
-        }
-      }
-    }
+    // &--icon_label {
+    //   #{$block}-row {
+    //     display: flex;
+    //     flex-wrap: wrap;
+    //   }
+
+    //   #{$block}-input {
+    //     flex-grow: 1;
+    //   }
+
+    //   #{$block} {
+    //     &-label,
+    //     &-input {
+    //       float: left;
+    //     }
+    //   }
+    // }
 
     &--icon_label,
     &--text,
@@ -92,18 +101,34 @@ form {
 
     &--icon_label {
       #{$block} {
+        &-row {
+          display: flex;
+          flex-wrap: wrap;
+        }
+
+        &-label,
+        &-input {
+          float: left;
+        }
+
         &-label {
           size: 45px;
           text-align: center;
           color: #c4cbcd #f0efe9;
 
-          &:before {
-            font-size: 45px;
-            content: "";
-          }
+          // &:before {
+          //   font-size: 45px;
+          //   content: "";
+          // }
+        }
+
+        &-icon {
+          size: 17px 100%;
+          fill: #c4cbcd;
         }
 
         &-input {
+          flex-grow: 1;
           width: auto;
           color: rgba(#373e42, 0.5) $white;
         }
@@ -231,12 +256,15 @@ form {
 
   &-input {
     border: 1px solid $white;
+    outline-width: 0;
+    outline-style: solid;
     transition: border, background-color $trsTime;
+    // transition: outline, background-color $trsTime;
 
     &:active,
     &:focus {
       border-color: $blue;
-      outline: 0;
+      // outline-color: $blue;
     }
 
     &--required {
@@ -244,6 +272,7 @@ form {
       &:active,
       &:focus {
         border-color: $orange;
+        // outline-color: $orange;
       }
     }
 
@@ -252,6 +281,7 @@ form {
       &:active,
       &:focus {
         border-color: $red;
+        // outline-color: $red;
       }
     }
 
@@ -261,6 +291,7 @@ form {
       &:focus {
         // border-color: forestgreen;
         border-color: $blue;
+        // outline-color: $blue;
       }
     }
   }
@@ -304,17 +335,4 @@ form {
       opacity: 0.5;
     }
   }
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: all 0.5s;
-}
-
-.fade-enter-active {
-  transition-delay: 0.5s;
-}
-
-.fade-enter, .fade-leave-active /* .fade-leave-active до версии 2.1.8 */ {
-  opacity: 0;
 }

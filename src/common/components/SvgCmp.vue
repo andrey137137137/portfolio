@@ -1,7 +1,6 @@
 <template lang="pug">
   svg(:class="addClasses")
-    use(xlink:href="../../assets/svg/sprite.svg")
-    //- v-bind:xlink:href=`../svg/symbol/svg/sprite.symbol.svg#${id}`
+    use(:xlink:href="`#${id}`")
 </template>
 
 <script>

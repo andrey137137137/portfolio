@@ -1,8 +1,13 @@
 import formElem from "@common/mixins/formElem";
+import SvgCmp from "@components/SvgCmp";
 
 export default {
   mixins: [formElem],
   props: {
+    labelIcon: {
+      type: String,
+      default: ""
+    },
     placeholder: {
       type: String,
       default: ""
@@ -17,7 +22,7 @@ export default {
       let elems = [];
 
       if (this.label) {
-        if (this.wrapClass === "icon_label") {
+        if (this.labelIcon) {
           elems.push(this.iconLabelElem());
         } else {
           elems.push(this.labelElem());
@@ -42,7 +47,11 @@ export default {
       return <label class="form-label">{this.label}</label>;
     },
     iconLabelElem() {
-      return <label class="form-label" />;
+      return (
+        <label class="form-label">
+          <SvgCmp class="form-icon" id={this.labelIcon} />
+        </label>
+      );
     },
     measureElem() {
       return <span class="form-measure">{this.measure}</span>;

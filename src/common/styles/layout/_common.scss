@@ -31,9 +31,11 @@ body {
   &-leave-active {
     transition: opacity 0.5s;
   }
+
   &-enter, &-leave-to /* .fade-leave-active до версии 2.1.8 */ {
     opacity: 0;
   }
+
   &-enter-to, &-leave /* .fade-leave-active до версии 2.1.8 */ {
     opacity: 1;
   }

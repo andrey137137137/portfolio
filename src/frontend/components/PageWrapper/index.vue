@@ -1,5 +1,5 @@
 <template lang="pug">
-  div(:class="classes")
+  .bg(:class="classes")
     PreloaderCmp
     //- ParallaxCmp
     slot
@@ -24,7 +24,6 @@ export default {
     ...mapGetters(["config"]),
     classes() {
       return {
-        bg: true,
         full_screen: !this.config.isContent,
         main_wrap: this.config.isContent
       };

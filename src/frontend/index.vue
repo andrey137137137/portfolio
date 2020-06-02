@@ -1,5 +1,5 @@
 <template lang="pug">
-  div
+  Fragment
     PageWrapper
       HeaderWrapper
         a.btn.btn--opacity.authorization(href="#login" ref="flipBtn" @click.prevent="fadeButton") Авторизоваться
@@ -61,6 +61,7 @@
 <script>
 import $ from "jquery";
 import axios from "axios";
+import { Fragment } from "vue-fragment";
 import { validationMixin } from "vuelidate";
 // import { required } from "vuelidate/lib/validators";
 import { userAlphaNumValids, checked } from "@common/helpers/validators";
@@ -82,6 +83,7 @@ import { mapActions } from "vuex";
 export default {
   name: "Home",
   components: {
+    Fragment,
     PageWrapper,
     HeaderWrapper,
     HeaderContent,

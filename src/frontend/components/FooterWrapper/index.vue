@@ -29,7 +29,7 @@ export default {
     ...mapGetters(["config", "profile"]),
     containerClasses() {
       return {
-        "footer--absolute": !this.config.isContent || this.config.sections > 2,
+        "footer--absolute": this.config.sections > 2,
         "footer--bg": this.config.isBlog
       };
     },

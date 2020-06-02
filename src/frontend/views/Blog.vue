@@ -67,7 +67,7 @@ export default {
           $vm.postPositions[item].top + $(this).innerHeight();
       });
     },
-    scrollPageFixMenu(e) {
+    scrollPageFixMenu() {
       if (window.pageYOffset < this.$posts.offset().top) {
         this.menu.$elem.removeClass(this.menu.modifs.fixed);
       } else {
@@ -81,7 +81,7 @@ export default {
         !current.hasClass(this.menu.modifs.itemActive)
       );
     },
-    scrollPage(e) {
+    scrollPage() {
       const $vm = this;
 
       $vm.postPositions.forEach((elem, index) => {
@@ -129,7 +129,7 @@ export default {
     $(document).on("scroll", $vm.scrollPage);
     $(document).on("scroll", $vm.scrollPageFixMenu);
 
-    $(window).on("resize", e => {
+    $(window).on("resize", () => {
       $vm.setPostPositions();
     });
   }

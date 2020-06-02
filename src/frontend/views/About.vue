@@ -1,5 +1,5 @@
 <template lang="pug">
-  div
+  Fragment
     TopWrapper
       SectionWrapper(
         name="about"
@@ -40,6 +40,7 @@
 </template>
 
 <script>
+import { Fragment } from "vue-fragment";
 import pageConfig from "@frontend/mixins/pageConfig";
 import TopWrapper from "@frontCmp/TopWrapper";
 import SectionWrapper from "@frontCmp/SectionWrapper";
@@ -54,6 +55,7 @@ const { mapGetters } = createNamespacedHelpers("frontView");
 export default {
   name: "AboutView",
   components: {
+    Fragment,
     TopWrapper,
     SectionWrapper,
     TitleWrapper,

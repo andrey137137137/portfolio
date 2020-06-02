@@ -1,13 +1,14 @@
 <template lang="pug">
-  div
+  Fragment
     TopWrapper
       SliderCmp(:slides="dbData")
-    BottomWrapper(:addClasses="bottomWrapClass")
+    BottomWrapper.bottom_wrap--bg
       CommentCmp
       FeedbackForm
 </template>
 
 <script>
+import { Fragment } from "vue-fragment";
 import pageConfig from "@frontend/mixins/pageConfig";
 import TopWrapper from "@frontCmp/TopWrapper";
 import SliderCmp from "@frontCmp/SliderCmp";
@@ -18,33 +19,14 @@ import FeedbackForm from "@frontCmp/Forms/FeedbackForm";
 export default {
   name: "WorksView",
   components: {
+    Fragment,
     TopWrapper,
     SliderCmp,
     BottomWrapper,
     CommentCmp,
     FeedbackForm
   },
-  mixins: [pageConfig],
-  data() {
-    return {
-      bottomWrapClass: {
-        "bottom_wrap--bg": true
-      }
-    };
-  }
-  // computed: {
-  //   slides() {
-  //     let obj = [];
-
-  //     for (const key in this.dbData) {
-  //       if (this.dbData.hasOwnProperty(key)) {
-  //         obj.push(this.dbData[key]);
-  //       }
-  //     }
-
-  //     return obj;
-  //   }
-  // },
+  mixins: [pageConfig]
 };
 </script>
 

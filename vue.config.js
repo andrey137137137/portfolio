@@ -22,20 +22,32 @@ function resolveBack(dir) {
 }
 
 module.exports = {
-  // pages: {
-  //   index: "src/frontend/main.js",
-  //   admin: "src/backend/admin.js"
-  // },
-  // devServer: {
-  //   historyApiFallback: {
-  //     rewrites: [
-  //       { from: /^\/index/, to: "/index.html" },
-  //       { from: /^\/admin\//, to: "/admin.html" }
-  //     ]
-  //   },
-  // },
+  pluginOptions: {
+    svgSprite: {
+      /*
+       * The directory containing your SVG files.
+       */
+      dir: "src/assets/icons",
+      /*
+       * The reqex that will be used for the Webpack rule.
+       */
+      test: /\.(svg)(\?.*)?$/,
+      /*
+       * @see https://github.com/kisenka/svg-sprite-loader#configuration
+       */
+      loaderOptions: {
+        extract: true,
+        spriteFilename: "img/icons.[hash:8].svg" // or 'img/icons.svg' if filenameHashing == false
+      },
+      /*
+       * @see https://github.com/kisenka/svg-sprite-loader#configuration
+       */
+      pluginOptions: {
+        plainSprite: true
+      }
+    }
+  },
   css: {
-    // modules: true,
     loaderOptions: {
       sass: {
         data: `@import "@/common/styles/variables.scss"; @import "@/common/styles/mixins.scss";`
@@ -59,6 +71,7 @@ module.exports = {
       "@httpSt",
       resolve(packageJson._moduleAliases["@httpSt"])
     );
+    config.resolve.alias.set("@assets", resolveSrc("assets"));
     config.resolve.alias.set("@common", resolveSrc("common"));
     config.resolve.alias.set("@frontend", resolveSrc("frontend"));
     config.resolve.alias.set("@backend", resolveSrc("backend"));

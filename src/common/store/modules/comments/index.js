@@ -16,14 +16,14 @@ export default {
     }
   },
   actions: {
-    readComment({ commit }) {
-      // fetch("/src/common/store/data/data.json")
+    readComments({ commit }) {
+      // fetch("@common/store/data/reviews.json")
       //   .then(data => {
       //     return data.text();
       //   })
       //   .then(response => {
       //     // state.data = response;
-      //     commit(types.SET, response);
+      //     commit(SET, response);
       //   });
 
       console.log(reviews);

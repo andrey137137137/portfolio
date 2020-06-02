@@ -1,9 +1,9 @@
 <template lang="pug">
   div
     TopWrapper
-      SliderCmp(:slides="slides")
+      SliderCmp(:slides="dbData")
     BottomWrapper(:addClasses="bottomWrapClass")
-      //- CommentCmp(:items="dbData")
+      CommentCmp
       FeedbackForm
 </template>
 
@@ -31,20 +31,20 @@ export default {
         "bottom_wrap--bg": true
       }
     };
-  },
-  computed: {
-    slides() {
-      let obj = [];
-
-      for (const key in this.dbData) {
-        if (this.dbData.hasOwnProperty(key)) {
-          obj.push(this.dbData[key]);
-        }
-      }
-
-      return obj;
-    }
   }
+  // computed: {
+  //   slides() {
+  //     let obj = [];
+
+  //     for (const key in this.dbData) {
+  //       if (this.dbData.hasOwnProperty(key)) {
+  //         obj.push(this.dbData[key]);
+  //       }
+  //     }
+
+  //     return obj;
+  //   }
+  // },
 };
 </script>
 

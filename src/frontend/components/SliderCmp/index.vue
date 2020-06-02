@@ -1,7 +1,7 @@
 <template lang="pug">
   SectionWrapper(:name="id" :isFullWidth="true" :isOwnContainerClass="true")
 
-    ul.menu
+    ul.menu(style="display:none")
       li.menu-item(v-for="item in slides") {{item.title}}
 
     ul.slider-demo

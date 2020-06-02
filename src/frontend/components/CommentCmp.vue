@@ -8,7 +8,7 @@
       titleAddClass="reviews-title"
     )
 
-    article.col.col--float.col--tb_6.col--ds_4.reviews-article(v-for="(review, index) in items" class="{'reviews-article--first': !index}")
+    article.col.col--float.col--tb_6.col--ds_4.reviews-article(v-for="(review, index) in comments" class="{'reviews-article--first': !index}")
       .icon.icon--quote.reviews-quote
       .img_wrap.reviews-img_wrap
         img.img_wrap-img(
@@ -26,16 +26,22 @@
 <script>
 import TitleWrapper from "@frontCmp/TitleWrapper";
 
+import { createNamespacedHelpers } from "vuex";
+const { mapGetters, mapActions } = createNamespacedHelpers("comments");
+
 export default {
   name: "CommentCmp",
   components: {
     TitleWrapper
   },
-  props: {
-    items: {
-      type: Array,
-      required: true
-    }
+  computed: {
+    ...mapGetters(["comments"])
+  },
+  methods: {
+    ...mapActions(["readComments"])
+  },
+  created() {
+    this.readComments();
   }
 };
 </script>

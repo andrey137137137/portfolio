@@ -8,7 +8,7 @@ import App from "@/App.vue";
 import router from "@/router";
 
 axios.interceptors.request.use(
-  (config) => {
+  config => {
     const { PROTOCOL, HOST, PORT, URL } = myConfig.server;
 
     config.baseURL = `${PROTOCOL}://${HOST}:${PORT}${URL}`;
@@ -18,7 +18,7 @@ axios.interceptors.request.use(
 
     return config;
   },
-  (err) => {
+  err => {
     if (isDev()) console.log(err.response.status);
     return Promise.reject();
   }
@@ -30,5 +30,5 @@ new Vue({
   el: "#app",
   store,
   router,
-  render: (h) => h(App),
+  render: h => h(App)
 });

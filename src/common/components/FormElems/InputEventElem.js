@@ -49,7 +49,7 @@ export default {
     iconLabelElem() {
       return (
         <label class="form-label">
-          <SvgCmp class="form-icon" id={this.labelIcon} />
+          <SvgCmp class="form-icon" name={this.labelIcon} />
         </label>
       );
     },

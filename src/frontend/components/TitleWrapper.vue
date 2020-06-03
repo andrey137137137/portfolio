@@ -56,7 +56,7 @@ export default {
   },
   methods: {
     svgElem() {
-      return <SvgCmp id={this.bgIcon} addClasses={this.bgClasses} />;
+      return <SvgCmp name={this.bgIcon} addClasses={this.bgClasses} />;
     },
     titleElem(h) {
       return h(`h${this.titleLevel}`, {

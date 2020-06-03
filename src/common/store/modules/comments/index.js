@@ -17,16 +17,6 @@ export default {
   },
   actions: {
     readComments({ commit }) {
-      // fetch("@common/store/data/reviews.json")
-      //   .then(data => {
-      //     return data.text();
-      //   })
-      //   .then(response => {
-      //     // state.data = response;
-      //     commit(SET, response);
-      //   });
-
-      console.log(reviews);
       commit(SET, reviews);
     },
     insertComment({ dispatch }, payload) {

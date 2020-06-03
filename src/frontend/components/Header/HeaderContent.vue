@@ -1,7 +1,7 @@
 <template lang="pug">
   article.header-article(:class="containerClasses")
 
-    SvgCmp(v-if="config.isContent" id="stars1" :addClasses="svgClasses")
+    SvgCmp.header-logo(v-if="config.isContent" name="stars1" :addClasses="svgClasses")
 
     router-link.img_wrap.header-avatar(:class="avatarClasses" to="/")
       img.img_wrap-img(src="/upload/avatar.jpg" alt="Аватарка")
@@ -32,7 +32,6 @@ export default {
     },
     svgClasses() {
       return {
-        "header-logo": true,
         "header-logo--for_blog": this.config.isBlog
       };
     },

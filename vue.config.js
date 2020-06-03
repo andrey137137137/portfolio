@@ -64,6 +64,10 @@ module.exports = {
           format: "minimal"
         }
       ]);
+    config.module
+      .rule("svg-sprite")
+      .use("svgo-loader")
+      .loader("svgo-loader");
     config.resolve.alias.set(
       "@config",
       resolve(packageJson._moduleAliases["@config"])

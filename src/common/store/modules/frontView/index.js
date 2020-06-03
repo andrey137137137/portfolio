@@ -7,8 +7,8 @@ const defaultData = {
     isTopWrapTitle: false,
     isBlog: false,
     isContent: false,
-    sections: 0,
-  },
+    sections: 0
+  }
 };
 
 export default {
@@ -19,7 +19,7 @@ export default {
       isTopWrapTitle: defaultData.isTopWrapTitle,
       isBlog: defaultData.isBlog,
       isContent: defaultData.isContent,
-      sections: defaultData.sections,
+      sections: defaultData.sections
     },
     userProfile: {
       firstName: "",
@@ -27,22 +27,22 @@ export default {
       old: 0,
       email: "",
       contacts: [],
-      footerDesc: "Дизайн сайта взят от Школы онлайн образования LoftSchool.",
-    },
+      footerDesc: "Дизайн сайта взят от Школы онлайн образования LoftSchool."
+    }
   },
   getters: {
-    config: (state) => state.pageConfig,
-    profile: (state) => state.userProfile,
+    config: state => state.pageConfig,
+    profile: state => state.userProfile
   },
   actions: {
     setConfig({ commit }, data) {
       commit(SET_CONFIG, data);
     },
     setProfile({ commit }) {
-      axios.get("user/profile").then((res) => {
+      axios.get("user/profile").then(res => {
         commit(SET_PROFILE, res.data.result);
       });
-    },
+    }
   },
   mutations: {
     [SET_CONFIG](state, data) {
@@ -58,6 +58,6 @@ export default {
           state.userProfile[key] = data[key];
         }
       }
-    },
-  },
+    }
+  }
 };

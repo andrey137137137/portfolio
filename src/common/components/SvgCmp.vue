@@ -1,6 +1,6 @@
 <template lang="pug">
-  svg(v-once :viewBox="svg.viewBox" :class="addClasses")
-    use(:xlink:href="`#${svg.id}`")
+  svg(:class="addClasses" xmlns="http://www.w3.org/2000/svg")
+    use(:xlink:href="iconPath" xmlns:xlink="http://www.w3.org/1999/xlink")
 </template>
 
 <script>
@@ -10,19 +10,20 @@ export default {
   name: "SvgCmp",
   mixins: [addClasses],
   props: {
-    id: {
+    name: {
       type: String,
       required: true
     }
   },
-  data() {
-    return {
-      svg: null
-    };
-  },
-  created() {
-    this.svg = require(`@assets/svg/${this.id}.svg`);
-    console.log(this.svg);
+  computed: {
+    iconPath() {
+      let icon = require(`@assets/svg/${this.name}.svg`);
+      if (Object.prototype.hasOwnProperty.call(icon, "default")) {
+        icon = icon.default;
+      }
+
+      return icon.url;
+    }
   }
 };
 </script>

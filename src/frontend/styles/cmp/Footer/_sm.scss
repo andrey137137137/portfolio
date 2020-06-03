@@ -61,6 +61,8 @@
     }
 
     &-socials {
+      justify-content: center;
+
       .socials-link {
         @include oneLineBlock(45px);
         font-size: 27px;

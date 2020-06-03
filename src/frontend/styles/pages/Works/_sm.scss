@@ -196,6 +196,8 @@
 // REVIEWS
 
 .reviews {
+  display: flex;
+  flex-wrap: wrap;
   @include padding("8px * 32px");
   // height: 614px;
   color: $white;

@@ -27,7 +27,7 @@ module.exports = {
       /*
        * The directory containing your SVG files.
        */
-      dir: "src/assets/icons",
+      dir: "src/assets/svg",
       /*
        * The reqex that will be used for the Webpack rule.
        */
@@ -37,7 +37,8 @@ module.exports = {
        */
       loaderOptions: {
         extract: true,
-        spriteFilename: "img/icons.[hash:8].svg" // or 'img/icons.svg' if filenameHashing == false
+        spriteFilename: "assets/icons.[hash:8].svg" // or 'assets/icons.svg' if filenameHashing == false
+        // publicPath: "/"
       },
       /*
        * @see https://github.com/kisenka/svg-sprite-loader#configuration

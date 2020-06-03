@@ -1,6 +1,6 @@
 <template lang="pug">
-  svg(:class="addClasses")
-    use(:xlink:href="svg.url")
+  svg(v-once :viewBox="svg.viewBox" :class="addClasses")
+    use(:xlink:href="`#${svg.id}`")
 </template>
 
 <script>

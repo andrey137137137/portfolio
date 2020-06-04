@@ -51,12 +51,6 @@ form {
       }
     }
 
-    &--text,
-    &--number,
-    &--textarea {
-      width: 300px;
-    }
-
     &--number {
       #{$block} {
         // &-label,

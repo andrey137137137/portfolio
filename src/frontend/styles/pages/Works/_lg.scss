@@ -8,26 +8,29 @@
 
 .slider {
   &-container {
-    display: block;
+    // display: block;
+    display: flex;
+    height: 750px;
   }
 
-  &-list,
+  &-demo,
   &-text_wrap,
   &-nav {
     width: 50%;
   }
 
-  &-list,
-  &-nav {
-    float: right;
-  }
+  // &-demo,
+  // &-nav {
+  //   float: right;
+  // }
 
-  &-list {
+  &-demo {
+    order: 1;
     height: 525px;
   }
 
   &-text_wrap {
-    float: left;
+    // float: left;
     @include padding("221px 100px 0");
     size: 50% 100%;
   }
@@ -51,6 +54,7 @@
   // }
 
   &-nav {
+    @include position("absolute * 0 0 *");
     margin-left: 50%;
     height: 225px;
   }

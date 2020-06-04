@@ -21,16 +21,16 @@
         //- v-for="(item, index) in slides"
         //- v-if="index==curIndex"
         //- :key="index"
-    AnimateStr(
-      transitionName="slider-techs"
-      rootElem="p"
-      :str="techs"
-      :commonKey="curIndex"
-      :addClasses="techsClasses"
-    )
-    a.clearfix.btn.slider-btn(:href="link" target="_blank")
-      span.icon.icon--link.slider-btn_icon
-      span.slider-btn_text Посмотреть сайт
+      AnimateStr(
+        transitionName="slider-techs"
+        rootElem="p"
+        :str="techs"
+        :commonKey="curIndex"
+        :addClasses="techsClasses"
+      )
+      a.clearfix.btn.slider-btn(:href="link" target="_blank")
+        span.icon.icon--link.slider-btn_icon
+        span.slider-btn_text Посмотреть сайт
 
     .clearfix.slider-nav
       ArrowButton(

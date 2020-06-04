@@ -26,6 +26,12 @@ body {
       line-height: 34px;
     }
 
+    #{$block}--text,
+    #{$block}--number,
+    #{$block}--textarea {
+      width: 300px;
+    }
+
     #{$block}-checked {
       color: $white;
     }

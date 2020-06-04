@@ -11,7 +11,6 @@ function setDbPage(dbPage) {
 function pageConfig(config, dbPage = "") {
   if (dbPage) {
     setDbPage(dbPage);
-    // store.dispatch("readData");
   }
 
   store.dispatch("frontView/setConfig", config);
@@ -33,9 +32,6 @@ export default new VueRouter({
     },
     {
       path: "/",
-      // props: () => {
-      //   setDbPage("user");
-      // },
       component: () => import("@frontViews"),
       children: [
         {
@@ -44,7 +40,7 @@ export default new VueRouter({
           props: () => {
             pageConfig(
               {
-                name: "Мои работы",
+                title: "Мои работы",
                 isTopWrapTitle: true,
                 isContent: true,
                 sections: 3
@@ -60,16 +56,13 @@ export default new VueRouter({
           props: () => {
             pageConfig(
               {
-                name: "Обо мне",
+                title: "Обо мне",
                 isContent: true,
                 sections: 4
               },
               "skill"
             );
           },
-          // route level code-splitting
-          // this generates a separate chunk (about.[hash].js) for this route
-          // which is lazy-loaded when the route is visited.
           component: () => import("@frontViews/About.vue")
         },
         {
@@ -78,7 +71,7 @@ export default new VueRouter({
           props: () => {
             pageConfig(
               {
-                name: "Блог",
+                title: "Блог",
                 isBlog: true,
                 isContent: true,
                 sections: 2

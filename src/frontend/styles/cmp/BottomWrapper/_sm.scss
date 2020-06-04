@@ -8,9 +8,9 @@
   }
 
   &#{$block}--bg {
-    height: 1478px;
-    background: #110d14 url(../../../../assets/img/bottom.jpg) center top
-      no-repeat;
+    padding-bottom: 97px;
+    // height: 1478px;
+    background: #110d14 url("../../assets/img/bottom.jpg") center top no-repeat;
     background-size: cover;
   }
 }

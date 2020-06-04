@@ -38,7 +38,7 @@ export default {
     titleWrapperElem() {
       return (
         <TitleWrapper
-          title={this.config.name}
+          title={this.config.title}
           containerAddClass="top_wrap-title_wrap"
         />
       );

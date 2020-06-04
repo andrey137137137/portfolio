@@ -7,7 +7,7 @@
         :isOwnContainerClass="true"
       )
         TitleWrapper(
-          :title="config.name"
+          :title="config.title"
           containerAddClass="about-title_wrap"
           bgAddClass="title_wrap-bg--contrast"
         )

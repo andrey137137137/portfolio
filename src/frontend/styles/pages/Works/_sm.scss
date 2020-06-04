@@ -4,11 +4,13 @@
   $demoHeight: 257px;
   $navHeight: 93px;
 
+  width: 100%;
   background-color: #f2f0e8;
 
   &-container {
     position: relative;
     // height: 569px;
+    min-width: 300px;
   }
 
   &-item,

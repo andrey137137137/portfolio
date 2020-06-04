@@ -1,8 +1,8 @@
 <template lang="pug">
-  SectionWrapper(:name="id" :isFullWidth="true" :isOwnContainerClass="true")
+  SectionWrapper(:name="id" :isContainerClass="false" :isOwnContainerClass="true")
 
-    ul.menu(style="display:none")
-      li.menu-item(v-for="item in slides") {{item.title}}
+    ul(style="display:none")
+      li(v-for="item in slides") {{item.title}}
 
     ul.slider-demo
       transition(:name="transitionName")

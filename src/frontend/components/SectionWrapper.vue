@@ -1,6 +1,6 @@
 <template lang="pug">
   section.section(:id="name" :class="name")
-    .container(:class="containerClasses")
+    div(:class="containerClasses")
       slot
 </template>
 
@@ -11,6 +11,10 @@ export default {
     name: {
       type: String,
       required: true
+    },
+    isContainerClass: {
+      type: Boolean,
+      default: true
     },
     isFullWidth: {
       type: Boolean,
@@ -24,7 +28,8 @@ export default {
   computed: {
     containerClasses() {
       return {
-        "container--full_width": this.isFullWidth,
+        container: this.isContainerClass,
+        "container--full_width": this.isContainerClass && this.isFullWidth,
         [`${this.name}-container`]: this.isOwnContainerClass
       };
     }

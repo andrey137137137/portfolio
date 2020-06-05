@@ -13,7 +13,6 @@ function pageConfig(config, dbPage = "") {
     setDbPage(dbPage);
   }
 
-  // store.dispatch("frontView/setConfig", config);
   store.dispatch("frontView/setTitle", config);
   store.dispatch("frontView/setProfile");
 

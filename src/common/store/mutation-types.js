@@ -3,7 +3,6 @@ export const SET_PAGE = "SET_PAGE";
 export const SET_SUCCESS_MESSAGE = "SET_SUCCESS_MESSAGE";
 export const SET_FORM_MESSAGE = "SET_FORM_MESSAGE";
 export const SET_AUTH_STATUS = "SET_AUTH_STATUS";
-// export const SET_CONFIG = "SET_CONFIG";
 export const SET_TITLE = "SET_TITLE";
 export const SET_PROFILE = "SET_PROFILE";
 export const ADD = "ADD";

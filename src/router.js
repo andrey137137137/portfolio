@@ -8,12 +8,13 @@ function setDbPage(dbPage) {
   store.dispatch("setPage", dbPage);
 }
 
-function pageConfig(config, dbPage = "") {
-  if (dbPage) {
-    setDbPage(dbPage);
-  }
+// function pageConfig(config, dbPage = "") {
+function pageConfig(dbPage) {
+  // if (dbPage) {
+  setDbPage(dbPage);
+  // }
 
-  store.dispatch("frontView/setTitle", config);
+  // store.dispatch("frontView/setTitle", config);
   store.dispatch("frontView/setProfile");
 
   return {};
@@ -26,10 +27,10 @@ export default new VueRouter({
     {
       path: "/",
       name: "home",
-      props: () => {
-        // pageConfig({ title: "Главная" });
-        pageConfig("Главная");
-      },
+      // props: () => {
+      //   pageConfig("Главная");
+      // },
+      meta: { title: "Главная" },
       component: () => import("@frontend")
     },
     {
@@ -40,56 +41,37 @@ export default new VueRouter({
           path: "works",
           name: "works",
           props: () => {
-            pageConfig(
-              // {
-              //   title:
-              "Мои работы",
-              //   isTopWrapTitle: true,
-              //   isContent: true,
-              //   sections: 3
-              // },
-              "work"
-            );
+            // pageConfig("Мои работы", "work");
+            pageConfig("work");
           },
+          meta: { title: "Мои работы" },
           component: () => import("@frontViews/Works.vue")
         },
         {
           path: "about",
           name: "about",
           props: () => {
-            pageConfig(
-              // {
-              //   title:
-              "Обо мне",
-              //   isContent: true,
-              //   sections: 4
-              // },
-              "skill"
-            );
+            // pageConfig("Обо мне", "skill");
+            pageConfig("skill");
           },
+          meta: { title: "Обо мне" },
           component: () => import("@frontViews/About.vue")
         },
         {
           path: "blog",
           name: "blog",
           props: () => {
-            pageConfig(
-              // {
-              //   title:
-              "Блог",
-              //   isBlog: true,
-              //   isContent: true,
-              //   sections: 2
-              // },
-              "post"
-            );
+            // pageConfig("Блог", "post");
+            pageConfig("post");
           },
+          meta: { title: "Блог" },
           component: () => import("@frontViews/Blog.vue")
         }
       ]
     },
     {
       path: "/admin",
+      meta: { authStatus: false },
       component: () => import("@backend"),
       children: [
         {

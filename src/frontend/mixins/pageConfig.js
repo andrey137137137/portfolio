@@ -1,10 +1,8 @@
-import { mapGetters, mapActions, createNamespacedHelpers } from "vuex";
-const viewMapGetters = createNamespacedHelpers("frontView").mapGetters;
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   computed: {
-    ...mapGetters(["dbData"]),
-    ...viewMapGetters(["config"])
+    ...mapGetters(["dbData"])
   },
   methods: {
     ...mapActions(["readData"])

@@ -43,15 +43,18 @@ export default {
   //   };
   // },
   computed: {
-    ...mapGetters(["config", "profile"]),
+    ...mapGetters(["profile"]),
+    isContent() {
+      return this.$route.name != "home";
+    },
     id() {
-      return this.inHeader && this.config.isContent ? "main_menu" : "";
+      return this.inHeader && this.isContent ? "main_menu" : "";
     },
     containerClasses() {
       if (this.inHeader) {
         return {
           "header-socials": true,
-          "header-socials--left": this.config.isContent
+          "header-socials--left": this.isContent
         };
       }
 

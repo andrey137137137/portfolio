@@ -1,9 +1,6 @@
 import MainMenu from "./MainMenu";
 import SocialMenu from "./SocialMenu";
 
-import { createNamespacedHelpers } from "vuex";
-const { mapGetters } = createNamespacedHelpers("frontView");
-
 export default {
   name: "NavCmp",
   render(h) {
@@ -12,7 +9,7 @@ export default {
     if (this.inHeader) {
       elems.push(this.socialMenuElem());
 
-      if (this.config.isContent) {
+      if (this.isContent) {
         elems.push(this.checkerElem());
       } else {
         elems.push(this.mainMenuElem());
@@ -31,13 +28,15 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["config"]),
+    isContent() {
+      return this.$route.name != "home";
+    },
     classes() {
       if (this.inHeader) {
         return {
           nav: true,
           "header-nav": true,
-          "header-nav--fixed": this.config.isContent
+          "header-nav--fixed": this.isContent
         };
       }
 

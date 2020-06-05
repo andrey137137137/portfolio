@@ -4,22 +4,21 @@
 </template>
 
 <script>
-import { createNamespacedHelpers } from "vuex";
-const { mapGetters } = createNamespacedHelpers("frontView");
-
 export default {
   name: "HeaderWrapper",
   computed: {
-    ...mapGetters(["config"]),
     classes() {
+      const name = this.$route.name;
       return {
-        "header--framed": !this.config.isContent,
-        "header--wide": this.config.isContent,
-        "header--blog": this.config.isBlog
+        "header--framed": name == "home",
+        "header--wide": name != "home",
+        "header--blog": name == "blog"
       };
     }
   }
 };
 </script>
 
-<style lang="scss" src="@frontStylesCmp/HeaderWrapper/import.scss"></style>
+<style lang="scss">
+@import "@frontStylesCmp/HeaderWrapper/import";
+</style>

@@ -13,8 +13,10 @@ function pageConfig(config, dbPage = "") {
     setDbPage(dbPage);
   }
 
-  store.dispatch("frontView/setConfig", config);
+  // store.dispatch("frontView/setConfig", config);
+  store.dispatch("frontView/setTitle", config);
   store.dispatch("frontView/setProfile");
+
   return {};
 }
 
@@ -26,7 +28,8 @@ export default new VueRouter({
       path: "/",
       name: "home",
       props: () => {
-        pageConfig({ name: "Главная" });
+        // pageConfig({ title: "Главная" });
+        pageConfig("Главная");
       },
       component: () => import("@frontend")
     },
@@ -39,12 +42,13 @@ export default new VueRouter({
           name: "works",
           props: () => {
             pageConfig(
-              {
-                title: "Мои работы",
-                isTopWrapTitle: true,
-                isContent: true,
-                sections: 3
-              },
+              // {
+              //   title:
+              "Мои работы",
+              //   isTopWrapTitle: true,
+              //   isContent: true,
+              //   sections: 3
+              // },
               "work"
             );
           },
@@ -55,11 +59,12 @@ export default new VueRouter({
           name: "about",
           props: () => {
             pageConfig(
-              {
-                title: "Обо мне",
-                isContent: true,
-                sections: 4
-              },
+              // {
+              //   title:
+              "Обо мне",
+              //   isContent: true,
+              //   sections: 4
+              // },
               "skill"
             );
           },
@@ -70,12 +75,13 @@ export default new VueRouter({
           name: "blog",
           props: () => {
             pageConfig(
-              {
-                title: "Блог",
-                isBlog: true,
-                isContent: true,
-                sections: 2
-              },
+              // {
+              //   title:
+              "Блог",
+              //   isBlog: true,
+              //   isContent: true,
+              //   sections: 2
+              // },
               "post"
             );
           },

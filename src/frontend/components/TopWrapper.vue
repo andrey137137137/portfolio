@@ -7,10 +7,10 @@ const { mapGetters } = createNamespacedHelpers("frontView");
 export default {
   name: "TopWrapper",
   render(h) {
-    const wrapperElem = this.config.isTopWrapTitle ? "section" : "div";
+    const wrapperElem = this.isWorks ? "section" : "div";
     const elems = [this.cornerBorderElem()];
 
-    if (this.config.isTopWrapTitle) {
+    if (this.isWorks) {
       elems.push(this.titleWrapperElem());
     }
 
@@ -19,15 +19,17 @@ export default {
     return h(wrapperElem, { class: ["section", "top_wrap"] }, elems);
   },
   computed: {
-    ...mapGetters(["config"]),
+    ...mapGetters(["title"]),
+    isWorks() {
+      return this.$route.name == "works";
+    },
     cornerBorderClasses() {
-      const { isBlog, isTopWrapTitle } = this.config;
-
+      const name = this.$route.name;
       return {
         "top_wrap-corner_border": true,
-        "top_wrap-corner_border--half_opacity": isTopWrapTitle,
-        "top_wrap-corner_border--two_colors": !isTopWrapTitle && !isBlog,
-        "top_wrap-corner_border--beige": !isTopWrapTitle && isBlog
+        "top_wrap-corner_border--half_opacity": this.isWorks,
+        "top_wrap-corner_border--two_colors": !this.isWorks && name != "blog",
+        "top_wrap-corner_border--beige": !this.isWorks && name == "blog"
       };
     }
   },
@@ -38,7 +40,7 @@ export default {
     titleWrapperElem() {
       return (
         <TitleWrapper
-          title={this.config.title}
+          title={this.title}
           containerAddClass="top_wrap-title_wrap"
         />
       );
@@ -47,4 +49,6 @@ export default {
 };
 </script>
 
-<style lang="scss" src="@frontStylesCmp/TopWrapper/import.scss"></style>
+<style lang="scss">
+@import "@frontStylesCmp/TopWrapper/import";
+</style>

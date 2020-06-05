@@ -1,9 +1,9 @@
 <template lang="pug">
   footer#footer.footer(:class="containerClasses")
 
-    ScrollButton(v-if="config.sections > 2" :inHeader="false")
+    ScrollButton(v-if="areManySections" :inHeader="false")
 
-    FooterTop(v-if="config.isContent")
+    FooterTop(v-if="isContent")
 
     ul.section.footer_bottom(:class="footerBottomClasses")
       li.container.footer_bottom-container
@@ -26,16 +26,23 @@ export default {
     FooterTop
   },
   computed: {
-    ...mapGetters(["config", "profile"]),
+    ...mapGetters(["profile"]),
+    isContent() {
+      return this.$route.name != "home";
+    },
+    areManySections() {
+      return this.isContent && this.$route.name != "blog";
+    },
     containerClasses() {
+      const name = this.$route.name;
       return {
-        "footer--absolute": this.config.sections > 3,
-        "footer--bg": this.config.isBlog
+        "footer--absolute": name == "about",
+        "footer--bg": name == "blog"
       };
     },
     footerBottomClasses() {
       return {
-        "footer_bottom--bg": this.config.isContent
+        "footer_bottom--bg": this.isContent
       };
     },
     fullName() {

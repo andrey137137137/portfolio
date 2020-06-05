@@ -9,9 +9,6 @@
 import PreloaderCmp from "./PreloaderCmp";
 import ParallaxCmp from "./ParallaxCmp";
 
-import { createNamespacedHelpers } from "vuex";
-const { mapGetters } = createNamespacedHelpers("frontView");
-
 export default {
   name: "PageWrapper",
   components: {
@@ -19,11 +16,11 @@ export default {
     ParallaxCmp
   },
   computed: {
-    ...mapGetters(["config"]),
     classes() {
+      const name = this.$route.name;
       return {
-        full_screen: !this.config.isContent,
-        main_wrap: this.config.isContent
+        full_screen: name == "home",
+        main_wrap: name != "home"
       };
     }
   }

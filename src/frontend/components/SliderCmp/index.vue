@@ -18,9 +18,6 @@
         :commonKey="curIndex"
         :addClasses="titleClasses"
       )
-        //- v-for="(item, index) in slides"
-        //- v-if="index==curIndex"
-        //- :key="index"
       AnimateStr(
         transitionName="slider-techs"
         rootElem="p"
@@ -46,23 +43,6 @@
         :handle="handleNext"
         :imgSrc="nextImg"
       )
-      //- a.icon.icon--chevron_down.slider-arrow.slider-arrow--prev(
-      //-   href=""
-      //-   @click.prevent="handlePrev"
-      //- )
-      //-   transition(name="slider-arrow--scroll_down")
-      //-     .img_wrap.slider-item(:key="curIndex")
-      //-       img.img_wrap-img(src="prevImg" :alt="curIndex + 1")
-      //-       .slider-item_number.slider-arrow_number prevIndex + 1}}
-
-      //- a.icon.icon--chevron_up.slider-arrow.slider-arrow--next(
-      //-   href=""
-      //-   @click.prevent="handleNext"
-      //- )
-      //-   transition(name="slider-arrow--scroll_up")
-      //-     .img_wrap.slider-item(:key="curIndex")
-      //-       img.img_wrap-img(src="nextImg" :alt="curIndex + 1")
-      //-       .slider-item_number.slider-arrow_number nextIndex + 1}}
 </template>
 
 <script>

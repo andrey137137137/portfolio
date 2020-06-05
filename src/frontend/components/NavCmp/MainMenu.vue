@@ -1,16 +1,15 @@
 <template lang="pug">
   .menu(:id="id" :class="containerClasses")
     router-link.menu-link(
-      v-for="link in activeLinks"
-      :key="link.href"
+      v-for="link in links"
+      :key="link.path"
       :class="linkClasses"
-      :to="link.href"
+      :to="link.path"
     ) {{link.name}}
 </template>
 
 <script>
-import { createNamespacedHelpers } from "vuex";
-const { mapGetters } = createNamespacedHelpers("frontView");
+import exist from "@common/helpers/exist.js";
 
 export default {
   name: "MainMenu",
@@ -20,48 +19,43 @@ export default {
       default: true
     }
   },
-  data() {
-    return {
-      links: [
-        { name: "Главная", isContent: false, href: "/" },
-        { name: "Мои работы", isContent: true, href: "/works" },
-        { name: "Обо мне", isContent: true, href: "/about" },
-        { name: "Блог", isContent: true, href: "/blog" }
-      ]
-    };
-  },
   computed: {
-    ...mapGetters(["config"]),
-    activeLinks() {
-      return this.links.filter(item => item.isContent);
+    isContent() {
+      return this.$route.name != "home";
+    },
+    restPages() {
+      return this.getRoutes(
+        item => item.path == "/" && exist("children", item)
+      )[0].children;
+    },
+    links() {
+      if (this.inHeader) return this.restPages;
+      return [...this.restPages, { name: "Авторизация", path: "/" }];
     },
     id() {
-      return this.inHeader && this.config.isContent ? "main_menu" : "";
+      return this.inHeader && this.isContent ? "main_menu" : "";
     },
     containerClasses() {
-      if (this.inHeader) {
-        return {
-          "header-menu": true,
-          "header-menu--absolute": this.config.isContent,
-          "header-menu--float": !this.config.isContent
-        };
-      }
-
+      if (!this.inHeader) return { "footer_top-menu": true };
       return {
-        "footer_top-menu": true
+        "header-menu": true,
+        "header-menu--absolute": this.isContent,
+        "header-menu--float": !this.isContent
       };
     },
     linkClasses() {
-      if (this.inHeader) {
-        return {
-          "section-title": this.config.isContent,
-          "section-title--large": this.config.isContent,
-          "section-title--underlined": this.config.isContent,
-          btn: !this.config.isContent
-        };
-      }
-
-      return {};
+      if (!this.inHeader) return {};
+      return {
+        "section-title": this.isContent,
+        "section-title--large": this.isContent,
+        "section-title--underlined": this.isContent,
+        btn: !this.isContent
+      };
+    }
+  },
+  methods: {
+    getRoutes(cb) {
+      return this.$router.options.routes.filter(cb);
     }
   }
 };

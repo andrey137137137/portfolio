@@ -7,7 +7,7 @@
         :isOwnContainerClass="true"
       )
         TitleWrapper(
-          :title="config.title"
+          :title="title"
           containerAddClass="about-title_wrap"
           bgAddClass="title_wrap-bg--contrast"
         )
@@ -75,7 +75,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["profile"]),
+    ...mapGetters(["title", "profile"]),
     old() {
       return this.profile.old;
     }

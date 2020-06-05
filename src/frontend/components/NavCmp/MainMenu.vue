@@ -5,7 +5,7 @@
       :key="link.path"
       :class="linkClasses"
       :to="link.path"
-    ) {{link.name}}
+    ) {{link.meta.title}}
 </template>
 
 <script>
@@ -29,15 +29,14 @@ export default {
       )[0].children;
     },
     links() {
-      const data = this.restPages;
-      // const data = [
-      //   { name: "Мои работы", path: "/works" },
-      //   { name: "Обо мне", path: "/about" },
-      //   { name: "Блог", path: "/blog" }
-      // ];
-
-      if (this.inHeader) return data;
-      return [...data, { name: "Авторизация", path: "/" }];
+      if (this.inHeader) return this.restPages;
+      return [
+        ...this.restPages,
+        {
+          meta: { title: "Авторизация" },
+          path: "/"
+        }
+      ];
     },
     id() {
       return this.inHeader && this.isContent ? "main_menu" : "";

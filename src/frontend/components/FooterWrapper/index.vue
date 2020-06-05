@@ -17,7 +17,7 @@ import ScrollButton from "@frontCmp/ScrollButton";
 import FooterTop from "./FooterTop";
 
 import { createNamespacedHelpers } from "vuex";
-const { mapGetters } = createNamespacedHelpers("frontView");
+const { mapGetters } = createNamespacedHelpers("profile");
 
 export default {
   name: "FooterWrapper",
@@ -26,7 +26,7 @@ export default {
     FooterTop
   },
   computed: {
-    ...mapGetters(["profile"]),
+    ...mapGetters(["firstName", "lastName"]),
     isContent() {
       return this.$route.name != "home";
     },
@@ -46,7 +46,7 @@ export default {
       };
     },
     fullName() {
-      return `${this.profile.lastName} ${this.profile.firstName}`;
+      return `${this.lastName} ${this.firstName}`;
     }
   }
 };

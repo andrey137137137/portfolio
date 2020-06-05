@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import store from "@common/store";
+import axios from "axios";
 
 Vue.use(VueRouter);
 
@@ -8,15 +9,9 @@ function setDbPage(dbPage) {
   store.dispatch("setPage", dbPage);
 }
 
-// function pageConfig(config, dbPage = "") {
 function pageConfig(dbPage) {
-  // if (dbPage) {
   setDbPage(dbPage);
-  // }
-
-  // store.dispatch("frontView/setTitle", config);
-  store.dispatch("frontView/setProfile");
-
+  store.dispatch("profile/set");
   return {};
 }
 
@@ -27,9 +22,9 @@ export default new VueRouter({
     {
       path: "/",
       name: "home",
-      // props: () => {
-      //   pageConfig("Главная");
-      // },
+      props: () => {
+        store.dispatch("profile/set");
+      },
       meta: { title: "Главная" },
       component: () => import("@frontend")
     },
@@ -41,7 +36,6 @@ export default new VueRouter({
           path: "works",
           name: "works",
           props: () => {
-            // pageConfig("Мои работы", "work");
             pageConfig("work");
           },
           meta: { title: "Мои работы" },
@@ -51,7 +45,6 @@ export default new VueRouter({
           path: "about",
           name: "about",
           props: () => {
-            // pageConfig("Обо мне", "skill");
             pageConfig("skill");
           },
           meta: { title: "Обо мне" },
@@ -61,7 +54,6 @@ export default new VueRouter({
           path: "blog",
           name: "blog",
           props: () => {
-            // pageConfig("Блог", "post");
             pageConfig("post");
           },
           meta: { title: "Блог" },
@@ -71,8 +63,22 @@ export default new VueRouter({
     },
     {
       path: "/admin",
-      meta: { authStatus: false },
       component: () => import("@backend"),
+      beforeEnter(to, from, next) {
+        const redirectPage = "/";
+        axios
+          .get("user/auth")
+          .then(res => {
+            if (res.data.success) {
+              next();
+            } else {
+              next(redirectPage);
+            }
+          })
+          .catch(() => {
+            next(redirectPage);
+          });
+      },
       children: [
         {
           path: "about",

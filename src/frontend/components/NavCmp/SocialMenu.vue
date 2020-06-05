@@ -1,7 +1,7 @@
 <template lang="pug">
   .socials(:class="containerClasses")
     a.icon.socials-link(
-      v-for="link in profile.contacts"
+      v-for="link in contacts"
       :key="link.href"
       :class="iconClass(link.icon)"
       target="_blank"
@@ -11,7 +11,7 @@
 
 <script>
 import { createNamespacedHelpers } from "vuex";
-const { mapGetters } = createNamespacedHelpers("frontView");
+const { mapGetters } = createNamespacedHelpers("profile");
 
 export default {
   name: "SocialMenu",
@@ -21,29 +21,8 @@ export default {
       default: true
     }
   },
-  // data() {
-  //   return {
-  //     links: [
-  //       {
-  //         name: "vk",
-  //         href: "",
-  //         icon: "vk"
-  //       },
-  //       {
-  //         name: "github",
-  //         href: "https://github.com/andrey137137137",
-  //         icon: "github_alt"
-  //       },
-  //       {
-  //         name: "skype",
-  //         href: "skype:andrey27x777@gmail.com",
-  //         icon: "skype"
-  //       }
-  //     ]
-  //   };
-  // },
   computed: {
-    ...mapGetters(["profile"]),
+    ...mapGetters(["contacts"]),
     isContent() {
       return this.$route.name != "home";
     },

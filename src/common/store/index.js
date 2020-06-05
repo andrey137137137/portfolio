@@ -1,9 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import axios from "axios";
-
-Vue.use(Vuex);
-
 import { SUCCESS, ERROR } from "@httpSt";
 import isDev from "@common/helpers/isDev";
 import {
@@ -16,8 +13,10 @@ import {
   UPDATE,
   DELETE
 } from "@common/store/mutation-types";
-import frontView from "@common/store/modules/frontView";
+import profile from "@common/store/modules/profile";
 import comments from "@common/store/modules/comments";
+
+Vue.use(Vuex);
 
 export default new Vuex.Store({
   strict: isDev(),
@@ -147,7 +146,7 @@ export default new Vuex.Store({
     }
   },
   modules: {
-    frontView,
+    profile,
     comments
   }
 });

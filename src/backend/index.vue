@@ -3,32 +3,18 @@
     AdminHeader
     AdminNav
     main.section.main
-      router-view(v-if="isAuth")
-      PageWrapper(v-else)
+      router-view
 </template>
 
 <script>
 import AdminHeader from "@backCmp/AdminHeader";
 import AdminNav from "@backCmp/AdminNav";
-import PageWrapper from "@backCmp/PageWrapper";
-
-import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "AdminApp",
   components: {
     AdminHeader,
-    AdminNav,
-    PageWrapper
-  },
-  computed: {
-    ...mapGetters(["isAuth"])
-  },
-  methods: {
-    ...mapActions(["getAuthStatus"])
-  },
-  created() {
-    this.getAuthStatus();
+    AdminNav
   }
 };
 </script>

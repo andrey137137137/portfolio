@@ -1,6 +1,5 @@
 import Vue from "vue";
 import axios from "axios";
-
 import myConfig from "@config";
 import isDev from "@common/helpers/isDev";
 import store from "@common/store";

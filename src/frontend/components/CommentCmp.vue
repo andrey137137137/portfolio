@@ -8,7 +8,7 @@
       titleAddClass="reviews-title"
     )
 
-    article.col.col--float.col--tb_6.col--ds_4.reviews-article(v-for="(review, index) in comments" class="{'reviews-article--first': !index}")
+    article.col.col--float.col--tb_6.col--ds_4.reviews-article(v-for="(review, index) in comments")
       .icon.icon--quote.reviews-quote
       .img_wrap.reviews-img_wrap
         img.img_wrap-img(

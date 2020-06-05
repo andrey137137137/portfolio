@@ -2,7 +2,7 @@
   ul.section.footer_top
     li.container.footer_top-container
 
-      p.col.col--ds_float.col--ds_4.col--xds_4.section-desc.footer_top-col.footer_top-desc {{profile.footerDesc}}
+      p.col.col--ds_float.col--ds_4.col--xds_4.section-desc.footer_top-col.footer_top-desc {{footerDesc}}
 
       NavCmp(:inHeader="false")
 
@@ -17,7 +17,7 @@ import NavCmp from "@frontCmp/NavCmp";
 import ContactList from "@frontCmp/ContactList";
 
 import { createNamespacedHelpers } from "vuex";
-const { mapGetters } = createNamespacedHelpers("frontView");
+const { mapGetters } = createNamespacedHelpers("profile");
 
 export default {
   name: "FooterTop",
@@ -38,7 +38,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["profile"])
+    ...mapGetters(["footerDesc"])
   }
 };
 </script>

@@ -67,6 +67,7 @@ import { validationMixin } from "vuelidate";
 import { userAlphaNumValids, checked } from "@common/helpers/validators";
 import { ERROR } from "@httpSt";
 import form from "@common/mixins/form";
+import getAuthStatus from "@frontend/mixins/getAuthStatus";
 import PageWrapper from "@frontCmp/PageWrapper";
 import HeaderWrapper from "@frontCmp/Header/HeaderWrapper";
 import HeaderContent from "@frontCmp/Header/HeaderContent";
@@ -95,7 +96,7 @@ export default {
     SubmitMessage,
     FooterWrapper
   },
-  mixins: [validationMixin, form],
+  mixins: [validationMixin, form, getAuthStatus],
   data() {
     return {
       isFlipped: false,
@@ -126,8 +127,8 @@ export default {
       const $flipBtn = $(this.$refs.flipBtn);
       this.isFlipped = !this.isFlipped;
 
-      const FUNC = this.isFlipped ? "fadeOut" : "fadeIn";
-      $flipBtn[FUNC]();
+      // const FUNC = this.isFlipped ? "fadeOut" : "fadeIn";
+      $flipBtn[this.isFlipped ? "fadeOut" : "fadeIn"]();
     },
     handleSubmit() {
       if (!this.touchInvalidElem()) return false;

@@ -1,5 +1,5 @@
 import { createNamespacedHelpers } from "vuex";
-const { mapGetters } = createNamespacedHelpers("frontView");
+const { mapGetters } = createNamespacedHelpers("profile");
 
 export default {
   name: "HeaderTitle",
@@ -7,7 +7,7 @@ export default {
     return h("div", {}, [this.titleElem(h), this.descElem()]);
   },
   computed: {
-    ...mapGetters(["title", "profile"]),
+    ...mapGetters(["firstName", "lastName"]),
     isContent() {
       return this.$route.name != "home";
     },
@@ -37,10 +37,10 @@ export default {
         "header-desc--after_large_title": this.isBlog
       };
     },
-    compTitle() {
+    title() {
       return this.isBlog
-        ? this.title
-        : `${this.profile.lastName} ${this.profile.firstName}`;
+        ? this.$route.meta.title
+        : `${this.lastName} ${this.firstName}`;
     },
     desc() {
       return this.isBlog
@@ -61,7 +61,7 @@ export default {
             ...this.titleClasses
           }
         },
-        [this.compTitle]
+        [this.title]
       );
     },
     descElem() {

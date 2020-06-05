@@ -1,9 +1,6 @@
 <script>
 import TitleWrapper from "@frontCmp/TitleWrapper";
 
-import { createNamespacedHelpers } from "vuex";
-const { mapGetters } = createNamespacedHelpers("frontView");
-
 export default {
   name: "TopWrapper",
   render(h) {
@@ -19,7 +16,6 @@ export default {
     return h(wrapperElem, { class: ["section", "top_wrap"] }, elems);
   },
   computed: {
-    ...mapGetters(["title"]),
     isWorks() {
       return this.$route.name == "works";
     },
@@ -40,7 +36,7 @@ export default {
     titleWrapperElem() {
       return (
         <TitleWrapper
-          title={this.title}
+          title={this.$route.meta.title}
           containerAddClass="top_wrap-title_wrap"
         />
       );

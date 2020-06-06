@@ -1,14 +1,14 @@
 <template lang="pug">
-  svg(:class="addClasses" xmlns="http://www.w3.org/2000/svg")
+  svg(:class="addClassesMixin" xmlns="http://www.w3.org/2000/svg")
     use(:xlink:href="iconPath" xmlns:xlink="http://www.w3.org/1999/xlink")
 </template>
 
 <script>
-import addClasses from "@common/mixins/addClasses";
+import addClassesMixin from "@common/mixins/addClassesMixin";
 
 export default {
   name: "SvgCmp",
-  mixins: [addClasses],
+  mixins: [addClassesMixin],
   props: {
     name: {
       type: String,

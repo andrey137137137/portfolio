@@ -37,8 +37,8 @@
 import { validationMixin } from "vuelidate";
 import { required, email, sameAs } from "vuelidate/lib/validators";
 import { userAlphaNumValids } from "@common/helpers/validators";
-import formMxn from "@backend/mixins/form";
-import userFormMxn from "@backend/mixins/userForm";
+import backFormMixin from "@backend/mixins/backFormMixin";
+import userFormMixin from "@backend/mixins/userFormMixin";
 import UserForm from "@backCmp/Forms/UserForm";
 import InputEventElem from "@components/FormElems/InputEventElem";
 import ChangeEventElem from "@components/FormElems/ChangeEventElem";
@@ -50,7 +50,7 @@ export default {
     InputEventElem,
     ChangeEventElem
   },
-  mixins: [validationMixin, formMxn, userFormMxn],
+  mixins: [validationMixin, backFormMixin, userFormMixin],
   data() {
     return {
       changePassword: false,

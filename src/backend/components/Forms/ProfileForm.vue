@@ -62,12 +62,12 @@ import {
   // minValue,
   // maxValue
 } from "vuelidate/lib/validators";
-// import upload from "@backend/mixins/upload";
+// import uploadMixin from "@backend/mixins/uploadMixin";
 // import { clipperBasic, clipperPreview } from "vuejs-clipper";
 // import myUpload from "vue-image-crop-upload";
 // import PictureInput from "vue-picture-input";
-import formMxn from "@backend/mixins/form";
-import userFormMxn from "@backend/mixins/userForm";
+import backFormMixin from "@backend/mixins/backFormMixin";
+import userFormMixin from "@backend/mixins/userFormMixin";
 import UserForm from "@backCmp/Forms/UserForm";
 import InputEventElem from "@components/FormElems/InputEventElem";
 import MultipleElem from "@components/FormElems/MultipleElem";
@@ -84,10 +84,10 @@ export default {
     MultipleElem
   },
   mixins: [
-    // upload,
+    // uploadMixin,
     validationMixin,
-    formMxn,
-    userFormMxn
+    backFormMixin,
+    userFormMixin
   ],
   data() {
     return {

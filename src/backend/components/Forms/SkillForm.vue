@@ -19,8 +19,8 @@
 <script>
 import { validationMixin } from "vuelidate";
 import { required, minValue, maxValue } from "vuelidate/lib/validators";
-import formMxn from "@backend/mixins/form";
-import itemFormMxn from "@backend/mixins/itemForm";
+import backFormMixin from "@backend/mixins/backFormMixin";
+import itemFormMixin from "@backend/mixins/itemFormMixin";
 import ItemForm from "@backCmp/Forms/ItemForm";
 import InputEventElem from "@components/FormElems/InputEventElem";
 import MultipleElem from "@components/FormElems/MultipleElem";
@@ -32,7 +32,7 @@ export default {
     InputEventElem,
     MultipleElem
   },
-  mixins: [validationMixin, formMxn, itemFormMxn],
+  mixins: [validationMixin, backFormMixin, itemFormMixin],
   data() {
     const data = {
       fields: [

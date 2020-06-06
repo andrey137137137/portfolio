@@ -4,11 +4,11 @@
 </template>
 
 <script>
-import addClasses from "@/common/mixins/addClasses";
+import addClassesMixin from "@/common/mixins/addClassesMixin";
 
 export default {
   name: "ButtonElem",
-  mixins: [addClasses],
+  mixins: [addClassesMixin],
   props: {
     isDanger: {
       type: Boolean,
@@ -22,7 +22,7 @@ export default {
     extClass() {
       return {
         "form-btn--danger": this.isDanger,
-        ...this.addClasses
+        ...this.addClassesMixin
       };
     }
   }

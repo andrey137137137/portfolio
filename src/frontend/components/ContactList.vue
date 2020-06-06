@@ -11,14 +11,14 @@
 </template>
 
 <script>
-import addClasses from "@common/mixins/addClasses";
+import addClassesMixin from "@common/mixins/addClassesMixin";
 
 import { createNamespacedHelpers } from "vuex";
 const { mapGetters } = createNamespacedHelpers("profile");
 
 export default {
   name: "ContactList",
-  mixins: [addClasses],
+  mixins: [addClassesMixin],
   props: {
     classBlock: {
       type: String,

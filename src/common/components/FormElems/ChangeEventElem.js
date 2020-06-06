@@ -1,7 +1,7 @@
-import formElem from "@common/mixins/formElem";
+import formElemMixin from "@common/mixins/formElemMixin";
 
 export default {
-  mixins: [formElem],
+  mixins: [formElemMixin],
   model: {
     prop: "value",
     event: "change"

@@ -4,11 +4,11 @@
 </template>
 
 <script>
-import addClasses from "@common/mixins/addClasses";
+import addClassesMixin from "@common/mixins/addClassesMixin";
 
 export default {
   name: "BottomWrapper",
-  mixins: [addClasses]
+  mixins: [addClassesMixin]
 };
 </script>
 

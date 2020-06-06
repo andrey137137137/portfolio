@@ -1,8 +1,8 @@
-import formElem from "@common/mixins/formElem";
+import formElemMixin from "@common/mixins/formElemMixin";
 import SvgCmp from "@components/SvgCmp";
 
 export default {
-  mixins: [formElem],
+  mixins: [formElemMixin],
   props: {
     labelIcon: {
       type: String,

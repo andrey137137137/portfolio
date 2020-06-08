@@ -1,9 +1,5 @@
 <template lang="pug">
   PageWrapper(page="Личные данные")
-    //- ProfileForm(
-    //-   v-for="user in dbData"
-    //-   :key="user.email"
-    //-   :item="user")
     ProfileForm(
       :firstName="dbData.firstName"
       :lastName="dbData.lastName"
@@ -12,7 +8,7 @@
 </template>
 
 <script>
-import pageData from "@backend/mixins/pageData";
+import pageDataMixin from "@backend/mixins/pageDataMixin";
 import PageWrapper from "@backCmp/PageWrapper";
 import ProfileForm from "@backCmp/Forms/ProfileForm";
 export default {
@@ -21,6 +17,6 @@ export default {
     PageWrapper,
     ProfileForm
   },
-  mixins: [pageData]
+  mixins: [pageDataMixin]
 };
 </script>

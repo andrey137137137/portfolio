@@ -1,5 +1,5 @@
 <template lang="pug">
-  svg(:class="addClassesMixin" xmlns="http://www.w3.org/2000/svg")
+  svg(:class="addClasses" xmlns="http://www.w3.org/2000/svg")
     use(:xlink:href="iconPath" xmlns:xlink="http://www.w3.org/1999/xlink")
 </template>
 

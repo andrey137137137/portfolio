@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import pageData from "@backend/mixins/pageData";
+import pageDataMixin from "@backend/mixins/pageDataMixin";
 import PageWrapper from "@backCmp/PageWrapper";
 import PostForm from "@backCmp/Forms/PostForm";
 
@@ -19,6 +19,6 @@ export default {
     PageWrapper,
     PostForm
   },
-  mixins: [pageData]
+  mixins: [pageDataMixin]
 };
 </script>

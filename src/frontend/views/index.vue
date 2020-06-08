@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import menuChecker from "@frontend/mixins/menuChecker";
+import menuCheckerMixin from "@frontend/mixins/menuCheckerMixin";
 import PageWrapper from "@frontCmp/PageWrapper";
 import HeaderWrapper from "@frontCmp/Header/HeaderWrapper";
 import NavCmp from "@frontCmp/NavCmp";
@@ -30,6 +30,6 @@ export default {
     FooterWrapper,
     MainMenu
   },
-  mixins: [menuChecker]
+  mixins: [menuCheckerMixin]
 };
 </script>

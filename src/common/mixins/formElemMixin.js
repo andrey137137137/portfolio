@@ -1,12 +1,12 @@
 import types from "@common/constants/validation/types";
 import exist from "@common/helpers/exist";
-import addClasses from "@common/mixins/addClasses";
+import addClassesMixin from "@common/mixins/addClassesMixin";
 import ErrorElem from "@components/FormElems/ErrorElem";
 
 import { mapGetters, mapActions } from "vuex";
 
 export default {
-  mixins: [addClasses],
+  mixins: [addClassesMixin],
   render(h) {
     let wrapClass = this.wrapClass;
 

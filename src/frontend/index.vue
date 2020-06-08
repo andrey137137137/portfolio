@@ -66,8 +66,8 @@ import { validationMixin } from "vuelidate";
 // import { required } from "vuelidate/lib/validators";
 import { userAlphaNumValids, checked } from "@common/helpers/validators";
 import { ERROR } from "@httpSt";
-import form from "@common/mixins/form";
-import getAuthStatus from "@frontend/mixins/getAuthStatus";
+import formMixin from "@common/mixins/formMixin";
+import getAuthStatusMixin from "@frontend/mixins/getAuthStatusMixin";
 import PageWrapper from "@frontCmp/PageWrapper";
 import HeaderWrapper from "@frontCmp/Header/HeaderWrapper";
 import HeaderContent from "@frontCmp/Header/HeaderContent";
@@ -96,7 +96,7 @@ export default {
     SubmitMessage,
     FooterWrapper
   },
-  mixins: [validationMixin, form, getAuthStatus],
+  mixins: [validationMixin, formMixin, getAuthStatusMixin],
   data() {
     return {
       isFlipped: false,

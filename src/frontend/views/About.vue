@@ -41,7 +41,7 @@
 
 <script>
 import { Fragment } from "vue-fragment";
-import pageConfig from "@frontend/mixins/pageConfig";
+import pageConfigMixin from "@frontend/mixins/pageConfigMixin";
 import TopWrapper from "@frontCmp/TopWrapper";
 import SectionWrapper from "@frontCmp/SectionWrapper";
 import TitleWrapper from "@frontCmp/TitleWrapper";
@@ -63,7 +63,7 @@ export default {
     BottomWrapper,
     ContactList
   },
-  mixins: [pageConfig],
+  mixins: [pageConfigMixin],
   data() {
     return {
       bottomWrapClass: {

@@ -25,8 +25,8 @@
 <script>
 import axios from "axios";
 import PictureInput from "vue-picture-input";
-import pageData from "@backend/mixins/pageData";
-import upload from "@backend/mixins/upload";
+import pageDataMixin from "@backend/mixins/pageDataMixin";
+import uploadMixin from "@backend/mixins/uploadMixin";
 import PageWrapper from "@backCmp/PageWrapper";
 import ButtonElem from "@components/FormElems/ButtonElem";
 import SkillForm from "@backCmp/Forms/SkillForm";
@@ -39,7 +39,7 @@ export default {
     ButtonElem,
     SkillForm
   },
-  mixins: [pageData, upload],
+  mixins: [pageDataMixin, uploadMixin],
   data() {
     return {
       image: null,

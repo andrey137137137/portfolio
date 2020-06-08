@@ -24,7 +24,7 @@
 
 <script>
 import $ from "jquery";
-import pageConfig from "@frontend/mixins/pageConfig";
+import pageConfigMixin from "@frontend/mixins/pageConfigMixin";
 import TopWrapper from "@frontCmp/TopWrapper";
 
 export default {
@@ -32,7 +32,7 @@ export default {
   components: {
     TopWrapper
   },
-  mixins: [pageConfig],
+  mixins: [pageConfigMixin],
   data() {
     return {
       // $news: $(".news"),

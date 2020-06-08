@@ -9,7 +9,7 @@
 
 <script>
 import { Fragment } from "vue-fragment";
-import pageConfig from "@frontend/mixins/pageConfig";
+import pageConfigMixin from "@frontend/mixins/pageConfigMixin";
 import TopWrapper from "@frontCmp/TopWrapper";
 import SliderCmp from "@frontCmp/SliderCmp";
 import BottomWrapper from "@frontCmp/BottomWrapper";
@@ -26,7 +26,7 @@ export default {
     CommentCmp,
     FeedbackForm
   },
-  mixins: [pageConfig]
+  mixins: [pageConfigMixin]
 };
 </script>
 

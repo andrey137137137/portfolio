@@ -18,14 +18,13 @@
 </template>
 
 <script>
-// import Velocity from "velocity";
 import $ from "jquery";
 
-import addClasses from "@common/mixins/addClasses";
+import addClassesMixin from "@common/mixins/addClassesMixin";
 
 export default {
   name: "AnimateStr",
-  mixins: [addClasses],
+  mixins: [addClassesMixin],
   props: {
     transitionName: {
       type: String,
@@ -77,7 +76,6 @@ export default {
     },
     enter: function(el, done) {
       setTimeout(function() {
-        // Velocity(el, { opacity: 1, height: "1.6em" }, { complete: done });
         $(el).animate(
           {
             opacity: 1

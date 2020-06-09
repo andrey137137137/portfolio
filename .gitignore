@@ -6,6 +6,7 @@ public/userfiles
 src/assets/img/parallax
 src/assets/img
 
+api/config.json
 package-lock.json
 
 # local env files

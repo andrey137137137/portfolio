@@ -68,7 +68,7 @@
 
     &-desc {
       &:before {
-        content: " | ";
+        content: $footerBottomSeparator;
       }
     }
 

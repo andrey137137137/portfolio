@@ -118,7 +118,7 @@
 
     &-date {
       &:before {
-        content: " | ";
+        content: $footerBottomSeparator;
       }
     }
 

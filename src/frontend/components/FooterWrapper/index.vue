@@ -53,5 +53,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import "@frontStylesCmp/Footer/import";
+@import "@frontStylesCmp/FooterWrapper/import";
 </style>

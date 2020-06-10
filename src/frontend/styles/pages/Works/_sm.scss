@@ -1,8 +1,7 @@
 // SLIDER
 
 .slider {
-  $demoHeight: 257px;
-  $navHeight: 93px;
+  $animHeight: 100%;
 
   width: 100%;
   background-color: #f2f0e8;
@@ -24,8 +23,10 @@
   }
 
   &-demo {
+    $height: 257px;
+
     position: relative;
-    height: $demoHeight;
+    height: $height;
     background-color: #e3e2de;
     overflow: hidden;
 
@@ -34,7 +35,7 @@
       padding: 40px;
 
       &_number {
-        font-size: 150px/257px;
+        font-size: 150px /#{$height};
       }
     }
   }
@@ -46,36 +47,6 @@
     color: $red;
     // background: $black;
     // background-size: cover;
-
-    &--scroll_down {
-      &-enter-active,
-      &-leave-active {
-        transition: margin-top $trsTime;
-      }
-
-      &-enter {
-        margin-top: $demoHeight;
-      }
-
-      &-leave-to {
-        margin-top: -$demoHeight;
-      }
-    }
-
-    &--scroll_up {
-      &-enter-active,
-      &-leave-active {
-        transition: top $trsTime;
-      }
-
-      &-enter {
-        top: -$demoHeight;
-      }
-
-      &-leave-to {
-        top: $demoHeight;
-      }
-    }
 
     &_number {
       @include position("absolute 0 * * 0");
@@ -126,7 +97,7 @@
   }
 
   &-nav {
-    height: $navHeight;
+    height: 93px;
   }
 
   &-arrow {
@@ -136,36 +107,6 @@
     font-size: 50px/85px;
     text-decoration: none;
     overflow: hidden;
-
-    &--scroll_down {
-      &-enter-active,
-      &-leave-active {
-        transition: margin-top $trsTime;
-      }
-
-      &-enter {
-        margin-top: $navHeight;
-      }
-
-      &-leave-to {
-        margin-top: -$navHeight;
-      }
-    }
-
-    &--scroll_up {
-      &-enter-active,
-      &-leave-active {
-        transition: top $trsTime;
-      }
-
-      &-enter {
-        top: -$navHeight;
-      }
-
-      &-leave-to {
-        top: $navHeight;
-      }
-    }
 
     &_number {
       font-size: 90px/93px;
@@ -191,6 +132,36 @@
     &:hover:before,
     &:focus:before {
       background-color: rgba(#7e7f8a, 0.7);
+    }
+  }
+
+  &--scroll_down {
+    &-enter-active,
+    &-leave-active {
+      transition: top $trsTime;
+    }
+
+    &-enter {
+      top: $animHeight;
+    }
+
+    &-leave-to {
+      top: -$animHeight;
+    }
+  }
+
+  &--scroll_up {
+    &-enter-active,
+    &-leave-active {
+      transition: top $trsTime;
+    }
+
+    &-enter {
+      top: -$animHeight;
+    }
+
+    &-leave-to {
+      top: $animHeight;
     }
   }
 }

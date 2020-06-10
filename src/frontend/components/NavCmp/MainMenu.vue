@@ -33,7 +33,7 @@ export default {
       return [
         ...this.restPages,
         {
-          meta: { title: "Авторизация" },
+          meta: { title: "Главная" },
           path: "/"
         }
       ];

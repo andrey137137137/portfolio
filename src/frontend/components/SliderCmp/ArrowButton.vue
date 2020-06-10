@@ -44,7 +44,7 @@ export default {
     },
     transitionName() {
       const transitionMethod = this.isNext ? "scroll_up" : "scroll_down";
-      return `slider-arrow--${transitionMethod}`;
+      return `slider--${transitionMethod}`;
     }
   }
 };

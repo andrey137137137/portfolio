@@ -15,6 +15,14 @@ function pageConfig(dbPage) {
   return {};
 }
 
+function setSuccessAuth(status) {
+  if (store.state.authStatus) return true;
+
+  if (store.dispatch("setAuthStatus", status)) return true;
+
+  return store.state.authStatus;
+}
+
 export default new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
@@ -70,7 +78,11 @@ export default new VueRouter({
           .get("user/auth")
           .then(res => {
             if (res.data.success) {
-              next();
+              if (setSuccessAuth(res.data.success)) {
+                next();
+              } else {
+                next(redirectPage);
+              }
             } else {
               next(redirectPage);
             }

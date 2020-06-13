@@ -76,10 +76,10 @@ if (!isProduction) {
 if (!isProduction) {
   app.use((err, req, res) => {
     // set locals, only providing error in development
-    console.log(err);
-    res.locals.message = err.message;
-    res.locals.error = req.app.get("env") === "development" ? err : {};
-    console.log(res.locals.error);
+    // console.log(err);
+    // res.locals.message = err.message;
+    // res.locals.error = req.app.get("env") === "development" ? err : {};
+    console.log(err.message);
     // render the error page
     res.json(err.status || ERROR);
     // res.render("error");

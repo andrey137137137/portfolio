@@ -2,7 +2,7 @@
   Fragment
     PageWrapper
       HeaderWrapper
-        a.btn.btn--opacity.authorization(href="#login" ref="flipBtn" @click.prevent="fadeButton") Авторизоваться
+        a.btn.btn--opacity.authorization(:href="authBtnlink" ref="flipBtn" @click="fadeButton") {{authBtnTitle}}
         .container.header-container.header-container--framed(:class="flippedClass")
           .header-flip_wrap
             HeaderContent
@@ -117,18 +117,26 @@ export default {
     }
   },
   computed: {
+    authBtnlink() {
+      return this.isAuth ? "admin" : "#login";
+    },
+    authBtnTitle() {
+      return this.isAuth ? "Администрировать" : "Авторизоваться";
+    },
     flippedClass() {
       return { "header-container--flipped": this.isFlipped };
     }
   },
   methods: {
     ...mapActions(["setAuthStatus", "setFormMessage"]),
-    fadeButton() {
-      const $flipBtn = $(this.$refs.flipBtn);
-      this.isFlipped = !this.isFlipped;
+    fadeButton(e) {
+      if (this.isAuth) return;
 
-      // const FUNC = this.isFlipped ? "fadeOut" : "fadeIn";
-      $flipBtn[this.isFlipped ? "fadeOut" : "fadeIn"]();
+      e.preventDefault();
+
+      // const $flipBtn = $(this.$refs.flipBtn);
+      this.isFlipped = !this.isFlipped;
+      $(this.$refs.flipBtn)[this.isFlipped ? "fadeOut" : "fadeIn"]();
     },
     handleSubmit() {
       if (!this.touchInvalidElem()) return false;

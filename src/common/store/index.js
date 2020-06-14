@@ -92,13 +92,14 @@ export default new Vuex.Store({
         commit(DELETE, id);
       });
     },
-    getAuthStatus({ commit }) {
-      axios.get("user/auth").then(res => {
-        if (res.data.success) commit(SET_AUTH_STATUS, res.data.success);
-      });
-    },
-    setAuthStatus({ commit }, authStatus) {
-      commit(SET_AUTH_STATUS, authStatus);
+    setAuthStatus({ commit }, authStatus = "") {
+      if (authStatus !== "") {
+        commit(SET_AUTH_STATUS, authStatus);
+      } else {
+        axios.get("user/auth").then(res => {
+          if (res.data.success) commit(SET_AUTH_STATUS, res.data.success);
+        });
+      }
     }
   },
   mutations: {

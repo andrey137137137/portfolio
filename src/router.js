@@ -1,7 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import store from "@common/store";
-import axios from "axios";
 
 Vue.use(VueRouter);
 
@@ -15,12 +14,12 @@ function pageConfig(dbPage) {
   return {};
 }
 
-function setSuccessAuth(status) {
-  if (store.state.authStatus) return true;
-
-  if (store.dispatch("setAuthStatus", status)) return true;
-
-  return store.state.authStatus;
+function redirect(cb) {
+  if (store.state.authStatus) {
+    cb();
+  } else {
+    cb("/");
+  }
 }
 
 export default new VueRouter({
@@ -73,22 +72,13 @@ export default new VueRouter({
       path: "/admin",
       component: () => import("@backend"),
       beforeEnter(to, from, next) {
-        const redirectPage = "/";
-        axios
-          .get("user/auth")
-          .then(res => {
-            if (res.data.success) {
-              if (setSuccessAuth(res.data.success)) {
-                next();
-              } else {
-                next(redirectPage);
-              }
-            } else {
-              next(redirectPage);
-            }
+        store
+          .dispatch("setAuthStatus")
+          .then(() => {
+            redirect(next);
           })
           .catch(() => {
-            next(redirectPage);
+            redirect(next);
           });
       },
       children: [

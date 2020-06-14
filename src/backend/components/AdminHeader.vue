@@ -22,11 +22,11 @@ export default {
     ...mapGetters(["isAuth"])
   },
   methods: {
-    ...mapActions(["getAuthStatus", "setAuthStatus"]),
+    ...mapActions(["setAuthStatus"]),
     logout() {
       const $vm = this;
 
-      $vm.getAuthStatus();
+      // $vm.getAuthStatus();
 
       if (!$vm.isAuth) {
         return $vm.$router.push($vm.homePage);

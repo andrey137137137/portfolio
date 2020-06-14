@@ -5,9 +5,9 @@ export default {
     ...mapGetters(["isAuth"])
   },
   methods: {
-    ...mapActions(["getAuthStatus"])
+    ...mapActions(["setAuthStatus"])
   },
   created() {
-    this.getAuthStatus();
+    this.setAuthStatus();
   }
 };

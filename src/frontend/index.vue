@@ -142,7 +142,7 @@ export default {
       if (!this.touchInvalidElem()) return false;
 
       const $vm = this;
-      const { username, password } = this;
+      const { username, password } = $vm;
 
       axios
         .post("user/auth", { username, password })

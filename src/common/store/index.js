@@ -93,10 +93,12 @@ export default new Vuex.Store({
       });
     },
     setAuthStatus({ commit }, authStatus = "") {
+      console.log(authStatus);
+
       if (authStatus !== "") {
         commit(SET_AUTH_STATUS, authStatus);
       } else {
-        axios.get("user/auth").then(res => {
+        return axios.get("user/auth").then(res => {
           if (res.data.success) commit(SET_AUTH_STATUS, res.data.success);
         });
       }

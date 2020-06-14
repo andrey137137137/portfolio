@@ -26,8 +26,6 @@ export default {
     logout() {
       const $vm = this;
 
-      // $vm.getAuthStatus();
-
       if (!$vm.isAuth) {
         return $vm.$router.push($vm.homePage);
       }

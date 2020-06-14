@@ -97,6 +97,7 @@ export default {
     FooterWrapper
   },
   mixins: [validationMixin, formMixin, getAuthStatusMixin],
+  // mixins: [validationMixin, formMixin],
   data() {
     return {
       isFlipped: false,

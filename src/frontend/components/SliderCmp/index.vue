@@ -128,18 +128,15 @@ export default {
     },
     demoImg() {
       // return getImg(this.slides[this.curIndex].image, images);
-      // return "/upload/slider/" + this.slides[this.curIndex].image;
-      return "/upload/slide.png";
+      return "/upload/slider/" + this.slides[this.curIndex].image;
     },
     prevImg() {
       // return getImg(this.slides[this.prevIndex].image, images);
-      // return "/upload/slider/" + this.slides[this.prevIndex].image;
-      return "/upload/slide.png";
+      return "/upload/slider/" + this.slides[this.prevIndex].image;
     },
     nextImg() {
       // return getImg(this.slides[this.nextIndex()].image, images);
-      // return "/upload/slider/" + this.slides[this.nextIndex].image;
-      return "/upload/slide.png";
+      return "/upload/slider/" + this.slides[this.nextIndex].image;
     },
     title() {
       return this.slides[this.curIndex].title;
@@ -171,15 +168,15 @@ export default {
     },
     handlePrev() {
       this.changeSlide(-1);
-      // this.resetInterval();
+      this.resetInterval();
     },
     handleNext() {
       this.changeSlide();
-      // this.resetInterval();
+      this.resetInterval();
     }
   },
   created() {
-    // this.resetInterval();
+    this.resetInterval();
   }
 };
 </script>

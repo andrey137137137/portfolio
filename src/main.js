@@ -1,10 +1,13 @@
 import Vue from "vue";
+import VueRx from "vue-rx";
 import axios from "axios";
 import myConfig from "@config";
 import isDev from "@common/helpers/isDev";
 import store from "@common/store";
 import App from "@/App.vue";
 import router from "@/router";
+
+Vue.use(VueRx);
 
 axios.interceptors.request.use(
   config => {

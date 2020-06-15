@@ -2,7 +2,7 @@
   header.section.admin_header
     .container
       div
-        a.admin_header-link(href="/" target="_blank") Вернуться на сайт
+        a.admin_header-link(:href="HOME.path" target="_blank") Вернуться на сайт
         a.admin_header-link(href="" @click.prevent="logout") Выйти
       h2.section-title.admin_header-title Панель администрирования
 </template>
@@ -10,30 +10,24 @@
 <script>
 import axios from "axios";
 import { mapGetters, mapActions } from "vuex";
+import { HOME } from "@common/constants/router.js";
 
 export default {
   name: "AdminHeader",
-  data() {
-    return {
-      homePage: { name: "home" }
-    };
-  },
   computed: {
     ...mapGetters(["isAuth"])
   },
   methods: {
     ...mapActions(["setAuthStatus"]),
     logout() {
-      const $vm = this;
+      if (!this.isAuth) return this.$router.push(HOME);
 
-      if (!$vm.isAuth) {
-        return $vm.$router.push($vm.homePage);
-      }
+      const $vm = this;
 
       axios.delete("user/auth").then(res => {
         if (res.data.success) {
           $vm.setAuthStatus(!res.data.success);
-          return $vm.$router.push($vm.homePage);
+          return $vm.$router.push(HOME);
         }
       });
     }
@@ -41,4 +35,6 @@ export default {
 };
 </script>
 
-<style lang="scss" src="@backStylesCmp/AdminHeader.scss"></style>
+<style lang="scss">
+@import "@backStylesCmp/AdminHeader";
+</style>

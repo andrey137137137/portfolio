@@ -1,6 +1,19 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import store from "@common/store";
+import {
+  ROOT,
+  HOME,
+  WORKS,
+  ABOUT,
+  BLOG,
+  ADMIN,
+  ADMIN_ABOUT,
+  ADMIN_BLOG,
+  ADMIN_WORKS,
+  ADMIN_PROFILE,
+  ADMIN_AUTHCONFIG
+} from "@common/constants/router.js";
 
 Vue.use(VueRouter);
 
@@ -18,17 +31,17 @@ function redirect(cb) {
   if (store.state.authStatus) {
     cb();
   } else {
-    cb("/");
+    cb(ROOT);
   }
 }
 
-export default new VueRouter({
+const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   routes: [
     {
-      path: "/",
-      name: "home",
+      path: HOME.path,
+      name: HOME.name,
       props: () => {
         store.dispatch("profile/set");
       },
@@ -36,12 +49,12 @@ export default new VueRouter({
       component: () => import("@frontend")
     },
     {
-      path: "/",
+      path: ROOT,
       component: () => import("@frontViews"),
       children: [
         {
-          path: "works",
-          name: "works",
+          path: WORKS,
+          name: WORKS,
           props: () => {
             pageConfig("work");
           },
@@ -49,8 +62,8 @@ export default new VueRouter({
           component: () => import("@frontViews/Works.vue")
         },
         {
-          path: "about",
-          name: "about",
+          path: ABOUT,
+          name: ABOUT,
           props: () => {
             pageConfig("skill");
           },
@@ -58,8 +71,8 @@ export default new VueRouter({
           component: () => import("@frontViews/About.vue")
         },
         {
-          path: "blog",
-          name: "blog",
+          path: BLOG,
+          name: BLOG,
           props: () => {
             pageConfig("post");
           },
@@ -69,49 +82,39 @@ export default new VueRouter({
       ]
     },
     {
-      path: "/admin",
+      path: ADMIN,
       component: () => import("@backend"),
-      beforeEnter(to, from, next) {
-        store
-          .dispatch("setAuthStatus")
-          .then(() => {
-            redirect(next);
-          })
-          .catch(() => {
-            redirect(next);
-          });
-      },
       children: [
         {
-          path: "about",
+          path: ADMIN_ABOUT,
           props: () => {
             setDbPage("skill");
           },
           component: () => import("@backViews/About.vue")
         },
         {
-          path: "blog",
+          path: ADMIN_BLOG,
           props: () => {
             setDbPage("post");
           },
           component: () => import("@backViews/Blog.vue")
         },
         {
-          path: "works",
+          path: ADMIN_WORKS,
           props: () => {
             setDbPage("work");
           },
           component: () => import("@backViews/Works.vue")
         },
         {
-          path: "profile",
+          path: ADMIN_PROFILE,
           props: () => {
             setDbPage("user/profile");
           },
           component: () => import("@backViews/Profile.vue")
         },
         {
-          path: "authConfig",
+          path: ADMIN_AUTHCONFIG,
           props: () => {
             setDbPage("user/config");
           },
@@ -121,3 +124,18 @@ export default new VueRouter({
     }
   ]
 });
+
+router.beforeEach((to, from, next) => {
+  if (to.path.startsWith(ADMIN)) {
+    store
+      .dispatch("getAuthStatus")
+      .then(() => {
+        redirect(next);
+      })
+      .catch(() => {
+        redirect(next);
+      });
+  }
+});
+
+export default router;

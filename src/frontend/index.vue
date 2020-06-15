@@ -63,6 +63,7 @@ import $ from "jquery";
 import axios from "axios";
 import { Fragment } from "vue-fragment";
 import { validationMixin } from "vuelidate";
+import { ADMIN } from "@common/constants/router.js";
 // import { required } from "vuelidate/lib/validators";
 import { userAlphaNumValids, checked } from "@common/helpers/validators";
 import { ERROR } from "@httpSt";
@@ -97,7 +98,6 @@ export default {
     FooterWrapper
   },
   mixins: [validationMixin, formMixin, getAuthStatusMixin],
-  // mixins: [validationMixin, formMixin],
   data() {
     return {
       isFlipped: false,
@@ -150,7 +150,7 @@ export default {
         .then(res => {
           if (res.data.success) {
             $vm.setAuthStatus(res.data.success);
-            return $vm.$router.push("/admin");
+            return $vm.$router.push(ADMIN);
           }
 
           return false;

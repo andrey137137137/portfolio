@@ -135,6 +135,8 @@ router.beforeEach((to, from, next) => {
       .catch(() => {
         redirect(next);
       });
+  } else {
+    next();
   }
 });
 

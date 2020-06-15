@@ -1,8 +1,8 @@
 export const ROOT = "/";
 export const HOME = {
-    path = "/",
-    name = "home"
-  };
+  path: "/",
+  name: "home"
+};
 export const WORKS = "works";
 export const ABOUT = "about";
 export const BLOG = "blog";

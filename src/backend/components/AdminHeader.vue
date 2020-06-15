@@ -2,7 +2,7 @@
   header.section.admin_header
     .container
       div
-        a.admin_header-link(:href="HOME.path" target="_blank") Вернуться на сайт
+        a.admin_header-link(:href="homeLink" target="_blank") Вернуться на сайт
         a.admin_header-link(href="" @click.prevent="logout") Выйти
       h2.section-title.admin_header-title Панель администрирования
 </template>
@@ -14,6 +14,11 @@ import { HOME } from "@common/constants/router.js";
 
 export default {
   name: "AdminHeader",
+  data() {
+    return {
+      homeLink: HOME.path
+    };
+  },
   computed: {
     ...mapGetters(["isAuth"])
   },

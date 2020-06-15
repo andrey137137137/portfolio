@@ -5,11 +5,10 @@ const path = require("path");
 // const http = require("request");
 
 function getExt(name) {
-  const start = name.lastIndexOf(".");
-  return name.slice(start + 1);
+  return name.slice(name.lastIndexOf(".") + 1);
 }
 
-function upload(req, res, dir = "") {
+module.exports = function(req, res, dir) {
   const form = new formidable.IncomingForm();
   const rootPath = "public/upload";
   const uploadPath = path.join(rootPath, dir);
@@ -31,7 +30,7 @@ function upload(req, res, dir = "") {
 
     // console.log(files);
 
-    fileName = !dir ? `avatar.${getExt(files.image.name)}` : files.image.name;
+    fileName = files.image.name;
     filePath = path.join(uploadPath, fileName);
 
     fs.rename(files.image.path, filePath, err => {
@@ -63,16 +62,4 @@ function upload(req, res, dir = "") {
       // });
     });
   });
-}
-
-module.exports.avatar = (req, res) => {
-  upload(req, res);
-};
-
-module.exports.slider = (req, res) => {
-  upload(req, res, "slider");
-};
-
-module.exports.comments = (req, res) => {
-  upload(req, res, "comments");
 };

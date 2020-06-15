@@ -12,7 +12,7 @@
       .placeholder(slot="placeholder") No image
     div
       div preview:
-      clipperPreview.my-clipper(name="my-preview")
+      clipper-preview.my-clipper(name="my-preview")
         .placeholder(slot="placeholder") preview area
     div
       div result:

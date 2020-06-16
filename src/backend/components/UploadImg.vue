@@ -74,6 +74,14 @@ export default {
     page: {
       type: String,
       required: true
+    },
+    forDevice: {
+      type: String,
+      default: "mb"
+    },
+    ext: {
+      type: String,
+      default: "jpg"
     }
   },
   data() {
@@ -105,16 +113,20 @@ export default {
       const canvas = this.$refs.clipper.clip(); //call component's clip method
       const data = new FormData();
 
-      this.resultURL = canvas.toDataURL("image/jpg", 1); //canvas->image
-      data.append("image", this.dataURItoBlob(this.resultURL), "avatar.jpg");
+      this.resultURL = canvas.toDataURL(`image/${this.ext}`, 1); //canvas->image
+      data.append(
+        "image",
+        this.dataURItoBlob(this.resultURL),
+        `${this.forDevice}.${this.ext}`
+      );
 
       axios.post(this.getUploadPage(this.page), data).then(response => {
         this.fileMsg = response.data.msg;
 
-        if (response.data.status === "Ok") {
-          this.resultURL = "";
-          // this.$refs.upload.value = null;
-        }
+        // if (response.data.status === "Ok") {
+        //   this.resultURL = "";
+        //   // this.$refs.upload.value = null;
+        // }
 
         console.log("image upload response > ", response);
       });

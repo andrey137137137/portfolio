@@ -3,8 +3,14 @@ const router = require("express").Router();
 const { isAuth } = require("@auth");
 const upload = require("@contr/upload");
 
-router.post("/avatar", isAuth, upload(req, res, "avatar"));
-router.post("/slider", isAuth, upload(req, res, "slider"));
-router.post("/about", isAuth, upload(req, res, "about"));
+router.post("/avatar", isAuth, (req, res) => {
+  upload(req, res, "avatar");
+});
+router.post("/slider", isAuth, (req, res) => {
+  upload(req, res, "slider");
+});
+router.post("/about", isAuth, (req, res) => {
+  upload(req, res, "about");
+});
 
 module.exports = router;

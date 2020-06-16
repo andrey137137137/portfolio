@@ -16,6 +16,14 @@ body {
   $block: &;
 
   &#{$block}--admin {
+    #{$block}-wrap {
+      &--text,
+      &--number,
+      &--textarea {
+        width: 300px;
+      }
+    }
+
     #{$block}-input,
     #{$block}-btn {
       border-radius: 5px;
@@ -24,12 +32,6 @@ body {
 
     #{$block}-legend {
       line-height: 34px;
-    }
-
-    #{$block}--text,
-    #{$block}--number,
-    #{$block}--textarea {
-      width: 300px;
     }
 
     #{$block}-checked {

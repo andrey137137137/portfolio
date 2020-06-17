@@ -3,7 +3,6 @@
     :handleSubmit="submit"
     :disabled="disabled"
   )
-    UploadImg(page="avatar")
     InputEventElem(
       v-model="firstName"
       :val="$v.firstName"
@@ -30,7 +29,6 @@ import {
 import backFormMixin from "@backend/mixins/backFormMixin";
 import userFormMixin from "@backend/mixins/userFormMixin";
 import UserForm from "@backCmp/Forms/UserForm";
-import UploadImg from "@backCmp/UploadImg";
 import InputEventElem from "@components/FormElems/InputEventElem";
 import MultipleElem from "@components/FormElems/MultipleElem";
 
@@ -38,7 +36,6 @@ export default {
   name: "ProfileForm",
   components: {
     UserForm,
-    UploadImg,
     InputEventElem,
     MultipleElem
   },

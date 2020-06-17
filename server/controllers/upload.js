@@ -8,10 +8,10 @@ const path = require("path");
 //   return name.slice(name.lastIndexOf(".") + 1);
 // }
 
-module.exports = function(req, res, dir) {
+module.exports = function(req, res, dir = "") {
   const form = new IncomingForm();
   const rootPath = "public/upload";
-  const uploadPath = path.join(rootPath, dir);
+  const uploadPath = dir ? path.join(rootPath, dir) : rootPath;
   let fileName;
   let filePath;
 

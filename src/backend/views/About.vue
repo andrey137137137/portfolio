@@ -1,6 +1,6 @@
 <template lang="pug">
   PageWrapper(page="Обо мне")
-    UploadImg(page="about")
+    UploadForm(page="about")
     SkillForm(
       v-for="skill in dbData"
       :key="skill._id"
@@ -13,7 +13,7 @@
 import PictureInput from "vue-picture-input";
 import pageDataMixin from "@backend/mixins/pageDataMixin";
 import PageWrapper from "@backCmp/PageWrapper";
-import UploadImg from "@backCmp/UploadImg";
+import UploadForm from "@backCmp/Forms/UploadForm";
 import SkillForm from "@backCmp/Forms/SkillForm";
 
 export default {
@@ -21,7 +21,7 @@ export default {
   components: {
     PageWrapper,
     PictureInput,
-    UploadImg,
+    UploadForm,
     SkillForm
   },
   mixins: [pageDataMixin]

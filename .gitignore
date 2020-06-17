@@ -1,7 +1,8 @@
 .DS_Store
 node_modules
 public/upload/about
-public/upload/avatar
+public/upload/*.jpg
+public/upload/*.png
 public/userfiles
 src/assets/img/parallax
 src/assets/img

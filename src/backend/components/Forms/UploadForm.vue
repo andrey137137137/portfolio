@@ -2,12 +2,11 @@
   Fragment
     button
       clipper-upload(v-model="imgURL" accept="image/jpeg") upload image
-    button(@click.prevent="uploadImage") clip image
+    button(@click="uploadImage") clip image
     clipper-fixed.my-clipper(
       ref="clipper"
       :src="imgURL"
       preview="my-preview"
-      round=true
     )
       .placeholder(slot="placeholder") No image
     div
@@ -17,21 +16,6 @@
     div
       div result:
       img.result(:src="resultURL" alt="")
-    //- a.btn(@click="toggleShow") set avatar
-    //- my-upload(
-    //-   field="image"
-    //-   @crop-success="cropSuccess"
-    //-   @crop-upload-success="cropUploadSuccess"
-    //-   @crop-upload-fail="cropUploadFail"
-    //-   v-model="show"
-    //-   :width="141"
-    //-   :height="141"
-    //-   :url="getUploadPage('avatar')"
-    //-   :params="params"
-    //-   langType="ru"
-    //-   img-format="jpg")
-    //- img(:src="imgDataUrl")
-    //-   //- :headers="headers"
     //- picture-input(
     //-   ref="pictureInput"
     //-   @change="changeImage"
@@ -54,11 +38,10 @@ import {
   // clipperBasic,
   clipperPreview
 } from "vuejs-clipper";
-// import myUpload from "vue-image-crop-upload";
 // import PictureInput from "vue-picture-input";
 
 export default {
-  name: "UploadImg",
+  name: "UploadForm",
   components: {
     Fragment,
     clipperUpload,
@@ -66,7 +49,6 @@ export default {
     clipperFixed,
     // clipperBasic,
     clipperPreview
-    // myUpload,
     // PictureInput
   },
   mixins: [uploadMixin],
@@ -75,7 +57,7 @@ export default {
       type: String,
       required: true
     },
-    forDevice: {
+    name: {
       type: String,
       default: "mb"
     },
@@ -88,15 +70,6 @@ export default {
     return {
       imgURL: "",
       resultURL: ""
-      // show: false,
-      // params: {
-      //   token: "123456798",
-      //   name: "avatar"
-      // },
-      // headers: {
-      //   smail: "*_~"
-      // },
-      // imgDataUrl: "", // the datebase64 url of created image
       // image: null,
       // fileMsg: ""
     };
@@ -111,13 +84,14 @@ export default {
     // },
     uploadImage() {
       const canvas = this.$refs.clipper.clip(); //call component's clip method
-      const data = new FormData();
+      // const data = {};
 
       this.resultURL = canvas.toDataURL(`image/${this.ext}`, 1); //canvas->image
+      const data = new FormData();
       data.append(
         "image",
         this.dataURItoBlob(this.resultURL),
-        `${this.forDevice}.${this.ext}`
+        `${this.name}.${this.ext}`
       );
 
       axios.post(this.getUploadPage(this.page), data).then(response => {
@@ -145,42 +119,6 @@ export default {
       const bb = new Blob([ab], { type: mimeString });
       return bb;
     }
-    // toggleShow() {
-    //   this.show = !this.show;
-    // },
-    /**
-     * crop success
-     *
-     * [param] imgDataUrl
-     * [param] field
-     */
-    // cropSuccess(imgDataUrl, field) {
-    //   console.log("-------- crop success --------");
-    //   this.imgDataUrl = imgDataUrl;
-    //   console.log("field: " + field);
-    // },
-    /**
-     * upload success
-     *
-     * [param] jsonData  server api return data, already json encode
-     * [param] field
-     */
-    // cropUploadSuccess(jsonData, field) {
-    //   console.log("-------- upload success --------");
-    //   console.log(jsonData);
-    //   console.log("field: " + field);
-    // },
-    /**
-     * upload fail
-     *
-     * [param] status    server api return error status, like 500
-     * [param] field
-     */
-    // cropUploadFail(status, field) {
-    //   console.log("-------- upload fail --------");
-    //   console.log(status);
-    //   console.log("field: " + field);
-    // }
   }
 };
 </script>

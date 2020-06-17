@@ -4,7 +4,7 @@ const { isAuth } = require("@auth");
 const upload = require("@contr/upload");
 
 router.post("/avatar", isAuth, (req, res) => {
-  upload(req, res, "avatar");
+  upload(req, res);
 });
 router.post("/slider", isAuth, (req, res) => {
   upload(req, res, "slider");

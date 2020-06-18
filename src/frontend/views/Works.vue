@@ -14,7 +14,7 @@ import TopWrapper from "@frontCmp/TopWrapper";
 import SliderCmp from "@frontCmp/SliderCmp";
 import BottomWrapper from "@frontCmp/BottomWrapper";
 import CommentCmp from "@frontCmp/CommentCmp";
-import FeedbackForm from "@frontCmp/Forms/FeedbackForm";
+import FeedbackForm from "@frontCmp/forms/FeedbackForm";
 
 export default {
   name: "WorksView",

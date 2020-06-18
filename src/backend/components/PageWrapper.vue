@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import SubmitMessage from "@components/FormElems/SubmitMessage";
+import SubmitMessage from "@components/formElems/SubmitMessage";
 
 import { mapGetters } from "vuex";
 

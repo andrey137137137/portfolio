@@ -1,21 +1,26 @@
 <template lang="pug">
-  Fragment
-    button
-      clipper-upload(v-model="imgURL" accept="image/jpeg") upload image
-    button(@click="uploadImage") clip image
-    clipper-fixed.my-clipper(
-      ref="clipper"
-      :src="imgURL"
-      preview="my-preview"
-    )
-      .placeholder(slot="placeholder") No image
-    div
-      div preview:
-      clipper-preview.my-clipper(name="my-preview")
-        .placeholder(slot="placeholder") preview area
-    div
-      div result:
-      img.result(:src="resultURL" alt="")
+  AdminFormWrapper.upload_form(@submit.prevent.native="uploadImage")
+    .upload_form-container
+      clipper-basic.col.upload_form-col.my-clipper(
+        ref="clipper"
+        :src="imgURL"
+        preview="my-preview"
+      )
+        .upload_form-placeholder(slot="placeholder") No image
+      div.col.upload_form-col
+        p preview:
+        clipper-preview.my-clipper(name="my-preview")
+          .upload_form-placeholder(slot="placeholder") preview area
+    .form-row.form-row--buttons
+      ButtonElem(
+        :addClasses="buttonWrapperClass"
+        type="button"
+      )
+        clipper-upload(v-model="imgURL" accept="image/jpeg") upload image
+      ButtonElem(:addClasses="buttonWrapperClass") clip image
+    //- div
+    //-   div result:
+    //-   img.result(:src="resultURL" alt="")
     //- picture-input(
     //-   ref="pictureInput"
     //-   @change="changeImage"
@@ -29,25 +34,25 @@
 
 <script>
 import axios from "axios";
-import { Fragment } from "vue-fragment";
 import uploadMixin from "@backend/mixins/uploadMixin";
 import {
   clipperUpload,
   clipperRange,
-  clipperFixed,
-  // clipperBasic,
+  clipperBasic,
   clipperPreview
 } from "vuejs-clipper";
 // import PictureInput from "vue-picture-input";
+import AdminFormWrapper from "@backCmp/AdminFormWrapper";
+import ButtonElem from "@components/formElems/ButtonElem";
 
 export default {
   name: "UploadForm",
   components: {
-    Fragment,
+    AdminFormWrapper,
+    ButtonElem,
     clipperUpload,
     clipperRange,
-    clipperFixed,
-    // clipperBasic,
+    clipperBasic,
     clipperPreview
     // PictureInput
   },
@@ -74,6 +79,14 @@ export default {
       // fileMsg: ""
     };
   },
+  computed: {
+    buttonWrapperClass() {
+      return {
+        "form-col": true,
+        "form-btn--disabled": this.disabled
+      };
+    }
+  },
   methods: {
     // changeImage() {
     //   this.image = this.$refs.pictureInput.file;
@@ -82,6 +95,22 @@ export default {
     // removeImage() {
     //   this.image = "";
     // },
+    //   uploadImage() {
+    //     let data = new FormData();
+    //     data.append("image", this.image, "about.jpg");
+
+    //     axios.post(this.getUploadPage("avatar"), data).then(response => {
+    //       this.fileMsg = response.data.msg;
+
+    //       if (response.data.status === "Ok") {
+    //         this.image = null;
+    //         this.$refs.upload.value = null;
+    //       }
+
+    //       console.log("image upload response > ", response);
+    //     });
+    //   }
+    // }
     uploadImage() {
       const canvas = this.$refs.clipper.clip(); //call component's clip method
       // const data = {};
@@ -124,14 +153,20 @@ export default {
 </script>
 
 <style lang="scss">
-.my-clipper {
-  width: 100%;
-  max-width: 700px;
-}
+.upload_form {
+  &-container {
+    display: flex;
+    flex-wrap: wrap;
+  }
 
-.placeholder {
-  text-align: center;
-  padding: 20px;
-  background-color: lightgray;
+  .container &-col {
+    width: 50%;
+  }
+
+  &-placeholder {
+    text-align: center;
+    padding: 20px;
+    background-color: lightgray;
+  }
 }
 </style>

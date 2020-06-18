@@ -11,7 +11,7 @@
 <script>
 import pageDataMixin from "@backend/mixins/pageDataMixin";
 import PageWrapper from "@backCmp/PageWrapper";
-import PostForm from "@backCmp/Forms/PostForm";
+import PostForm from "@backCmp/forms/PostForm";
 
 export default {
   name: "AdminBlogView",

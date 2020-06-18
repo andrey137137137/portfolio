@@ -43,9 +43,9 @@ import uploadMixin from "@backend/mixins/uploadMixin";
 import backFormMixin from "@backend/mixins/backFormMixin";
 import itemFormMixin from "@backend/mixins/itemFormMixin";
 import PictureInput from "vue-picture-input";
-import ItemForm from "@backCmp/Forms/ItemForm";
-import InputEventElem from "@components/FormElems/InputEventElem";
-import MultipleElem from "@components/FormElems/MultipleElem";
+import ItemForm from "@backCmp/forms/ItemForm";
+import InputEventElem from "@components/formElems/InputEventElem";
+import MultipleElem from "@components/formElems/MultipleElem";
 
 export default {
   name: "SlideForm",

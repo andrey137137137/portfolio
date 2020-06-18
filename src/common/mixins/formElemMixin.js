@@ -1,7 +1,7 @@
 import types from "@common/constants/validation/types";
 import exist from "@common/helpers/exist";
 import addClassesMixin from "@common/mixins/addClassesMixin";
-import ErrorElem from "@components/FormElems/ErrorElem";
+import ErrorElem from "@components/formElems/ErrorElem";
 
 import { mapGetters, mapActions } from "vuex";
 

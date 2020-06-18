@@ -1,10 +1,10 @@
 <template lang="pug">
-  button.btn.form-btn(:type="type" :class="extClass")
+  button.btn.form-btn(:type="compType" :class="extClass")
     slot
 </template>
 
 <script>
-import addClassesMixin from "@/common/mixins/addClassesMixin";
+import addClassesMixin from "@common/mixins/addClassesMixin";
 
 export default {
   name: "ButtonElem",
@@ -13,11 +13,19 @@ export default {
     isDanger: {
       type: Boolean,
       default: false
+    },
+    type: {
+      type: String,
+      default: ""
     }
   },
   computed: {
-    type() {
-      return this.isDanger ? "button" : "submit";
+    compType() {
+      if (this.type === "") {
+        return this.isDanger ? "button" : "submit";
+      }
+
+      return this.type;
     },
     extClass() {
       return {

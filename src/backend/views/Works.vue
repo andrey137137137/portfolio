@@ -11,7 +11,7 @@
 <script>
 import pageDataMixin from "@backend/mixins/pageDataMixin";
 import PageWrapper from "@backCmp/PageWrapper";
-import SlideForm from "@backCmp/Forms/SlideForm";
+import SlideForm from "@backCmp/forms/SlideForm";
 
 export default {
   name: "AdminWorksView",

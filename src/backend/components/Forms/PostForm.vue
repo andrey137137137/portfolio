@@ -33,8 +33,8 @@ import formMixin from "@common/mixins/formMixin";
 import backFormMixin from "@backend/mixins/backFormMixin";
 import itemFormMixin from "@backend/mixins/itemFormMixin";
 // import exist from "@common/helpers/exist";
-import ItemForm from "@backCmp/Forms/ItemForm";
-import InputEventElem from "@components/FormElems/InputEventElem";
+import ItemForm from "@backCmp/forms/ItemForm";
+import InputEventElem from "@components/formElems/InputEventElem";
 
 export default {
   name: "PostForm",

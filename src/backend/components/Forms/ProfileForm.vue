@@ -28,9 +28,9 @@ import {
 } from "vuelidate/lib/validators";
 import backFormMixin from "@backend/mixins/backFormMixin";
 import userFormMixin from "@backend/mixins/userFormMixin";
-import UserForm from "@backCmp/Forms/UserForm";
-import InputEventElem from "@components/FormElems/InputEventElem";
-import MultipleElem from "@components/FormElems/MultipleElem";
+import UserForm from "@backCmp/forms/UserForm";
+import InputEventElem from "@components/formElems/InputEventElem";
+import MultipleElem from "@components/formElems/MultipleElem";
 
 export default {
   name: "ProfileForm",

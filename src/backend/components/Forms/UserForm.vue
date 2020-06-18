@@ -11,7 +11,7 @@
 
 <script>
 import AdminFormWrapper from "@backCmp/AdminFormWrapper";
-import ButtonElem from "@components/FormElems/ButtonElem";
+import ButtonElem from "@components/formElems/ButtonElem";
 
 export default {
   name: "UserForm",

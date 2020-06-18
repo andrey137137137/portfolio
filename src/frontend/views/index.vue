@@ -12,9 +12,9 @@
 <script>
 import menuCheckerMixin from "@frontend/mixins/menuCheckerMixin";
 import PageWrapper from "@frontCmp/PageWrapper";
-import HeaderWrapper from "@frontCmp/Header/HeaderWrapper";
+import HeaderWrapper from "@frontCmp/header/HeaderWrapper";
 import NavCmp from "@frontCmp/NavCmp";
-import HeaderContent from "@frontCmp/Header/HeaderContent";
+import HeaderContent from "@frontCmp/header/HeaderContent";
 import ScrollButton from "@frontCmp/ScrollButton";
 import FooterWrapper from "@frontCmp/FooterWrapper";
 import MainMenu from "@frontCmp/NavCmp/MainMenu";

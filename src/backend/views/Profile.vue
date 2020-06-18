@@ -27,7 +27,7 @@ import uploadMixin from "@backend/mixins/uploadMixin";
 import pageDataMixin from "@backend/mixins/pageDataMixin";
 import PageWrapper from "@backCmp/PageWrapper";
 import myUpload from "vue-image-crop-upload";
-import ProfileForm from "@backCmp/Forms/ProfileForm";
+import ProfileForm from "@backCmp/forms/ProfileForm";
 
 export default {
   name: "AdminProfileView",

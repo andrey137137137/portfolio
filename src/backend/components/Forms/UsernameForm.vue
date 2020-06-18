@@ -39,9 +39,9 @@ import { required, email, sameAs } from "vuelidate/lib/validators";
 import { userAlphaNumValids } from "@common/helpers/validators";
 import backFormMixin from "@backend/mixins/backFormMixin";
 import userFormMixin from "@backend/mixins/userFormMixin";
-import UserForm from "@backCmp/Forms/UserForm";
-import InputEventElem from "@components/FormElems/InputEventElem";
-import ChangeEventElem from "@components/FormElems/ChangeEventElem";
+import UserForm from "@backCmp/forms/UserForm";
+import InputEventElem from "@components/formElems/InputEventElem";
+import ChangeEventElem from "@components/formElems/ChangeEventElem";
 
 export default {
   name: "UsernameForm",

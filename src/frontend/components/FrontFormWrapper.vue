@@ -4,7 +4,7 @@
 </template>
 
 <script>
-import FormWrapper from "@components/FormElems/FormWrapper";
+import FormWrapper from "@components/formElems/FormWrapper";
 
 export default {
   name: "FrontFormWrapper",

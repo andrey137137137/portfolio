@@ -1,4 +1,4 @@
-import InputEventElem from "@components/FormElems/InputEventElem";
+import InputEventElem from "@components/formElems/InputEventElem";
 
 export default {
   name: "MultipleElem",

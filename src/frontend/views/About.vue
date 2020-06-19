@@ -12,7 +12,7 @@
           bgAddClass="title_wrap-bg--contrast"
         )
         .col.col--center.col--tb_8.about-col.img_wrap.about-img_wrap
-          img.img_wrap-img(src="/upload/about.jpg" alt="")
+          img.img_wrap-img(src="/upload/about/mb.jpg" alt="")
         article.col.col--center.col--tb_8.about-col.about-text_wrap
           h2.section-title.section-title--uppercase.section-title--underlined.about-title Кто я
           p.section-desc.about-desc.about-desc--first Я веб разработчик из Одессы. Мне {{compOld}}. Я учусь разработке современных сайтов и приложений. Мне нравится решать сложные задачи.

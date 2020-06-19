@@ -15,6 +15,8 @@ module.exports = function(req, res, dir = "") {
   let fileName;
   let filePath;
 
+  console.log(uploadPath);
+
   if (!fs.existsSync(uploadPath)) {
     fs.mkdirSync(uploadPath);
   }
@@ -27,8 +29,6 @@ module.exports = function(req, res, dir = "") {
         message: "Не удалось загрузить изображение"
       });
     }
-
-    // console.log(files);
 
     fileName = files.image.name;
     filePath = path.join(uploadPath, fileName);

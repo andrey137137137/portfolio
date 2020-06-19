@@ -1,6 +1,8 @@
 <template lang="pug">
   PageWrapper(page="Обо мне")
-    UploadForm(page="about")
+    UploadForm(
+      page="about"
+      :stencilProps="stencilProps")
     SkillForm(
       v-for="skill in dbData"
       :key="skill._id"
@@ -24,6 +26,15 @@ export default {
     UploadForm,
     SkillForm
   },
-  mixins: [pageDataMixin]
+  mixins: [pageDataMixin],
+  data() {
+    return {
+      stencilProps: {
+        aspectRatio: 1.130742049469965
+        // minAspectRatio: 1.130742049469965,
+        // maxAspectRatio: 1
+      }
+    };
+  }
 };
 </script>

@@ -1,5 +1,6 @@
 <template lang="pug">
   PageWrapper(page="Личные данные")
+    UploadForm(page="avatar" name="avatar")
     a.btn(@click="toggleShow") set avatar
     my-upload(
       field="image"
@@ -11,10 +12,10 @@
       :height="141"
       :url="getUploadPage('avatar')"
       :params="params"
+      :headers="headers"
       langType="ru"
       img-format="jpg")
     img(:src="imgDataUrl")
-      //- :headers="headers"
     ProfileForm(
       :firstName="dbData.firstName"
       :lastName="dbData.lastName"
@@ -23,17 +24,19 @@
 </template>
 
 <script>
+import myUpload from "vue-image-crop-upload";
 import uploadMixin from "@backend/mixins/uploadMixin";
 import pageDataMixin from "@backend/mixins/pageDataMixin";
 import PageWrapper from "@backCmp/PageWrapper";
-import myUpload from "vue-image-crop-upload";
+import UploadForm from "@backCmp/forms/UploadForm";
 import ProfileForm from "@backCmp/forms/ProfileForm";
 
 export default {
   name: "AdminProfileView",
   components: {
-    PageWrapper,
     myUpload,
+    PageWrapper,
+    UploadForm,
     ProfileForm
   },
   mixins: [uploadMixin, pageDataMixin],
@@ -42,7 +45,7 @@ export default {
       show: false,
       params: {
         // token: "123456798",
-        name: "image"
+        name: "avatar"
       },
       headers: {
         smail: "*_~"

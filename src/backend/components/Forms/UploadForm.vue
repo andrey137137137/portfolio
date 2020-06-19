@@ -8,7 +8,6 @@
       )
         .upload_form-placeholder(slot="placeholder") No image
       div.col.upload_form-col
-        p preview:
         clipper-preview.my-clipper(name="my-preview")
           .upload_form-placeholder(slot="placeholder") preview area
     .form-row.form-row--buttons

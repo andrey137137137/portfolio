@@ -1,36 +1,40 @@
 <template lang="pug">
-  AdminFormWrapper.upload_form(@submit.prevent.native="uploadImage")
-    cropper(
-      ref="cropper"
-      :src="image"
-      :stencil-component="$options.components.CircleStencil"
-      :stencil-props="stencilProps")
-    .form-row.form-row--buttons
-      input(
-        type="file"
-        ref="file"
-        @change="loadImage($event)" accept="image/*")
-      ButtonElem(
-        :addClasses="buttonWrapperClass"
-        @click.prevent.native="uploadImage") clip image
+  Fragment
+    AdminFormWrapper.upload_form(
+      v-for="(item, index) in images"
+      :key="index"
+      @submit.prevent.native="uploadImage(index)"
+    )
+      h3.section-title Изображение: "{{item.title}}"
+      cropper(
+        :ref="'cropper' + index"
+        :src="image(index)"
+        :stencil-component="stencilComp"
+        :stencil-props="stencilProps")
+      .form-row.form-row--buttons
+        input(
+          type="file"
+          :ref="'file' + index"
+          @change="loadImage($event, index)" accept="image/*")
+        ButtonElem(:addClasses="buttonWrapperClass") clip image
 </template>
 
 <script>
 import axios from "axios";
+import { Fragment } from "vue-fragment";
+import { CircleStencil, Cropper } from "vue-advanced-cropper";
 import uploadMixin from "@backend/mixins/uploadMixin";
 import AdminFormWrapper from "@backCmp/AdminFormWrapper";
-import { CircleStencil, Cropper } from "vue-advanced-cropper";
 import ButtonElem from "@components/formElems/ButtonElem";
-import PictureInput from "vue-picture-input";
 
 export default {
   name: "UploadForm",
   components: {
+    Fragment,
     AdminFormWrapper,
     Cropper,
     CircleStencil,
-    ButtonElem,
-    PictureInput
+    ButtonElem
   },
   mixins: [uploadMixin],
   props: {
@@ -38,40 +42,51 @@ export default {
       type: String,
       required: true
     },
-    name: {
-      type: String,
-      default: "mb"
+    titles: {
+      type: Array,
+      default() {
+        return null;
+      }
     },
     ext: {
       type: String,
       default: "jpg"
+    },
+    isRound: {
+      type: Boolean,
+      default: false
     },
     stencilProps: {
       type: Object,
       default() {
         return {};
       }
+    },
+    cropSize: {
+      type: Object,
+      default() {
+        return null;
+      }
     }
   },
   data() {
     return {
-      img:
-        "https://images.unsplash.com/photo-1485178575877-1a13bf489dfe?ixlib=rb-1.2.1&auto=format&fit=crop&w=991&q=80",
-      resultCoordinates: { height: 141, width: 141, left: 0, top: 0 },
-      stencilCoordinates: { height: 141, width: 141, left: 0, top: 0 },
-      image: null,
+      // image:
+      //   "https://images.unsplash.com/photo-1485178575877-1a13bf489dfe?ixlib=rb-1.2.1&auto=format&fit=crop&w=991&q=80",
       resultURL: ""
     };
   },
   computed: {
-    style() {
-      const { height, width, left, top } = this.stencilCoordinates;
-      return {
-        width: `${width}px`,
-        height: `${height}px`,
-        left: `${left}px`,
-        top: `${top}px`
-      };
+    images() {
+      return this.titles
+        ? this.titles.map(title => {
+            return { title, value: null };
+          })
+        : [{ title: this.page, value: null }];
+    },
+    stencilComp() {
+      const COMP = this.isRound ? "CircleStencil" : "RectangleStencil";
+      return this.$options.components[COMP];
     },
     buttonWrapperClass() {
       return {
@@ -81,6 +96,14 @@ export default {
     }
   },
   methods: {
+    image(index) {
+      const root = "/upload";
+
+      if (this.titles)
+        return `${root}/${this.page}/${this.images[index].title}.${this.ext}`;
+
+      return `${root}/${this.page}.${this.ext}`;
+    },
     dataURItoBlob(dataURI) {
       const byteString = atob(dataURI.split(",")[1]);
       const mimeString = dataURI
@@ -95,10 +118,10 @@ export default {
       const bb = new Blob([ab], { type: mimeString });
       return bb;
     },
-    reset() {
-      this.image = null;
+    reset(index) {
+      this.images[index].value = null;
     },
-    loadImage(event) {
+    loadImage(event, index) {
       // Reference to the DOM input element
       var input = event.target;
       // Ensure that you have a file before attempting to read it
@@ -109,31 +132,41 @@ export default {
         reader.onload = e => {
           // Note: arrow function used here, so that "this.imageData" refers to the imageData of Vue component
           // Read image as base64 and set to imageData
-          this.image = e.target.result;
+          this.images[index].value = e.target.result;
+
+          if (this.cropSize) {
+            const { width, height } = this.cropSize;
+            this.$refs.cropper.setCoordinates((coordinates, imageSize) => ({
+              width,
+              height,
+              left: imageSize.width / 2 - width / 2,
+              top: imageSize.height / 2 - height / 2
+            }));
+          }
         };
         // Start the reader job - read file as a data url (base64 format)
         reader.readAsDataURL(input.files[0]);
       }
     },
-    uploadImage() {
-      const { canvas } = this.$refs.cropper.getResult();
+    uploadImage(index) {
+      const { canvas } = this.$refs["cropper" + index].getResult();
       if (canvas) {
         this.resultURL = canvas.toDataURL(`image/${this.ext}`, 1);
         const form = new FormData();
         form.append(
           "image",
           this.dataURItoBlob(this.resultURL),
-          `${this.name}.${this.ext}`
+          `${this.images[index].title}.${this.ext}`
         );
-        axios.post(this.getUploadPage(this.page), form).then(response => {
-          this.fileMsg = response.data.message;
+        axios.post(this.getUploadPage(this.page), form).then(res => {
+          this.fileMsg = res.data.message;
 
-          // if (response.data.status === "Ok") {
+          // if (res.data.status === "Ok") {
           //   this.resultURL = "";
           //   // this.$refs.upload.value = null;
           // }
 
-          console.log("image upload response > ", response);
+          console.log("image upload response > ", res);
         });
       }
     }

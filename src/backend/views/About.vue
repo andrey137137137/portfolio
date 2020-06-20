@@ -2,6 +2,7 @@
   PageWrapper(page="Обо мне")
     UploadForm(
       page="about"
+      :titles="['mb', 'tb']"
       :stencilProps="stencilProps")
     SkillForm(
       v-for="skill in dbData"
@@ -31,8 +32,6 @@ export default {
     return {
       stencilProps: {
         aspectRatio: 1.130742049469965
-        // minAspectRatio: 1.130742049469965,
-        // maxAspectRatio: 1
       }
     };
   }

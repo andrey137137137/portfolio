@@ -2,7 +2,9 @@
   PageWrapper(page="Личные данные")
     UploadForm(
       page="avatar"
-      name="avatar")
+      :isRound="true"
+      :stencilProps="stencilProps"
+      :cropSize="cropSize")
     ProfileForm(
       :firstName="dbData.firstName"
       :lastName="dbData.lastName"
@@ -24,6 +26,17 @@ export default {
     UploadForm,
     ProfileForm
   },
-  mixins: [uploadMixin, pageDataMixin]
+  mixins: [uploadMixin, pageDataMixin],
+  data() {
+    return {
+      stencilProps: {
+        aspectRatio: 1
+      },
+      cropSize: {
+        width: 141,
+        height: 141
+      }
+    };
+  }
 };
 </script>

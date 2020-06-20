@@ -73,17 +73,18 @@ export default {
     return {
       // image:
       //   "https://images.unsplash.com/photo-1485178575877-1a13bf489dfe?ixlib=rb-1.2.1&auto=format&fit=crop&w=991&q=80",
-      resultURL: ""
+      resultURL: "",
+      images: []
     };
   },
   computed: {
-    images() {
-      return this.titles
-        ? this.titles.map(title => {
-            return { title, value: null };
-          })
-        : [{ title: this.page, value: null }];
-    },
+    // images() {
+    //   return this.titles
+    //     ? this.titles.map(title => {
+    //         return { title, value: null };
+    //       })
+    //     : [{ title: this.page, value: null }];
+    // },
     stencilComp() {
       const COMP = this.isRound ? "CircleStencil" : "RectangleStencil";
       return this.$options.components[COMP];
@@ -97,10 +98,15 @@ export default {
   },
   methods: {
     image(index) {
+      if (this.images[index].value) {
+        return this.images[index].value;
+      }
+
       const root = "/upload";
 
-      if (this.titles)
+      if (this.titles) {
         return `${root}/${this.page}/${this.images[index].title}.${this.ext}`;
+      }
 
       return `${root}/${this.page}.${this.ext}`;
     },
@@ -149,7 +155,7 @@ export default {
       }
     },
     uploadImage(index) {
-      const { canvas } = this.$refs["cropper" + index].getResult();
+      const { canvas } = this.$refs["cropper" + index][0].getResult();
       if (canvas) {
         this.resultURL = canvas.toDataURL(`image/${this.ext}`, 1);
         const form = new FormData();
@@ -170,6 +176,16 @@ export default {
         });
       }
     }
+  },
+  created() {
+    if (this.titles) {
+      this.titles.map(title => {
+        this.images.push({ title, value: null });
+      });
+    } else {
+      this.images = [{ title: this.page, value: null }];
+    }
+    console.log(this.images);
   }
 };
 </script>

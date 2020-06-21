@@ -11,8 +11,11 @@
           containerAddClass="about-title_wrap"
           bgAddClass="title_wrap-bg--contrast"
         )
-        .col.col--center.col--tb_8.about-col.img_wrap.about-img_wrap
-          img.img_wrap-img(src="/upload/about/mb.jpg" alt="")
+        ImageWrapper.col.col--center.col--tb_8.about-col(
+          :path="image.path"
+          :breakpoints="image.breakpoints"
+          :addClasses="image.classes.post"
+        )
         article.col.col--center.col--tb_8.about-col.about-text_wrap
           h2.section-title.section-title--uppercase.section-title--underlined.about-title Кто я
           p.section-desc.about-desc.about-desc--first Я веб разработчик из Одессы. Мне {{compOld}}. Я учусь разработке современных сайтов и приложений. Мне нравится решать сложные задачи.
@@ -45,6 +48,7 @@ import pageConfigMixin from "@frontend/mixins/pageConfigMixin";
 import TopWrapper from "@frontCmp/TopWrapper";
 import SectionWrapper from "@frontCmp/SectionWrapper";
 import TitleWrapper from "@frontCmp/TitleWrapper";
+import ImageWrapper from "@frontCmp/ImageWrapper";
 import SkillList from "@frontCmp/SkillList";
 import BottomWrapper from "@frontCmp/BottomWrapper";
 import ContactList from "@frontCmp/ContactList";
@@ -59,6 +63,7 @@ export default {
     TopWrapper,
     SectionWrapper,
     TitleWrapper,
+    ImageWrapper,
     SkillList,
     BottomWrapper,
     ContactList
@@ -66,6 +71,25 @@ export default {
   mixins: [pageConfigMixin],
   data() {
     return {
+      image: {
+        classes: {
+          pre: {
+            col: true,
+            "col--center": true,
+            "col--tb_8": true,
+            "about-col": true
+          },
+          post: {
+            "about-img_wrap": true
+          }
+        },
+        path: "/upload/about",
+        breakpoints: [
+          { name: "ds.jpg", value: 1200, title: "" },
+          { name: "tb.jpg", value: 768, title: "" },
+          { name: "mb.jpg", value: 0, title: "Обо мне" }
+        ]
+      },
       bottomWrapClass: {
         "bottom_wrap--map_wrap": true
       },

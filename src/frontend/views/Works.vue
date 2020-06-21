@@ -1,7 +1,7 @@
 <template lang="pug">
   Fragment
     TopWrapper
-      SliderCmp(:slides="dbData")
+      SliderCmp(:items="dbData")
     BottomWrapper.bottom_wrap--bg
       CommentCmp
       FeedbackForm

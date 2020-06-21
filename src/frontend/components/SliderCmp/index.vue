@@ -2,7 +2,7 @@
   SectionWrapper(:name="id" :isContainerClass="false" :isOwnContainerClass="true")
 
     ul(style="display:none")
-      li(v-for="item in slides") {{item.title}}
+      li(v-for="item in items") {{item.title}}
 
     ul.slider-demo
       transition(:name="transitionName")
@@ -64,7 +64,7 @@ export default {
     ArrowButton
   },
   props: {
-    slides: {
+    items: {
       type: Array,
       // required: true,
       default() {
@@ -94,7 +94,7 @@ export default {
       transitionMethod: "scroll_up",
       duration: 3000,
       curIndex: 0,
-      // count: this.slides.length,
+      // count: this.items.length,
       intervalID: null,
       titleClasses: {
         "section-title": true,
@@ -117,35 +117,35 @@ export default {
 
       if (tempIndex < 0) {
         // return this.count - 1;
-        return this.slides.length - 1;
+        return this.items.length - 1;
       }
 
       return tempIndex;
     },
     nextIndex() {
       // return (this.curIndex + 1) % this.count;
-      return (this.curIndex + 1) % this.slides.length;
+      return (this.curIndex + 1) % this.items.length;
     },
     demoImg() {
-      // return getImg(this.slides[this.curIndex].image, images);
-      return "/upload/slider/" + this.slides[this.curIndex].image;
+      // return getImg(this.items[this.curIndex].image, images);
+      return "/upload/slider/" + this.items[this.curIndex].image;
     },
     prevImg() {
-      // return getImg(this.slides[this.prevIndex].image, images);
-      return "/upload/slider/" + this.slides[this.prevIndex].image;
+      // return getImg(this.items[this.prevIndex].image, images);
+      return "/upload/slider/" + this.items[this.prevIndex].image;
     },
     nextImg() {
-      // return getImg(this.slides[this.nextIndex()].image, images);
-      return "/upload/slider/" + this.slides[this.nextIndex].image;
+      // return getImg(this.items[this.nextIndex()].image, images);
+      return "/upload/slider/" + this.items[this.nextIndex].image;
     },
     title() {
-      return this.slides[this.curIndex].title;
+      return this.items[this.curIndex].title;
     },
     techs() {
-      return this.slides[this.curIndex].techs.join(", ");
+      return this.items[this.curIndex].techs.join(", ");
     },
     link() {
-      return this.slides[this.curIndex].link;
+      return this.items[this.curIndex].link;
     }
   },
   methods: {

@@ -1,24 +1,31 @@
 <template lang="pug">
-  ul#parallax.parallax(:class="classes")
+  #parallax.parallax(:class="classes")
     //- .parallax-container
-    li.parallax-layer(v-for="(item, index) in layers" :data-depth="item")
-      img.parallax-img(:src="img(index)")
+    //- li.parallax-layer(
+    //-   v-for="(item, index) in layers"
+    //-   :key="index"
+    //-   :data-depth="item")
+    ImageWrapper.parallax-layer(
+      v-for="(item, index) in layers"
+      :key="index"
+      :data-depth="item"
+      :path="getLayerPath(index)"
+      :breakpoints="breakpoints"
+      :title="getTitle(index)"
+      :isWrapperClass="false"
+      :imgAddClasses="{'parallax-img': true}")
     //- .parallax-content
 </template>
 
 <script>
-const images = {
-  png: require.context("@/assets/img/parallax/", false, /layer_\d+\.png$/)
-};
-
 import $ from "jquery";
-import getImg from "@common/helpers/getImg";
-
-import { createNamespacedHelpers } from "vuex";
-const { mapGetters } = createNamespacedHelpers("frontView");
+import ImageWrapper from "@frontCmp/ImageWrapper";
 
 export default {
   name: "ParallaxCmp",
+  components: {
+    ImageWrapper
+  },
   data() {
     return {
       $parallaxContainer: document.getElementById("parallax"),
@@ -34,24 +41,34 @@ export default {
       positionY: 0,
       bottomPosition: 0,
       transformString: "",
-      path: "../../assets/img/parallax",
+      path: "/upload/parallax",
       ext: "png",
-      layers: [100, 100, 90, 80, 70, 60, 15, 10]
+      layers: [100, 100, 90, 80, 70, 60, 15, 10],
+      breakpoints: [
+        { name: "ds.png", value: 1200 },
+        { name: "tb.png", value: 768 },
+        { name: "mb.png", value: 0 }
+      ]
     };
   },
   computed: {
-    ...mapGetters(["config"]),
+    isScroll() {
+      return this.$route.name != "home";
+    },
     classes() {
-      return { "parallax--scroll": this.config.isContent };
+      return { "parallax--scroll": this.isScroll };
     }
   },
   methods: {
-    img(index) {
-      return getImg("layer_" + (index + 1) + ".png", images);
+    getLayerPath(index) {
+      return this.path + "/layer_" + (index + 1);
+    },
+    getTitle(index) {
+      return "Слой " + index;
     },
     moveLayers(event) {
       const $vm = this;
-      const isScroll = this.config.isContent;
+      const isScroll = this.isScroll;
 
       if (isScroll) {
         this.scrollY = window.pageYOffset || document.documentElement.scrollTop;
@@ -90,10 +107,9 @@ export default {
   },
   mounted() {
     const $vm = this;
-    console.log(images.png.length);
 
     $(document).ready(() => {
-      const isScroll = $vm.config.isContent;
+      const isScroll = $vm.isScroll;
 
       $vm.$parallaxContainer = document.getElementById("parallax");
 
@@ -120,4 +136,6 @@ export default {
 };
 </script>
 
-<style lang="scss" src="@frontStylesCmp/Parallax/import.scss"></style>
+<style lang="scss">
+@import "@frontStylesCmp/Parallax/import";
+</style>

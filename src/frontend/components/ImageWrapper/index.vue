@@ -1,11 +1,12 @@
 <template lang="pug">
-  picture(:class="classes")
+  picture(:class="containerClasses")
     ImageCmp(
       v-for="(item, index) in breakpoints"
       :key="index"
+      :classes="imgClasses"
       :path="path + '/' + item.name"
       :breakpoint="item.value"
-      :title="item.title")
+      :title="title")
 </template>
 
 <script>
@@ -26,13 +27,33 @@ export default {
     breakpoints: {
       type: Array,
       required: true
+    },
+    title: {
+      type: String,
+      required: true
+    },
+    isWrapperClass: {
+      type: Boolean,
+      default: true
+    },
+    imgAddClasses: {
+      type: Object,
+      default() {
+        return {};
+      }
     }
   },
   computed: {
-    classes() {
+    containerClasses() {
       return {
-        img_wrap: true,
+        img_wrap: this.isWrapperClass,
         ...this.addClasses
+      };
+    },
+    imgClasses() {
+      return {
+        "img_wrap-img": this.isWrapperClass,
+        ...this.imgAddClasses
       };
     }
   }

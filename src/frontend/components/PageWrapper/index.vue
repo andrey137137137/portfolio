@@ -1,7 +1,7 @@
 <template lang="pug">
   .bg(:class="classes")
     //- PreloaderCmp
-    //- ParallaxCmp
+    ParallaxCmp
     slot
 </template>
 

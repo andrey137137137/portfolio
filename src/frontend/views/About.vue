@@ -14,7 +14,8 @@
         ImageWrapper.col.col--center.col--tb_8.about-col(
           :path="image.path"
           :breakpoints="image.breakpoints"
-          :addClasses="image.classes.post"
+          title="Обо мне"
+          :addClasses="image.classes"
         )
         article.col.col--center.col--tb_8.about-col.about-text_wrap
           h2.section-title.section-title--uppercase.section-title--underlined.about-title Кто я
@@ -73,21 +74,13 @@ export default {
     return {
       image: {
         classes: {
-          pre: {
-            col: true,
-            "col--center": true,
-            "col--tb_8": true,
-            "about-col": true
-          },
-          post: {
-            "about-img_wrap": true
-          }
+          "about-img_wrap": true
         },
         path: "/upload/about",
         breakpoints: [
-          { name: "ds.jpg", value: 1200, title: "" },
-          { name: "tb.jpg", value: 768, title: "" },
-          { name: "mb.jpg", value: 0, title: "Обо мне" }
+          { name: "ds.jpg", value: 1200 },
+          { name: "tb.jpg", value: 768 },
+          { name: "mb.jpg", value: 0 }
         ]
       },
       bottomWrapClass: {

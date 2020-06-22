@@ -2,8 +2,7 @@
   a(href="#" :class="classes" @click.prevent="handle")
     transition(:name="transitionName")
       .img_wrap.slider-item(:key="index")
-        img.img_wrap-img(:src="imgSrc" :alt="index + 1")
-        .slider-item_number.slider-arrow_number {{newIndex + 1}}
+        img.img_wrap-img.slider-img.slider-img--in_arrow(:src="imgSrc" :alt="alt")
 </template>
 
 <script>
@@ -26,6 +25,10 @@ export default {
       type: String,
       required: true
     },
+    title: {
+      type: String,
+      required: true
+    },
     isNext: {
       type: Boolean,
       default: true
@@ -45,6 +48,10 @@ export default {
     transitionName() {
       const transitionMethod = this.isNext ? "scroll_up" : "scroll_down";
       return `slider--${transitionMethod}`;
+    },
+    alt() {
+      const number = this.newIndex + 1;
+      return number + ". " + this.title;
     }
   }
 };

@@ -7,8 +7,7 @@
     ul.slider-demo
       transition(:name="transitionName")
         li.img_wrap.slider-item.slider-demo_item(:key="curIndex")
-          img.img_wrap-img(:src="demoImg" :alt="title")
-          .slider-item_number.slider-demo_item_number {{curIndex + 1}}
+          img.img_wrap-img.slider-img(:src="demoImg" :alt="alt")
 
     article.slider-text_wrap
       AnimateStr(
@@ -35,6 +34,7 @@
         :newIndex="prevIndex"
         :handle="handlePrev"
         :imgSrc="prevImg"
+        :title="prevTitle"
         :isNext="false"
       )
       ArrowButton(
@@ -42,6 +42,7 @@
         :newIndex="nextIndex"
         :handle="handleNext"
         :imgSrc="nextImg"
+        :title="nextTitle"
       )
 </template>
 
@@ -80,6 +81,12 @@ export default {
             link: "http://test2.link/",
             techs: ["html 2", "css 2", "js 2"],
             title: "Test Title 2"
+          },
+          {
+            image: "test3.jpg",
+            link: "http://test3.link/",
+            techs: ["html 3", "css 3", "js 3"],
+            title: "Test Title 3"
           }
         ];
       }
@@ -128,18 +135,31 @@ export default {
     },
     demoImg() {
       // return getImg(this.items[this.curIndex].image, images);
-      return "/upload/slider/" + this.items[this.curIndex].image;
+      // return "/upload/slider/" + this.items[this.curIndex].image;
+      return "/upload/slider/slide.png";
     },
     prevImg() {
       // return getImg(this.items[this.prevIndex].image, images);
-      return "/upload/slider/" + this.items[this.prevIndex].image;
+      // return "/upload/slider/" + this.items[this.prevIndex].image;
+      return "/upload/slider/slide.png";
     },
     nextImg() {
       // return getImg(this.items[this.nextIndex()].image, images);
-      return "/upload/slider/" + this.items[this.nextIndex].image;
+      // return "/upload/slider/" + this.items[this.nextIndex].image;
+      return "/upload/slider/slide.png";
     },
     title() {
       return this.items[this.curIndex].title;
+    },
+    alt() {
+      const number = this.curIndex + 1;
+      return number + ". " + this.title;
+    },
+    prevTitle() {
+      return this.items[this.prevIndex].title;
+    },
+    nextTitle() {
+      return this.items[this.nextIndex].title;
     },
     techs() {
       return this.items[this.curIndex].techs.join(", ");
@@ -168,15 +188,15 @@ export default {
     },
     handlePrev() {
       this.changeSlide(-1);
-      this.resetInterval();
+      // this.resetInterval();
     },
     handleNext() {
       this.changeSlide();
-      this.resetInterval();
+      // this.resetInterval();
     }
   },
   created() {
-    this.resetInterval();
+    // this.resetInterval();
   }
 };
 </script>

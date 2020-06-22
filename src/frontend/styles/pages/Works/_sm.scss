@@ -34,9 +34,9 @@
       font-size: 40px;
       padding: 40px;
 
-      &_number {
-        font-size: 150px /#{$height};
-      }
+      // &_number {
+      //   font-size: 150px /#{$height};
+      // }
     }
   }
 
@@ -52,6 +52,18 @@
       @include position("absolute 0 * * 0");
       z-index: 1;
       size: 100%;
+    }
+  }
+
+  &-img {
+    @include position("absolute 50% * * 50%");
+    display: block;
+    font-family: $mainFont;
+    line-height: 1;
+    transform: translate(-50%, -50%);
+
+    &--in_arrow {
+      font-size: 28px;
     }
   }
 
@@ -108,9 +120,9 @@
     text-decoration: none;
     overflow: hidden;
 
-    &_number {
-      font-size: 90px/93px;
-    }
+    // &_number {
+    //   font-size: 90px/93px;
+    // }
 
     &:before {
       position: absolute;
@@ -185,7 +197,7 @@
 
     .title_wrap-title {
       padding-top: 0;
-      line-height: 42px;
+      // line-height: 42px;
     }
   }
 

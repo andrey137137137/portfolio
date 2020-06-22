@@ -26,6 +26,10 @@ body {
   }
 }
 
+picture {
+  display: block;
+}
+
 .fade {
   &-enter-active,
   &-leave-active {

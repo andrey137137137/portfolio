@@ -90,11 +90,11 @@
     position: relative;
     size: 110px;
     overflow: hidden;
-    transition: opacity $trsTime;
+    // transition: opacity $trsTime;
 
     @for $prs from 0 through 99 {
       &--prs_#{$prs} {
-        @include percentsToOpacity($prs);
+        // @include percentsToOpacity($prs);
 
         .skills-item_sector {
           @include percentsToCircleLength($prs, $circleLength);

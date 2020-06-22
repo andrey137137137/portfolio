@@ -7,6 +7,10 @@
     height: 529px;
   }
 
+  &-img--in_arrow {
+    font-size: inherit;
+  }
+
   &-text_wrap {
     @include padding("20px * 30px");
     height: 270px;

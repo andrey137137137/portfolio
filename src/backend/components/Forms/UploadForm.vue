@@ -13,6 +13,7 @@
         :stencil-props="stencilProps")
       .form-row.form-row--buttons
         input(
+          v-if="index == 0"
           type="file"
           :ref="'file' + index"
           @change="loadImage($event, index)" accept="image/*")
@@ -42,7 +43,7 @@ export default {
       type: String,
       required: true
     },
-    titles: {
+    breakpoints: {
       type: Array,
       default() {
         return null;
@@ -79,8 +80,8 @@ export default {
   },
   computed: {
     // images() {
-    //   return this.titles
-    //     ? this.titles.map(title => {
+    //   return this.breakpoints
+    //     ? this.breakpoints.map(title => {
     //         return { title, value: null };
     //       })
     //     : [{ title: this.page, value: null }];
@@ -104,8 +105,10 @@ export default {
 
       const root = "/upload";
 
-      if (this.titles) {
-        return `${root}/${this.page}/${this.images[index].title}.${this.ext}`;
+      if (this.breakpoints) {
+        return `${root}/${this.page}/${this.images[index - 1].title}.${
+          this.ext
+        }`;
       }
 
       return `${root}/${this.page}.${this.ext}`;
@@ -178,8 +181,8 @@ export default {
     }
   },
   created() {
-    if (this.titles) {
-      this.titles.map(title => {
+    if (this.breakpoints) {
+      this.breakpoints.map(title => {
         this.images.push({ title, value: null });
       });
     } else {

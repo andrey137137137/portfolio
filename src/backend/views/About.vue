@@ -2,7 +2,7 @@
   PageWrapper(page="Обо мне")
     UploadForm(
       page="about"
-      :titles="['mb', 'tb', 'ds']"
+      :breakpoints="['mb', 'tb', 'ds']"
       :stencilProps="stencilProps")
     SkillForm(
       v-for="skill in dbData"

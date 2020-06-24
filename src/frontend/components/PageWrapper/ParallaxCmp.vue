@@ -1,34 +1,29 @@
 <template lang="pug">
-  Fragment
-    #parallax.parallax(:class="classes")
-      //- .parallax-container
-      //- li.parallax-layer(
-      //-   v-for="(item, index) in layers"
-      //-   :key="index"
-      //-   :data-depth="item")
-      ImageWrapper.parallax-layer(
-        v-for="(item, index) in layers"
-        :key="index"
-        :data-depth="item"
-        :path="getLayerPath(index)"
-        :breakpoints="breakpoints"
-        :title="getTitle(index)"
-        :isWrapperClass="false"
-        :imgAddClasses="{'parallax-img': true}")
-      //- .parallax-content
-    .parallax_mirror(v-if="isWorks")
-      img.parallax_mirror-img(src="@assets/img/bottom.jpg")
+  #parallax.parallax(:class="classes")
+    //- .parallax-container
+    //- li.parallax-layer(
+    //-   v-for="(item, index) in layers"
+    //-   :key="index"
+    //-   :data-depth="item")
+    ImageWrapper.parallax-layer(
+      v-for="(item, index) in layers"
+      :key="index"
+      :data-depth="item"
+      :path="getLayerPath(index)"
+      :breakpoints="breakpoints"
+      :title="getTitle(index)"
+      :isWrapperClass="false"
+      :imgAddClasses="{'parallax-img': true}")
+    //- .parallax-content
 </template>
 
 <script>
 import $ from "jquery";
-import { Fragment } from "vue-fragment";
 import ImageWrapper from "@frontCmp/ImageWrapper";
 
 export default {
   name: "ParallaxCmp",
   components: {
-    Fragment,
     ImageWrapper
   },
   data() {
@@ -36,7 +31,6 @@ export default {
       $parallaxContainer: document.getElementById("parallax"),
       // $container,
       $layers: false,
-      $bottomParallax: null,
       centerX: 0,
       centerY: 0,
       initialX: 0,
@@ -58,9 +52,6 @@ export default {
     };
   },
   computed: {
-    isWorks() {
-      return this.$route.name == "works";
-    },
     isScroll() {
       return this.$route.name != "home";
     },
@@ -103,13 +94,6 @@ export default {
 
           if (isScroll) {
             $vm.transformString = `translateY(${$vm.positionY}px)`;
-
-            if ($vm.isWorks) {
-              const bottomImgPos =
-                document.body.scrollHeight - (window.innerHeight + $vm.scrollY);
-              $vm.$bottomParallax.style.bottom = `${bottomImgPos}px`;
-              // console.log(bottomImgPos);
-            }
           } else {
             $vm.positionX = $vm.initialX * $vm.divider;
             $vm.transformString = `translate(${$vm.positionX}px, ${$vm.positionY}px)`;
@@ -128,9 +112,6 @@ export default {
       const isScroll = $vm.isScroll;
 
       $vm.$parallaxContainer = document.getElementById("parallax");
-      if ($vm.isWorks) {
-        $vm.$bottomParallax = document.querySelector(".parallax_mirror-img");
-      }
 
       $vm.centerX = window.innerWidth / 2;
       $vm.centerY = window.innerHeight / 2;

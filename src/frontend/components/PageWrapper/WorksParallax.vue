@@ -1,6 +1,7 @@
 <template lang="pug">
-  .parallax_mirror(v-if="isWorks")
-    img.parallax_mirror-img(src="@assets/img/bottom.jpg")
+  #bottomParallax.parallax_mirror
+    //- img.parallax_mirror-img(src="@assets/img/bottom.jpg")
+    .parallax_mirror-img
 </template>
 
 <script>
@@ -8,57 +9,51 @@ import $ from "jquery";
 import ImageWrapper from "@frontCmp/ImageWrapper";
 
 export default {
-  name: "ParallaxCmp",
+  name: "WorksParallax",
   components: {
     ImageWrapper
   },
   data() {
     return {
-      $bottomParallax: null
+      $parallaxContainer: null,
+      $parallax: null,
+      $bottomWrapper: null,
+      $footer: null
     };
   },
   methods: {
     moveLayers() {
-      const $vm = this;
-      this.scrollY = window.pageYOffset || document.documentElement.scrollTop;
-
+      const scrollY = window.pageYOffset || document.documentElement.scrollTop;
       const bottomImgPos =
-        document.body.scrollHeight - (window.innerHeight + $vm.scrollY);
-      $vm.$bottomParallax.style.bottom = `${bottomImgPos}px`;
-      // console.log(bottomImgPos);
+        document.body.scrollHeight - (window.innerHeight + scrollY);
+      this.$parallax.style.transform = `translateY(-${bottomImgPos}px)`;
+    },
+    changeHeight() {
+      this.$parallaxContainer.style.height =
+        this.$bottomWrapper.offsetHeight + this.$footer.offsetHeight + "px";
+      this.moveLayers();
     }
   },
   mounted() {
     const $vm = this;
 
-    $(document).ready(() => {
-      $vm.$bottomParallax = document.querySelector(".parallax_mirror-img");
-      window.addEventListener("scroll", $vm.moveLayers);
-      window.dispatchEvent(new Event("scroll"));
+    this.$nextTick(() => {
+      $(document).ready(() => {
+        $vm.$bottomWrapper = document.getElementById("bottomWrapper");
+        $vm.$footer = document.getElementById("footer");
+        $vm.$parallaxContainer = document.getElementById("bottomParallax");
+        $vm.$parallax = $vm.$parallaxContainer.firstElementChild;
+
+        window.addEventListener("scroll", $vm.moveLayers);
+        window.addEventListener("resize", $vm.changeHeight);
+
+        $vm.changeHeight();
+      });
     });
   }
 };
 </script>
 
 <style lang="scss">
-.parallax_mirror {
-  position: absolute;
-  overflow: hidden;
-  bottom: 0;
-  left: 0;
-  height: 1540px;
-  width: 100%;
-
-  &-img {
-    position: absolute;
-    bottom: 0;
-    // left: 50%;
-    left: 0;
-    display: block;
-    width: 2001px;
-    // width: 100%;
-    line-height: 0;
-    // transform: translateX(-50%);
-  }
-}
+@import "@frontStylesCmp/WorksParallax/import";
 </style>

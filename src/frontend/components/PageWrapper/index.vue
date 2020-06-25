@@ -27,7 +27,7 @@ export default {
       };
     },
     isWorks() {
-      return this.$route.name != "works";
+      return this.$route.name == "works";
     }
   }
 };

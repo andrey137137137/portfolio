@@ -41,6 +41,7 @@
           :addClasses="clearfixClass"
           :addItemClasses="clearfixClass"
           :isIconed="true")
+      ScrollButton.scroll_btn--on_map(:inHeader="false")
 </template>
 
 <script>
@@ -53,6 +54,7 @@ import ImageWrapper from "@frontCmp/ImageWrapper";
 import SkillList from "@frontCmp/SkillList";
 import BottomWrapper from "@frontCmp/BottomWrapper";
 import ContactList from "@frontCmp/ContactList";
+import ScrollButton from "@frontCmp/ScrollButton";
 
 import { createNamespacedHelpers } from "vuex";
 const { mapGetters } = createNamespacedHelpers("profile");
@@ -67,7 +69,8 @@ export default {
     ImageWrapper,
     SkillList,
     BottomWrapper,
-    ContactList
+    ContactList,
+    ScrollButton
   },
   mixins: [pageConfigMixin],
   data() {

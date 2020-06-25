@@ -1,5 +1,5 @@
 <template lang="pug">
-  .section.bottom_wrap(:class="addClasses")
+  #bottomWrapper.section.bottom_wrap(:class="addClasses")
     slot
 </template>
 

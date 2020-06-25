@@ -28,4 +28,6 @@ export default {
 };
 </script>
 
-<style lang="scss" src="@frontStylesCmp/ScrollButton/import.scss"></style>
+<style lang="scss">
+@import "@frontStylesCmp/ScrollButton/import.scss";
+</style>

@@ -1,5 +1,6 @@
 .scroll_btn {
-  @include position("absolute * * * 50%");
+  left: 50%;
+  z-index: 1;
   color: rgba($white, 0.7);
   text-decoration: none;
   transform: translateX(-50%);
@@ -9,10 +10,21 @@
   }
 
   &--to_bottom {
+    position: absolute;
     top: 455px;
   }
 
   &--to_top {
-    bottom: 356px;
+    position: relative;
+  }
+
+  &--on_map {
+    // @include position("absolute * * 356px *");
+    @include position("absolute * * 250px *");
+    color: $darkBlue;
+
+    &:hover {
+      color: $blue;
+    }
   }
 }

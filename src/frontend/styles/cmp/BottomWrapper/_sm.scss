@@ -4,11 +4,11 @@
   position: relative;
 
   &#{$block}--map_wrap {
-    position: relative;
+    background-color: $darkWhite;
   }
 
-  &#{$block}--bg {
-    padding-bottom: 97px;
+  &#{$block}--without_bg {
+    // padding-bottom: 97px;
     background: transparent;
     // height: 1478px;
   }

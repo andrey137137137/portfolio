@@ -1,10 +1,6 @@
 <template lang="pug">
   footer#footer.footer(:class="containerClasses")
-
-    ScrollButton(v-if="areManySections" :inHeader="false")
-
     FooterTop(v-if="isContent")
-
     ul.section.footer_bottom(:class="footerBottomClasses")
       li.container.footer_bottom-container
         p.section-desc.footer_bottom-col.footer_bottom-author &copy; {{fullName}} 
@@ -13,7 +9,6 @@
 </template>
 
 <script>
-import ScrollButton from "@frontCmp/ScrollButton";
 import FooterTop from "./FooterTop";
 
 import { createNamespacedHelpers } from "vuex";
@@ -22,16 +17,12 @@ const { mapGetters } = createNamespacedHelpers("profile");
 export default {
   name: "FooterWrapper",
   components: {
-    ScrollButton,
     FooterTop
   },
   computed: {
     ...mapGetters(["firstName", "lastName"]),
     isContent() {
       return this.$route.name != "home";
-    },
-    areManySections() {
-      return this.isContent && this.$route.name != "blog";
     },
     containerClasses() {
       const name = this.$route.name;

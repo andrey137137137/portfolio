@@ -2,9 +2,10 @@
   Fragment
     TopWrapper
       SliderCmp(:items="dbData")
-    BottomWrapper.bottom_wrap--bg
+    BottomWrapper.bottom_wrap--without_bg
       CommentCmp
       FeedbackForm
+      ScrollButton(:inHeader="false")
 </template>
 
 <script>
@@ -15,6 +16,7 @@ import SliderCmp from "@frontCmp/SliderCmp";
 import BottomWrapper from "@frontCmp/BottomWrapper";
 import CommentCmp from "@frontCmp/CommentCmp";
 import FeedbackForm from "@frontCmp/forms/FeedbackForm";
+import ScrollButton from "@frontCmp/ScrollButton";
 
 export default {
   name: "WorksView",
@@ -24,12 +26,13 @@ export default {
     SliderCmp,
     BottomWrapper,
     CommentCmp,
-    FeedbackForm
+    FeedbackForm,
+    ScrollButton
   },
   mixins: [pageConfigMixin]
 };
 </script>
 
 <style lang="scss">
-@import "@frontStylesPgs/Works/import.scss";
+@import "@frontStylesPgs/Works/import";
 </style>

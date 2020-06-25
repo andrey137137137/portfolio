@@ -28,7 +28,7 @@ export default {
   },
   data() {
     return {
-      $parallaxContainer: document.getElementById("parallax"),
+      $parallaxContainer: null,
       // $container,
       $layers: false,
       centerX: 0,
@@ -126,10 +126,6 @@ export default {
 
         if (isScroll) {
           window.addEventListener("scroll", $vm.moveLayers);
-          // window.dispatchEvent(new Event("scroll"));
-          if ($vm.isWorks) {
-            window.addEventListener("scroll", $vm.$bottomParallax);
-          }
           window.dispatchEvent(new Event("scroll"));
         } else {
           window.addEventListener("mousemove", $vm.moveLayers);
@@ -142,25 +138,4 @@ export default {
 
 <style lang="scss">
 @import "@frontStylesCmp/Parallax/import";
-
-.parallax_mirror {
-  position: absolute;
-  overflow: hidden;
-  bottom: 0;
-  left: 0;
-  height: 1540px;
-  width: 100%;
-
-  &-img {
-    position: absolute;
-    bottom: 0;
-    // left: 50%;
-    left: 0;
-    display: block;
-    width: 2001px;
-    // width: 100%;
-    line-height: 0;
-    // transform: translateX(-50%);
-  }
-}
 </style>

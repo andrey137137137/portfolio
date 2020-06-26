@@ -16,7 +16,7 @@
           :id="post._id"
         )
           h3.section-title.blog-title {{post.title}}
-          span.blog-date {{post.date}}
+          span.blog-date {{getDate(post.date)}}
           p {{post.body}}
 
           .blog-separator(v-show="index < dbData.length - 1")
@@ -55,6 +55,16 @@ export default {
   methods: {
     getTabLink(name) {
       return `#${name}`;
+    },
+    getDate(value) {
+      const time = new Date(value);
+      const options = {
+        month: "long",
+        day: "numeric",
+        timezone: "UTC"
+      };
+
+      return `${time.toLocaleString("ru", options)} ${time.getFullYear()}`;
     },
     setPostPositions() {
       const $vm = this;

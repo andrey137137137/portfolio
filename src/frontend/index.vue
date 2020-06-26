@@ -80,7 +80,8 @@ import ChangeEventElem from "@components/formElems/ChangeEventElem";
 import SubmitMessage from "@components/formElems/SubmitMessage";
 import FooterWrapper from "@frontCmp/FooterWrapper";
 
-import { mapActions } from "vuex";
+import { mapActions, createNamespacedHelpers } from "vuex";
+const { mapGetters } = createNamespacedHelpers("frontFormError");
 
 export default {
   name: "Home",

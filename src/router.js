@@ -45,7 +45,7 @@ const router = new VueRouter({
       props: () => {
         store.dispatch("profile/set");
       },
-      meta: { title: "Главная" },
+      meta: { title: "Главная", isFront: true },
       component: () => import("@frontend")
     },
     {
@@ -58,7 +58,7 @@ const router = new VueRouter({
           props: () => {
             pageConfig("work");
           },
-          meta: { title: "Мои работы" },
+          meta: { title: "Мои работы", isFront: true },
           component: () => import("@frontViews/Works.vue")
         },
         {
@@ -67,7 +67,7 @@ const router = new VueRouter({
           props: () => {
             pageConfig("skill");
           },
-          meta: { title: "Обо мне" },
+          meta: { title: "Обо мне", isFront: true },
           component: () => import("@frontViews/About.vue")
         },
         {
@@ -76,7 +76,7 @@ const router = new VueRouter({
           props: () => {
             pageConfig("post");
           },
-          meta: { title: "Блог" },
+          meta: { title: "Блог", isFront: true },
           component: () => import("@frontViews/Blog.vue")
         }
       ]

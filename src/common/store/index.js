@@ -13,6 +13,7 @@ import {
   UPDATE,
   DELETE
 } from "@common/store/mutation-types";
+import frontFormError from "@common/store/modules/frontFormError";
 import profile from "@common/store/modules/profile";
 import comments from "@common/store/modules/comments";
 
@@ -146,6 +147,7 @@ export default new Vuex.Store({
     }
   },
   modules: {
+    frontFormError,
     profile,
     comments
   }

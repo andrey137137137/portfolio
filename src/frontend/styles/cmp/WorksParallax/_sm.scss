@@ -5,12 +5,12 @@
   left: 0;
   width: 100%;
   // height: 1540px;
-  background-color: black;
+  background-color: $black;
 
   &-img {
     @include position("absolute * * 0 0");
     size: 100%;
-    background: black url(../../../assets/img/bottom.jpg) no-repeat top center;
+    background: $black url(../../../assets/img/bottom.jpg) no-repeat top center;
     background-size: cover;
   }
 }

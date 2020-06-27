@@ -16,6 +16,7 @@
 
               InputEventElem(
                 wrapClass="icon_label"
+                ref="login"
                 labelIcon="login"
                 label="Пользователь"
                 v-model="username"
@@ -24,6 +25,7 @@
 
               InputEventElem(
                 wrapClass="icon_label"
+                ref="password"
                 labelIcon="password"
                 label="Пароль"
                 v-model="password"
@@ -33,6 +35,7 @@
 
               ChangeEventElem(
                 label="Я человек"
+                ref="isHuman"
                 v-model="isHuman"
                 :val="$v.isHuman"
                 type="checkbox")
@@ -80,8 +83,7 @@ import ChangeEventElem from "@components/formElems/ChangeEventElem";
 import SubmitMessage from "@components/formElems/SubmitMessage";
 import FooterWrapper from "@frontCmp/FooterWrapper";
 
-import { mapActions, createNamespacedHelpers } from "vuex";
-const { mapGetters } = createNamespacedHelpers("frontFormError");
+import { mapActions } from "vuex";
 
 export default {
   name: "Home",

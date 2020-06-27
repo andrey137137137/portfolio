@@ -42,7 +42,9 @@ export default {
           ...this.addClasses
         }
       },
-      this.isRequiredInput ? [...elems, this.errorElem()] : elems
+      !this.$route.meta.isFront && this.isRequiredInput
+        ? [...elems, this.errorElem()]
+        : elems
     );
   },
   props: {

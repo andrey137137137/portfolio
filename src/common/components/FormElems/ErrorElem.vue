@@ -1,6 +1,7 @@
 <template lang="pug">
   .form-error_wrap
-    transition(name="fade")
+    .form-error_tip_wrap(v-if="isTip" v-show="error")
+    transition(v-else name="fade")
       .form-error_tip_wrap(v-if="error")
         .form-error {{error}}
 </template>
@@ -20,6 +21,10 @@ export default {
     message: {
       type: String,
       default: ""
+    },
+    isTip: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {

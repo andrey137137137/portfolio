@@ -1,12 +1,13 @@
 import types from "@common/constants/validation/types";
 import exist from "@common/helpers/exist";
 import addClassesMixin from "@common/mixins/addClassesMixin";
+import errorElemMixin from "@common/mixins/errorElemMixin";
 import ErrorElem from "@components/formElems/ErrorElem";
 
 import { mapGetters, mapActions } from "vuex";
 
 export default {
-  mixins: [addClassesMixin],
+  mixins: [addClassesMixin, errorElemMixin],
   render(h) {
     let wrapClass = this.wrapClass;
 
@@ -101,20 +102,6 @@ export default {
         default:
           return true;
       }
-    },
-    isEmptyRequired() {
-      return this.val.$error && !this.value;
-    },
-    errorType() {
-      if (this.isEmptyRequired) {
-        return "required";
-      }
-
-      if (this.val.$error) {
-        return this.type;
-      }
-
-      return "";
     },
     validationClasses() {
       const baseClass = `${this.classes.block}-${this.classes.elem}--`;

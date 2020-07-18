@@ -1,6 +1,8 @@
 export default {
-  data: {
-    isError: false
+  data() {
+    return {
+      isError: false
+    };
   },
   methods: {
     isEmptyRequired(value) {

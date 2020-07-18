@@ -16,11 +16,13 @@
 </template>
 
 <script>
+import itemFormMixin from "@backend/mixins/itemFormMixin";
 import AdminFormWrapper from "@backCmp/AdminFormWrapper";
 import ButtonElem from "@components/formElems/ButtonElem";
 
 export default {
   name: "ItemForm",
+  mixins: [itemFormMixin],
   components: {
     AdminFormWrapper,
     ButtonElem

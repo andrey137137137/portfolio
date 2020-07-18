@@ -1,6 +1,6 @@
 <template lang="pug">
   .form-error_wrap
-    .form-error_tip_wrap(v-if="isTip" v-show="error")
+    .form-error_tip_wrap(v-if="isTip" v-show="error") {{error}}
     transition(v-else name="fade")
       .form-error_tip_wrap(v-if="error")
         .form-error {{error}}

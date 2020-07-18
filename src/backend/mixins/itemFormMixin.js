@@ -1,6 +1,8 @@
+import backFormMixin from "@backend/mixins/backFormMixin";
 import { mapActions } from "vuex";
 
 export default {
+  mixins: [backFormMixin],
   props: {
     item: {
       type: Object,

@@ -22,16 +22,16 @@
 </template>
 
 <script>
-import { validationMixin } from "vuelidate";
+// import { validationMixin } from "vuelidate";
 import {
   required,
   // alphaNum,
   minLength
   // maxLength
 } from "vuelidate/lib/validators";
-import formMixin from "@common/mixins/formMixin";
-import backFormMixin from "@backend/mixins/backFormMixin";
-import itemFormMixin from "@backend/mixins/itemFormMixin";
+// import formMixin from "@common/mixins/formMixin";
+// import backFormMixin from "@backend/mixins/backFormMixin";
+// import itemFormMixin from "@backend/mixins/itemFormMixin";
 // import exist from "@common/helpers/exist";
 import ItemForm from "@backCmp/forms/ItemForm";
 import InputEventElem from "@components/formElems/InputEventElem";
@@ -42,7 +42,7 @@ export default {
     ItemForm,
     InputEventElem
   },
-  mixins: [validationMixin, formMixin, backFormMixin, itemFormMixin],
+  // mixins: [validationMixin, formMixin, backFormMixin, itemFormMixin],
   data() {
     const data = {
       dbPage: "post"

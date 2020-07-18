@@ -52,7 +52,8 @@
                     input.form-input(type="radio" value="no" v-model="$v.notRobot.$model")
                     .form-checked
                     .form-checkbox_text Не уверен
-                  ErrorElem(ref="errorElem" :isTip="true")
+
+              ErrorElem(ref="errorElem" :type="errorType(error.value, error.type)" :isTip="true")
 
             .menu.header-menu.header-menu--float.form-menu.login_form-menu
               a#flip_2_front.menu-link.btn(@click.prevent="fadeButton" href="#") На главную
@@ -65,12 +66,10 @@
 import $ from "jquery";
 import axios from "axios";
 import { Fragment } from "vue-fragment";
-// import { validationMixin } from "vuelidate";
 import { ADMIN } from "@common/constants/router.js";
 // import { required } from "vuelidate/lib/validators";
 import { userAlphaNumValids, checked } from "@common/helpers/validators";
 import { ERROR } from "@httpSt";
-// import formMixin from "@common/mixins/formMixin";
 import frontFormMixin from "@frontend/mixins/frontFormMixin";
 import getAuthStatusMixin from "@frontend/mixins/getAuthStatusMixin";
 import PageWrapper from "@frontCmp/PageWrapper";
@@ -101,7 +100,6 @@ export default {
     SubmitMessage,
     FooterWrapper
   },
-  // mixins: [validationMixin, formMixin, frontFormMixin, getAuthStatusMixin],
   mixins: [frontFormMixin, getAuthStatusMixin],
   data() {
     return {

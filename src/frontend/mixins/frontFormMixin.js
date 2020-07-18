@@ -1,28 +1,30 @@
 import formMixin from "@common/mixins/formMixin";
+import errorElemMixin from "@common/mixins/errorElemMixin";
 
 export default {
-  mixins: [formMixin],
+  mixins: [formMixin, errorElemMixin],
   data() {
     return {
-      error: "",
-      $errorElem: null,
-      $input: null,
+      error: {
+        value: "",
+        type: ""
+      },
+      $errorComp: null,
+      $inputElem: null,
       marginTop: 10
     };
   },
   methods: {
-    set(value) {
-      this.error = value;
-    },
-    delete() {
-      this.error = "";
-    },
-    setPosition(name) {
-      this.$input = this.$refs[name].$el;
-      console.log(this.$input.offsetTop);
-      this.$errorElem = this.$refs["errorElem"].$el;
-      this.$errorElem.style.top =
-        this.$input.offsetTop + this.$input.offsetHeight + "px";
+    showError(name) {
+      const $inputComp = this.$refs[name];
+
+      this.error.value = $inputComp.value;
+      this.error.type = $inputComp.type;
+      this.$inputElem = $inputComp.$el;
+
+      this.isError = this.$v.$invalid;
+      this.$errorComp.$el.style.top =
+        this.$inputElem.offsetTop + this.$inputElem.offsetHeight + "px";
     },
     touchInvalidElem() {
       const elemName = this.returnInvalidElem();
@@ -30,9 +32,13 @@ export default {
       if (!elemName) return true;
 
       this.$v[elemName].$touch();
-      this.setPosition(elemName);
+      this.showError(elemName);
 
       return false;
     }
+  },
+  mounted() {
+    this.$errorComp = this.$refs["errorElem"];
+    console.log(this.$errorComp);
   }
 };

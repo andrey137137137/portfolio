@@ -15,8 +15,9 @@ export default {
       this.error = "";
     },
     setPosition(name) {
-      this.$input = this.$refs[name];
-      this.$errorElem = this.$refs["errorElem"];
+      this.$input = this.$refs[name].$el;
+      console.log(this.$input.offsetTop);
+      this.$errorElem = this.$refs["errorElem"].$el;
       this.$errorElem.style.top =
         this.$input.offsetTop + this.$input.offsetHeight + "px";
     },
@@ -30,6 +31,7 @@ export default {
           this.$v[key].$invalid
         ) {
           this.$v[key].$touch();
+          this.setPosition(key);
           return false;
         }
       }

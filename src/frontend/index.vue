@@ -16,7 +16,7 @@
 
               InputEventElem(
                 wrapClass="icon_label"
-                ref="login"
+                ref="username"
                 labelIcon="login"
                 label="Пользователь"
                 v-model="username"
@@ -52,7 +52,7 @@
                     input.form-input(type="radio" value="no" v-model="$v.notRobot.$model")
                     .form-checked
                     .form-checkbox_text Не уверен
-                  ErrorElem
+                  ErrorElem(ref="errorElem" :isTip="true")
 
             .menu.header-menu.header-menu--float.form-menu.login_form-menu
               a#flip_2_front.menu-link.btn(@click.prevent="fadeButton" href="#") На главную
@@ -71,6 +71,7 @@ import { ADMIN } from "@common/constants/router.js";
 import { userAlphaNumValids, checked } from "@common/helpers/validators";
 import { ERROR } from "@httpSt";
 import formMixin from "@common/mixins/formMixin";
+import frontFormMixin from "@frontend/mixins/frontFormMixin";
 import getAuthStatusMixin from "@frontend/mixins/getAuthStatusMixin";
 import PageWrapper from "@frontCmp/PageWrapper";
 import HeaderWrapper from "@frontCmp/header/HeaderWrapper";
@@ -100,7 +101,7 @@ export default {
     SubmitMessage,
     FooterWrapper
   },
-  mixins: [validationMixin, formMixin, getAuthStatusMixin],
+  mixins: [validationMixin, formMixin, frontFormMixin, getAuthStatusMixin],
   data() {
     return {
       isFlipped: false,

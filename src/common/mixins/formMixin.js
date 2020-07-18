@@ -1,6 +1,8 @@
+import { validationMixin } from "vuelidate";
 import types from "@common/constants/validation/types.js";
 
 export default {
+  mixins: [validationMixin],
   // validations() {
   //   return this.fields;
   // },
@@ -19,8 +21,8 @@ export default {
           return "";
       }
     },
-    touchInvalidElem() {
-      if (!this.$v.$invalid) return true;
+    returnInvalidElem() {
+      if (!this.$v.$invalid) return false;
 
       for (const key in this.$v) {
         if (
@@ -28,8 +30,7 @@ export default {
           key.slice(0, 1) !== "$" &&
           this.$v[key].$invalid
         ) {
-          this.$v[key].$touch();
-          return false;
+          return key;
         }
       }
     }

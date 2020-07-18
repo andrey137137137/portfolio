@@ -1,15 +1,18 @@
 export default {
-  computed: {
-    isEmptyRequired() {
-      return this.val.$error && !this.value;
+  data: {
+    isError: false
+  },
+  methods: {
+    isEmptyRequired(value) {
+      return this.isError && !value;
     },
-    errorType() {
-      if (this.isEmptyRequired) {
+    errorType(value, type) {
+      if (this.isEmptyRequired(value)) {
         return "required";
       }
 
-      if (this.val.$error) {
-        return this.type;
+      if (this.isError) {
+        return type;
       }
 
       return "";

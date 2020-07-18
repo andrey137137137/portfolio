@@ -1,7 +1,10 @@
 import exist from "@common/helpers/exist";
+import formMixin from "@common/mixins/formMixin";
+
 import { mapActions } from "vuex";
 
 export default {
+  mixins: [formMixin],
   data() {
     return {
       sourceData: {},
@@ -38,6 +41,15 @@ export default {
     },
     prepareData() {
       this.submitData = this.item;
+    },
+    touchInvalidElem() {
+      const elemName = this.returnInvalidElem();
+
+      if (!elemName) return true;
+
+      this.$v[elemName].$touch();
+
+      return false;
     },
     reset() {
       const data = this.defaultFields();

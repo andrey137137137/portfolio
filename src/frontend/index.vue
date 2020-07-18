@@ -65,12 +65,12 @@
 import $ from "jquery";
 import axios from "axios";
 import { Fragment } from "vue-fragment";
-import { validationMixin } from "vuelidate";
+// import { validationMixin } from "vuelidate";
 import { ADMIN } from "@common/constants/router.js";
 // import { required } from "vuelidate/lib/validators";
 import { userAlphaNumValids, checked } from "@common/helpers/validators";
 import { ERROR } from "@httpSt";
-import formMixin from "@common/mixins/formMixin";
+// import formMixin from "@common/mixins/formMixin";
 import frontFormMixin from "@frontend/mixins/frontFormMixin";
 import getAuthStatusMixin from "@frontend/mixins/getAuthStatusMixin";
 import PageWrapper from "@frontCmp/PageWrapper";
@@ -101,7 +101,8 @@ export default {
     SubmitMessage,
     FooterWrapper
   },
-  mixins: [validationMixin, formMixin, frontFormMixin, getAuthStatusMixin],
+  // mixins: [validationMixin, formMixin, frontFormMixin, getAuthStatusMixin],
+  mixins: [frontFormMixin, getAuthStatusMixin],
   data() {
     return {
       isFlipped: false,

@@ -1,4 +1,7 @@
+import formMixin from "@common/mixins/formMixin";
+
 export default {
+  mixins: [formMixin],
   data() {
     return {
       error: "",
@@ -22,19 +25,14 @@ export default {
         this.$input.offsetTop + this.$input.offsetHeight + "px";
     },
     touchInvalidElem() {
-      if (!this.$v.$invalid) return true;
+      const elemName = this.returnInvalidElem();
 
-      for (const key in this.$v) {
-        if (
-          this.$v.hasOwnProperty(key) &&
-          key.slice(0, 1) !== "$" &&
-          this.$v[key].$invalid
-        ) {
-          this.$v[key].$touch();
-          this.setPosition(key);
-          return false;
-        }
-      }
+      if (!elemName) return true;
+
+      this.$v[elemName].$touch();
+      this.setPosition(elemName);
+
+      return false;
     }
   }
 };

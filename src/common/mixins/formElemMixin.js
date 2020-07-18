@@ -145,7 +145,8 @@ export default {
       this.$emit(event, value);
     },
     errorElem() {
-      return <ErrorElem type={this.errorType} />;
+      this.isError = this.val.$error;
+      return <ErrorElem type={this.errorType(this.value, this.type)} />;
     },
     inputElem(h) {
       const on = {

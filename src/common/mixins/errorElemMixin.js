@@ -4,17 +4,17 @@ export default {
       isError: false
     };
   },
-  methods: {
-    isEmptyRequired(value) {
-      return this.isError && !value;
+  computed: {
+    isEmptyRequired() {
+      return this.isError && !this.value;
     },
-    errorType(value, type) {
-      if (this.isEmptyRequired(value)) {
+    errorType() {
+      if (this.isEmptyRequired) {
         return "required";
       }
 
       if (this.isError) {
-        return type;
+        return this.type;
       }
 
       return "";

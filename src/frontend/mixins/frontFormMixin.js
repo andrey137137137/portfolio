@@ -1,44 +1,31 @@
 import formMixin from "@common/mixins/formMixin";
 import errorElemMixin from "@common/mixins/errorElemMixin";
 
+import { createNamespacedHelpers } from "vuex";
+const { mapGetters, mapActions } = createNamespacedHelpers("frontFormError");
+
 export default {
   mixins: [formMixin, errorElemMixin],
-  data() {
-    return {
-      error: {
-        value: "",
-        type: ""
-      },
-      $errorComp: null,
-      $inputElem: null,
-      marginTop: 10
-    };
+  computed: {
+    ...mapGetters(["formInputName", "formError"])
   },
   methods: {
-    showError(name) {
-      const $inputComp = this.$refs[name];
-
-      this.error.value = $inputComp.value;
-      this.error.type = $inputComp.type;
-      this.$inputElem = $inputComp.$el;
-
-      this.isError = this.$v.$invalid;
-      this.$errorComp.$el.style.top =
-        this.$inputElem.offsetTop + this.$inputElem.offsetHeight + "px";
+    ...mapActions(["setFormError"]),
+    errorStyleTop() {
+      const $inputElem = this.$refs[this.formInputName].$el;
+      return $inputElem.offsetTop + $inputElem.offsetHeight;
     },
     touchInvalidElem() {
       const elemName = this.returnInvalidElem();
 
-      if (!elemName) return true;
+      if (!elemName) {
+        return true;
+      }
 
-      this.$v[elemName].$touch();
-      this.showError(elemName);
+      // this.$v[elemName].$touch();
+      this.$refs[elemName].$emit("handle");
 
       return false;
     }
-  },
-  mounted() {
-    this.$errorComp = this.$refs["errorElem"];
-    console.log(this.$errorComp);
   }
 };

@@ -1,5 +1,5 @@
 <template lang="pug">
-  .form-error_wrap
+  .form-error_wrap(:style="position")
     transition(name="fade")
       .form-error_tip_wrap(v-show="error")
         .form-error {{error}}
@@ -20,9 +20,21 @@ export default {
     message: {
       type: String,
       default: ""
+    },
+    styleTop: {
+      type: Number,
+      default: 0
     }
   },
+  data() {
+    return {
+      marginTop: 10
+    };
+  },
   computed: {
+    position() {
+      return `{top: ${marginTop + styleTop}px;}`;
+    },
     error() {
       if (this.message) return this.message;
       if (!this.type) return "";

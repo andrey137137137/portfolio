@@ -4,7 +4,9 @@ import addClassesMixin from "@common/mixins/addClassesMixin";
 import errorElemMixin from "@common/mixins/errorElemMixin";
 import ErrorElem from "@components/formElems/ErrorElem";
 
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions, createNamespacedHelpers } from "vuex";
+const mapFrontFormErrorActions = createNamespacedHelpers("frontFormError")
+  .mapActions;
 
 export default {
   mixins: [addClassesMixin, errorElemMixin],
@@ -114,6 +116,7 @@ export default {
   },
   methods: {
     ...mapActions(["setFormMessage"]),
+    ...mapFrontFormErrorActions(["setFormError"]),
     elemsBeforeInput() {
       return [];
     },
@@ -140,13 +143,20 @@ export default {
           value = e.target.value;
       }
 
-      if (this.isRequiredInput) this.val.$touch();
+      if (this.isRequiredInput) {
+        if (!this.$route.meta.isFront) {
+          this.isError = this.val.$error;
+          this.setFormError(this.errorType);
+        }
+
+        this.val.$touch();
+      }
 
       this.$emit(event, value);
     },
     errorElem() {
       this.isError = this.val.$error;
-      return <ErrorElem type={this.errorType(this.value, this.type)} />;
+      return <ErrorElem type={this.errorType} />;
     },
     inputElem(h) {
       const on = {

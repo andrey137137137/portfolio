@@ -53,7 +53,7 @@
                     .form-checked
                     .form-checkbox_text Не уверен
 
-              ErrorElem(ref="errorElem" :type="errorType(error.value, error.type)" :isTip="true")
+              ErrorElem(ref="errorElem" :type="errorType(error.value, error.type)")
 
             .menu.header-menu.header-menu--float.form-menu.login_form-menu
               a#flip_2_front.menu-link.btn(@click.prevent="fadeButton" href="#") На главную

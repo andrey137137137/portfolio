@@ -40,8 +40,9 @@ body {
 
     // #{$block}-error_wrap--tip
     #{$block}-error_wrap {
-      position: relative;
-      overflow: visible;
+      position: absolute;
+      // overflow: visible;
+      transition: all 0.5s;
     }
 
     #{$block}-error_tip_wrap {

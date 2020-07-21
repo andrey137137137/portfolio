@@ -130,6 +130,8 @@ export default {
       let event;
       let value;
 
+      // console.log(this);
+
       if (this.message) this.setFormMessage({ status: 0, message: "" });
 
       switch (this.type) {
@@ -144,19 +146,22 @@ export default {
       }
 
       if (this.isRequiredInput) {
-        if (!this.$route.meta.isFront) {
-          this.isError = this.val.$error;
-          this.setFormError(this.errorType);
-        }
-
-        this.val.$touch();
+        this.touchHandle();
       }
 
       this.$emit(event, value);
     },
+    touchHandle() {
+      if (this.$route.meta.isFront) {
+        // this.isError = this.val.$error;
+        this.setFormError({ inputName: "", error: this.error });
+      }
+
+      this.val.$touch();
+    },
     errorElem() {
-      this.isError = this.val.$error;
-      return <ErrorElem type={this.errorType} />;
+      // this.isError = this.val.$error;
+      return <ErrorElem message={this.error} />;
     },
     inputElem(h) {
       const on = {
@@ -183,7 +188,7 @@ export default {
           ...classes,
           ...this.validationClasses
         };
-        on.blur = this.val.$touch;
+        on.blur = this.touchHandle;
       }
 
       return h(formElem, {

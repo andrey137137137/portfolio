@@ -7,14 +7,17 @@ const { mapGetters, mapActions } = createNamespacedHelpers("frontFormError");
 export default {
   mixins: [formMixin, errorElemMixin],
   computed: {
-    ...mapGetters(["formInputName", "formError"])
+    ...mapGetters(["formInputName", "formError"]),
+    errorStyleTop() {
+      if (!this.formInputName) return 0;
+
+      const $inputElem = this.$refs[this.formInputName].$el;
+
+      return $inputElem.offsetTop + $inputElem.offsetHeight;
+    }
   },
   methods: {
     ...mapActions(["setFormError"]),
-    errorStyleTop() {
-      const $inputElem = this.$refs[this.formInputName].$el;
-      return $inputElem.offsetTop + $inputElem.offsetHeight;
-    },
     touchInvalidElem() {
       const elemName = this.returnInvalidElem();
 
@@ -22,8 +25,9 @@ export default {
         return true;
       }
 
+      // console.log(this.$event);
       // this.$v[elemName].$touch();
-      this.$refs[elemName].$emit("handle");
+      this.$refs[elemName].handle();
 
       return false;
     }

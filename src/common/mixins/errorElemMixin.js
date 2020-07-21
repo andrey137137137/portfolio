@@ -1,20 +1,23 @@
+import exist from "@common/helpers/exist";
+import errors from "@common/constants/validation/errors";
+
 export default {
-  data() {
-    return {
-      isError: false
-    };
-  },
+  // data() {
+  //   return {
+  //     isError: false
+  //   };
+  // },
   computed: {
     isEmptyRequired() {
-      return this.isError && !this.value;
+      return this.val.$error && !this.value;
     },
-    errorType() {
+    error() {
       if (this.isEmptyRequired) {
-        return "required";
+        return errors["required"];
       }
 
-      if (this.isError) {
-        return this.type;
+      if (this.val.$error) {
+        return exist(this.type, errors) ? errors[this.type] : errors.other;
       }
 
       return "";

@@ -17,6 +17,7 @@
               InputEventElem(
                 wrapClass="icon_label"
                 ref="username"
+                name="username"
                 labelIcon="login"
                 label="Пользователь"
                 v-model="username"
@@ -26,6 +27,7 @@
               InputEventElem(
                 wrapClass="icon_label"
                 ref="password"
+                name="password"
                 labelIcon="password"
                 label="Пароль"
                 v-model="password"
@@ -36,6 +38,7 @@
               ChangeEventElem(
                 label="Я человек"
                 ref="isHuman"
+                name="isHuman"
                 v-model="isHuman"
                 :val="$v.isHuman"
                 type="checkbox")

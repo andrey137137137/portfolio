@@ -1,11 +1,10 @@
 import formMixin from "@common/mixins/formMixin";
-import errorElemMixin from "@common/mixins/errorElemMixin";
 
 import { createNamespacedHelpers } from "vuex";
-const { mapGetters, mapActions } = createNamespacedHelpers("frontFormError");
+const { mapGetters } = createNamespacedHelpers("frontFormError");
 
 export default {
-  mixins: [formMixin, errorElemMixin],
+  mixins: [formMixin],
   computed: {
     ...mapGetters(["formInputName", "formError"]),
     errorStyleTop() {
@@ -17,7 +16,6 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["setFormError"]),
     touchInvalidElem() {
       const elemName = this.returnInvalidElem();
 
@@ -25,9 +23,7 @@ export default {
         return true;
       }
 
-      // console.log(this.$event);
-      // this.$v[elemName].$touch();
-      this.$refs[elemName].handle();
+      this.$refs[elemName].touchHandle();
 
       return false;
     }

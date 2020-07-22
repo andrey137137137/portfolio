@@ -1,7 +1,7 @@
 import types from "@common/constants/validation/types";
+import errors from "@common/constants/validation/errors";
 import exist from "@common/helpers/exist";
 import addClassesMixin from "@common/mixins/addClassesMixin";
-import errorElemMixin from "@common/mixins/errorElemMixin";
 import ErrorElem from "@components/formElems/ErrorElem";
 
 import { mapGetters, mapActions, createNamespacedHelpers } from "vuex";
@@ -9,7 +9,7 @@ const mapFrontFormErrorActions = createNamespacedHelpers("frontFormError")
   .mapActions;
 
 export default {
-  mixins: [addClassesMixin, errorElemMixin],
+  mixins: [addClassesMixin],
   render(h) {
     let wrapClass = this.wrapClass;
 
@@ -51,6 +51,10 @@ export default {
     );
   },
   props: {
+    name: {
+      type: String,
+      default: ""
+    },
     wrapClass: {
       type: String,
       default: ""
@@ -95,6 +99,20 @@ export default {
   },
   computed: {
     ...mapGetters(["message"]),
+    isEmptyRequired() {
+      return this.val.$error && !this.value;
+    },
+    error() {
+      if (this.isEmptyRequired) {
+        return errors["required"];
+      }
+
+      if (this.val.$error) {
+        return exist(this.type, errors) ? errors[this.type] : errors.other;
+      }
+
+      return "";
+    },
     isRequiredInput() {
       switch (this.type) {
         case types.native.checkbox:
@@ -130,7 +148,7 @@ export default {
       let event;
       let value;
 
-      // console.log(this);
+      console.log(this);
 
       if (this.message) this.setFormMessage({ status: 0, message: "" });
 
@@ -139,28 +157,22 @@ export default {
           event = "change";
           value = e.target.checked;
           break;
-
         default:
           event = "input";
           value = e.target.value;
       }
 
-      if (this.isRequiredInput) {
-        this.touchHandle();
-      }
-
       this.$emit(event, value);
+
+      if (this.isRequiredInput) this.touchHandle();
     },
     touchHandle() {
-      if (this.$route.meta.isFront) {
-        // this.isError = this.val.$error;
-        this.setFormError({ inputName: "", error: this.error });
-      }
-
       this.val.$touch();
+      if (this.$route.meta.isFront) {
+        this.setFormError({ inputName: this.name, error: this.error });
+      }
     },
     errorElem() {
-      // this.isError = this.val.$error;
       return <ErrorElem message={this.error} />;
     },
     inputElem(h) {

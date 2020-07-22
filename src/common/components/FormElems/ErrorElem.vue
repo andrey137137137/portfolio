@@ -25,7 +25,7 @@ export default {
   },
   computed: {
     position() {
-      return `{top: ${this.marginTop + this.styleTop}px;}`;
+      return { top: `${this.marginTop + this.styleTop}px` };
     },
     required() {
       return this.type == "required" ? true : false;

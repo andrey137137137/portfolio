@@ -45,7 +45,7 @@ export default {
           ...this.addClasses
         }
       },
-      !this.$route.meta.isFront && this.isRequiredInput
+      !this.isFront && this.isRequiredInput
         ? [...elems, this.errorElem()]
         : elems
     );
@@ -99,6 +99,9 @@ export default {
   },
   computed: {
     ...mapGetters(["message"]),
+    isFront() {
+      return this.$route.meta.isFront;
+    },
     isEmptyRequired() {
       return this.val.$error && !this.value;
     },
@@ -148,8 +151,6 @@ export default {
       let event;
       let value;
 
-      console.log(this);
-
       if (this.message) this.setFormMessage({ status: 0, message: "" });
 
       switch (this.type) {
@@ -164,11 +165,15 @@ export default {
 
       this.$emit(event, value);
 
-      if (this.isRequiredInput) this.touchHandle();
+      if (this.isRequiredInput) {
+        this.$nextTick(function() {
+          this.touchHandle();
+        });
+      }
     },
     touchHandle() {
       this.val.$touch();
-      if (this.$route.meta.isFront) {
+      if (this.isFront) {
         this.setFormError({ inputName: this.name, error: this.error });
       }
     },

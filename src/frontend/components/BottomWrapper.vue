@@ -4,14 +4,14 @@
 </template>
 
 <script>
-import addClassesMixin from "@common/mixins/addClassesMixin";
+import addClassesMixin from '@common/mixins/addClassesMixin';
 
 export default {
-  name: "BottomWrapper",
-  mixins: [addClassesMixin]
+  name: 'BottomWrapper',
+  mixins: [addClassesMixin],
 };
 </script>
 
 <style lang="scss">
-@import "@frontStylesCmp/BottomWrapper/import";
+@import '@frontStylesCmp/BottomWrapper/import';
 </style>

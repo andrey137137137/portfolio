@@ -31,12 +31,12 @@
 
   &-text_wrap {
     // float: left;
-    @include padding("221px 100px 0");
+    @include padding('221px 100px 0');
     size: 50% 100%;
   }
 
   &-desc {
-    @include padding("14px * 54px");
+    @include padding('14px * 54px');
   }
 
   // &-btn {
@@ -54,7 +54,7 @@
   // }
 
   &-nav {
-    @include position("absolute * 0 0 *");
+    @include position('absolute * 0 0 *');
     margin-left: 50%;
     height: 225px;
   }
@@ -68,11 +68,11 @@
 
 .reviews {
   justify-content: center;
-  @include padding("33px * 66px");
+  @include padding('33px * 66px');
   // height: 555px;
 
   &-title_wrap {
-    @include padding("25px * 47px");
+    @include padding('25px * 47px');
 
     // .title_wrap-bg {
     //   height: 105%;
@@ -88,7 +88,7 @@
   &-article {
     $elem: &;
 
-    @include padding("16px * *");
+    @include padding('16px * *');
 
     &#{$elem}--first {
       margin-left: 200px;
@@ -125,7 +125,7 @@
 
 .feedback_form {
   // padding-top: 11px;
-  @include padding("14px * *");
+  @include padding('14px * *');
   width: 380px;
   // height: 459px;
 

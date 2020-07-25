@@ -6,33 +6,33 @@
 
 <script>
 export default {
-  name: "SectionWrapper",
+  name: 'SectionWrapper',
   props: {
     name: {
       type: String,
-      required: true
+      required: true,
     },
     isContainerClass: {
       type: Boolean,
-      default: true
+      default: true,
     },
     isFullWidth: {
       type: Boolean,
-      default: false
+      default: false,
     },
     isOwnContainerClass: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   computed: {
     containerClasses() {
       return {
         container: this.isContainerClass,
-        "container--full_width": this.isContainerClass && this.isFullWidth,
-        [`${this.name}-container`]: this.isOwnContainerClass
+        'container--full_width': this.isContainerClass && this.isFullWidth,
+        [`${this.name}-container`]: this.isOwnContainerClass,
       };
-    }
-  }
+    },
+  },
 };
 </script>

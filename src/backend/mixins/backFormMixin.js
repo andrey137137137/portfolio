@@ -1,23 +1,23 @@
-import exist from "@common/helpers/exist";
-import formMixin from "@common/mixins/formMixin";
+import exist from '@common/helpers/exist';
+import formMixin from '@common/mixins/formMixin';
 
-import { mapActions } from "vuex";
+import { mapActions } from 'vuex';
 
 export default {
   mixins: [formMixin],
   data() {
     return {
       sourceData: {},
-      submitData: {}
+      submitData: {},
     };
   },
   computed: {
     disabled() {
       return this.$v.$pending || this.$v.$invalid;
-    }
+    },
   },
   methods: {
-    ...mapActions(["updateData"]),
+    ...mapActions(['updateData']),
     cloneMultipleArray(array, props) {
       return array.map(item => {
         const object = {};
@@ -69,6 +69,6 @@ export default {
       this.updateData({ id: this.item._id, data: this.submitData });
 
       return true;
-    }
-  }
+    },
+  },
 };

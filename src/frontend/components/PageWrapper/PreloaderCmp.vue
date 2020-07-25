@@ -10,10 +10,10 @@
 </template>
 
 <script>
-import $ from "jquery";
+import $ from 'jquery';
 
 export default {
-  name: "PreloaderCmp",
+  name: 'PreloaderCmp',
   data() {
     return {
       $preloader: null,
@@ -25,7 +25,7 @@ export default {
       count: 0,
       // circleLength: 106.811,
       counter: 0,
-      prs: 0
+      prs: 0,
     };
   },
   methods: {
@@ -45,24 +45,24 @@ export default {
 
       if ($vm.counter >= $vm.count) {
         setTimeout(function() {
-          $vm.$preloader.classList.remove("preloader--active");
+          $vm.$preloader.classList.remove('preloader--active');
         }, 500);
         setTimeout(function() {
           $vm.$preloader.parentElement.removeChild($vm.$preloader);
         }, 1500);
       }
-    }
+    },
   },
   mounted() {
     const $vm = this;
 
     $(document).ready(() => {
-      $vm.$preloader = document.getElementById("preloader");
+      $vm.$preloader = document.getElementById('preloader');
       $vm.$satellite = $vm.$preloader.querySelector(
-        ".preloader-satellite_circle"
+        '.preloader-satellite_circle',
       );
-      $vm.$circle = $vm.$preloader.querySelector(".preloader-center_circle");
-      $vm.$counter = $vm.$preloader.querySelector(".preloader-counter");
+      $vm.$circle = $vm.$preloader.querySelector('.preloader-center_circle');
+      $vm.$counter = $vm.$preloader.querySelector('.preloader-counter');
       $vm.$images = document.images;
       $vm.count = $vm.$images.length;
 
@@ -73,7 +73,7 @@ export default {
         $vm.$imageClone.src = $vm.$images[i].src;
       }
     });
-  }
+  },
 };
 </script>
 

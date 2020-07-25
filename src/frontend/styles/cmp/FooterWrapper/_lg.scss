@@ -3,7 +3,7 @@
     // height: 147px;
 
     &-col {
-      @include padding("25px * 18px");
+      @include padding('25px * 18px');
     }
 
     &-desc {
@@ -19,7 +19,7 @@
 
       &:before,
       &:after {
-        @include position("absolute 29px * * *");
+        @include position('absolute 29px * * *');
         size: 0 88px;
       }
 
@@ -43,12 +43,12 @@
       margin-left: 17px;
 
       .menu-link {
-        @include padding("* 20px");
+        @include padding('* 20px');
       }
     }
 
     &-socials {
-      @include margin("33px * * 21px");
+      @include margin('33px * * 21px');
     }
 
     &-contacts {

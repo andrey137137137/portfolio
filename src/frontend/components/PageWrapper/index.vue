@@ -7,32 +7,32 @@
 </template>
 
 <script>
-import PreloaderCmp from "./PreloaderCmp";
-import ParallaxCmp from "./ParallaxCmp";
-import WorksParallax from "./WorksParallax";
+import PreloaderCmp from './PreloaderCmp';
+import ParallaxCmp from './ParallaxCmp';
+import WorksParallax from './WorksParallax';
 
 export default {
-  name: "PageWrapper",
+  name: 'PageWrapper',
   components: {
     PreloaderCmp,
     ParallaxCmp,
-    WorksParallax
+    WorksParallax,
   },
   computed: {
     classes() {
       const name = this.$route.name;
       return {
-        full_screen: name == "home",
-        main_wrap: name != "home"
+        full_screen: name == 'home',
+        main_wrap: name != 'home',
       };
     },
     isWorks() {
-      return this.$route.name == "works";
-    }
-  }
+      return this.$route.name == 'works';
+    },
+  },
 };
 </script>
 
 <style lang="scss">
-@import "@frontStyles/common.scss";
+@import '@frontStyles/common.scss';
 </style>

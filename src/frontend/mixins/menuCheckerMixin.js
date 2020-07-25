@@ -1,4 +1,4 @@
-import $ from "jquery";
+import $ from 'jquery';
 
 export default {
   data() {
@@ -7,20 +7,20 @@ export default {
         $checker: null,
         $menu: null,
         checkerClasses: {
-          open: "header-menu_checker--open",
-          close: "header-menu_checker--close"
+          open: 'header-menu_checker--open',
+          close: 'header-menu_checker--close',
         },
         menuClasses: {
-          item: "menu-link",
-          opened: "header-menu--opened",
-          hidden: "header-menu--hidden",
-          visibleBg: "header-menu--visible_bg",
-          visibleMenuItem: "menu-link--visible"
+          item: 'menu-link',
+          opened: 'header-menu--opened',
+          hidden: 'header-menu--hidden',
+          visibleBg: 'header-menu--visible_bg',
+          visibleMenuItem: 'menu-link--visible',
         },
         delay: 700,
         itemDelay: 200,
-        process: false
-      }
+        process: false,
+      },
     };
   },
   methods: {
@@ -31,7 +31,7 @@ export default {
         checkerClasses,
         menuClasses,
         delay,
-        itemDelay
+        itemDelay,
       } = this.menuChecker;
 
       if ($checker.hasClass(checkerClasses.close)) {
@@ -40,14 +40,14 @@ export default {
         $menu
           .queue(function() {
             $checker.toggleClass(
-              `${checkerClasses.close} ${checkerClasses.open}`
+              `${checkerClasses.close} ${checkerClasses.open}`,
             );
             $(this).dequeue();
           })
           .queue(function() {
             var delay = 0;
 
-            $menu.find("." + menuClasses.item).each(function() {
+            $menu.find('.' + menuClasses.item).each(function() {
               $(this)
                 .delay(delay)
                 .queue(function() {
@@ -74,14 +74,14 @@ export default {
             $(this).dequeue();
           });
       }
-    }
+    },
   },
   mounted() {
     this.$nextTick(function() {
       const $vm = this;
 
-      $vm.menuChecker.$checker = $("body").find("#menu_checker");
-      $vm.menuChecker.$menu = $("body").find("#main_menu");
+      $vm.menuChecker.$checker = $('body').find('#menu_checker');
+      $vm.menuChecker.$menu = $('body').find('#main_menu');
 
       $vm.closeMenu();
 
@@ -92,7 +92,7 @@ export default {
         menuClasses,
         delay,
         itemDelay,
-        process
+        process,
       } = $vm.menuChecker;
 
       // console.log("Menu");
@@ -119,7 +119,7 @@ export default {
           $menu
             .queue(function() {
               $checker.toggleClass(
-                `${checkerClasses.open} ${checkerClasses.close}`
+                `${checkerClasses.open} ${checkerClasses.close}`,
               );
               $(this).dequeue();
             })
@@ -136,7 +136,7 @@ export default {
             .queue(function() {
               var delay = 0;
 
-              $menu.find("." + menuClasses.item).each(function() {
+              $menu.find('.' + menuClasses.item).each(function() {
                 $(this)
                   .delay(delay)
                   .queue(function() {
@@ -163,7 +163,7 @@ export default {
       // обновления всех представлений
       this.closeMenu();
     });
-  }
+  },
   // beforeDestroy() {
   //   this.menuChecker.$checker.off("click");
   //   this.menuChecker.$checker.remove();

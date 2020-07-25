@@ -20,27 +20,27 @@
 
 <script>
 export default {
-  name: "SkillList",
+  name: 'SkillList',
   props: {
     categories: {
       type: Array,
-      required: true
-    }
+      required: true,
+    },
   },
   methods: {
     getContainerClasses(index) {
       return {
-        "skills-counters--first": !index
+        'skills-counters--first': !index,
       };
     },
     getSkillItemWrapperClasses(index, length) {
       return {
-        "skills-item_wrap--last": index == length - 1
+        'skills-item_wrap--last': index == length - 1,
       };
     },
     getSkillItemPercentClass(percent) {
-      return "skills-item skills-item--prs_" + percent;
-    }
-  }
+      return 'skills-item skills-item--prs_' + percent;
+    },
+  },
 };
 </script>

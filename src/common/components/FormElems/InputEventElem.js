@@ -1,21 +1,21 @@
-import formElemMixin from "@common/mixins/formElemMixin";
-import SvgCmp from "@components/SvgCmp";
+import formElemMixin from '@common/mixins/formElemMixin';
+import SvgCmp from '@components/SvgCmp';
 
 export default {
   mixins: [formElemMixin],
   props: {
     labelIcon: {
       type: String,
-      default: ""
+      default: '',
     },
     placeholder: {
       type: String,
-      default: ""
+      default: '',
     },
     measure: {
       type: String,
-      default: ""
-    }
+      default: '',
+    },
   },
   methods: {
     elemsBeforeInput() {
@@ -41,7 +41,7 @@ export default {
       return elems;
     },
     wrapInput(h, elems) {
-      return [h("div", { class: "form-row" }, elems)];
+      return [h('div', { class: 'form-row' }, elems)];
     },
     labelElem() {
       return <label class="form-label">{this.label}</label>;
@@ -55,6 +55,6 @@ export default {
     },
     measureElem() {
       return <span class="form-measure">{this.measure}</span>;
-    }
-  }
+    },
+  },
 };

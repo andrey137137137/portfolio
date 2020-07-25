@@ -13,27 +13,27 @@
 </template>
 
 <script>
-import PictureInput from "vue-picture-input";
-import pageDataMixin from "@backend/mixins/pageDataMixin";
-import PageWrapper from "@backCmp/PageWrapper";
-import UploadForm from "@backCmp/forms/UploadForm";
-import SkillForm from "@backCmp/forms/SkillForm";
+import PictureInput from 'vue-picture-input';
+import pageDataMixin from '@backend/mixins/pageDataMixin';
+import PageWrapper from '@backCmp/PageWrapper';
+import UploadForm from '@backCmp/forms/UploadForm';
+import SkillForm from '@backCmp/forms/SkillForm';
 
 export default {
-  name: "AdminAboutView",
+  name: 'AdminAboutView',
   components: {
     PageWrapper,
     PictureInput,
     UploadForm,
-    SkillForm
+    SkillForm,
   },
   mixins: [pageDataMixin],
   data() {
     return {
       stencilProps: {
-        aspectRatio: 1.130742049469965
-      }
+        aspectRatio: 1.130742049469965,
+      },
     };
-  }
+  },
 };
 </script>

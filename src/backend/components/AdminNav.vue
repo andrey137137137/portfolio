@@ -9,25 +9,25 @@
 
 <script>
 export default {
-  name: "AdminNav",
+  name: 'AdminNav',
   data() {
     return {
       tabs: [
-        { name: "Обо мне", href: "/admin/about" },
-        { name: "Блог", href: "/admin/blog" },
-        { name: "Мои работы", href: "/admin/works" },
-        { name: "Личные данные", href: "/admin/profile" },
-        { name: "Имя пользователя и email", href: "/admin/authConfig" }
-      ]
+        { name: 'Обо мне', href: '/admin/about' },
+        { name: 'Блог', href: '/admin/blog' },
+        { name: 'Мои работы', href: '/admin/works' },
+        { name: 'Личные данные', href: '/admin/profile' },
+        { name: 'Имя пользователя и email', href: '/admin/authConfig' },
+      ],
     };
   },
   methods: {
     isActiveClass(path) {
       return {
-        "nav-link--active": this.$route.path === path
+        'nav-link--active': this.$route.path === path,
       };
-    }
-  }
+    },
+  },
 };
 </script>
 

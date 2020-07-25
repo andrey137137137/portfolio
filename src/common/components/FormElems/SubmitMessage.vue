@@ -4,12 +4,12 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex';
 
 export default {
-  name: "SubmitMessage",
+  name: 'SubmitMessage',
   computed: {
-    ...mapGetters(["message"])
-  }
+    ...mapGetters(['message']),
+  },
 };
 </script>

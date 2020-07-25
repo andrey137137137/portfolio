@@ -9,17 +9,17 @@
 </template>
 
 <script>
-import { Fragment } from "vue-fragment";
-import pageConfigMixin from "@frontend/mixins/pageConfigMixin";
-import TopWrapper from "@frontCmp/TopWrapper";
-import SliderCmp from "@frontCmp/SliderCmp";
-import BottomWrapper from "@frontCmp/BottomWrapper";
-import CommentCmp from "@frontCmp/CommentCmp";
-import FeedbackForm from "@frontCmp/forms/FeedbackForm";
-import ScrollButton from "@frontCmp/ScrollButton";
+import { Fragment } from 'vue-fragment';
+import pageConfigMixin from '@frontend/mixins/pageConfigMixin';
+import TopWrapper from '@frontCmp/TopWrapper';
+import SliderCmp from '@frontCmp/SliderCmp';
+import BottomWrapper from '@frontCmp/BottomWrapper';
+import CommentCmp from '@frontCmp/CommentCmp';
+import FeedbackForm from '@frontCmp/forms/FeedbackForm';
+import ScrollButton from '@frontCmp/ScrollButton';
 
 export default {
-  name: "WorksView",
+  name: 'WorksView',
   components: {
     Fragment,
     TopWrapper,
@@ -27,12 +27,12 @@ export default {
     BottomWrapper,
     CommentCmp,
     FeedbackForm,
-    ScrollButton
+    ScrollButton,
   },
-  mixins: [pageConfigMixin]
+  mixins: [pageConfigMixin],
 };
 </script>
 
 <style lang="scss">
-@import "@frontStylesPgs/Works/import";
+@import '@frontStylesPgs/Works/import';
 </style>

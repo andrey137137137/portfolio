@@ -7,18 +7,18 @@
 </template>
 
 <script>
-import AdminHeader from "@backCmp/AdminHeader";
-import AdminNav from "@backCmp/AdminNav";
+import AdminHeader from '@backCmp/AdminHeader';
+import AdminNav from '@backCmp/AdminNav';
 
 export default {
-  name: "AdminApp",
+  name: 'AdminApp',
   components: {
     AdminHeader,
-    AdminNav
-  }
+    AdminNav,
+  },
 };
 </script>
 
 <style lang="scss">
-@import "@backStyles/common";
+@import '@backStyles/common';
 </style>

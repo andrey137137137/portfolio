@@ -7,18 +7,18 @@
 .parallax {
   $block: &;
 
-  @include position("fixed -1% -5%");
+  @include position('fixed -1% -5%');
   // size: 100%;
   overflow: hidden;
 
   &-layer {
-    @include position("absolute 0 * * 0");
+    @include position('absolute 0 * * 0');
     size: 100%;
     will-change: transform;
   }
 
   &-img {
-    @include position("absolute * * 0 50%");
+    @include position('absolute * * 0 50%');
     max-width: 100%;
     width: 100%;
     transform: translateX(-50%);

@@ -10,32 +10,32 @@
 </template>
 
 <script>
-import AdminFormWrapper from "@backCmp/AdminFormWrapper";
-import ButtonElem from "@components/formElems/ButtonElem";
+import AdminFormWrapper from '@backCmp/AdminFormWrapper';
+import ButtonElem from '@components/formElems/ButtonElem';
 
 export default {
-  name: "UserForm",
+  name: 'UserForm',
   components: {
     AdminFormWrapper,
-    ButtonElem
+    ButtonElem,
   },
   props: {
     handleSubmit: {
       type: Function,
-      required: true
+      required: true,
     },
     disabled: {
       type: Boolean,
-      required: true
-    }
+      required: true,
+    },
   },
   computed: {
     buttonWrapperClass() {
       return {
-        "form-col": true,
-        "form-btn--disabled": this.disabled
+        'form-col': true,
+        'form-btn--disabled': this.disabled,
       };
-    }
-  }
+    },
+  },
 };
 </script>

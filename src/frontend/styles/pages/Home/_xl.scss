@@ -8,7 +8,7 @@
   color: $grey $white;
 
   &-container {
-    @include padding("30px * 27px");
+    @include padding('30px * 27px');
   }
 
   &-post {
@@ -40,7 +40,7 @@
   }
 
   &-separator {
-    @include margin("27px * 25px");
+    @include margin('27px * 25px');
     border-top: 4px solid rgba(#373e42, 0.07);
     // border-top: 4px solid #373e42;
   }

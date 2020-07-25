@@ -1,13 +1,13 @@
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
   computed: {
-    ...mapGetters(["isAuth"])
+    ...mapGetters(['isAuth']),
   },
   methods: {
-    ...mapActions(["getAuthStatus"])
+    ...mapActions(['getAuthStatus']),
   },
   created() {
     this.getAuthStatus();
-  }
+  },
 };

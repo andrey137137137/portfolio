@@ -1,38 +1,38 @@
-const { SUCCESS, FORBIDDEN, NOT_FOUND, ERROR } = require("@httpSt");
-const waterfall = require("async/waterfall");
+const { SUCCESS, FORBIDDEN, NOT_FOUND, ERROR } = require('@httpSt');
+const waterfall = require('async/waterfall');
 
 function getMessage(mode, isError = false) {
   switch (mode) {
-    case "find":
-      return "чтении записей";
-    case "findOne":
-      return "чтении записи";
-    case "insert":
-      if (isError) return "добавлении записи";
-      return "добавлена";
-    case "update":
-      if (isError) return "обновлении записи";
-      return "обновлена";
-    case "delete":
-      if (isError) return "удалении записи";
-      return "удалена";
+    case 'find':
+      return 'чтении записей';
+    case 'findOne':
+      return 'чтении записи';
+    case 'insert':
+      if (isError) return 'добавлении записи';
+      return 'добавлена';
+    case 'update':
+      if (isError) return 'обновлении записи';
+      return 'обновлена';
+    case 'delete':
+      if (isError) return 'удалении записи';
+      return 'удалена';
   }
 }
 
-function sendResult(result, res, mode = "insert") {
+function sendResult(result, res, mode = 'insert') {
   if (!result) {
-    let message = "Запись в БД не обнаружена";
+    let message = 'Запись в БД не обнаружена';
 
-    if (mode == "insert") {
-      message = "Невозможно добавить новую запись в БД";
+    if (mode == 'insert') {
+      message = 'Невозможно добавить новую запись в БД';
     }
 
     return res.status(NOT_FOUND).json({ message });
   }
 
-  const data = { message: "Запись успешно " + getMessage(mode) };
+  const data = { message: 'Запись успешно ' + getMessage(mode) };
 
-  if (mode == "insert") {
+  if (mode == 'insert') {
     data._id = result._id;
   }
 
@@ -41,15 +41,15 @@ function sendResult(result, res, mode = "insert") {
 
 function sendError(err, res, mode) {
   res.status(ERROR).json({
-    message: `При ${getMessage(mode, true)} произошла ошибка: ${err}`
+    message: `При ${getMessage(mode, true)} произошла ошибка: ${err}`,
   });
 }
 
-function get(Model, res, filter, fields, options, mode = "many") {
+function get(Model, res, filter, fields, options, mode = 'many') {
   const types = {
-    many: "find",
-    one: "findOne",
-    id: "findById"
+    many: 'find',
+    one: 'findOne',
+    id: 'findById',
   };
   const method = types[mode];
 
@@ -58,25 +58,25 @@ function get(Model, res, filter, fields, options, mode = "many") {
       res.status(SUCCESS).json({ result });
     })
     .catch(err => {
-      sendError(err, res, mode == "many" ? "find" : "findOne");
+      sendError(err, res, mode == 'many' ? 'find' : 'findOne');
     });
 }
 
 function update(Model, query, data, res) {
-  const FUNC = query.id ? "findByIdAndUpdate" : "findOneAndUpdate";
+  const FUNC = query.id ? 'findByIdAndUpdate' : 'findOneAndUpdate';
   const filter = query.id ? query.id : query;
 
   Model[FUNC](filter, { $set: data })
     .then(result => {
-      sendResult(result, res, "update");
+      sendResult(result, res, 'update');
     })
     .catch(err => {
-      sendError(err, res, "update");
+      sendError(err, res, 'update');
     });
 }
 
 module.exports.getItemById = (Model, res, id, fields = {}, options = {}) => {
-  get(Model, res, id, fields, options, "id");
+  get(Model, res, id, fields, options, 'id');
 };
 
 module.exports.getItem = (
@@ -84,9 +84,9 @@ module.exports.getItem = (
   res,
   filter = {},
   fields = {},
-  options = {}
+  options = {},
 ) => {
-  get(Model, res, filter, fields, options, "one");
+  get(Model, res, filter, fields, options, 'one');
 };
 
 module.exports.getItems = (Model, res, sort, filter = {}, fields = {}) => {
@@ -99,10 +99,10 @@ module.exports.createItem = (Model, data, res) => {
   item
     .save()
     .then(result => {
-      sendResult(result, res, "insert");
+      sendResult(result, res, 'insert');
     })
     .catch(err => {
-      sendError(err, res, "insert");
+      sendError(err, res, 'insert');
     });
 };
 
@@ -126,13 +126,13 @@ module.exports.updateUserPassword = (Model, id, data, res) => {
         if (!user.validatePassword(oldPassword)) {
           return res
             .status(FORBIDDEN)
-            .json({ message: "Старый пароль неверный" });
+            .json({ message: 'Старый пароль неверный' });
         }
 
         if (!password || password !== repPassword) {
           return res
             .status(FORBIDDEN)
-            .json({ message: "Повтор пароля неверный" });
+            .json({ message: 'Повтор пароля неверный' });
         }
 
         user.email = email;
@@ -140,22 +140,22 @@ module.exports.updateUserPassword = (Model, id, data, res) => {
         user.password = password;
 
         user.save(cb);
-      }
+      },
     ],
     (err, user) => {
-      if (err) sendError(err, res, "update");
-      sendResult(user, res, "update");
-    }
+      if (err) sendError(err, res, 'update');
+      sendResult(user, res, 'update');
+    },
   );
 };
 
 module.exports.deleteItem = (Model, id, res) => {
   Model.findByIdAndRemove(id).then(
     result => {
-      sendResult(result, res, "delete");
+      sendResult(result, res, 'delete');
     },
     err => {
-      sendError(err, res, "delete");
-    }
+      sendError(err, res, 'delete');
+    },
   );
 };

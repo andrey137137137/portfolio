@@ -7,7 +7,7 @@
   }
 
   &-title {
-    @include margin("* auto");
+    @include margin('* auto');
     width: 50%;
   }
 }

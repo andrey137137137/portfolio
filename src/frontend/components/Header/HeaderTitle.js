@@ -1,18 +1,18 @@
-import { createNamespacedHelpers } from "vuex";
-const { mapGetters } = createNamespacedHelpers("profile");
+import { createNamespacedHelpers } from 'vuex';
+const { mapGetters } = createNamespacedHelpers('profile');
 
 export default {
-  name: "HeaderTitle",
+  name: 'HeaderTitle',
   render(h) {
-    return h("div", {}, [this.titleElem(h), this.descElem()]);
+    return h('div', {}, [this.titleElem(h), this.descElem()]);
   },
   computed: {
-    ...mapGetters(["firstName", "lastName"]),
+    ...mapGetters(['firstName', 'lastName']),
     isContent() {
-      return this.$route.name != "home";
+      return this.$route.name != 'home';
     },
     isBlog() {
-      return this.$route.name == "blog";
+      return this.$route.name == 'blog';
     },
     titleClasses() {
       if (!this.isContent) {
@@ -20,10 +20,10 @@ export default {
       }
 
       return {
-        "section-title--large": this.isBlog,
-        "header-title--relative": true,
-        "header-title--medium": !this.isBlog,
-        "header-title--large": this.isBlog
+        'section-title--large': this.isBlog,
+        'header-title--relative': true,
+        'header-title--medium': !this.isBlog,
+        'header-title--large': this.isBlog,
       };
     },
     descClasses() {
@@ -32,9 +32,9 @@ export default {
       }
 
       return {
-        "header-desc--relative": true,
-        "header-desc--after_medium_title": !this.isBlog,
-        "header-desc--after_large_title": this.isBlog
+        'header-desc--relative': true,
+        'header-desc--after_medium_title': !this.isBlog,
+        'header-desc--after_large_title': this.isBlog,
       };
     },
     title() {
@@ -44,9 +44,9 @@ export default {
     },
     desc() {
       return this.isBlog
-        ? "Статьи, которые я написал"
-        : "Личный сайт веб разработчика";
-    }
+        ? 'Статьи, которые я написал'
+        : 'Личный сайт веб разработчика';
+    },
   },
   methods: {
     titleElem(h) {
@@ -56,26 +56,26 @@ export default {
         `h${this.isBlog ? 1 : 2}`,
         {
           class: {
-            "section-title": true,
-            "header-title": true,
-            ...this.titleClasses
-          }
+            'section-title': true,
+            'header-title': true,
+            ...this.titleClasses,
+          },
         },
-        [this.title]
+        [this.title],
       );
     },
     descElem() {
       return (
         <p
           class={{
-            "section-desc": true,
-            "header-desc": true,
-            ...this.descClasses
+            'section-desc': true,
+            'header-desc': true,
+            ...this.descClasses,
           }}
         >
           {this.desc}
         </p>
       );
-    }
-  }
+    },
+  },
 };

@@ -1,15 +1,15 @@
-import axios from "axios";
-import { SET } from "@common/store/mutation-types";
+import axios from 'axios';
+import { SET } from '@common/store/mutation-types';
 
 export default {
   namespaced: true,
   state: {
-    firstName: "",
-    lastName: "",
+    firstName: '',
+    lastName: '',
     old: 0,
-    email: "",
+    email: '',
     contacts: [],
-    footerDesc: "Дизайн сайта взят от Школы онлайн образования LoftSchool."
+    footerDesc: 'Дизайн сайта взят от Школы онлайн образования LoftSchool.',
   },
   getters: {
     firstName: state => state.firstName,
@@ -17,14 +17,14 @@ export default {
     old: state => state.old,
     email: state => state.email,
     contacts: state => state.contacts,
-    footerDesc: state => state.footerDesc
+    footerDesc: state => state.footerDesc,
   },
   actions: {
     set({ commit }) {
-      axios.get("user/profile").then(res => {
+      axios.get('user/profile').then(res => {
         commit(SET, res.data.result);
       });
-    }
+    },
   },
   mutations: {
     [SET](state, data) {
@@ -33,6 +33,6 @@ export default {
           state[key] = data[key];
         }
       }
-    }
-  }
+    },
+  },
 };

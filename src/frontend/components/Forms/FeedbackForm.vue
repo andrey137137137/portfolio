@@ -1,56 +1,56 @@
 <template lang="pug">
-FrontFormWrapper#feedback.section.container.container--full_width.feedback_form(
-  @submit.prevent.native="handleSubmit"
-)
-  h2.section-title.section-title--uppercase.section-title--underlined.feedback_form-title Связаться со мной
-
-  //- .form-row.form-row--text_wrap.feedback_form-row
-  //-   input.form-input.feedback_form-text_input(type="text" name="name")
-
-  InputEventElem(
-    :addInputClasses="inputClasses",
-    ref="name",
-    name="name",
-    v-model="name",
-    :val="$v.name",
-    placeholder="Пользователь"
+  FrontFormWrapper#feedback.section.container.container--full_width.feedback_form(
+    @submit.prevent.native="handleSubmit"
   )
+    h2.section-title.section-title--uppercase.section-title--underlined.feedback_form-title Связаться со мной
 
-  //- .form-row.form-row--text_wrap.feedback_form-row
-  //-   input.form-input.feedback_form-text_input(type="email" name="email")
+    //- .form-row.form-row--text_wrap.feedback_form-row
+    //-   input.form-input.feedback_form-text_input(type="text" name="name")
 
-  InputEventElem(
-    :addInputClasses="inputClasses",
-    type="email",
-    ref="email",
-    name="email",
-    v-model="email",
-    :val="$v.email",
-    placeholder="Почта"
-  )
+    InputEventElem(
+      :addInputClasses="inputClasses",
+      ref="name",
+      name="name",
+      v-model="name",
+      :val="$v.name",
+      placeholder="Пользователь"
+    )
 
-  //- .form-row.form-row--textarea_wrap
-  //-   textarea.form-input.feedback_form-text_input(name="message")
+    //- .form-row.form-row--text_wrap.feedback_form-row
+    //-   input.form-input.feedback_form-text_input(type="email" name="email")
 
-  InputEventElem(
-    :addInputClasses="inputClasses",
-    type="textarea",
-    ref="message",
-    name="message",
-    v-model="message",
-    :val="$v.message",
-    placeholder="Сообщение"
-  )
+    InputEventElem(
+      :addInputClasses="inputClasses",
+      type="email",
+      ref="email",
+      name="email",
+      v-model="email",
+      :val="$v.email",
+      placeholder="Почта"
+    )
 
-  ErrorElem(:message="formError", :styleTop="errorStyleTop")
+    //- .form-row.form-row--textarea_wrap
+    //-   textarea.form-input.feedback_form-text_input(name="message")
 
-  .menu.form-menu.feedback_form-menu
-    input.menu-link.btn(type="submit", value="Отправить")
-    input.menu-link.btn.btn--full_opacity(type="reset", value="Очистить")
-    //- li.menu-item
-    //-   input.menu-link.btn(type="submit", value="Отправить")
-    //- li.menu-item
-    //-   input.menu-link.btn.btn--full_opacity(type="reset" value="Очистить")
+    InputEventElem(
+      :addInputClasses="inputClasses",
+      type="textarea",
+      ref="message",
+      name="message",
+      v-model="message",
+      :val="$v.message",
+      placeholder="Сообщение"
+    )
+
+    ErrorElem(:message="formError", :styleTop="errorStyleTop")
+
+    .menu.form-menu.feedback_form-menu
+      input.menu-link.btn(type="submit", value="Отправить")
+      input.menu-link.btn.btn--full_opacity(type="reset", value="Очистить")
+      //- li.menu-item
+      //-   input.menu-link.btn(type="submit", value="Отправить")
+      //- li.menu-item
+      //-   input.menu-link.btn.btn--full_opacity(type="reset" value="Очистить")
 </template>
 
 <script>
@@ -59,59 +59,59 @@ import {
   alphaNum,
   email,
   minLength,
-  maxLength
-} from "vuelidate/lib/validators";
-import frontFormMixin from "@frontend/mixins/frontFormMixin";
-import FrontFormWrapper from "@frontCmp/FrontFormWrapper";
-import InputEventElem from "@components/formElems/InputEventElem";
-import ErrorElem from "@components/formElems/ErrorElem";
+  maxLength,
+} from 'vuelidate/lib/validators';
+import frontFormMixin from '@frontend/mixins/frontFormMixin';
+import FrontFormWrapper from '@frontCmp/FrontFormWrapper';
+import InputEventElem from '@components/formElems/InputEventElem';
+import ErrorElem from '@components/formElems/ErrorElem';
 
 export default {
-  name: "FeedbackForm",
+  name: 'FeedbackForm',
   components: {
     FrontFormWrapper,
     InputEventElem,
-    ErrorElem
+    ErrorElem,
   },
   mixins: [frontFormMixin],
   data() {
     return {
-      name: "",
-      email: "",
-      message: ""
+      name: '',
+      email: '',
+      message: '',
     };
   },
   computed: {
     containerClasses() {
       return {
-        feedback_form: true
+        feedback_form: true,
       };
     },
     inputWrapClasses() {
       return {
-        "feedback_form-row": true
+        'feedback_form-row': true,
       };
     },
     inputClasses() {
       return {
-        "feedback_form-text_input": true
+        'feedback_form-text_input': true,
       };
-    }
+    },
   },
   validations: {
     name: {
       required,
-      alphaNum
+      alphaNum,
     },
     email: {
       required,
-      email
+      email,
     },
     message: {
       required,
       minLength: minLength(27),
-      maxLength: maxLength(527)
-    }
-  }
+      maxLength: maxLength(527),
+    },
+  },
 };
 </script>

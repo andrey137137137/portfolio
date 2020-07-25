@@ -4,35 +4,35 @@
 </template>
 
 <script>
-import addClassesMixin from "@common/mixins/addClassesMixin";
+import addClassesMixin from '@common/mixins/addClassesMixin';
 
 export default {
-  name: "ButtonElem",
+  name: 'ButtonElem',
   mixins: [addClassesMixin],
   props: {
     isDanger: {
       type: Boolean,
-      default: false
+      default: false,
     },
     type: {
       type: String,
-      default: ""
-    }
+      default: '',
+    },
   },
   computed: {
     compType() {
-      if (this.type === "") {
-        return this.isDanger ? "button" : "submit";
+      if (this.type === '') {
+        return this.isDanger ? 'button' : 'submit';
       }
 
       return this.type;
     },
     extClass() {
       return {
-        "form-btn--danger": this.isDanger,
-        ...this.addClassesMixin
+        'form-btn--danger': this.isDanger,
+        ...this.addClassesMixin,
       };
-    }
-  }
+    },
+  },
 };
 </script>

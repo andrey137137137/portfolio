@@ -10,7 +10,7 @@ form {
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
-      @include margin("10px * 30px");
+      @include margin('10px * 30px');
     }
   }
 
@@ -64,7 +64,7 @@ form {
         }
 
         &-label {
-          @include padding("* 20px");
+          @include padding('* 20px');
           width: 124px;
         }
 
@@ -87,7 +87,7 @@ form {
 
     &--textarea {
       #{$block}-input {
-        @include padding("9px *");
+        @include padding('9px *');
         height: 249px;
         line-height: 24px;
       }
@@ -151,7 +151,7 @@ form {
           &:before {
             display: block;
             size: 20px;
-            content: "";
+            content: '';
           }
         }
 
@@ -174,7 +174,7 @@ form {
       #{$block} {
         &-label {
           display: table;
-          @include margin("* auto");
+          @include margin('* auto');
           width: auto;
 
           &:before {
@@ -196,7 +196,7 @@ form {
 
           &:before {
             display: block;
-            content: "\f00c";
+            content: '\f00c';
           }
         }
       }
@@ -212,8 +212,8 @@ form {
 
       #{$block} {
         &-label {
-          @include margin("* auto");
-          @include padding("* 20px");
+          @include margin('* auto');
+          @include padding('* 20px');
           width: auto;
 
           &:before {
@@ -226,7 +226,7 @@ form {
         }
 
         &-checked {
-          @include position("absolute 6px * * 26px");
+          @include position('absolute 6px * * 26px');
           size: 8px;
           background-color: $darkBlue;
         }
@@ -310,7 +310,7 @@ form {
   }
 
   &-error {
-    @include padding("* 10px");
+    @include padding('* 10px');
     font-size: 14px/20px;
   }
 

@@ -1,14 +1,14 @@
-import { SET, DELETE } from "@common/store/mutation-types";
+import { SET, DELETE } from '@common/store/mutation-types';
 
 export default {
   namespaced: true,
   state: {
-    inputName: "",
-    error: ""
+    inputName: '',
+    error: '',
   },
   getters: {
     formInputName: state => state.inputName,
-    formError: state => state.error
+    formError: state => state.error,
   },
   actions: {
     setFormError({ commit }, { inputName, error }) {
@@ -16,7 +16,7 @@ export default {
     },
     clearFormError({ commit }) {
       commit(DELETE);
-    }
+    },
   },
   mutations: {
     [SET](state, { inputName, error }) {
@@ -24,8 +24,8 @@ export default {
       state.error = error;
     },
     [DELETE](state) {
-      state.inputName = "";
-      state.error = "";
-    }
-  }
+      state.inputName = '';
+      state.error = '';
+    },
+  },
 };

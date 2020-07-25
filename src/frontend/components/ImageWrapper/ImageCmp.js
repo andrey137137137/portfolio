@@ -1,36 +1,36 @@
 export default {
-  name: "ImageCmp",
+  name: 'ImageCmp',
   render(h) {
     return this.breakpoint ? this.sourceElem() : this.imgElem(h);
   },
   props: {
     path: {
       type: String,
-      required: true
+      required: true,
     },
     classes: {
       type: Object,
-      required: true
+      required: true,
     },
     breakpoint: {
       type: Number,
-      default: 0
+      default: 0,
     },
     title: {
       type: String,
-      default: ""
-    }
+      default: '',
+    },
   },
   methods: {
     sourceElem() {
-      const media = "(min-width: " + this.breakpoint + "px)";
+      const media = '(min-width: ' + this.breakpoint + 'px)';
       return <source media={media} srcset={this.path} />;
     },
     imgElem(h) {
-      return h("img", {
+      return h('img', {
         class: this.classes,
-        attrs: { src: this.path, alt: this.title }
+        attrs: { src: this.path, alt: this.title },
       });
-    }
-  }
+    },
+  },
 };

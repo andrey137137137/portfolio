@@ -3,7 +3,7 @@
 .code {
   &-list {
     margin-left: 42px;
-    @include padding("14px *");
+    @include padding('14px *');
     font-size: 15px/18px;
   }
 
@@ -11,19 +11,19 @@
     margin-left: -42px;
 
     &:before {
-      @include padding("* 10px");
+      @include padding('* 10px');
       width: 42px;
     }
   }
 
   &-text {
-    @include padding("* 4px");
+    @include padding('* 4px');
   }
 }
 
 .blog {
   &-container {
-    @include padding("48px 25px 41px");
+    @include padding('48px 25px 41px');
   }
 
   &-post {
@@ -45,7 +45,7 @@
   }
 
   &-separator {
-    @include margin("50px * 42px");
+    @include margin('50px * 42px');
     border-top-width: 5px;
     border-top-color: rgba(#393e42, 0.07);
     // border-top-color: #393e42;

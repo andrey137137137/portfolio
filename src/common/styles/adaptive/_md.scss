@@ -21,13 +21,13 @@
     }
   }
 
-  @include container(768, 12, "tb");
+  @include container(768, 12, 'tb');
 
   .container {
-    $elem: ".col";
+    $elem: '.col';
 
     .col {
-      @include padding("* 12px");
+      @include padding('* 12px');
 
       &#{$elem} {
         &--float,
@@ -37,7 +37,7 @@
 
         &--center,
         &--tb_center {
-          @include margin("* auto");
+          @include margin('* auto');
         }
       }
     }

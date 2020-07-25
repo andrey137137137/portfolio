@@ -1,24 +1,24 @@
-const packageJson = require("./package.json");
-const path = require("path");
+const packageJson = require('./package.json');
+const path = require('path');
 
 function resolve(dir) {
   return path.join(__dirname, dir);
 }
 
 function resolveSrc(dir) {
-  return resolve(path.join("src", dir));
+  return resolve(path.join('src', dir));
 }
 
 function resolveCommon(dir) {
-  return resolveSrc(path.join("common", dir));
+  return resolveSrc(path.join('common', dir));
 }
 
 function resolveFront(dir) {
-  return resolveSrc(path.join("frontend", dir));
+  return resolveSrc(path.join('frontend', dir));
 }
 
 function resolveBack(dir) {
-  return resolveSrc(path.join("backend", dir));
+  return resolveSrc(path.join('backend', dir));
 }
 
 module.exports = {
@@ -27,7 +27,7 @@ module.exports = {
       /*
        * The directory containing your SVG files.
        */
-      dir: "src/assets/svg",
+      dir: 'src/assets/svg',
       /*
        * The reqex that will be used for the Webpack rule.
        */
@@ -37,75 +37,75 @@ module.exports = {
        */
       loaderOptions: {
         extract: true,
-        spriteFilename: "assets/icons.[hash:8].svg" // or 'assets/icons.svg' if filenameHashing == false
+        spriteFilename: 'assets/icons.[hash:8].svg', // or 'assets/icons.svg' if filenameHashing == false
         // publicPath: "/"
       },
       /*
        * @see https://github.com/kisenka/svg-sprite-loader#configuration
        */
       pluginOptions: {
-        plainSprite: true
-      }
-    }
+        plainSprite: true,
+      },
+    },
   },
   css: {
     loaderOptions: {
       sass: {
-        data: `@import "@/common/styles/variables.scss"; @import "@/common/styles/mixins.scss";`
-      }
-    }
+        data: `@import "@/common/styles/variables.scss"; @import "@/common/styles/mixins.scss";`,
+      },
+    },
   },
   chainWebpack: config => {
-    config.plugins.delete("progress");
+    config.plugins.delete('progress');
     config
-      .plugin("simple-progress-webpack-plugin")
-      .use(require.resolve("simple-progress-webpack-plugin"), [
+      .plugin('simple-progress-webpack-plugin')
+      .use(require.resolve('simple-progress-webpack-plugin'), [
         {
-          format: "minimal"
-        }
+          format: 'minimal',
+        },
       ]);
     config.module
-      .rule("svg-sprite")
-      .use("svgo-loader")
-      .loader("svgo-loader");
+      .rule('svg-sprite')
+      .use('svgo-loader')
+      .loader('svgo-loader');
     config.resolve.alias.set(
-      "@config",
-      resolve(packageJson._moduleAliases["@config"])
+      '@config',
+      resolve(packageJson._moduleAliases['@config']),
     );
     config.resolve.alias.set(
-      "@httpSt",
-      resolve(packageJson._moduleAliases["@httpSt"])
+      '@httpSt',
+      resolve(packageJson._moduleAliases['@httpSt']),
     );
-    config.resolve.alias.set("@assets", resolveSrc("assets"));
-    config.resolve.alias.set("@common", resolveSrc("common"));
-    config.resolve.alias.set("@frontend", resolveSrc("frontend"));
-    config.resolve.alias.set("@backend", resolveSrc("backend"));
+    config.resolve.alias.set('@assets', resolveSrc('assets'));
+    config.resolve.alias.set('@common', resolveSrc('common'));
+    config.resolve.alias.set('@frontend', resolveSrc('frontend'));
+    config.resolve.alias.set('@backend', resolveSrc('backend'));
 
-    config.resolve.alias.set("@styles", resolveCommon("styles"));
-    config.resolve.alias.set("@components", resolveCommon("components"));
+    config.resolve.alias.set('@styles', resolveCommon('styles'));
+    config.resolve.alias.set('@components', resolveCommon('components'));
 
-    config.resolve.alias.set("@backStyles", resolveBack("styles"));
+    config.resolve.alias.set('@backStyles', resolveBack('styles'));
     config.resolve.alias.set(
-      "@backStylesCmp",
-      resolveBack(path.join("styles", "cmp"))
+      '@backStylesCmp',
+      resolveBack(path.join('styles', 'cmp')),
     );
     config.resolve.alias.set(
-      "@backStylesPgs",
-      resolveBack(path.join("styles", "pages"))
+      '@backStylesPgs',
+      resolveBack(path.join('styles', 'pages')),
     );
-    config.resolve.alias.set("@backCmp", resolveBack("components"));
-    config.resolve.alias.set("@backViews", resolveBack("views"));
+    config.resolve.alias.set('@backCmp', resolveBack('components'));
+    config.resolve.alias.set('@backViews', resolveBack('views'));
 
-    config.resolve.alias.set("@frontStyles", resolveFront("styles"));
+    config.resolve.alias.set('@frontStyles', resolveFront('styles'));
     config.resolve.alias.set(
-      "@frontStylesCmp",
-      resolveFront(path.join("styles", "cmp"))
+      '@frontStylesCmp',
+      resolveFront(path.join('styles', 'cmp')),
     );
     config.resolve.alias.set(
-      "@frontStylesPgs",
-      resolveFront(path.join("styles", "pages"))
+      '@frontStylesPgs',
+      resolveFront(path.join('styles', 'pages')),
     );
-    config.resolve.alias.set("@frontCmp", resolveFront("components"));
-    config.resolve.alias.set("@frontViews", resolveFront("views"));
-  }
+    config.resolve.alias.set('@frontCmp', resolveFront('components'));
+    config.resolve.alias.set('@frontViews', resolveFront('views'));
+  },
 };

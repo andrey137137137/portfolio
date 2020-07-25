@@ -30,30 +30,30 @@
 </template>
 
 <script>
-import { validationMixin } from "vuelidate";
+import { validationMixin } from 'vuelidate';
 import {
-  required
+  required,
   // alphaNum,
   // minLength,
   // maxLength
-} from "vuelidate/lib/validators";
-import axios from "axios";
-import exist from "@common/helpers/exist";
-import uploadMixin from "@backend/mixins/uploadMixin";
-import backFormMixin from "@backend/mixins/backFormMixin";
-import itemFormMixin from "@backend/mixins/itemFormMixin";
-import PictureInput from "vue-picture-input";
-import ItemForm from "@backCmp/forms/ItemForm";
-import InputEventElem from "@components/formElems/InputEventElem";
-import MultipleElem from "@components/formElems/MultipleElem";
+} from 'vuelidate/lib/validators';
+import axios from 'axios';
+import exist from '@common/helpers/exist';
+import uploadMixin from '@backend/mixins/uploadMixin';
+import backFormMixin from '@backend/mixins/backFormMixin';
+import itemFormMixin from '@backend/mixins/itemFormMixin';
+import PictureInput from 'vue-picture-input';
+import ItemForm from '@backCmp/forms/ItemForm';
+import InputEventElem from '@components/formElems/InputEventElem';
+import MultipleElem from '@components/formElems/MultipleElem';
 
 export default {
-  name: "SlideForm",
+  name: 'SlideForm',
   components: {
     PictureInput,
     ItemForm,
     InputEventElem,
-    MultipleElem
+    MultipleElem,
   },
   mixins: [uploadMixin, validationMixin, backFormMixin, itemFormMixin],
   data() {
@@ -61,12 +61,12 @@ export default {
       image: null,
       fields: [
         {
-          name: "name",
-          type: "text",
-          placeholder: "Технология"
-        }
+          name: 'name',
+          type: 'text',
+          placeholder: 'Технология',
+        },
       ],
-      propTemplate: { name: "" }
+      propTemplate: { name: '' },
     };
 
     // if (!this.slide) {
@@ -99,28 +99,28 @@ export default {
       ...data,
       title: this.item.title,
       link: this.item.link,
-      techs: exist("techs", this.item)
+      techs: exist('techs', this.item)
         ? this.item.techs.map(item => {
             return { name: item };
           })
-        : []
+        : [],
     };
   },
   validations: {
     title: {
-      required
+      required,
     },
     link: {
-      required
+      required,
     },
     techs: {
       required,
       $each: {
         name: {
-          required
-        }
-      }
-    }
+          required,
+        },
+      },
+    },
   },
   methods: {
     // getIndex(index) {
@@ -128,27 +128,27 @@ export default {
     // },
     defaultFields() {
       return {
-        title: "",
-        link: "",
+        title: '',
+        link: '',
         techs: [
           {
-            name: "HTML"
+            name: 'HTML',
           },
           {
-            name: "CSS"
+            name: 'CSS',
           },
           {
-            name: "JavaScript"
-          }
-        ]
+            name: 'JavaScript',
+          },
+        ],
       };
     },
     prepareData() {
       this.submitData = {
         title: this.title,
         link: this.link,
-        image: this.image ? this.image.name : "",
-        techs: this.techs.map(item => item.name)
+        image: this.image ? this.image.name : '',
+        techs: this.techs.map(item => item.name),
       };
     },
     changeImage() {
@@ -156,23 +156,23 @@ export default {
       console.log(this.image);
     },
     removeImage() {
-      this.image = "";
+      this.image = '';
     },
     uploadImage() {
       let data = new FormData();
-      data.append("image", this.image, this.image.name);
+      data.append('image', this.image, this.image.name);
 
-      axios.post(this.getUploadPage("slider"), data).then(response => {
+      axios.post(this.getUploadPage('slider'), data).then(response => {
         this.fileMsg = response.data.msg;
 
-        if (response.data.status === "Ok") {
+        if (response.data.status === 'Ok') {
           this.image = null;
           this.$refs.upload.value = null;
         }
 
-        console.log("image upload response > ", response);
+        console.log('image upload response > ', response);
       });
-    }
+    },
     // submit() {
     //   if (this.$v.$invalid) {
     //     return false;
@@ -200,6 +200,6 @@ export default {
 
     //   return true;
     // }
-  }
+  },
 };
 </script>

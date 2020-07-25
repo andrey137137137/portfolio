@@ -53,16 +53,16 @@
 // };
 
 // import getImg from "@common/helpers/getImg";
-import SectionWrapper from "@frontCmp/SectionWrapper";
-import AnimateStr from "./AnimateStr";
-import ArrowButton from "./ArrowButton";
+import SectionWrapper from '@frontCmp/SectionWrapper';
+import AnimateStr from './AnimateStr';
+import ArrowButton from './ArrowButton';
 
 export default {
-  name: "SliderCmp",
+  name: 'SliderCmp',
   components: {
     SectionWrapper,
     AnimateStr,
-    ArrowButton
+    ArrowButton,
   },
   props: {
     items: {
@@ -71,48 +71,48 @@ export default {
       default() {
         return [
           {
-            image: "test1.jpg",
-            link: "http://test1.link/",
-            techs: ["html 1", "css 1", "js 1"],
-            title: "Test Title 1"
+            image: 'test1.jpg',
+            link: 'http://test1.link/',
+            techs: ['html 1', 'css 1', 'js 1'],
+            title: 'Test Title 1',
           },
           {
-            image: "test2.jpg",
-            link: "http://test2.link/",
-            techs: ["html 2", "css 2", "js 2"],
-            title: "Test Title 2"
+            image: 'test2.jpg',
+            link: 'http://test2.link/',
+            techs: ['html 2', 'css 2', 'js 2'],
+            title: 'Test Title 2',
           },
           {
-            image: "test3.jpg",
-            link: "http://test3.link/",
-            techs: ["html 3", "css 3", "js 3"],
-            title: "Test Title 3"
-          }
+            image: 'test3.jpg',
+            link: 'http://test3.link/',
+            techs: ['html 3', 'css 3', 'js 3'],
+            title: 'Test Title 3',
+          },
         ];
-      }
+      },
     },
     id: {
       type: String,
-      default: "slider"
-    }
+      default: 'slider',
+    },
   },
   data() {
     return {
-      transitionMethod: "scroll_up",
+      transitionMethod: 'scroll_up',
       duration: 3000,
       curIndex: 0,
       // count: this.items.length,
       intervalID: null,
       titleClasses: {
-        "section-title": true,
-        "section-title--uppercase": true,
-        "section-title--underlined": true,
-        "slider-title": true
+        'section-title': true,
+        'section-title--uppercase': true,
+        'section-title--underlined': true,
+        'slider-title': true,
       },
       techsClasses: {
-        "section-desc": true,
-        "slider-desc": true
-      }
+        'section-desc': true,
+        'slider-desc': true,
+      },
     };
   },
   computed: {
@@ -136,24 +136,24 @@ export default {
     demoImg() {
       // return getImg(this.items[this.curIndex].image, images);
       // return "/upload/slider/" + this.items[this.curIndex].image;
-      return "/upload/slider/slide.png";
+      return '/upload/slider/slide.png';
     },
     prevImg() {
       // return getImg(this.items[this.prevIndex].image, images);
       // return "/upload/slider/" + this.items[this.prevIndex].image;
-      return "/upload/slider/slide.png";
+      return '/upload/slider/slide.png';
     },
     nextImg() {
       // return getImg(this.items[this.nextIndex()].image, images);
       // return "/upload/slider/" + this.items[this.nextIndex].image;
-      return "/upload/slider/slide.png";
+      return '/upload/slider/slide.png';
     },
     title() {
       return this.items[this.curIndex].title;
     },
     alt() {
       const number = this.curIndex + 1;
-      return number + ". " + this.title;
+      return number + '. ' + this.title;
     },
     prevTitle() {
       return this.items[this.prevIndex].title;
@@ -162,20 +162,20 @@ export default {
       return this.items[this.nextIndex].title;
     },
     techs() {
-      return this.items[this.curIndex].techs.join(", ");
+      return this.items[this.curIndex].techs.join(', ');
     },
     link() {
       return this.items[this.curIndex].link;
-    }
+    },
   },
   methods: {
     changeSlide(direction = 1) {
       if (direction < 0) {
         this.curIndex = this.prevIndex;
-        this.transitionMethod = "scroll_down";
+        this.transitionMethod = 'scroll_down';
       } else {
         this.curIndex = this.nextIndex;
-        this.transitionMethod = "scroll_up";
+        this.transitionMethod = 'scroll_up';
       }
     },
     resetInterval() {
@@ -193,10 +193,10 @@ export default {
     handleNext() {
       this.changeSlide();
       // this.resetInterval();
-    }
+    },
   },
   created() {
     // this.resetInterval();
-  }
+  },
 };
 </script>

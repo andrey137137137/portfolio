@@ -10,33 +10,33 @@
 </template>
 
 <script>
-import SvgCmp from "@components/SvgCmp";
-import HeaderTitle from "./HeaderTitle";
+import SvgCmp from '@components/SvgCmp';
+import HeaderTitle from './HeaderTitle';
 
 export default {
-  name: "HeaderContent",
+  name: 'HeaderContent',
   components: {
     SvgCmp,
-    HeaderTitle
+    HeaderTitle,
   },
   computed: {
     isContent() {
-      return this.$route.name != "home";
+      return this.$route.name != 'home';
     },
     containerClasses() {
       return {
-        "header-article--relative": this.isContent,
-        "header-article--padding": !this.isContent
+        'header-article--relative': this.isContent,
+        'header-article--padding': !this.isContent,
       };
     },
     svgClasses() {
       return {
-        "header-logo--for_blog": this.$route.name == "blog"
+        'header-logo--for_blog': this.$route.name == 'blog',
       };
     },
     avatarClasses() {
-      return { "header-avatar--relative": this.isContent };
-    }
-  }
+      return { 'header-avatar--relative': this.isContent };
+    },
+  },
 };
 </script>

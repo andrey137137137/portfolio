@@ -17,37 +17,37 @@
 </template>
 
 <script>
-import { validationMixin } from "vuelidate";
-import { required, minValue, maxValue } from "vuelidate/lib/validators";
-import backFormMixin from "@backend/mixins/backFormMixin";
-import itemFormMixin from "@backend/mixins/itemFormMixin";
-import ItemForm from "@backCmp/forms/ItemForm";
-import InputEventElem from "@components/formElems/InputEventElem";
-import MultipleElem from "@components/formElems/MultipleElem";
+import { validationMixin } from 'vuelidate';
+import { required, minValue, maxValue } from 'vuelidate/lib/validators';
+import backFormMixin from '@backend/mixins/backFormMixin';
+import itemFormMixin from '@backend/mixins/itemFormMixin';
+import ItemForm from '@backCmp/forms/ItemForm';
+import InputEventElem from '@components/formElems/InputEventElem';
+import MultipleElem from '@components/formElems/MultipleElem';
 
 export default {
-  name: "SkillForm",
+  name: 'SkillForm',
   components: {
     ItemForm,
     InputEventElem,
-    MultipleElem
+    MultipleElem,
   },
   mixins: [validationMixin, backFormMixin, itemFormMixin],
   data() {
     const data = {
       fields: [
         {
-          name: "name",
-          type: "text",
-          placeholder: "Навык"
+          name: 'name',
+          type: 'text',
+          placeholder: 'Навык',
         },
         {
-          name: "percents",
-          type: "number",
-          placeholder: "Владение"
-        }
+          name: 'percents',
+          type: 'number',
+          placeholder: 'Владение',
+        },
       ],
-      propTemplate: { name: "", percents: "" }
+      propTemplate: { name: '', percents: '' },
     };
 
     if (!this.item) {
@@ -57,53 +57,53 @@ export default {
     return {
       ...data,
       category: this.item.category,
-      items: this.getMultipleArray(this.item, "items", data.propTemplate)
+      items: this.getMultipleArray(this.item, 'items', data.propTemplate),
     };
   },
   validations: {
     category: {
-      required
+      required,
     },
     items: {
       required,
       $each: {
         name: {
-          required
+          required,
         },
         percents: {
           required,
           minValue: minValue(1),
-          maxValue: maxValue(100)
-        }
-      }
-    }
+          maxValue: maxValue(100),
+        },
+      },
+    },
   },
   methods: {
     defaultFields() {
       return {
-        category: "",
+        category: '',
         items: [
           {
-            name: "HTML",
-            percents: 1
+            name: 'HTML',
+            percents: 1,
           },
           {
-            name: "CSS",
-            percents: 1
+            name: 'CSS',
+            percents: 1,
           },
           {
-            name: "JavaScript",
-            percents: 1
-          }
-        ]
+            name: 'JavaScript',
+            percents: 1,
+          },
+        ],
       };
     },
     prepareData() {
       this.submitData = {
         category: this.category,
-        items: this.cloneMultipleArray(this.items, this.propTemplate)
+        items: this.cloneMultipleArray(this.items, this.propTemplate),
       };
-    }
-  }
+    },
+  },
 };
 </script>

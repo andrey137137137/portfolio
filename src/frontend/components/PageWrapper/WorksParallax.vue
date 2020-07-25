@@ -5,20 +5,20 @@
 </template>
 
 <script>
-import $ from "jquery";
-import ImageWrapper from "@frontCmp/ImageWrapper";
+import $ from 'jquery';
+import ImageWrapper from '@frontCmp/ImageWrapper';
 
 export default {
-  name: "WorksParallax",
+  name: 'WorksParallax',
   components: {
-    ImageWrapper
+    ImageWrapper,
   },
   data() {
     return {
       $parallaxContainer: null,
       $parallax: null,
       $bottomWrapper: null,
-      $footer: null
+      $footer: null,
     };
   },
   methods: {
@@ -30,30 +30,30 @@ export default {
     },
     changeHeight() {
       this.$parallaxContainer.style.height =
-        this.$bottomWrapper.offsetHeight + this.$footer.offsetHeight + "px";
+        this.$bottomWrapper.offsetHeight + this.$footer.offsetHeight + 'px';
       this.moveLayers();
-    }
+    },
   },
   mounted() {
     const $vm = this;
 
     this.$nextTick(() => {
       $(document).ready(() => {
-        $vm.$bottomWrapper = document.getElementById("bottomWrapper");
-        $vm.$footer = document.getElementById("footer");
-        $vm.$parallaxContainer = document.getElementById("bottomParallax");
+        $vm.$bottomWrapper = document.getElementById('bottomWrapper');
+        $vm.$footer = document.getElementById('footer');
+        $vm.$parallaxContainer = document.getElementById('bottomParallax');
         $vm.$parallax = $vm.$parallaxContainer.firstElementChild;
 
-        window.addEventListener("scroll", $vm.moveLayers);
-        window.addEventListener("resize", $vm.changeHeight);
+        window.addEventListener('scroll', $vm.moveLayers);
+        window.addEventListener('resize', $vm.changeHeight);
 
         $vm.changeHeight();
       });
     });
-  }
+  },
 };
 </script>
 
 <style lang="scss">
-@import "@frontStylesCmp/WorksParallax/import";
+@import '@frontStylesCmp/WorksParallax/import';
 </style>

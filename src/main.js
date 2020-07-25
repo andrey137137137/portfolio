@@ -1,11 +1,11 @@
-import Vue from "vue";
-import VueRx from "vue-rx";
-import axios from "axios";
-import myConfig from "@config";
-import isDev from "@common/helpers/isDev";
-import store from "@common/store";
-import App from "@/App.vue";
-import router from "@/router";
+import Vue from 'vue';
+import VueRx from 'vue-rx';
+import axios from 'axios';
+import myConfig from '@config';
+import isDev from '@common/helpers/isDev';
+import store from '@common/store';
+import App from '@/App.vue';
+import router from '@/router';
 
 Vue.use(VueRx);
 
@@ -15,7 +15,7 @@ axios.interceptors.request.use(
 
     config.baseURL = `${PROTOCOL}://${HOST}:${PORT}${URL}`;
     config.timeout = 5000;
-    config.headers = { "Content-Type": "application/json" };
+    config.headers = { 'Content-Type': 'application/json' };
     config.withCredentials = true;
 
     return config;
@@ -23,14 +23,14 @@ axios.interceptors.request.use(
   err => {
     if (isDev()) console.log(err.response.status);
     return Promise.reject();
-  }
+  },
 );
 
 Vue.config.productionTip = !isDev();
 
 new Vue({
-  el: "#app",
+  el: '#app',
   store,
   router,
-  render: h => h(App)
+  render: h => h(App),
 });

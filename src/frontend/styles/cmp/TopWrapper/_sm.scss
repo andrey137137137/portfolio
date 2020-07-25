@@ -13,7 +13,7 @@
     // @include border("#{$cornerBorderHeight} 160px 0 160px / solid / transparent * transparent *");
     // @include borderPx(320px, $cornerBorderHeight);
     @include border(
-      "#{$cornerBorderHeight} 49.5vw 0 49.5vw / solid / transparent * transparent *"
+      '#{$cornerBorderHeight} 49.5vw 0 49.5vw / solid / transparent * transparent *'
     );
     width: 100%;
 

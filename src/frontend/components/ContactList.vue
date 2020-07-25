@@ -11,49 +11,49 @@
 </template>
 
 <script>
-import addClassesMixin from "@common/mixins/addClassesMixin";
+import addClassesMixin from '@common/mixins/addClassesMixin';
 
-import { createNamespacedHelpers } from "vuex";
-const { mapGetters } = createNamespacedHelpers("profile");
+import { createNamespacedHelpers } from 'vuex';
+const { mapGetters } = createNamespacedHelpers('profile');
 
 export default {
-  name: "ContactList",
+  name: 'ContactList',
   mixins: [addClassesMixin],
   props: {
     classBlock: {
       type: String,
-      required: true
+      required: true,
     },
     classElemSeparator: {
       type: String,
-      default: "-"
+      default: '-',
     },
     addItemClasses: {
       type: Object,
       default() {
         return {};
-      }
+      },
     },
     isIconed: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   computed: {
-    ...mapGetters(["email", "contacts"]),
+    ...mapGetters(['email', 'contacts']),
     compEmail() {
       return {
-        icon: "envelope",
+        icon: 'envelope',
         name: this.email,
-        link: "mailto: " + this.email
+        link: 'mailto: ' + this.email,
       };
     },
     mapMarker() {
       return {
-        icon: "map_marker",
-        name: "Одесса",
+        icon: 'map_marker',
+        name: 'Одесса',
         link:
-          "https://www.google.com.ua/maps/place/%D0%9E%D0%B4%D0%B5%D1%81%D1%81%D0%BA%D0%B8%D0%B9+%D0%B3%D0%BE%D1%81%D1%83%D0%B4%D0%B0%D1%80%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D1%8B%D0%B9+%D0%B0%D0%BA%D0%B0%D0%B4%D0%B5%D0%BC%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B9+%D1%82%D0%B5%D0%B0%D1%82%D1%80+%D0%BE%D0%BF%D0%B5%D1%80%D1%8B+%D0%B8+%D0%B1%D0%B0%D0%BB%D0%B5%D1%82%D0%B0/@46.4854787,30.7402854,18z/data=!4m13!1m7!3m6!1s0x40c6318a0b864c43:0x129f8fe28cf2176c!2z0J7QtNC10YHRgdCwLCDQntC00LXRgdGB0LrQsNGPINC-0LHQu9Cw0YHRgtGMLCA2NTAwMA!3b1!8m2!3d46.482526!4d30.7233095!3m4!1s0x40c631985b45cb0b:0x6e315e968e5b2a42!8m2!3d46.4854787!4d30.7411794"
+          'https://www.google.com.ua/maps/place/%D0%9E%D0%B4%D0%B5%D1%81%D1%81%D0%BA%D0%B8%D0%B9+%D0%B3%D0%BE%D1%81%D1%83%D0%B4%D0%B0%D1%80%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D1%8B%D0%B9+%D0%B0%D0%BA%D0%B0%D0%B4%D0%B5%D0%BC%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B9+%D1%82%D0%B5%D0%B0%D1%82%D1%80+%D0%BE%D0%BF%D0%B5%D1%80%D1%8B+%D0%B8+%D0%B1%D0%B0%D0%BB%D0%B5%D1%82%D0%B0/@46.4854787,30.7402854,18z/data=!4m13!1m7!3m6!1s0x40c6318a0b864c43:0x129f8fe28cf2176c!2z0J7QtNC10YHRgdCwLCDQntC00LXRgdGB0LrQsNGPINC-0LHQu9Cw0YHRgtGMLCA2NTAwMA!3b1!8m2!3d46.482526!4d30.7233095!3m4!1s0x40c631985b45cb0b:0x6e315e968e5b2a42!8m2!3d46.4854787!4d30.7411794',
       };
     },
     links() {
@@ -63,37 +63,37 @@ export default {
       return this.classBlock + this.classElemSeparator;
     },
     listClass() {
-      return this.classPrefix + "list";
+      return this.classPrefix + 'list';
     },
     itemClass() {
-      return this.classPrefix + "item";
+      return this.classPrefix + 'item';
     },
     iconClass() {
-      return this.classPrefix + "icon";
+      return this.classPrefix + 'icon';
     },
     itemTitleClass() {
-      return this.classPrefix + "item_title";
+      return this.classPrefix + 'item_title';
     },
     linkClass() {
-      return this.classPrefix + "link";
+      return this.classPrefix + 'link';
     },
     containerClasses() {
       return {
         ...this.addClasses,
-        [this.listClass]: true
+        [this.listClass]: true,
       };
     },
     itemClasses() {
       return {
         ...this.addItemClasses,
-        [this.itemClass]: true
+        [this.itemClass]: true,
       };
-    }
+    },
   },
   methods: {
     iconClasses(icon) {
       return [`icon--${icon}`, this.iconClass];
-    }
-  }
+    },
+  },
 };
 </script>

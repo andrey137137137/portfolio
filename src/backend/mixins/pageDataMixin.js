@@ -1,13 +1,13 @@
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
   computed: {
-    ...mapGetters(["dbData"])
+    ...mapGetters(['dbData']),
   },
   methods: {
-    ...mapActions(["readData"])
+    ...mapActions(['readData']),
   },
   created() {
     this.readData();
-  }
+  },
 };

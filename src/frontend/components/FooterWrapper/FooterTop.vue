@@ -13,32 +13,32 @@
 </template>
 
 <script>
-import NavCmp from "@frontCmp/NavCmp";
-import ContactList from "@frontCmp/ContactList";
+import NavCmp from '@frontCmp/NavCmp';
+import ContactList from '@frontCmp/ContactList';
 
-import { createNamespacedHelpers } from "vuex";
-const { mapGetters } = createNamespacedHelpers("profile");
+import { createNamespacedHelpers } from 'vuex';
+const { mapGetters } = createNamespacedHelpers('profile');
 
 export default {
-  name: "FooterTop",
+  name: 'FooterTop',
   components: {
     NavCmp,
-    ContactList
+    ContactList,
   },
   data() {
     return {
       contactClasses: {
         col: true,
-        "col--tb_float": true,
-        "col--tb_6": true,
-        "col--ds_3": true,
-        "col--xds_4": true,
-        "footer_top-col": true
-      }
+        'col--tb_float': true,
+        'col--tb_6': true,
+        'col--ds_3': true,
+        'col--xds_4': true,
+        'footer_top-col': true,
+      },
     };
   },
   computed: {
-    ...mapGetters(["footerDesc"])
-  }
+    ...mapGetters(['footerDesc']),
+  },
 };
 </script>

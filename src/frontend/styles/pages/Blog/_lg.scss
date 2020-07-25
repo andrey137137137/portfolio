@@ -26,7 +26,7 @@
 
     display: block;
     border-right: 3px solid rgba($white, 0);
-    @include padding("8px *");
+    @include padding('8px *');
     margin-bottom: 10px;
     color: inherit;
 
@@ -87,7 +87,7 @@
   // width: 890px;
 
   &-container {
-    @include margin("* 0");
+    @include margin('* 0');
     padding: 102px 110px 62px 100px;
   }
 
@@ -104,11 +104,11 @@
   }
 
   &-date {
-    @include padding("16px * 6px");
+    @include padding('16px * 6px');
   }
 
   &-separator {
-    @include margin("70px * 62px");
+    @include margin('70px * 62px');
     border-top-width: 5px;
   }
 }

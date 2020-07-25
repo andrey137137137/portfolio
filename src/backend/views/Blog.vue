@@ -9,16 +9,16 @@
 </template>
 
 <script>
-import pageDataMixin from "@backend/mixins/pageDataMixin";
-import PageWrapper from "@backCmp/PageWrapper";
-import PostForm from "@backCmp/forms/PostForm";
+import pageDataMixin from '@backend/mixins/pageDataMixin';
+import PageWrapper from '@backCmp/PageWrapper';
+import PostForm from '@backCmp/forms/PostForm';
 
 export default {
-  name: "AdminBlogView",
+  name: 'AdminBlogView',
   components: {
     PageWrapper,
-    PostForm
+    PostForm,
   },
-  mixins: [pageDataMixin]
+  mixins: [pageDataMixin],
 };
 </script>

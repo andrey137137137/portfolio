@@ -5,7 +5,7 @@
 // TABS
 
 .tabs {
-  @include position("absolute 0 * * 0");
+  @include position('absolute 0 * * 0');
   display: none;
   size: 100%;
   text-align: right;
@@ -16,14 +16,14 @@
     flex-direction: column;
 
     &#{$elem}--fixed {
-      @include position("fixed 0 * * 0");
+      @include position('fixed 0 * * 0');
       // size: 90% 100%;
       width: 90%;
     }
   }
 
   &-link {
-    @include padding("* 16px * *");
+    @include padding('* 16px * *');
     text-decoration: none;
   }
 }
@@ -38,7 +38,7 @@
     counter-reset: item;
     list-style: inside none;
     margin-left: 38px;
-    @include padding("12px *");
+    @include padding('12px *');
     width: 1200px;
     font-size: 13px/16px;
     color: $black #f4f2f0;
@@ -52,7 +52,7 @@
     &:before {
       float: left;
       box-sizing: border-box;
-      @include padding("* 9px");
+      @include padding('* 9px');
       width: 38px;
       font-family: monospace;
       text-align: right;
@@ -64,7 +64,7 @@
 
   &-text {
     float: left;
-    @include padding("* 3px");
+    @include padding('* 3px');
     // height: 100%;
     overflow: hidden;
   }
@@ -74,7 +74,7 @@
   color: $grey #f9f8f0;
 
   &-container {
-    @include padding("30px * 27px");
+    @include padding('30px * 27px');
   }
 
   &-post {
@@ -106,7 +106,7 @@
   }
 
   &-separator {
-    @include margin("27px * 25px");
+    @include margin('27px * 25px');
     border-top: 4px solid rgba(#373e42, 0.07);
     // border-top: 4px solid #373e42;
   }

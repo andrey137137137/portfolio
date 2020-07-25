@@ -3,7 +3,7 @@ body {
 }
 
 .main {
-  background: url("../assets/img/bg.jpg") center center / cover no-repeat;
+  background: url('../assets/img/bg.jpg') center center / cover no-repeat;
 }
 
 .section {
@@ -27,7 +27,7 @@ body {
     #{$block}-input,
     #{$block}-btn {
       border-radius: 5px;
-      @include padding("* 17px");
+      @include padding('* 17px');
     }
 
     #{$block}-legend {
@@ -50,7 +50,7 @@ body {
 }
 
 .admin .form-popup {
-  @include position("fixed 0 * * *");
+  @include position('fixed 0 * * *');
   display: block;
   size: 100% 30px;
   color: $white $blue;

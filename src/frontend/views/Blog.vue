@@ -23,14 +23,14 @@
 </template>
 
 <script>
-import $ from "jquery";
-import pageConfigMixin from "@frontend/mixins/pageConfigMixin";
-import TopWrapper from "@frontCmp/TopWrapper";
+import $ from 'jquery';
+import pageConfigMixin from '@frontend/mixins/pageConfigMixin';
+import TopWrapper from '@frontCmp/TopWrapper';
 
 export default {
-  name: "BlogView",
+  name: 'BlogView',
   components: {
-    TopWrapper
+    TopWrapper,
   },
   mixins: [pageConfigMixin],
   data() {
@@ -41,15 +41,15 @@ export default {
       $posts: null,
       menu: {
         modifs: {
-          fixed: "tabs-container--fixed",
-          itemActive: "tabs-link--active"
+          fixed: 'tabs-container--fixed',
+          itemActive: 'tabs-link--active',
         },
         $elem: null,
-        $items: null
+        $items: null,
       },
       postPositions: [],
       offsetHeight: 0, // верхнее смещение для скролла
-      flagAnimation: true
+      flagAnimation: true,
     };
   },
   methods: {
@@ -59,12 +59,12 @@ export default {
     getDate(value) {
       const time = new Date(value);
       const options = {
-        month: "long",
-        day: "numeric",
-        timezone: "UTC"
+        month: 'long',
+        day: 'numeric',
+        timezone: 'UTC',
       };
 
-      return `${time.toLocaleString("ru", options)} ${time.getFullYear()}`;
+      return `${time.toLocaleString('ru', options)} ${time.getFullYear()}`;
     },
     setPostPositions() {
       const $vm = this;
@@ -115,35 +115,35 @@ export default {
 
       $vm.flagAnimation = false;
 
-      $(document).off("scroll", $vm.scrollPage);
+      $(document).off('scroll', $vm.scrollPage);
       $elem.siblings().removeClass($vm.menu.modifs.itemActive);
 
-      $("body, html").animate({ scrollTop: sectionOffset }, 1000, () => {
+      $('body, html').animate({ scrollTop: sectionOffset }, 1000, () => {
         $elem.addClass($vm.menu.modifs.itemActive);
-        $(document).on("scroll", $vm.scrollPage);
+        $(document).on('scroll', $vm.scrollPage);
         $vm.flagAnimation = true;
       });
-    }
+    },
   },
   updated() {
     const $vm = this;
 
-    $vm.$posts = $(".blog-post");
-    $vm.menu.$elem = $("#scroll_menu");
-    $vm.menu.$items = $(".tabs-link");
+    $vm.$posts = $('.blog-post');
+    $vm.menu.$elem = $('#scroll_menu');
+    $vm.menu.$items = $('.tabs-link');
 
     $vm.setPostPositions();
-    $vm.menu.$elem.on("click", $vm.clickMenu);
-    $(document).on("scroll", $vm.scrollPage);
-    $(document).on("scroll", $vm.scrollPageFixMenu);
+    $vm.menu.$elem.on('click', $vm.clickMenu);
+    $(document).on('scroll', $vm.scrollPage);
+    $(document).on('scroll', $vm.scrollPageFixMenu);
 
-    $(window).on("resize", () => {
+    $(window).on('resize', () => {
       $vm.setPostPositions();
     });
-  }
+  },
 };
 </script>
 
 <style lang="scss">
-@import "@frontStylesPgs/Blog/import.scss";
+@import '@frontStylesPgs/Blog/import.scss';
 </style>

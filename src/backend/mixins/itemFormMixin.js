@@ -1,31 +1,31 @@
-import backFormMixin from "@backend/mixins/backFormMixin";
-import { mapActions } from "vuex";
+import backFormMixin from '@backend/mixins/backFormMixin';
+import { mapActions } from 'vuex';
 
 export default {
   mixins: [backFormMixin],
   props: {
     item: {
       type: Object,
-      default: null
-    }
+      default: null,
+    },
   },
   data() {
     return {
-      removeTitle: "запись",
-      removeValue: ""
+      removeTitle: 'запись',
+      removeValue: '',
     };
   },
   computed: {
     id() {
       return this.item ? this.item._id : 0;
-    }
+    },
   },
   methods: {
-    ...mapActions(["deleteData", "insertData"]),
+    ...mapActions(['deleteData', 'insertData']),
     removeItem() {
       if (
         confirm(
-          `Вы уверены, что хотите удалить ${this.removeTitle}: "${this.id}"?`
+          `Вы уверены, что хотите удалить ${this.removeTitle}: "${this.id}"?`,
         )
       ) {
         this.deleteData(this.id);
@@ -46,7 +46,7 @@ export default {
       }
 
       return true;
-    }
+    },
   },
   created() {
     if (this.item) {
@@ -56,5 +56,5 @@ export default {
         }
       }
     }
-  }
+  },
 };

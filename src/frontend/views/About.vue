@@ -45,22 +45,22 @@
 </template>
 
 <script>
-import { Fragment } from "vue-fragment";
-import pageConfigMixin from "@frontend/mixins/pageConfigMixin";
-import TopWrapper from "@frontCmp/TopWrapper";
-import SectionWrapper from "@frontCmp/SectionWrapper";
-import TitleWrapper from "@frontCmp/TitleWrapper";
-import ImageWrapper from "@frontCmp/ImageWrapper";
-import SkillList from "@frontCmp/SkillList";
-import BottomWrapper from "@frontCmp/BottomWrapper";
-import ContactList from "@frontCmp/ContactList";
-import ScrollButton from "@frontCmp/ScrollButton";
+import { Fragment } from 'vue-fragment';
+import pageConfigMixin from '@frontend/mixins/pageConfigMixin';
+import TopWrapper from '@frontCmp/TopWrapper';
+import SectionWrapper from '@frontCmp/SectionWrapper';
+import TitleWrapper from '@frontCmp/TitleWrapper';
+import ImageWrapper from '@frontCmp/ImageWrapper';
+import SkillList from '@frontCmp/SkillList';
+import BottomWrapper from '@frontCmp/BottomWrapper';
+import ContactList from '@frontCmp/ContactList';
+import ScrollButton from '@frontCmp/ScrollButton';
 
-import { createNamespacedHelpers } from "vuex";
-const { mapGetters } = createNamespacedHelpers("profile");
+import { createNamespacedHelpers } from 'vuex';
+const { mapGetters } = createNamespacedHelpers('profile');
 
 export default {
-  name: "AboutView",
+  name: 'AboutView',
   components: {
     Fragment,
     TopWrapper,
@@ -70,39 +70,39 @@ export default {
     SkillList,
     BottomWrapper,
     ContactList,
-    ScrollButton
+    ScrollButton,
   },
   mixins: [pageConfigMixin],
   data() {
     return {
       image: {
         classes: {
-          "about-img_wrap": true
+          'about-img_wrap': true,
         },
-        path: "/upload/about",
+        path: '/upload/about',
         breakpoints: [
-          { name: "ds.jpg", value: 1200 },
-          { name: "tb.jpg", value: 768 },
-          { name: "mb.jpg", value: 0 }
-        ]
+          { name: 'ds.jpg', value: 1200 },
+          { name: 'tb.jpg', value: 768 },
+          { name: 'mb.jpg', value: 0 },
+        ],
       },
       bottomWrapClass: {
-        "bottom_wrap--map_wrap": true
+        'bottom_wrap--map_wrap': true,
       },
       clearfixClass: {
-        clearfix: true
-      }
+        clearfix: true,
+      },
     };
   },
   computed: {
-    ...mapGetters(["old", "footerDesc"]),
+    ...mapGetters(['old', 'footerDesc']),
     compOld() {
       return this.old;
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style lang="scss">
-@import "@frontStylesPgs/About/import";
+@import '@frontStylesPgs/About/import';
 </style>

@@ -26,7 +26,7 @@ body {
   &#{$block}--front {
     #{$block}-wrap,
     #{$block}-input {
-      @include padding("* 20px");
+      @include padding('* 20px');
     }
 
     #{$block}-wrap {
@@ -34,7 +34,7 @@ body {
         display: block;
         size: 100% 0;
         clear: both;
-        content: "";
+        content: '';
       }
     }
 
@@ -50,13 +50,13 @@ body {
 
       &:before {
         display: block;
-        @include position("absolute 0 * * 50%");
+        @include position('absolute 0 * * 50%');
         z-index: 1;
         @include border(
-          "* 3px 5px 3px / * solid solid solid / * transparent #{$red} transparent"
+          '* 3px 5px 3px / * solid solid solid / * transparent #{$red} transparent'
         );
         transform: translateX(-50%);
-        content: "";
+        content: '';
       }
     }
 
@@ -66,7 +66,7 @@ body {
       color: $white $red;
 
       // &--tip {
-      @include position("absolute 5px * * 50%");
+      @include position('absolute 5px * * 50%');
       z-index: 1;
       transform: translateX(-50%);
       min-height: 50px;

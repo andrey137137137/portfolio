@@ -4,12 +4,12 @@
 </template>
 
 <script>
-import FormWrapper from "@components/formElems/FormWrapper";
+import FormWrapper from '@components/formElems/FormWrapper';
 
 export default {
-  name: "FrontFormWrapper",
+  name: 'FrontFormWrapper',
   components: {
-    FormWrapper
-  }
+    FormWrapper,
+  },
 };
 </script>

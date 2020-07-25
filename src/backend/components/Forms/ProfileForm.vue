@@ -19,85 +19,86 @@
 </template>
 
 <script>
-import { validationMixin } from "vuelidate";
+// import { validationMixin } from 'vuelidate';
 import {
   required,
-  alphaNum
+  alphaNum,
   // minValue,
   // maxValue
-} from "vuelidate/lib/validators";
-import backFormMixin from "@backend/mixins/backFormMixin";
-import userFormMixin from "@backend/mixins/userFormMixin";
-import UserForm from "@backCmp/forms/UserForm";
-import InputEventElem from "@components/formElems/InputEventElem";
-import MultipleElem from "@components/formElems/MultipleElem";
+} from 'vuelidate/lib/validators';
+// import backFormMixin from '@backend/mixins/backFormMixin';
+import userFormMixin from '@backend/mixins/userFormMixin';
+import UserForm from '@backCmp/forms/UserForm';
+import InputEventElem from '@components/formElems/InputEventElem';
+import MultipleElem from '@components/formElems/MultipleElem';
 
 export default {
-  name: "ProfileForm",
+  name: 'ProfileForm',
   components: {
     UserForm,
     InputEventElem,
-    MultipleElem
+    MultipleElem,
   },
-  mixins: [validationMixin, backFormMixin, userFormMixin],
+  // mixins: [validationMixin, backFormMixin, userFormMixin],
+  mixins: [userFormMixin],
   data() {
     return {
       contactFields: [
         {
-          name: "name",
-          type: "text",
-          placeholder: "Контакт"
+          name: 'name',
+          type: 'text',
+          placeholder: 'Контакт',
         },
         {
-          name: "href",
-          type: "text",
-          placeholder: "Значение"
+          name: 'href',
+          type: 'text',
+          placeholder: 'Значение',
         },
         {
-          name: "icon",
-          type: "text",
-          placeholder: "Иконка"
-        }
+          name: 'icon',
+          type: 'text',
+          placeholder: 'Иконка',
+        },
       ],
       contactTemplate: {
-        name: "",
-        href: "",
-        icon: ""
-      }
+        name: '',
+        href: '',
+        icon: '',
+      },
     };
   },
   validations: {
     firstName: {
-      required
+      required,
     },
     lastName: {
-      required
+      required,
     },
     contacts: {
       $each: {
         name: {
           required,
-          alphaNum
+          alphaNum,
         },
         href: {
           required,
-          alphaNum
+          alphaNum,
         },
         icon: {
           required,
-          alphaNum
-        }
-      }
-    }
+          alphaNum,
+        },
+      },
+    },
   },
   methods: {
     prepareData() {
       this.submitData = {
         firstName: this.firstName,
         lastName: this.lastName,
-        contacts: this.cloneMultipleArray(this.contacts, this.contactTemplate)
+        contacts: this.cloneMultipleArray(this.contacts, this.contactTemplate),
       };
-    }
-  }
+    },
+  },
 };
 </script>

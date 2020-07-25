@@ -1,25 +1,25 @@
-require("module-alias/register");
+require('module-alias/register');
 
 const {
   SUCCESS,
   // NOT_FOUND,
-  ERROR
-} = require("@httpSt");
-const express = require("express");
-const cors = require("cors");
-const logger = require("morgan");
-const bodyParser = require("body-parser");
-const cookieParser = require("cookie-parser");
-const session = require("express-session");
-const mongoose = require("mongoose");
-const MongoStore = require("connect-mongo")(session);
-const errorHandler = require("errorhandler");
+  ERROR,
+} = require('@httpSt');
+const express = require('express');
+const cors = require('cors');
+const logger = require('morgan');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
+const mongoose = require('mongoose');
+const MongoStore = require('connect-mongo')(session);
+const errorHandler = require('errorhandler');
 
-const { PROTOCOL, HOST, PORT, FRONT_PORT, URL } = require("@config").server;
-const { SECRET, KEY } = require("@config").session;
-require("./db");
+const { PROTOCOL, HOST, PORT, FRONT_PORT, URL } = require('@config').server;
+const { SECRET, KEY } = require('@config').session;
+require('./db');
 
-const isProduction = process.env.NODE_ENV === "production";
+const isProduction = process.env.NODE_ENV === 'production';
 
 const app = express();
 
@@ -34,11 +34,11 @@ app.use(
   cors({
     origin: `${PROTOCOL}://${HOST}:${FRONT_PORT}`,
     optionsSuccessStatus: SUCCESS,
-    credentials: true
-  })
+    credentials: true,
+  }),
 );
 
-app.use(logger("dev"));
+app.use(logger('dev'));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -49,17 +49,17 @@ app.use(
     secret: SECRET,
     key: KEY,
     store: new MongoStore({
-      mongooseConnection: mongoose.connection
+      mongooseConnection: mongoose.connection,
     }),
     resave: false,
     saveUninitialized: false,
     cookie: {
-      httpOnly: true
-    }
-  })
+      httpOnly: true,
+    },
+  }),
 );
 
-app.use(URL, require("./routes/index"));
+app.use(URL, require('./routes/index'));
 
 if (!isProduction) {
   app.use(errorHandler());

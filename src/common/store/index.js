@@ -1,8 +1,8 @@
-import Vue from "vue";
-import Vuex from "vuex";
-import axios from "axios";
-import { SUCCESS, ERROR } from "@httpSt";
-import isDev from "@common/helpers/isDev";
+import Vue from 'vue';
+import Vuex from 'vuex';
+import axios from 'axios';
+import { SUCCESS, ERROR } from '@httpSt';
+import isDev from '@common/helpers/isDev';
 import {
   SET,
   SET_PAGE,
@@ -11,11 +11,11 @@ import {
   SET_AUTH_STATUS,
   ADD,
   UPDATE,
-  DELETE
-} from "@common/store/mutation-types";
-import frontFormError from "@common/store/modules/frontFormError";
-import profile from "@common/store/modules/profile";
-import comments from "@common/store/modules/comments";
+  DELETE,
+} from '@common/store/mutation-types';
+import frontFormError from '@common/store/modules/frontFormError';
+import profile from '@common/store/modules/profile';
+import comments from '@common/store/modules/comments';
 
 Vue.use(Vuex);
 
@@ -23,19 +23,19 @@ export default new Vuex.Store({
   strict: isDev(),
   state: {
     data: {
-      page: "",
-      result: []
+      page: '',
+      result: [],
     },
     status: 0,
-    message: "",
-    authStatus: false
+    message: '',
+    authStatus: false,
   },
   getters: {
     dbPage: state => state.data.page,
     dbData: state => state.data.result,
     status: state => state.status,
     message: state => state.message,
-    isAuth: state => state.authStatus
+    isAuth: state => state.authStatus,
   },
   actions: {
     setPage({ commit }, page) {
@@ -44,7 +44,7 @@ export default new Vuex.Store({
     [SET_SUCCESS_MESSAGE]({ commit }, message) {
       commit(SET_FORM_MESSAGE, {
         status: SUCCESS,
-        message
+        message,
       });
     },
     setFormMessage({ commit }, data) {
@@ -67,12 +67,12 @@ export default new Vuex.Store({
       const { data, id } = payload;
 
       let isUser = false;
-      let method = "put";
+      let method = 'put';
       let url = `${page}/${id}`;
 
-      if (page.slice(0, 4) == "user") {
+      if (page.slice(0, 4) == 'user') {
         isUser = true;
-        method = "post";
+        method = 'post';
         url = page;
       }
 
@@ -94,13 +94,13 @@ export default new Vuex.Store({
       });
     },
     getAuthStatus({ commit }) {
-      return axios.get("user/auth").then(res => {
+      return axios.get('user/auth').then(res => {
         commit(SET_AUTH_STATUS, res.data.success);
       });
     },
     setAuthStatus({ commit }, status) {
       commit(SET_AUTH_STATUS, status);
-    }
+    },
   },
   mutations: {
     [SET_PAGE](state, page) {
@@ -111,10 +111,10 @@ export default new Vuex.Store({
 
       switch (status) {
         case ERROR:
-          state.message = "Невозможно подключиться к серверу";
+          state.message = 'Невозможно подключиться к серверу';
           break;
         case 0:
-          state.message = "";
+          state.message = '';
           break;
         default:
           state.message = message;
@@ -144,11 +144,11 @@ export default new Vuex.Store({
     },
     [SET_AUTH_STATUS](state, authStatus) {
       state.authStatus = authStatus;
-    }
+    },
   },
   modules: {
     frontFormError,
     profile,
-    comments
-  }
+    comments,
+  },
 });

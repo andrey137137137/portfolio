@@ -1,25 +1,28 @@
+import backFormMixin from '@backend/mixins/backFormMixin';
+
 export default {
+  mixins: [backFormMixin],
   props: {
     firstName: {
       type: String,
-      default: ""
+      default: '',
     },
     lastName: {
       type: String,
-      default: ""
+      default: '',
     },
     contacts: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
     email: {
       type: String,
-      default: ""
+      default: '',
     },
     username: {
       type: String,
-      default: ""
-    }
+      default: '',
+    },
   },
   methods: {
     defaultFields() {
@@ -46,6 +49,6 @@ export default {
       this.updateData({ data: this.submitData });
 
       return true;
-    }
-  }
+    },
+  },
 };

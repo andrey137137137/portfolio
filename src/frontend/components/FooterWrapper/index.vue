@@ -9,40 +9,40 @@
 </template>
 
 <script>
-import FooterTop from "./FooterTop";
+import FooterTop from './FooterTop';
 
-import { createNamespacedHelpers } from "vuex";
-const { mapGetters } = createNamespacedHelpers("profile");
+import { createNamespacedHelpers } from 'vuex';
+const { mapGetters } = createNamespacedHelpers('profile');
 
 export default {
-  name: "FooterWrapper",
+  name: 'FooterWrapper',
   components: {
-    FooterTop
+    FooterTop,
   },
   computed: {
-    ...mapGetters(["firstName", "lastName"]),
+    ...mapGetters(['firstName', 'lastName']),
     isContent() {
-      return this.$route.name != "home";
+      return this.$route.name != 'home';
     },
     containerClasses() {
       const name = this.$route.name;
       return {
-        "footer--absolute": name == "about",
-        "footer--bg": name == "blog"
+        'footer--absolute': name == 'about',
+        'footer--bg': name == 'blog',
       };
     },
     footerBottomClasses() {
       return {
-        "footer_bottom--bg": this.isContent
+        'footer_bottom--bg': this.isContent,
       };
     },
     fullName() {
       return `${this.lastName} ${this.firstName}`;
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style lang="scss">
-@import "@frontStylesCmp/FooterWrapper/import";
+@import '@frontStylesCmp/FooterWrapper/import';
 </style>

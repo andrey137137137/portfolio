@@ -4,7 +4,7 @@
   color: $white;
 
   &--absolute {
-    @include position("absolute * * 0 *");
+    @include position('absolute * * 0 *');
   }
 
   &--bg {
@@ -21,7 +21,7 @@
     }
 
     &-desc {
-      @include padding("13px *");
+      @include padding('13px *');
       font-weight: 300;
     }
 
@@ -30,7 +30,7 @@
       &:after {
         display: block;
         width: 100%;
-        content: "";
+        content: '';
       }
 
       &:before {
@@ -46,11 +46,11 @@
 
     &-menu {
       display: table;
-      @include margin("* auto");
+      @include margin('* auto');
       font-weight: 500;
 
       .menu-link {
-        @include padding("* 5px");
+        @include padding('* 5px');
         color: $white;
 
         &:hover {
@@ -77,7 +77,7 @@
     &-contacts {
       &_list {
         border-bottom-color: rgba($white, 0);
-        @include padding("14px * 12px");
+        @include padding('14px * 12px');
       }
 
       &_link {
@@ -96,7 +96,7 @@
   }
 
   &_bottom {
-    @include padding("5px * 4px");
+    @include padding('5px * 4px');
     // height: 57px;
     font-weight: 300;
 

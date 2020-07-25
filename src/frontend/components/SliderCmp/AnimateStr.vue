@@ -18,43 +18,43 @@
 </template>
 
 <script>
-import $ from "jquery";
+import $ from 'jquery';
 
-import addClassesMixin from "@common/mixins/addClassesMixin";
+import addClassesMixin from '@common/mixins/addClassesMixin';
 
 export default {
-  name: "AnimateStr",
+  name: 'AnimateStr',
   mixins: [addClassesMixin],
   props: {
     transitionName: {
       type: String,
-      required: true
+      required: true,
     },
     str: {
-      required: true
+      required: true,
     },
     commonKey: {
       type: Number,
-      required: true
+      required: true,
     },
     rootElem: {
       type: String,
-      default: "div"
+      default: 'div',
     },
     arrayGlue: {
       type: String,
-      default: ", "
+      default: ', ',
     },
     spanAddClasses: {
       type: Array,
       default() {
         return [];
-      }
+      },
     },
     duration: {
       type: Number,
-      default: 500
-    }
+      default: 500,
+    },
   },
   computed: {
     length() {
@@ -65,7 +65,7 @@ export default {
     },
     spanDelay() {
       return Math.ceil((150 * 10) / this.length);
-    }
+    },
   },
   methods: {
     getSymbolKey(symbol, index) {
@@ -78,17 +78,17 @@ export default {
       setTimeout(function() {
         $(el).animate(
           {
-            opacity: 1
+            opacity: 1,
           },
           this.spanDuration,
-          done
+          done,
         );
       }, el.dataset.index * this.spanDelay);
     },
     leave: function(el, done) {
       el.style.opacity = 0;
       done();
-    }
-  }
+    },
+  },
 };
 </script>

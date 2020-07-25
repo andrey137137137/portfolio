@@ -38,7 +38,7 @@
   // height: 815px;
 
   &-container {
-    @include padding("20px * 32px");
+    @include padding('20px * 32px');
   }
 
   &-desc {
@@ -48,7 +48,7 @@
   &-counters {
     $elem: &;
 
-    @include padding("22px * 1px");
+    @include padding('22px * 1px');
 
     &#{$elem}--first {
       padding-top: 39px;
@@ -78,7 +78,7 @@
   // height: 374px;
 
   &-container {
-    @include padding("11px 20px 20px");
+    @include padding('11px 20px 20px');
   }
 
   &-list {
@@ -86,7 +86,7 @@
   }
 
   &-item {
-    @include padding("10px *");
+    @include padding('10px *');
   }
 
   &-icon,

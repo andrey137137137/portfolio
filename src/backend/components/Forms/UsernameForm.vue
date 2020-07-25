@@ -34,52 +34,52 @@
 </template>
 
 <script>
-import { validationMixin } from "vuelidate";
-import { required, email, sameAs } from "vuelidate/lib/validators";
-import { userAlphaNumValids } from "@common/helpers/validators";
-import backFormMixin from "@backend/mixins/backFormMixin";
-import userFormMixin from "@backend/mixins/userFormMixin";
-import UserForm from "@backCmp/forms/UserForm";
-import InputEventElem from "@components/formElems/InputEventElem";
-import ChangeEventElem from "@components/formElems/ChangeEventElem";
+import { validationMixin } from 'vuelidate';
+import { required, email, sameAs } from 'vuelidate/lib/validators';
+import { userAlphaNumValids } from '@common/helpers/validators';
+import backFormMixin from '@backend/mixins/backFormMixin';
+import userFormMixin from '@backend/mixins/userFormMixin';
+import UserForm from '@backCmp/forms/UserForm';
+import InputEventElem from '@components/formElems/InputEventElem';
+import ChangeEventElem from '@components/formElems/ChangeEventElem';
 
 export default {
-  name: "UsernameForm",
+  name: 'UsernameForm',
   components: {
     UserForm,
     InputEventElem,
-    ChangeEventElem
+    ChangeEventElem,
   },
   mixins: [validationMixin, backFormMixin, userFormMixin],
   data() {
     return {
       changePassword: false,
-      oldPassword: "",
-      password: "",
-      repPassword: ""
+      oldPassword: '',
+      password: '',
+      repPassword: '',
     };
   },
   validations() {
     const userValids = {
       email: {
         required,
-        email
+        email,
       },
-      username: userAlphaNumValids
+      username: userAlphaNumValids,
     };
     const changePasswordValids = {
       oldPassword: userAlphaNumValids,
       password: userAlphaNumValids,
       repPassword: {
-        sameAsPassword: sameAs("password")
-      }
+        sameAsPassword: sameAs('password'),
+      },
     };
 
     if (!this.changePassword) return userValids;
 
     return {
       ...userValids,
-      ...changePasswordValids
+      ...changePasswordValids,
     };
   },
   methods: {
@@ -91,18 +91,18 @@ export default {
         username,
         oldPassword,
         password,
-        repPassword
+        repPassword,
       };
-    }
+    },
   },
   watch: {
     changePassword(newValue) {
       if (!newValue) {
-        this.oldPassword = "";
-        this.password = "";
-        this.repPassword = "";
+        this.oldPassword = '';
+        this.password = '';
+        this.repPassword = '';
       }
-    }
-  }
+    },
+  },
 };
 </script>

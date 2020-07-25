@@ -30,10 +30,10 @@
     // padding-top: 0;
 
     .menu-link {
-      @include padding("* 41px");
+      @include padding('* 41px');
 
       &:first-child {
-        @include padding("* 40px * 41px");
+        @include padding('* 40px * 41px');
       }
     }
 

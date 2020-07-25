@@ -10,52 +10,52 @@
 </template>
 
 <script>
-import addClassesMixin from "@common/mixins/addClassesMixin.js";
-import ImageCmp from "./ImageCmp";
+import addClassesMixin from '@common/mixins/addClassesMixin.js';
+import ImageCmp from './ImageCmp';
 
 export default {
-  name: "ImageWrapper",
+  name: 'ImageWrapper',
   components: {
-    ImageCmp
+    ImageCmp,
   },
   mixins: [addClassesMixin],
   props: {
     path: {
       type: String,
-      required: true
+      required: true,
     },
     breakpoints: {
       type: Array,
-      required: true
+      required: true,
     },
     title: {
       type: String,
-      required: true
+      required: true,
     },
     isWrapperClass: {
       type: Boolean,
-      default: true
+      default: true,
     },
     imgAddClasses: {
       type: Object,
       default() {
         return {};
-      }
-    }
+      },
+    },
   },
   computed: {
     containerClasses() {
       return {
         img_wrap: this.isWrapperClass,
-        ...this.addClasses
+        ...this.addClasses,
       };
     },
     imgClasses() {
       return {
-        "img_wrap-img": this.isWrapperClass,
-        ...this.imgAddClasses
+        'img_wrap-img': this.isWrapperClass,
+        ...this.imgAddClasses,
       };
-    }
-  }
+    },
+  },
 };
 </script>

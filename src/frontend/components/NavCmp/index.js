@@ -1,8 +1,8 @@
-import MainMenu from "./MainMenu";
-import SocialMenu from "./SocialMenu";
+import MainMenu from './MainMenu';
+import SocialMenu from './SocialMenu';
 
 export default {
-  name: "NavCmp",
+  name: 'NavCmp',
   render(h) {
     const elems = [];
 
@@ -19,38 +19,38 @@ export default {
       elems.push(this.socialMenuElem());
     }
 
-    return h("nav", { class: this.classes }, elems);
+    return h('nav', { class: this.classes }, elems);
   },
   props: {
     inHeader: {
       type: Boolean,
-      default: true
-    }
+      default: true,
+    },
   },
   computed: {
     isContent() {
-      return this.$route.name != "home";
+      return this.$route.name != 'home';
     },
     classes() {
       if (this.inHeader) {
         return {
           nav: true,
-          "header-nav": true,
-          "header-nav--fixed": this.isContent
+          'header-nav': true,
+          'header-nav--fixed': this.isContent,
         };
       }
 
       return {
         col: true,
-        "col--tb_float": true,
-        "col--tb_6": true,
-        "col--ds_5": true,
-        "col--xds_4": true,
-        "footer_top-col": true,
+        'col--tb_float': true,
+        'col--tb_6': true,
+        'col--ds_5': true,
+        'col--xds_4': true,
+        'footer_top-col': true,
         nav: true,
-        "footer_top-nav": true
+        'footer_top-nav': true,
       };
-    }
+    },
   },
   methods: {
     checkerElem() {
@@ -71,6 +71,6 @@ export default {
     },
     socialMenuElem() {
       return <SocialMenu inHeader={this.inHeader} />;
-    }
-  }
+    },
+  },
 };

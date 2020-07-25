@@ -1,5 +1,5 @@
-import { validationMixin } from "vuelidate";
-import types from "@common/constants/validation/types.js";
+import { validationMixin } from 'vuelidate';
+import types from '@common/constants/validation/types.js';
 
 export default {
   mixins: [validationMixin],
@@ -8,7 +8,7 @@ export default {
   // },
   methods: {
     getValue(value, type) {
-      if (typeof value !== "undefined") {
+      if (typeof value !== 'undefined') {
         return value;
       }
 
@@ -18,7 +18,7 @@ export default {
         case types.native.radio:
           return 0;
         default:
-          return "";
+          return '';
       }
     },
     returnInvalidElem() {
@@ -27,12 +27,12 @@ export default {
       for (const key in this.$v) {
         if (
           this.$v.hasOwnProperty(key) &&
-          key.slice(0, 1) !== "$" &&
+          key.slice(0, 1) !== '$' &&
           this.$v[key].$invalid
         ) {
           return key;
         }
       }
-    }
-  }
+    },
+  },
 };

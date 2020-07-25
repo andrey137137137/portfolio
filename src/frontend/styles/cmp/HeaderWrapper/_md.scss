@@ -51,7 +51,7 @@
 
     &#{$elem}--fixed {
       // left: 50%;
-      @include padding("* 19px");
+      @include padding('* 19px');
       // width: 768px;
       // transform: translateX(-50%);
     }
@@ -96,7 +96,7 @@
 
     top: 16px;
     // @include padding("12px *");
-    @include margin("12px *");
+    @include margin('12px *');
     width: 35px;
 
     &_line {
@@ -105,7 +105,7 @@
       transform-origin: 2px 2px;
 
       &:nth-child(2) {
-        @include margin("11px *");
+        @include margin('11px *');
       }
     }
 

@@ -16,52 +16,52 @@
 </template>
 
 <script>
-import itemFormMixin from "@backend/mixins/itemFormMixin";
-import AdminFormWrapper from "@backCmp/AdminFormWrapper";
-import ButtonElem from "@components/formElems/ButtonElem";
+import itemFormMixin from '@backend/mixins/itemFormMixin';
+import AdminFormWrapper from '@backCmp/AdminFormWrapper';
+import ButtonElem from '@components/formElems/ButtonElem';
 
 export default {
-  name: "ItemForm",
+  name: 'ItemForm',
   mixins: [itemFormMixin],
   components: {
     AdminFormWrapper,
-    ButtonElem
+    ButtonElem,
   },
   props: {
     handleSubmit: {
       type: Function,
-      required: true
+      required: true,
     },
     disabled: {
       type: Boolean,
-      required: true
+      required: true,
     },
     handleDelete: {
       type: Function,
-      default: () => {}
+      default: () => {},
     },
     id: {
       // type: Number,
-      default: 0
-    }
+      default: 0,
+    },
   },
   computed: {
     buttonWrapperClass() {
       return {
-        "form-col": true,
-        "form-btn--disabled": this.disabled
+        'form-col': true,
+        'form-btn--disabled': this.disabled,
       };
     },
     buttonValue() {
-      return this.id ? "Обновить" : "Добавить";
-    }
+      return this.id ? 'Обновить' : 'Добавить';
+    },
   },
   methods: {
     remove() {
       if (this.id) {
         this.handleDelete(this.id);
       }
-    }
-  }
+    },
+  },
 };
 </script>

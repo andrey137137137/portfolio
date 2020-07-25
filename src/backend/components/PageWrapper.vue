@@ -6,26 +6,26 @@
 </template>
 
 <script>
-import SubmitMessage from "@components/formElems/SubmitMessage";
+import SubmitMessage from '@components/formElems/SubmitMessage';
 
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex';
 
 export default {
-  name: "PageWrapper",
+  name: 'PageWrapper',
   components: {
-    SubmitMessage
+    SubmitMessage,
   },
   props: {
     page: {
       type: String,
-      default: ""
-    }
+      default: '',
+    },
   },
   computed: {
-    ...mapGetters(["isAuth"]),
+    ...mapGetters(['isAuth']),
     title() {
-      return !this.isAuth ? "Вы не авторизированы!" : `Страница "${this.page}"`;
-    }
-  }
+      return !this.isAuth ? 'Вы не авторизированы!' : `Страница "${this.page}"`;
+    },
+  },
 };
 </script>

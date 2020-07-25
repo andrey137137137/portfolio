@@ -1,10 +1,10 @@
-const router = require("express").Router();
-const Model = require("mongoose").model("user");
+const router = require('express').Router();
+const Model = require('mongoose').model('user');
 
-const { isAuth, userId } = require("@auth");
-const crud = require("@contr/crud");
+const { isAuth, userId } = require('@auth');
+const crud = require('@contr/crud');
 
-router.get("/", (req, res) => {
+router.get('/', (req, res) => {
   crud.getItem(
     Model,
     res,
@@ -13,12 +13,12 @@ router.get("/", (req, res) => {
       _id: 0,
       __v: 0,
       username: 0,
-      password: 0
-    }
+      password: 0,
+    },
   );
 });
 
-router.post("/", isAuth, (req, res, next) => {
+router.post('/', isAuth, (req, res, next) => {
   const { firstName, lastName, contacts } = req.body;
 
   crud.updateItem(
@@ -27,9 +27,9 @@ router.post("/", isAuth, (req, res, next) => {
     {
       firstName,
       lastName,
-      contacts
+      contacts,
     },
-    res
+    res,
   );
 });
 

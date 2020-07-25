@@ -62,7 +62,7 @@ picture {
 
   &-title,
   &-desc {
-    @include margin("* auto");
+    @include margin('* auto');
     width: 100%;
     text-align: center;
     color: inherit;
@@ -80,7 +80,7 @@ picture {
     }
 
     &#{$elem}--uppercase {
-      @include padding("23px * 8px");
+      @include padding('23px * 8px');
     }
 
     &#{$elem}--large {
@@ -92,10 +92,10 @@ picture {
       &:after {
         // display: table;
         display: block;
-        @include margin("* auto");
+        @include margin('* auto');
         border-bottom: 3px solid $grey;
         size: 56px 13px;
-        content: "";
+        content: '';
       }
     }
 
@@ -169,7 +169,7 @@ a {
     display: block;
     size: 100% 0;
     clear: both;
-    content: "";
+    content: '';
   }
 }
 
@@ -181,8 +181,8 @@ a {
   // justify-content: space-around;
   // align-items: flex-start;
   // align-content: flex-start;
-  @include margin("* auto");
-  @include padding("* 10px");
+  @include margin('* auto');
+  @include padding('* 10px');
   width: 100%;
   min-width: 300px;
   max-width: 320px;
@@ -193,7 +193,7 @@ a {
   }
 
   &#{$block}--full_width {
-    @include padding("* 0");
+    @include padding('* 0');
   }
 }
 
@@ -238,72 +238,72 @@ ul {
   text-align: center;
 
   &--github:before {
-    content: "\f09b";
+    content: '\f09b';
   }
 
   &--github_alt:before {
-    content: "\f113";
+    content: '\f113';
   }
 
   &--skype:before {
-    content: "\f17e";
+    content: '\f17e';
   }
 
   &--linkedin:before {
-    content: "\f0e1";
+    content: '\f0e1';
   }
 
   &--vk:before {
-    content: "\f189";
+    content: '\f189';
   }
 
   &--check {
-    content: "\f00c";
+    content: '\f00c';
   }
 
   &--chevron {
     &_down:before {
-      content: "\f078";
+      content: '\f078';
     }
 
     &_left:before {
-      content: "\f053";
+      content: '\f053';
     }
 
     &_right:before {
-      content: "\f054";
+      content: '\f054';
     }
 
     &_up:before {
-      content: "\f077";
+      content: '\f077';
     }
   }
 
   &--bars:before {
-    content: "\f0c9";
+    content: '\f0c9';
   }
 
   &--close:before {
-    content: "\f00d";
+    content: '\f00d';
   }
 
   &--link:before {
-    content: "\f0c1";
+    content: '\f0c1';
   }
 
   &--quote:before {
-    content: "\f10d";
+    content: '\f10d';
   }
 
   &--envelope:before {
-    content: "\f0e0";
+    content: '\f0e0';
   }
 
   &--phone:before {
-    content: "\f095";
+    content: '\f095';
   }
 
   &--map_marker:before {
-    content: "\f041";
+    content: '\f041';
   }
 }

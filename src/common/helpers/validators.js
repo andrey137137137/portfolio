@@ -3,8 +3,8 @@ import {
   alphaNum,
   minLength,
   maxLength,
-  helpers
-} from "vuelidate/lib/validators";
+  helpers,
+} from 'vuelidate/lib/validators';
 // import * as regexp from "@common/constants/validation/regexp";
 
 // export const email = helpers.regex("email", regexp.email);
@@ -12,13 +12,13 @@ import {
 // export const password = helpers.regex("alphaNum", regexp.password);
 // export const emailPhone = () => email || phone;
 export const checked = helpers.withParams(
-  { type: "checked" },
-  value => !helpers.req(value) || value === true
+  { type: 'checked' },
+  value => !helpers.req(value) || value === true,
 );
 
 export const userAlphaNumValids = {
   required,
   alphaNum,
   minLength: minLength(6),
-  maxLength: maxLength(16)
+  maxLength: maxLength(16),
 };

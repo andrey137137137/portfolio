@@ -8,7 +8,7 @@
   background-color: $black;
 
   &-img {
-    @include position("absolute * * 0 0");
+    @include position('absolute * * 0 0');
     size: 100%;
     background: $black url(../../../assets/img/bottom.jpg) no-repeat top center;
     background-size: cover;

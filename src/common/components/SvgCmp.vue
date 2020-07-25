@@ -4,26 +4,26 @@
 </template>
 
 <script>
-import addClassesMixin from "@common/mixins/addClassesMixin";
+import addClassesMixin from '@common/mixins/addClassesMixin';
 
 export default {
-  name: "SvgCmp",
+  name: 'SvgCmp',
   mixins: [addClassesMixin],
   props: {
     name: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   computed: {
     iconPath() {
       let icon = require(`@assets/svg/${this.name}.svg`);
-      if (Object.prototype.hasOwnProperty.call(icon, "default")) {
+      if (Object.prototype.hasOwnProperty.call(icon, 'default')) {
         icon = icon.default;
       }
 
       return icon.url;
-    }
-  }
+    },
+  },
 };
 </script>

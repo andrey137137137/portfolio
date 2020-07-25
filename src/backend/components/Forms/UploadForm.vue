@@ -21,61 +21,61 @@
 </template>
 
 <script>
-import axios from "axios";
-import { Fragment } from "vue-fragment";
-import { CircleStencil, Cropper } from "vue-advanced-cropper";
-import uploadMixin from "@backend/mixins/uploadMixin";
-import AdminFormWrapper from "@backCmp/AdminFormWrapper";
-import ButtonElem from "@components/formElems/ButtonElem";
+import axios from 'axios';
+import { Fragment } from 'vue-fragment';
+import { CircleStencil, Cropper } from 'vue-advanced-cropper';
+import uploadMixin from '@backend/mixins/uploadMixin';
+import AdminFormWrapper from '@backCmp/AdminFormWrapper';
+import ButtonElem from '@components/formElems/ButtonElem';
 
 export default {
-  name: "UploadForm",
+  name: 'UploadForm',
   components: {
     Fragment,
     AdminFormWrapper,
     Cropper,
     CircleStencil,
-    ButtonElem
+    ButtonElem,
   },
   mixins: [uploadMixin],
   props: {
     page: {
       type: String,
-      required: true
+      required: true,
     },
     breakpoints: {
       type: Array,
       default() {
         return null;
-      }
+      },
     },
     ext: {
       type: String,
-      default: "jpg"
+      default: 'jpg',
     },
     isRound: {
       type: Boolean,
-      default: false
+      default: false,
     },
     stencilProps: {
       type: Object,
       default() {
         return {};
-      }
+      },
     },
     cropSize: {
       type: Object,
       default() {
         return null;
-      }
-    }
+      },
+    },
   },
   data() {
     return {
       // image:
       //   "https://images.unsplash.com/photo-1485178575877-1a13bf489dfe?ixlib=rb-1.2.1&auto=format&fit=crop&w=991&q=80",
-      resultURL: "",
-      images: []
+      resultURL: '',
+      images: [],
     };
   },
   computed: {
@@ -87,15 +87,15 @@ export default {
     //     : [{ title: this.page, value: null }];
     // },
     stencilComp() {
-      const COMP = this.isRound ? "CircleStencil" : "RectangleStencil";
+      const COMP = this.isRound ? 'CircleStencil' : 'RectangleStencil';
       return this.$options.components[COMP];
     },
     buttonWrapperClass() {
       return {
-        "form-col": true,
-        "form-btn--disabled": this.disabled
+        'form-col': true,
+        'form-btn--disabled': this.disabled,
       };
-    }
+    },
   },
   methods: {
     image(index) {
@@ -103,7 +103,7 @@ export default {
         return this.images[index].value;
       }
 
-      const root = "/upload";
+      const root = '/upload';
 
       if (this.breakpoints) {
         return `${root}/${this.page}/${this.images[index - 1].title}.${
@@ -114,11 +114,11 @@ export default {
       return `${root}/${this.page}.${this.ext}`;
     },
     dataURItoBlob(dataURI) {
-      const byteString = atob(dataURI.split(",")[1]);
+      const byteString = atob(dataURI.split(',')[1]);
       const mimeString = dataURI
-        .split(",")[0]
-        .split(":")[1]
-        .split(";")[0];
+        .split(',')[0]
+        .split(':')[1]
+        .split(';')[0];
       const ab = new ArrayBuffer(byteString.length);
       const ia = new Uint8Array(ab);
       for (var i = 0; i < byteString.length; i++) {
@@ -149,7 +149,7 @@ export default {
               width,
               height,
               left: imageSize.width / 2 - width / 2,
-              top: imageSize.height / 2 - height / 2
+              top: imageSize.height / 2 - height / 2,
             }));
           }
         };
@@ -158,14 +158,14 @@ export default {
       }
     },
     uploadImage(index) {
-      const { canvas } = this.$refs["cropper" + index][0].getResult();
+      const { canvas } = this.$refs['cropper' + index][0].getResult();
       if (canvas) {
         this.resultURL = canvas.toDataURL(`image/${this.ext}`, 1);
         const form = new FormData();
         form.append(
-          "image",
+          'image',
           this.dataURItoBlob(this.resultURL),
-          `${this.images[index].title}.${this.ext}`
+          `${this.images[index].title}.${this.ext}`,
         );
         axios.post(this.getUploadPage(this.page), form).then(res => {
           this.fileMsg = res.data.message;
@@ -175,10 +175,10 @@ export default {
           //   // this.$refs.upload.value = null;
           // }
 
-          console.log("image upload response > ", res);
+          console.log('image upload response > ', res);
         });
       }
-    }
+    },
   },
   created() {
     if (this.breakpoints) {
@@ -189,7 +189,7 @@ export default {
       this.images = [{ title: this.page, value: null }];
     }
     console.log(this.images);
-  }
+  },
 };
 </script>
 

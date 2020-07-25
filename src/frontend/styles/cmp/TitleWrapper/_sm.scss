@@ -8,7 +8,7 @@
   &-bg {
     $elem: &;
 
-    @include position("absolute 0 * * 0");
+    @include position('absolute 0 * * 0');
     size: 100%;
     opacity: 0.15;
 

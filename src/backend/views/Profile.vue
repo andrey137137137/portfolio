@@ -13,30 +13,30 @@
 </template>
 
 <script>
-import uploadMixin from "@backend/mixins/uploadMixin";
-import pageDataMixin from "@backend/mixins/pageDataMixin";
-import PageWrapper from "@backCmp/PageWrapper";
-import UploadForm from "@backCmp/forms/UploadForm";
-import ProfileForm from "@backCmp/forms/ProfileForm";
+import uploadMixin from '@backend/mixins/uploadMixin';
+import pageDataMixin from '@backend/mixins/pageDataMixin';
+import PageWrapper from '@backCmp/PageWrapper';
+import UploadForm from '@backCmp/forms/UploadForm';
+import ProfileForm from '@backCmp/forms/ProfileForm';
 
 export default {
-  name: "AdminProfileView",
+  name: 'AdminProfileView',
   components: {
     PageWrapper,
     UploadForm,
-    ProfileForm
+    ProfileForm,
   },
   mixins: [uploadMixin, pageDataMixin],
   data() {
     return {
       stencilProps: {
-        aspectRatio: 1
+        aspectRatio: 1,
       },
       cropSize: {
         width: 141,
-        height: 141
-      }
+        height: 141,
+      },
     };
-  }
+  },
 };
 </script>

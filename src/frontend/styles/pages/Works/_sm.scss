@@ -41,7 +41,7 @@
   }
 
   &-item {
-    @include position("absolute 0 * * 0");
+    @include position('absolute 0 * * 0');
     size: 100%;
     text-align: center;
     color: $red;
@@ -49,14 +49,14 @@
     // background-size: cover;
 
     &_number {
-      @include position("absolute 0 * * 0");
+      @include position('absolute 0 * * 0');
       z-index: 1;
       size: 100%;
     }
   }
 
   &-img {
-    @include position("absolute 50% * * 50%");
+    @include position('absolute 50% * * 50%');
     display: block;
     font-family: $mainFont;
     line-height: 1;
@@ -83,7 +83,7 @@
   }
 
   &-desc {
-    @include padding("5px * 12px");
+    @include padding('5px * 12px');
     font-weight: 500;
     color: #243994;
   }
@@ -91,7 +91,7 @@
   &-btn {
     display: table;
     // @include margin("12px auto *");
-    @include margin("* auto 30px");
+    @include margin('* auto 30px');
     padding: 0 19px;
     height: 40px;
     line-height: 38px;
@@ -183,12 +183,12 @@
 .reviews {
   display: flex;
   flex-wrap: wrap;
-  @include padding("8px * 32px");
+  @include padding('8px * 32px');
   // height: 614px;
   color: $white;
 
   &-title_wrap {
-    @include padding("21px * 3px");
+    @include padding('21px * 3px');
 
     .title_wrap-bg {
       height: 90px;
@@ -203,11 +203,11 @@
 
   &-article {
     position: relative;
-    @include padding("32px * *");
+    @include padding('32px * *');
   }
 
   &-quote {
-    @include position("absolute 71px * * 0");
+    @include position('absolute 71px * * 0');
     font-size: 83px;
     color: rgba($white, 0.1);
   }
@@ -251,7 +251,7 @@
 
 .feedback_form {
   // padding-top: 11px;
-  @include padding("11px * *");
+  @include padding('11px * *');
   width: 300px;
   // height: 422px;
   color: $white rgba(#dadbd6, 0.05);
@@ -269,7 +269,7 @@
   &-menu {
     .menu-link {
       @include oneLineBlock(43px, 1px);
-      @include padding("* 36px * 37px");
+      @include padding('* 36px * 37px');
     }
   }
 }

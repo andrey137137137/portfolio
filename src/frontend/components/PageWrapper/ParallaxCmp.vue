@@ -18,13 +18,13 @@
 </template>
 
 <script>
-import $ from "jquery";
-import ImageWrapper from "@frontCmp/ImageWrapper";
+import $ from 'jquery';
+import ImageWrapper from '@frontCmp/ImageWrapper';
 
 export default {
-  name: "ParallaxCmp",
+  name: 'ParallaxCmp',
   components: {
-    ImageWrapper
+    ImageWrapper,
   },
   data() {
     return {
@@ -40,31 +40,31 @@ export default {
       positionX: 0,
       positionY: 0,
       bottomPosition: 0,
-      transformString: "",
-      path: "/upload/parallax",
-      ext: "png",
+      transformString: '',
+      path: '/upload/parallax',
+      ext: 'png',
       layers: [100, 100, 90, 80, 70, 60, 15, 10],
       breakpoints: [
-        { name: "ds.png", value: 1200 },
-        { name: "tb.png", value: 768 },
-        { name: "mb.png", value: 0 }
-      ]
+        { name: 'ds.png', value: 1200 },
+        { name: 'tb.png', value: 768 },
+        { name: 'mb.png', value: 0 },
+      ],
     };
   },
   computed: {
     isScroll() {
-      return this.$route.name != "home";
+      return this.$route.name != 'home';
     },
     classes() {
-      return { "parallax--scroll": this.isScroll };
-    }
+      return { 'parallax--scroll': this.isScroll };
+    },
   },
   methods: {
     getLayerPath(index) {
-      return this.path + "/layer_" + (index + 1);
+      return this.path + '/layer_' + (index + 1);
     },
     getTitle(index) {
-      return "Слой " + index;
+      return 'Слой ' + index;
     },
     moveLayers(event) {
       const $vm = this;
@@ -103,7 +103,7 @@ export default {
           $layer.firstElementChild.style.bottom = `-${$vm.bottomPosition}px`;
         });
       }
-    }
+    },
   },
   mounted() {
     const $vm = this;
@@ -111,7 +111,7 @@ export default {
     $(document).ready(() => {
       const isScroll = $vm.isScroll;
 
-      $vm.$parallaxContainer = document.getElementById("parallax");
+      $vm.$parallaxContainer = document.getElementById('parallax');
 
       $vm.centerX = window.innerWidth / 2;
       $vm.centerY = window.innerHeight / 2;
@@ -125,17 +125,17 @@ export default {
         $vm.$layers = $vm.$parallaxContainer.children;
 
         if (isScroll) {
-          window.addEventListener("scroll", $vm.moveLayers);
-          window.dispatchEvent(new Event("scroll"));
+          window.addEventListener('scroll', $vm.moveLayers);
+          window.dispatchEvent(new Event('scroll'));
         } else {
-          window.addEventListener("mousemove", $vm.moveLayers);
+          window.addEventListener('mousemove', $vm.moveLayers);
         }
       }
     });
-  }
+  },
 };
 </script>
 
 <style lang="scss">
-@import "@frontStylesCmp/Parallax/import";
+@import '@frontStylesCmp/Parallax/import';
 </style>

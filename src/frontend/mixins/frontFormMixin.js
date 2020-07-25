@@ -1,19 +1,19 @@
-import formMixin from "@common/mixins/formMixin";
+import formMixin from '@common/mixins/formMixin';
 
-import { createNamespacedHelpers } from "vuex";
-const { mapGetters } = createNamespacedHelpers("frontFormError");
+import { createNamespacedHelpers } from 'vuex';
+const { mapGetters } = createNamespacedHelpers('frontFormError');
 
 export default {
   mixins: [formMixin],
   computed: {
-    ...mapGetters(["formInputName", "formError"]),
+    ...mapGetters(['formInputName', 'formError']),
     errorStyleTop() {
       if (!this.formInputName) return 0;
 
       const $inputElem = this.$refs[this.formInputName].$el;
 
       return $inputElem.offsetTop + $inputElem.offsetHeight;
-    }
+    },
   },
   methods: {
     touchInvalidElem() {
@@ -26,6 +26,10 @@ export default {
       this.$refs[elemName].touchHandle();
 
       return false;
-    }
-  }
+    },
+    handleSubmit() {
+      if (!this.touchInvalidElem()) return false;
+      return true;
+    },
+  },
 };

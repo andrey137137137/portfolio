@@ -1,58 +1,58 @@
 <script>
-import SvgCmp from "@components/SvgCmp";
+import SvgCmp from '@components/SvgCmp';
 
 export default {
-  name: "TitleWrapper",
+  name: 'TitleWrapper',
   render(h) {
-    return h("div", { class: this.containerClasses }, [
+    return h('div', { class: this.containerClasses }, [
       this.svgElem(),
-      this.titleElem(h)
+      this.titleElem(h),
     ]);
   },
   props: {
     title: {
       type: String,
-      required: true
+      required: true,
     },
     containerAddClass: {
       type: String,
-      required: true
+      required: true,
     },
     titleLevel: {
       type: Number,
-      default: 1
+      default: 1,
     },
     bgIcon: {
       type: String,
-      default: "stars2"
+      default: 'stars2',
     },
     bgAddClass: {
       type: String,
-      default: ""
+      default: '',
     },
     titleAddClass: {
       type: String,
-      default: ""
-    }
+      default: '',
+    },
   },
   computed: {
     containerClasses() {
-      return ["title_wrap", this.containerAddClass];
+      return ['title_wrap', this.containerAddClass];
     },
     bgClasses() {
       return {
-        "title_wrap-bg": true,
-        [this.bgAddClass]: true
+        'title_wrap-bg': true,
+        [this.bgAddClass]: true,
       };
     },
     titleClasses() {
       return [
-        "section-title",
-        "section-title--large",
-        "title_wrap-title",
-        this.titleAddClass
+        'section-title',
+        'section-title--large',
+        'title_wrap-title',
+        this.titleAddClass,
       ];
-    }
+    },
   },
   methods: {
     svgElem() {
@@ -61,10 +61,10 @@ export default {
     titleElem(h) {
       return h(`h${this.titleLevel}`, {
         class: this.titleClasses,
-        domProps: { innerHTML: this.title }
+        domProps: { innerHTML: this.title },
       });
-    }
-  }
+    },
+  },
 };
 </script>
 

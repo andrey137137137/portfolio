@@ -8,38 +8,38 @@
 </template>
 
 <script>
-import axios from "axios";
-import { mapGetters, mapActions } from "vuex";
-import { HOME } from "@common/constants/router.js";
+import axios from 'axios';
+import { mapGetters, mapActions } from 'vuex';
+import { HOME } from '@common/constants/router.js';
 
 export default {
-  name: "AdminHeader",
+  name: 'AdminHeader',
   data() {
     return {
-      homeLink: HOME.path
+      homeLink: HOME.path,
     };
   },
   computed: {
-    ...mapGetters(["isAuth"])
+    ...mapGetters(['isAuth']),
   },
   methods: {
-    ...mapActions(["setAuthStatus"]),
+    ...mapActions(['setAuthStatus']),
     logout() {
       if (!this.isAuth) return this.$router.push(HOME);
 
       const $vm = this;
 
-      axios.delete("user/auth").then(res => {
+      axios.delete('user/auth').then(res => {
         if (res.data.success) {
           $vm.setAuthStatus(!res.data.success);
           return $vm.$router.push(HOME);
         }
       });
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style lang="scss">
-@import "@backStylesCmp/AdminHeader";
+@import '@backStylesCmp/AdminHeader';
 </style>

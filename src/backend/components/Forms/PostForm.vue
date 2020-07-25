@@ -26,26 +26,26 @@
 import {
   required,
   // alphaNum,
-  minLength
+  minLength,
   // maxLength
-} from "vuelidate/lib/validators";
+} from 'vuelidate/lib/validators';
 // import formMixin from "@common/mixins/formMixin";
 // import backFormMixin from "@backend/mixins/backFormMixin";
 // import itemFormMixin from "@backend/mixins/itemFormMixin";
 // import exist from "@common/helpers/exist";
-import ItemForm from "@backCmp/forms/ItemForm";
-import InputEventElem from "@components/formElems/InputEventElem";
+import ItemForm from '@backCmp/forms/ItemForm';
+import InputEventElem from '@components/formElems/InputEventElem';
 
 export default {
-  name: "PostForm",
+  name: 'PostForm',
   components: {
     ItemForm,
-    InputEventElem
+    InputEventElem,
   },
   // mixins: [validationMixin, formMixin, backFormMixin, itemFormMixin],
   data() {
     const data = {
-      dbPage: "post"
+      dbPage: 'post',
     };
 
     if (!this.item) {
@@ -62,23 +62,23 @@ export default {
       ...data,
       title: this.item.title,
       date: this.item.date,
-      text: this.item.body
+      text: this.item.body,
     };
   },
   validations() {
     const data = {
       title: {
-        required
+        required,
       },
       text: {
         required,
-        minLength: minLength(71)
-      }
+        minLength: minLength(71),
+      },
     };
 
     if (this.item) {
       data.date = {
-        required
+        required,
       };
     }
 
@@ -87,15 +87,15 @@ export default {
   methods: {
     defaultFields() {
       return {
-        title: "",
-        text: ""
+        title: '',
+        text: '',
       };
     },
     prepareData() {
       const data = {
         // id: Math.round(Math.random() * 1000000),
         title: this.title,
-        text: this.text
+        text: this.text,
       };
 
       if (this.item) {
@@ -103,7 +103,7 @@ export default {
       }
 
       this.submitData = data;
-    }
-  }
+    },
+  },
 };
 </script>

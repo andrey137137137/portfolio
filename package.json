@@ -7,8 +7,7 @@
     "lint": "vue-cli-service lint",
     "client": "vue-cli-service serve --open",
     "server": "nodemon server/app.js",
-    "start": "concurrently \"nodemon server/app.js\" \"vue-cli-service serve --open\"",
-    "svg": "gulp"
+    "start": "concurrently \"nodemon server/app.js\" \"vue-cli-service serve --open\""
   },
   "dependencies": {
     "async": "^3.2.0",

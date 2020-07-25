@@ -3,13 +3,13 @@
     // height: 192px;
 
     &-desc {
-      @include padding("23px * 0");
+      @include padding('23px * 0');
 
       &:after {
         display: block;
         border-bottom: 1px solid rgba($white, 0.2);
         size: 100% 14px;
-        content: "";
+        content: '';
       }
     }
 
@@ -32,25 +32,25 @@
 
     &-menu,
     &-socials {
-      @include margin("* -12px");
+      @include margin('* -12px');
     }
 
     &-menu {
       display: block;
 
       .menu-link {
-        @include padding("* 15px");
+        @include padding('* 15px');
       }
     }
 
     &-socials {
       justify-content: flex-start;
-      @include margin("* -12px");
+      @include margin('* -12px');
     }
 
     &-contacts {
       &_list {
-        @include padding("13px * 21px");
+        @include padding('13px * 21px');
       }
       &_link {
         text-align: right;

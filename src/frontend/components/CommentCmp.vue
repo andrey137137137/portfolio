@@ -24,24 +24,24 @@
 </template>
 
 <script>
-import TitleWrapper from "@frontCmp/TitleWrapper";
+import TitleWrapper from '@frontCmp/TitleWrapper';
 
-import { createNamespacedHelpers } from "vuex";
-const { mapGetters, mapActions } = createNamespacedHelpers("comments");
+import { createNamespacedHelpers } from 'vuex';
+const { mapGetters, mapActions } = createNamespacedHelpers('comments');
 
 export default {
-  name: "CommentCmp",
+  name: 'CommentCmp',
   components: {
-    TitleWrapper
+    TitleWrapper,
   },
   computed: {
-    ...mapGetters(["comments"])
+    ...mapGetters(['comments']),
   },
   methods: {
-    ...mapActions(["readComments"])
+    ...mapActions(['readComments']),
   },
   created() {
     this.readComments();
-  }
+  },
 };
 </script>

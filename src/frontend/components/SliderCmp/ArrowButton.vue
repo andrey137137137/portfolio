@@ -7,52 +7,52 @@
 
 <script>
 export default {
-  name: "ArrowButton",
+  name: 'ArrowButton',
   props: {
     index: {
       type: Number,
-      required: true
+      required: true,
     },
     newIndex: {
       type: Number,
-      required: true
+      required: true,
     },
     handle: {
       type: Function,
-      required: true
+      required: true,
     },
     imgSrc: {
       type: String,
-      required: true
+      required: true,
     },
     title: {
       type: String,
-      required: true
+      required: true,
     },
     isNext: {
       type: Boolean,
-      default: true
-    }
+      default: true,
+    },
   },
   computed: {
     classes() {
       return {
         icon: true,
-        "icon--chevron_down": !this.isNext,
-        "icon--chevron_up": this.isNext,
-        "slider-arrow": true,
-        "slider-arrow--prev": !this.isNext,
-        "slider-arrow--next": this.isNext
+        'icon--chevron_down': !this.isNext,
+        'icon--chevron_up': this.isNext,
+        'slider-arrow': true,
+        'slider-arrow--prev': !this.isNext,
+        'slider-arrow--next': this.isNext,
       };
     },
     transitionName() {
-      const transitionMethod = this.isNext ? "scroll_up" : "scroll_down";
+      const transitionMethod = this.isNext ? 'scroll_up' : 'scroll_down';
       return `slider--${transitionMethod}`;
     },
     alt() {
       const number = this.newIndex + 1;
-      return number + ". " + this.title;
-    }
-  }
+      return number + '. ' + this.title;
+    },
+  },
 };
 </script>

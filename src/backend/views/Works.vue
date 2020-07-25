@@ -9,16 +9,16 @@
 </template>
 
 <script>
-import pageDataMixin from "@backend/mixins/pageDataMixin";
-import PageWrapper from "@backCmp/PageWrapper";
-import SlideForm from "@backCmp/forms/SlideForm";
+import pageDataMixin from '@backend/mixins/pageDataMixin';
+import PageWrapper from '@backCmp/PageWrapper';
+import SlideForm from '@backCmp/forms/SlideForm';
 
 export default {
-  name: "AdminWorksView",
+  name: 'AdminWorksView',
   components: {
     PageWrapper,
-    SlideForm
+    SlideForm,
   },
-  mixins: [pageDataMixin]
+  mixins: [pageDataMixin],
 };
 </script>

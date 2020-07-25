@@ -5,20 +5,20 @@
 
 <script>
 export default {
-  name: "HeaderWrapper",
+  name: 'HeaderWrapper',
   computed: {
     classes() {
       const name = this.$route.name;
       return {
-        "header--framed": name == "home",
-        "header--wide": name != "home",
-        "header--blog": name == "blog"
+        'header--framed': name == 'home',
+        'header--wide': name != 'home',
+        'header--blog': name == 'blog',
       };
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style lang="scss">
-@import "@frontStylesCmp/HeaderWrapper/import";
+@import '@frontStylesCmp/HeaderWrapper/import';
 </style>

@@ -3,14 +3,14 @@
   // $svgHeight: 63.73px;
   $circleLength: 106.811;
 
-  @include position("fixed 0");
+  @include position('fixed 0');
   z-index: 100000;
   color: $white rgba(#253468, 0.87);
   opacity: 0;
   transition: opacity 1s;
 
   &-container {
-    @include position("absolute 50% * * 50%");
+    @include position('absolute 50% * * 50%');
     // @include position("absolute 229px * * 50%");
     // size: 74.876px;
     size: 50px;
@@ -59,7 +59,7 @@
   }
 
   &-counter {
-    @include position("absolute 50% * * *");
+    @include position('absolute 50% * * *');
     // margin-top: -47px;
     width: 100%;
     font-family: $reserveFonts;

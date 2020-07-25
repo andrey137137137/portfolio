@@ -6,15 +6,15 @@
 </template>
 
 <script>
-import pageDataMixin from "@backend/mixins/pageDataMixin";
-import PageWrapper from "@backCmp/PageWrapper";
-import UsernameForm from "@backCmp/forms/UsernameForm";
+import pageDataMixin from '@backend/mixins/pageDataMixin';
+import PageWrapper from '@backCmp/PageWrapper';
+import UsernameForm from '@backCmp/forms/UsernameForm';
 export default {
-  name: "AdminAuthConfigView",
+  name: 'AdminAuthConfigView',
   components: {
     PageWrapper,
-    UsernameForm
+    UsernameForm,
   },
-  mixins: [pageDataMixin]
+  mixins: [pageDataMixin],
 };
 </script>

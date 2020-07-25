@@ -20,7 +20,7 @@
 
   &--on_map {
     // @include position("absolute * * 356px *");
-    @include position("absolute * * 250px *");
+    @include position('absolute * * 250px *');
     color: $darkBlue;
 
     &:hover {

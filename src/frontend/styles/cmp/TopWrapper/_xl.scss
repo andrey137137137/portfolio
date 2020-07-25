@@ -1,5 +1,5 @@
 .top_wrap {
   &-corner_border {
-    @include border("102px  50vw  0  50vw  / * / *");
+    @include border('102px  50vw  0  50vw  / * / *');
   }
 }

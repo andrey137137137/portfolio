@@ -12,12 +12,12 @@
   }
 
   &-text_wrap {
-    @include padding("20px * 30px");
+    @include padding('20px * 30px');
     height: 270px;
   }
 
   &-desc {
-    @include padding("13px * 25px");
+    @include padding('13px * 25px');
   }
 
   &-btn_icon {
@@ -36,11 +36,11 @@
 // REVIEWS
 
 .reviews {
-  @include padding("16px * 43px");
+  @include padding('16px * 43px');
   // height: 455px;
 
   &-title_wrap {
-    @include padding("22px * 42px");
+    @include padding('22px * 42px');
 
     .title_wrap-bg {
       height: 105%;
@@ -60,7 +60,7 @@
 
   &-article {
     // margin-top: -10px;
-    @include padding("0 * *");
+    @include padding('0 * *');
   }
 
   &-quote {
@@ -84,7 +84,7 @@
 // FEEDBACK FORM
 
 .feedback_form {
-  @include padding("18px * *");
+  @include padding('18px * *');
   width: 348px;
   // height: 439px;
 
@@ -98,7 +98,7 @@
 
   &-menu {
     .menu-link {
-      @include padding("* 36px * 37px");
+      @include padding('* 36px * 37px');
       @include oneLineBlock(45px, 1px);
     }
   }

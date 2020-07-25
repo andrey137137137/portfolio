@@ -1,9 +1,9 @@
-import InputEventElem from "@components/formElems/InputEventElem";
+import InputEventElem from '@components/formElems/InputEventElem';
 
 export default {
-  name: "MultipleElem",
+  name: 'MultipleElem',
   components: {
-    InputEventElem
+    InputEventElem,
   },
   render(h) {
     let elems = [];
@@ -18,32 +18,32 @@ export default {
               this.vals[valIndex],
               field.name,
               field.type,
-              field.placeholder
-            )
+              field.placeholder,
+            ),
           );
         });
       }
     }
 
-    return h("div", {}, [...elems.map(elem => elem), this.navElem(h)]);
+    return h('div', {}, [...elems.map(elem => elem), this.navElem(h)]);
   },
   props: {
     vals: {
       type: Object,
-      required: true
+      required: true,
     },
     items: {
       type: Array,
-      required: true
+      required: true,
     },
     fields: {
       type: Array,
-      required: true
+      required: true,
     },
     propTemplate: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   methods: {
     getIndex(index) {
@@ -52,20 +52,20 @@ export default {
     inputEvElem(h, index, val, fieldName, type, placeholder) {
       const self = this;
 
-      return h("InputEventElem", {
+      return h('InputEventElem', {
         props: {
           type,
           value: val[fieldName].$model,
           val: val[fieldName],
-          placeholder: `${placeholder} ${this.getIndex(index)}`
+          placeholder: `${placeholder} ${this.getIndex(index)}`,
         },
         on: {
           input: value => {
             self.items[index][fieldName] = value;
             val.$touch();
-            self.$emit("input", value);
-          }
-        }
+            self.$emit('input', value);
+          },
+        },
       });
     },
     removeItem(e) {
@@ -87,18 +87,18 @@ export default {
       this.items.push(template);
     },
     navElem(h) {
-      return h("div", { class: "menu" }, [
-        h("button", {
-          class: "btn",
+      return h('div', { class: 'menu' }, [
+        h('button', {
+          class: 'btn',
           on: { click: this.removeItem },
-          domProps: { type: "button", innerHTML: "Remove" }
+          domProps: { type: 'button', innerHTML: 'Remove' },
         }),
-        h("button", {
-          class: "btn",
+        h('button', {
+          class: 'btn',
           on: { click: this.addItem },
-          domProps: { type: "button", innerHTML: "Add" }
-        })
+          domProps: { type: 'button', innerHTML: 'Add' },
+        }),
       ]);
-    }
-  }
+    },
+  },
 };

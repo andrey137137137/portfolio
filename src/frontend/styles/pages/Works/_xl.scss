@@ -26,7 +26,7 @@
   }
 
   &-item {
-    @include position("absolute 0 * * 0");
+    @include position('absolute 0 * * 0');
     z-index: 0;
     display: none;
     size: 100%;
@@ -41,17 +41,17 @@
 
     /* http://unrestrictedstock.com/wp-content/uploads/snowy-winter-vignette-bokeh-night-snow-falling-free-stock-photo.jpg */
     &:nth-of-type(2) {
-      background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/123941/snowy-winter-vignette-bokeh-night-snow-falling-free-stock-photo.jpg");
+      background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/123941/snowy-winter-vignette-bokeh-night-snow-falling-free-stock-photo.jpg');
     }
 
     /* http://www.dawghousedesignstudio.com/wp-content/uploads/2010/01/25/free-stock-photos-1.jpg */
     &:nth-of-type(3) {
-      background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/123941/free-stock-photos-1.jpg");
+      background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/123941/free-stock-photos-1.jpg');
     }
 
     /* http://www.stockfreeimages.com/static/homepage/waterfall-free-stock-photo-244915.jpg */
     &:nth-of-type(4) {
-      background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/123941/waterfall-free-stock-photo-244915.jpg");
+      background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/123941/waterfall-free-stock-photo-244915.jpg');
     }
 
     &-active,
@@ -69,7 +69,7 @@
   }
 
   &-text_wrap {
-    @include padding("5px * 30px");
+    @include padding('5px * 30px');
     // height: 219px;
   }
 
@@ -137,7 +137,7 @@
 // REVIEWS
 
 .reviews {
-  @include padding("8px * 30px");
+  @include padding('8px * 30px');
   // height: 614px;
   color: $white;
 
@@ -151,7 +151,7 @@
   }
 
   &-article {
-    @include padding("32px * *");
+    @include padding('32px * *');
   }
 
   &-img_wrap {
@@ -185,7 +185,7 @@
 
 .feedback_form {
   // padding-top: 11px;
-  @include padding("11px * *");
+  @include padding('11px * *');
   width: 300px;
   // height: 422px;
   color: $white rgba(#dadbd6, 0.05);
@@ -210,7 +210,7 @@
   &-menu {
     .menu-link {
       @include oneLineBlock(43px, 1px);
-      @include padding("* 36px * 37px");
+      @include padding('* 36px * 37px');
     }
   }
 }

@@ -25,13 +25,13 @@
     }
   }
 
-  @include container(1200, 0, "ds");
+  @include container(1200, 0, 'ds');
 
   .container {
-    $elem: ".col";
+    $elem: '.col';
 
     .col {
-      @include padding("* 10px");
+      @include padding('* 10px');
 
       &#{$elem}--ds {
         &_float {
@@ -40,7 +40,7 @@
 
         &_center {
           float: none;
-          @include margin("* auto");
+          @include margin('* auto');
         }
       }
     }

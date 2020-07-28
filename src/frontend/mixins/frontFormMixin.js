@@ -12,7 +12,8 @@ export default {
 
       const $inputElem = this.$refs[this.formInputName].$el;
 
-      return $inputElem.offsetTop + $inputElem.offsetHeight;
+      // return $inputElem.offsetTop + $inputElem.offsetHeight;
+      return $inputElem.offsetTop + 45;
     },
   },
   methods: {
@@ -28,6 +29,7 @@ export default {
       return false;
     },
     handleSubmit() {
+      console.log('fkjdklsfjdkls');
       if (!this.touchInvalidElem()) return false;
       return true;
     },

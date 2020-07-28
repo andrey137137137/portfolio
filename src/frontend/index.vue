@@ -1,85 +1,85 @@
 <template lang="pug">
-  Fragment
-    PageWrapper
-      HeaderWrapper
-        a.btn.btn--opacity.authorization(
-          :href="authBtnlink",
-          ref="flipBtn",
-          @click="fadeButton"
-        ) {{ authBtnTitle }}
-        .container.header-container.header-container--framed(
-          :class="flippedClass"
+Fragment
+  PageWrapper
+    HeaderWrapper
+      a.btn.btn--opacity.authorization(
+        :href='authBtnlink',
+        ref='flipBtn',
+        @click='fadeButton'
+      ) {{ authBtnTitle }}
+      .container.header-container.header-container--framed(
+        :class='flippedClass'
+      )
+        .header-flip_wrap
+          HeaderContent
+          NavCmp
+        FrontFormWrapper#login_form.header-flip_wrap.header-flip_wrap--back.login_form(
+          action='/admin',
+          @submit.prevent.native='handleSubmit'
         )
-          .header-flip_wrap
-            HeaderContent
-            NavCmp
-          FrontFormWrapper#login_form.header-flip_wrap.header-flip_wrap--back.login_form(
-            action="/admin",
-            @submit.prevent.native="handleSubmit"
-          )
-            .login_form-top_wrap
-              h2.section-title.section-title--uppercase.login_form-title Авторизуйтесь
+          .login_form-top_wrap
+            h2.section-title.section-title--uppercase.login_form-title Авторизуйтесь
 
-              InputEventElem(
-                wrapClass="icon_label",
-                ref="username",
-                name="username",
-                labelIcon="login",
-                label="Пользователь",
-                v-model="username",
-                :val="$v.username",
-                placeholder="Пользователь"
-              )
+            InputEventElem(
+              wrapClass='icon_label',
+              ref='username',
+              name='username',
+              labelIcon='login',
+              label='Пользователь',
+              v-model='username',
+              :val='$v.username',
+              placeholder='Пользователь'
+            )
 
-              InputEventElem(
-                wrapClass="icon_label",
-                ref="password",
-                name="password",
-                labelIcon="password",
-                label="Пароль",
-                v-model="password",
-                :val="$v.password",
-                type="password",
-                placeholder="Пароль"
-              )
+            InputEventElem(
+              wrapClass='icon_label',
+              ref='password',
+              name='password',
+              labelIcon='password',
+              label='Пароль',
+              v-model='password',
+              :val='$v.password',
+              type='password',
+              placeholder='Пароль'
+            )
 
-              ChangeEventElem(
-                label="Я человек",
-                ref="isHuman",
-                name="isHuman",
-                v-model="isHuman",
-                :val="$v.isHuman",
-                type="checkbox"
-              )
+            ChangeEventElem(
+              label='Я человек',
+              ref='isHuman',
+              name='isHuman',
+              v-model='isHuman',
+              :val='$v.isHuman',
+              type='checkbox'
+            )
 
-              legend.form-legend Вы точно не робот?
+            legend.form-legend Вы точно не робот?
 
-              .form-wrap.form-wrap--radio.login_form-radio_wrap
-                .form-row.flex.flex--wrap
-                  label.form-label.login_form-radio_yes
-                    input.form-input(
-                      type="radio",
-                      value="yes",
-                      v-model="$v.notRobot.$model"
-                    )
-                    .form-checked
-                    .form-checkbox_text Да
-                  label.form-label
-                    input.form-input(
-                      type="radio",
-                      value="no",
-                      v-model="$v.notRobot.$model"
-                    )
-                    .form-checked
-                    .form-checkbox_text Не уверен
+            .form-wrap.form-wrap--radio.login_form-radio_wrap
+              .form-row.flex.flex--wrap
+                label.form-label.login_form-radio_yes
+                  input.form-input(
+                    type='radio',
+                    value='yes',
+                    v-model='$v.notRobot.$model'
+                  )
+                  .form-checked
+                  .form-checkbox_text Да
+                label.form-label
+                  input.form-input(
+                    type='radio',
+                    value='no',
+                    v-model='$v.notRobot.$model'
+                  )
+                  .form-checked
+                  .form-checkbox_text Не уверен
 
-              ErrorElem(:message="formError", :styleTop="errorStyleTop")
+            ErrorElem(:message='formError', :styleTop='errorStyleTop')
 
-            .menu.header-menu.header-menu--float.form-menu.login_form-menu
-              a#flip_2_front.menu-link.btn(@click.prevent="fadeButton", href="#") На главную
-              input.menu-link.btn(type="submit", value="Войти")
-      SubmitMessage
-    FooterWrapper
+          .menu.header-menu.header-menu--float.form-menu.login_form-menu
+            a#flip_2_front.menu-link.btn(@click.prevent='fadeButton', href='#') На главную
+            input.menu-link.btn(type='submit', value='Войти')
+    SubmitMessage
+  FooterWrapper
 </template>
 
 <script>

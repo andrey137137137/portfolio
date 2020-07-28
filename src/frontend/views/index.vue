@@ -1,12 +1,12 @@
 <template lang="pug">
-  PageWrapper
-    HeaderWrapper
-      NavCmp
-      HeaderContent
-      ScrollButton
-    router-view
-    FooterWrapper
-    MainMenu
+PageWrapper
+  HeaderWrapper
+    NavCmp
+    HeaderContent
+    ScrollButton
+  router-view
+  FooterWrapper
+  MainMenu
 </template>
 
 <script>

@@ -19,18 +19,18 @@ export default {
     readComments({ commit }) {
       commit(SET, reviews);
     },
-    insertComment({ dispatch }, payload) {
-      axios.post(dbPage, payload.data).then(() => {
+    insertComment({ dispatch }, { data }) {
+      axios.post(dbPage, data).then(() => {
         dispatch('readData');
       });
     },
-    updateComment({ dispatch }, payload) {
-      axios.put(`${dbPage}/${payload.id}`, payload.data).then(() => {
+    updateComment({ dispatch }, { id, data }) {
+      axios.put(`${dbPage}/${id}`, data).then(() => {
         dispatch('readData');
       });
     },
-    deleteComment({ dispatch }, payload) {
-      axios.delete(`${dbPage}/${payload.id}`).then(() => {
+    deleteComment({ dispatch }, { id }) {
+      axios.delete(`${dbPage}/${id}`).then(() => {
         dispatch('readData');
       });
     },

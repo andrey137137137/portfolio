@@ -1,49 +1,52 @@
 <template lang="pug">
-  SectionWrapper(:name="id" :isContainerClass="false" :isOwnContainerClass="true")
+SectionWrapper(
+  :name='id',
+  :isContainerClass='false',
+  :isOwnContainerClass='true'
+)
+  ul(style='display:none')
+    li(v-for='item in items') {{ item.title }}
 
-    ul(style="display:none")
-      li(v-for="item in items") {{item.title}}
+  ul.slider-demo
+    transition(:name='transitionName')
+      li.img_wrap.slider-item.slider-demo_item(:key='curIndex')
+        img.img_wrap-img.slider-img(:src='demoImg', :alt='alt')
 
-    ul.slider-demo
-      transition(:name="transitionName")
-        li.img_wrap.slider-item.slider-demo_item(:key="curIndex")
-          img.img_wrap-img.slider-img(:src="demoImg" :alt="alt")
+  article.slider-text_wrap
+    AnimateStr(
+      transitionName='slider-title',
+      rootElem='h2',
+      :str='title',
+      :commonKey='curIndex',
+      :addClasses='titleClasses'
+    )
+    AnimateStr(
+      transitionName='slider-techs',
+      rootElem='p',
+      :str='techs',
+      :commonKey='curIndex',
+      :addClasses='techsClasses'
+    )
+    a.clearfix.btn.slider-btn(:href='link', target='_blank')
+      span.icon.icon--link.slider-btn_icon
+      span.slider-btn_text Посмотреть сайт
 
-    article.slider-text_wrap
-      AnimateStr(
-        transitionName="slider-title"
-        rootElem="h2"
-        :str="title"
-        :commonKey="curIndex"
-        :addClasses="titleClasses"
-      )
-      AnimateStr(
-        transitionName="slider-techs"
-        rootElem="p"
-        :str="techs"
-        :commonKey="curIndex"
-        :addClasses="techsClasses"
-      )
-      a.clearfix.btn.slider-btn(:href="link" target="_blank")
-        span.icon.icon--link.slider-btn_icon
-        span.slider-btn_text Посмотреть сайт
-
-    .clearfix.slider-nav
-      ArrowButton(
-        :index="curIndex"
-        :newIndex="prevIndex"
-        :handle="handlePrev"
-        :imgSrc="prevImg"
-        :title="prevTitle"
-        :isNext="false"
-      )
-      ArrowButton(
-        :index="curIndex"
-        :newIndex="nextIndex"
-        :handle="handleNext"
-        :imgSrc="nextImg"
-        :title="nextTitle"
-      )
+  .clearfix.slider-nav
+    ArrowButton(
+      :index='curIndex',
+      :newIndex='prevIndex',
+      :handle='handlePrev',
+      :imgSrc='prevImg',
+      :title='prevTitle',
+      :isNext='false'
+    )
+    ArrowButton(
+      :index='curIndex',
+      :newIndex='nextIndex',
+      :handle='handleNext',
+      :imgSrc='nextImg',
+      :title='nextTitle'
+    )
 </template>
 
 <script>
@@ -188,15 +191,15 @@ export default {
     },
     handlePrev() {
       this.changeSlide(-1);
-      // this.resetInterval();
+      this.resetInterval();
     },
     handleNext() {
       this.changeSlide();
-      // this.resetInterval();
+      this.resetInterval();
     },
   },
   created() {
-    // this.resetInterval();
+    this.resetInterval();
   },
 };
 </script>

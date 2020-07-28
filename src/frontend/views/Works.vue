@@ -1,11 +1,11 @@
 <template lang="pug">
-  Fragment
-    TopWrapper
-      SliderCmp(:items="dbData")
-    BottomWrapper.bottom_wrap--without_bg
-      CommentCmp
-      FeedbackForm
-      ScrollButton(:inHeader="false")
+Fragment
+  TopWrapper
+    SliderCmp(:items='dbData')
+  BottomWrapper.bottom_wrap--without_bg
+    CommentCmp
+    FeedbackForm
+    ScrollButton(:inHeader='false')
 </template>
 
 <script>

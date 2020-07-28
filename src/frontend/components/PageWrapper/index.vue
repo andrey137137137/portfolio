@@ -1,9 +1,9 @@
 <template lang="pug">
-  .bg(:class="classes")
-    //- PreloaderCmp
-    ParallaxCmp
-    WorksParallax(v-if="isWorks")
-    slot
+.bg(:class='classes')
+  //- PreloaderCmp
+  ParallaxCmp
+  WorksParallax(v-show='isWorks')
+  slot
 </template>
 
 <script>

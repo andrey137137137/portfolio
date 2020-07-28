@@ -1,7 +1,7 @@
 <template lang="pug">
-  #bottomParallax.parallax_mirror
-    //- img.parallax_mirror-img(src="@assets/img/bottom.jpg")
-    .parallax_mirror-img
+#bottomParallax.parallax_mirror
+  //- img.parallax_mirror-img(src="@assets/img/bottom.jpg")
+  .parallax_mirror-img
 </template>
 
 <script>

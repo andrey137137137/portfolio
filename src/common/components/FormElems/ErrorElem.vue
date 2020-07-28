@@ -1,8 +1,8 @@
 <template lang="pug">
-  .form-error_wrap(:style="position")
-    transition(name="fade")
-      .form-error_tip_wrap(v-show="message")
-        .form-error {{ message }}
+.form-error_wrap(:style='position')
+  transition(name='fade')
+    .form-error_tip_wrap(v-show='message')
+      .form-error {{ message }}
 </template>
 
 <script>
@@ -20,7 +20,7 @@ export default {
   },
   data() {
     return {
-      marginTop: 10,
+      marginTop: 0,
     };
   },
   computed: {

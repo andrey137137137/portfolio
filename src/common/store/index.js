@@ -106,8 +106,8 @@ export default new Vuex.Store({
     [SET_PAGE](state, page) {
       state.data.page = page;
     },
-    [SET_FORM_MESSAGE](state, data) {
-      const { status, message } = data;
+    [SET_FORM_MESSAGE](state, { status, message }) {
+      // const { status, message } = data;
 
       switch (status) {
         case ERROR:
@@ -128,8 +128,8 @@ export default new Vuex.Store({
     [ADD](state, newItem) {
       state.data.result.push(newItem);
     },
-    [UPDATE](state, payload) {
-      const { id, data } = payload;
+    [UPDATE](state, { id, data }) {
+      // const { id, data } = payload;
 
       if (id) {
         const index = state.data.result.findIndex(item => item._id == id);

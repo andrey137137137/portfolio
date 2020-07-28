@@ -30,6 +30,8 @@ body {
     }
 
     #{$block}-wrap {
+      margin-bottom: 20px;
+
       &:after {
         display: block;
         size: 100% 0;
@@ -41,6 +43,7 @@ body {
     // #{$block}-error_wrap--tip
     #{$block}-error_wrap {
       position: absolute;
+      // height: auto;
       // overflow: visible;
       transition: all 0.5s;
     }

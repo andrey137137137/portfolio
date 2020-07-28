@@ -306,7 +306,8 @@ form {
   }
 
   &-error_wrap {
-    size: 100% 20px;
+    // size: 100% 20px;
+    width: 100%;
   }
 
   &-error {

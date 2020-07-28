@@ -250,6 +250,7 @@
 }
 
 .feedback_form {
+  position: relative;
   // padding-top: 11px;
   @include padding('11px * *');
   width: 300px;

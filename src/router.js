@@ -136,7 +136,7 @@ router.beforeEach((to, from, next) => {
         redirect(next);
       });
   } else {
-    if (store.frontFormError.state.inputName) {
+    if (store.state.frontFormError.inputName) {
       store
         .dispatch('frontFormError/clearFormError')
         .then(() => {
@@ -145,6 +145,8 @@ router.beforeEach((to, from, next) => {
         .catch(() => {
           next();
         });
+    } else {
+      next();
     }
   }
 });

@@ -87,9 +87,9 @@ export default {
         },
         path: '/upload/about',
         breakpoints: [
-          { name: 'ds.jpg', value: 1200 },
-          { name: 'tb.jpg', value: 768 },
-          { name: 'mb.jpg', value: 0 },
+          { name: 'lg.jpg', value: 1200 },
+          { name: 'md.jpg', value: 768 },
+          { name: 'sm.jpg', value: 0 },
         ],
       },
       bottomWrapClass: {

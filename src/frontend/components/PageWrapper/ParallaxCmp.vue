@@ -1,20 +1,21 @@
 <template lang="pug">
-  #parallax.parallax(:class="classes")
-    //- .parallax-container
-    //- li.parallax-layer(
-    //-   v-for="(item, index) in layers"
-    //-   :key="index"
-    //-   :data-depth="item")
-    ImageWrapper.parallax-layer(
-      v-for="(item, index) in layers"
-      :key="index"
-      :data-depth="item"
-      :path="getLayerPath(index)"
-      :breakpoints="breakpoints"
-      :title="getTitle(index)"
-      :isWrapperClass="false"
-      :imgAddClasses="{'parallax-img': true}")
-    //- .parallax-content
+#parallax.parallax(:class='classes')
+  //- .parallax-container
+  //- li.parallax-layer(
+  //-   v-for="(item, index) in layers"
+  //-   :key="index"
+  //-   :data-depth="item")
+  ImageWrapper.parallax-layer(
+    v-for='(item, index) in layers',
+    :key='index',
+    :data-depth='item',
+    :path='getLayerPath(index)',
+    :breakpoints='breakpoints',
+    :title='getTitle(index)',
+    :isWrapperClass='false',
+    :imgAddClasses='{ "parallax-img": true }'
+  )
+  //- .parallax-content
 </template>
 
 <script>
@@ -45,9 +46,10 @@ export default {
       ext: 'png',
       layers: [100, 100, 90, 80, 70, 60, 15, 10],
       breakpoints: [
-        { name: 'ds.png', value: 1200 },
-        { name: 'tb.png', value: 768 },
-        { name: 'mb.png', value: 0 },
+        { name: 'xlg.png', value: 2000 },
+        { name: 'lg.png', value: 1200 },
+        { name: 'md.png', value: 768 },
+        { name: 'sm.png', value: 0 },
       ],
     };
   },
@@ -80,7 +82,7 @@ export default {
         : this.centerY - event.pageY;
 
       if (this.$layers) {
-        [].slice.call(this.$layers).forEach(function($layer, index) {
+        [].slice.call(this.$layers).forEach(function ($layer, index) {
           if (isScroll) {
             $vm.divider = (index + 1) / 90;
           } else {

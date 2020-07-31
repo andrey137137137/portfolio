@@ -2,7 +2,7 @@
 .bg(:class='classes')
   //- PreloaderCmp
   ParallaxCmp
-  WorksParallax(v-show='isWorks')
+  WorksParallax(v-if='isWorks')
   slot
 </template>
 

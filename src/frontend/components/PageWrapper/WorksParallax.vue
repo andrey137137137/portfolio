@@ -25,7 +25,7 @@ export default {
     moveLayers() {
       const scrollY = window.pageYOffset || document.documentElement.scrollTop;
       const bottomImgPos =
-        document.body.scrollHeight - (window.innerHeight + scrollY);
+        (document.body.scrollHeight - (window.innerHeight + scrollY)) * 0.05;
       this.$parallax.style.transform = `translateY(-${bottomImgPos}px)`;
     },
     changeHeight() {

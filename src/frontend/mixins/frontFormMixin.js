@@ -26,7 +26,6 @@ export default {
       return false;
     },
     handleSubmit() {
-      console.log('fkjdklsfjdkls');
       if (!this.touchInvalidElem()) return false;
       return true;
     },

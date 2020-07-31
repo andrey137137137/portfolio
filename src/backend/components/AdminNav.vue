@@ -1,25 +1,40 @@
 <template lang="pug">
-  nav.admin_nav
-    .admin_nav-item(v-for="tab in tabs" :key="tab.href")
-      router-link.btn.admin_nav-link(
-        :class="isActiveClass(tab.href)"
-        :to="tab.href"
-      ) {{tab.name}}
+nav.admin_nav
+  .admin_nav-item(v-for='tab in tabs', :key='tab.path')
+    router-link.btn.admin_nav-link(
+      :class='isActiveClass(tab.path)',
+      :to='tab.path'
+    ) {{ tab.meta.title }}
 </template>
 
 <script>
+import { ADMIN } from '@common/constants/router.js';
+import exist from '@common/helpers/exist';
+import getRoutesMixin from '@common/mixins/getRoutesMixin';
+
 export default {
   name: 'AdminNav',
-  data() {
-    return {
-      tabs: [
-        { name: 'Обо мне', href: '/admin/about' },
-        { name: 'Блог', href: '/admin/blog' },
-        { name: 'Мои работы', href: '/admin/works' },
-        { name: 'Личные данные', href: '/admin/profile' },
-        { name: 'Имя пользователя и email', href: '/admin/authConfig' },
-      ],
-    };
+  mixins: [getRoutesMixin],
+  // data() {
+  //   return {
+  //     tabs: [
+  //       { meta: { title: 'Обо мне' }, path: '/admin/about' },
+  //       { meta: { title: 'Блог' }, path: '/admin/blog' },
+  //       { meta: { title: 'Мои работы' }, path: '/admin/works' },
+  //       { meta: { title: 'Личные данные' }, path: '/admin/profile' },
+  //       {
+  //         meta: { title: 'Имя пользователя и email' },
+  //         path: '/admin/authConfig',
+  //       },
+  //     ],
+  //   };
+  // },
+  computed: {
+    tabs() {
+      return this.getRoutes(
+        item => item.path == ADMIN && exist('children', item),
+      )[0].children;
+    },
   },
   methods: {
     isActiveClass(path) {
@@ -31,4 +46,6 @@ export default {
 };
 </script>
 
-<style lang="scss" src="@backStylesCmp/AdminNav.scss"></style>
+<style lang="scss">
+@import '@backStylesCmp/AdminNav.scss';
+</style>

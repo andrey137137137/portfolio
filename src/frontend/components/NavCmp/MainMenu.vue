@@ -1,18 +1,21 @@
 <template lang="pug">
-  .menu(:id="id" :class="containerClasses")
-    router-link.menu-link(
-      v-for="link in links"
-      :key="link.path"
-      :class="linkClasses"
-      :to="link.path"
-    ) {{link.meta.title}}
+.menu(:id='id', :class='containerClasses')
+  router-link.menu-link(
+    v-for='link in links',
+    :key='link.path',
+    :class='linkClasses',
+    :to='link.path'
+  ) {{ link.meta.title }}
 </template>
 
 <script>
-import exist from '@common/helpers/exist.js';
+import { ROOT, HOME } from '@common/constants/router.js';
+import exist from '@common/helpers/exist';
+import getRoutesMixin from '@common/mixins/getRoutesMixin';
 
 export default {
   name: 'MainMenu',
+  mixins: [getRoutesMixin],
   props: {
     inHeader: {
       type: Boolean,
@@ -21,11 +24,11 @@ export default {
   },
   computed: {
     isContent() {
-      return this.$route.name != 'home';
+      return this.$route.name != HOME.name;
     },
     restPages() {
       return this.getRoutes(
-        item => item.path == '/' && exist('children', item),
+        item => item.path == ROOT && exist('children', item),
       )[0].children;
     },
     links() {
@@ -34,7 +37,7 @@ export default {
         ...this.restPages,
         {
           meta: { title: 'Главная' },
-          path: '/',
+          path: HOME.path,
         },
       ];
     },
@@ -57,11 +60,6 @@ export default {
         'section-title--underlined': this.isContent,
         btn: !this.isContent,
       };
-    },
-  },
-  methods: {
-    getRoutes(cb) {
-      return this.$router.options.routes.filter(cb);
     },
   },
 };

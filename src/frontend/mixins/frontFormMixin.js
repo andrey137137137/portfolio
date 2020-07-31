@@ -1,7 +1,7 @@
 import formMixin from '@common/mixins/formMixin';
 
 import { createNamespacedHelpers } from 'vuex';
-const { mapGetters } = createNamespacedHelpers('frontFormError');
+const { mapGetters, mapActions } = createNamespacedHelpers('frontFormError');
 
 export default {
   mixins: [formMixin],
@@ -9,14 +9,11 @@ export default {
     ...mapGetters(['formInputName', 'formError']),
     errorStyleTop() {
       if (!this.formInputName) return 0;
-
-      const $inputElem = this.$refs[this.formInputName].$el;
-
-      // return $inputElem.offsetTop + $inputElem.offsetHeight;
-      return $inputElem.offsetTop + 45;
+      return this.$refs[this.formInputName].$el.offsetTop;
     },
   },
   methods: {
+    ...mapActions(['clearFormError']),
     touchInvalidElem() {
       const elemName = this.returnInvalidElem();
 
@@ -33,5 +30,8 @@ export default {
       if (!this.touchInvalidElem()) return false;
       return true;
     },
+  },
+  created() {
+    this.clearFormError();
   },
 };

@@ -136,18 +136,18 @@ router.beforeEach((to, from, next) => {
         redirect(next);
       });
   } else {
-    if (store.state.frontFormError.inputName) {
-      store
-        .dispatch('frontFormError/clearFormError')
-        .then(() => {
-          next();
-        })
-        .catch(() => {
-          next();
-        });
-    } else {
-      next();
-    }
+    // if (store.state.frontFormError.inputName) {
+    //   store
+    //     .dispatch('frontFormError/clearFormError')
+    //     .then(() => {
+    //       next();
+    //     })
+    //     .catch(() => {
+    //       next();
+    //     });
+    // } else {
+    next();
+    // }
   }
 });
 

@@ -1,12 +1,12 @@
 <template lang="pug">
-  #preloader.preloader.preloader--active
-    .preloader-container
-      //- svg.preloader-circles
-      //-   use(xlink:href="../img/night.svg#preloader")
-      svg.preloader-circles
-        circle.preloader-center_circle
-        circle.preloader-satellite_circle
-      .preloader-counter
+#preloader.preloader.preloader--active
+  .preloader-container
+    //- svg.preloader-circles
+    //-   use(xlink:href="../img/night.svg#preloader")
+    svg.preloader-circles
+      circle.preloader-center_circle
+      circle.preloader-satellite_circle
+    .preloader-counter
 </template>
 
 <script>
@@ -44,10 +44,10 @@ export default {
       // }, 100);
 
       if ($vm.counter >= $vm.count) {
-        setTimeout(function() {
+        setTimeout(function () {
           $vm.$preloader.classList.remove('preloader--active');
         }, 500);
-        setTimeout(function() {
+        setTimeout(function () {
           $vm.$preloader.parentElement.removeChild($vm.$preloader);
         }, 1500);
       }
@@ -77,4 +77,6 @@ export default {
 };
 </script>
 
-<style lang="scss" src="@frontStylesCmp/Preloader/import.scss"></style>
+<style lang="scss">
+@import '@frontStylesCmp/Preloader/import';
+</style>

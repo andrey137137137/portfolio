@@ -1,54 +1,44 @@
 .preloader {
   $block: &;
   $svgHeight: 63.73px;
+  $circleLength: 156;
+  $center: 37.438px;
 
-  @include position('fixed 0');
-  z-index: 100000;
-  color: $white rgba(#253468, 0.87);
-  opacity: 0;
   transition: opacity 0.5s;
 
   &-container {
-    @include position('absolute 50% * * 50%');
-    size: 74.876px;
-    transform: translate(-50%);
-  }
-
-  &-circles {
-    // size: 52.586px $svgHeight;
-    size: 100%;
+    size: $center * 2;
   }
 
   &-center_circle,
   &-satellite_circle {
-    cx: 37.438px;
+    cx: $center;
+    transform-origin: $center $center;
   }
 
   &-center_circle {
-    fill: none;
-    stroke: $white;
     stroke-width: 2.5864;
-    stroke-miterlimit: 10;
-    cy: 37.438px;
+    stroke-dasharray: 0 $circleLength;
+    cy: $center;
     r: 25px;
   }
 
   &-satellite_circle {
-    fill: $white;
     cy: 4.5px;
     r: 4.5px;
   }
 
   &-counter {
-    @include position('absolute 50% * * *');
-    // margin-top: -47px;
-    width: 100%;
     font: 24px $reserveFonts;
-    text-align: center;
-    transform: translateY(-50%);
   }
 
-  &#{$block}--active {
-    opacity: 1;
+  @for $prs from 1 through 100 {
+    &#{$block}--prs_#{$prs} {
+      #{$block} {
+        &-center_circle {
+          @include percentsToCircleLength($prs, $circleLength);
+        }
+      }
+    }
   }
 }

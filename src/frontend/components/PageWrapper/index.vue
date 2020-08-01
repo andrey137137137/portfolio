@@ -1,6 +1,6 @@
 <template lang="pug">
 .bg(:class='classes')
-  //- PreloaderCmp
+  PreloaderCmp
   ParallaxCmp
   WorksParallax(v-if='isWorks')
   slot

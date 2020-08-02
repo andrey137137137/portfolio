@@ -1,6 +1,5 @@
 <template lang="pug">
 #bottomParallax.parallax_mirror
-  //- img.parallax_mirror-img(src="@assets/img/bottom.jpg")
   .parallax_mirror-img
 </template>
 
@@ -25,7 +24,7 @@ export default {
     moveLayers() {
       const scrollY = window.pageYOffset || document.documentElement.scrollTop;
       const bottomImgPos =
-        (document.body.scrollHeight - (window.innerHeight + scrollY)) * 0.05;
+        (document.body.scrollHeight - (window.innerHeight + scrollY)) * 0.025;
       this.$parallax.style.transform = `translateY(-${bottomImgPos}px)`;
     },
     changeHeight() {

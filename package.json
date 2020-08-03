@@ -45,6 +45,7 @@
     "errorhandler": "^1.5.1",
     "eslint": "^5.14.0",
     "eslint-plugin-vue": "^5.2.1",
+    "gsap": "^3.4.2",
     "gulp": "^4.0.2",
     "gulp-cheerio": "^1.0.0",
     "gulp-load-plugins": "^2.0.3",

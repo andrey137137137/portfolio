@@ -11,8 +11,8 @@ div
         v-for='(skill, index) in category.items',
         :class='getSkillItemWrapperClasses(index, category.items.length)'
       )
-        .box(
-          :ref='`${category._id}_${index}`',
+        .skills-item(
+          :id='`${category._id}-${index}`',
           :class='getSkillItemPercentClass(0)'
         )
           svg.skills-item_circle(
@@ -31,6 +31,7 @@ div
 </template>
 
 <script>
+import $ from 'jquery';
 import { gsap, ScrollTrigger } from 'gsap/all';
 
 export default {
@@ -60,18 +61,20 @@ export default {
     gsap.registerPlugin(ScrollTrigger);
 
     let tl = gsap.timeline({
-      // yes, we can add it to an entire timeline!
       scrollTrigger: {
-        trigger: '.container',
-        pin: true, // pin the trigger element while active
         start: 'top top', // when the top of the trigger hits the top of the viewport
         end: '+=500', // end after scrolling 500px beyond the start
         scrub: 1, // smooth scrubbing, takes 1 second to "catch up" to the scrollbar
       },
     });
 
-    // add animations and labels to the timeline
-    tl.to('.box', { rotation: 180 });
+    this.categories.forEach(category => {
+      category.items.map((skill, index) => {
+        tl.to($(`#${category._id}-${index}`), {
+          className: this.getSkillItemPercentClass(skill.percents),
+        });
+      });
+    });
   },
 };
 </script>

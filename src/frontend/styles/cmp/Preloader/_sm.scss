@@ -15,7 +15,7 @@
     size: $center * 2;
     transform: translate(-50%);
     // 66,7770714247556
-    counter-reset: prs - 1;
+    // counter-reset: prs - 1;
   }
 
   &-circles {
@@ -60,10 +60,10 @@
     text-align: center;
     transform: translateY(-50%);
 
-    &:before {
-      content: counter(prs);
-      transition: counter-increment $trsTime;
-    }
+    // &:before {
+    //   content: counter(prs);
+    //   transition: counter-increment $trsTime;
+    // }
   }
 
   &#{$block}--active {

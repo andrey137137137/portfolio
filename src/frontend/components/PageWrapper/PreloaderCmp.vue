@@ -1,16 +1,15 @@
 <template lang="pug">
 #preloader.preloader.preloader--active
   .preloader-container
-    //- svg.preloader-circles
-    //-   use(xlink:href="../img/night.svg#preloader")
     svg.preloader-circles
       circle.preloader-center_circle
       circle.preloader-satellite_circle
-    .preloader-counter
+    .preloader-counter {{ animatedNumber }}
 </template>
 
 <script>
 import $ from 'jquery';
+import { gsap } from 'gsap';
 
 export default {
   name: 'PreloaderCmp',
@@ -26,7 +25,13 @@ export default {
       // circleLength: 106.811,
       counter: 0,
       prs: 0,
+      tweenedNumber: 0,
     };
+  },
+  computed: {
+    animatedNumber: function () {
+      return this.tweenedNumber.toFixed(0);
+    },
   },
   methods: {
     imageLoaded() {
@@ -35,13 +40,7 @@ export default {
       $vm.counter++;
       $vm.prs = Math.floor(($vm.counter * 100) / $vm.count);
 
-      // setTimeout(function() {
       $vm.$preloader.classList.add(`preloader--prs_${$vm.prs}`);
-      // $vm.$satellite.style.transform = `rotate(${$vm.prs * 7.2}deg)`;
-      // $vm.$circle.style.strokeDasharray = `${($vm.prs * $vm.circleLength) /
-      //   100} ${$vm.circleLength}`;
-      // $vm.$counter.innerHTML = $vm.prs;
-      // }, 100);
 
       if ($vm.counter >= $vm.count) {
         setTimeout(function () {
@@ -51,6 +50,11 @@ export default {
           $vm.$preloader.parentElement.removeChild($vm.$preloader);
         }, 1500);
       }
+    },
+  },
+  watch: {
+    prs(newValue) {
+      gsap.to(this.$data, { duration: 0.5, tweenedNumber: newValue });
     },
   },
   mounted() {

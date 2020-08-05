@@ -68,10 +68,16 @@ export default {
       },
     });
 
+    const $vm = this;
+
     this.categories.forEach(category => {
       category.items.map((skill, index) => {
-        tl.to($(`#${category._id}-${index}`), {
-          className: `+=${this.getSkillItemPercentClass(skill.percents)}`,
+        const $elem = $(`#${category._id}-${index}`);
+
+        tl.to($elem, {
+          onComplete() {
+            $elem.addClass($vm.getSkillItemPercentClass(skill.percents));
+          },
         });
       });
     });

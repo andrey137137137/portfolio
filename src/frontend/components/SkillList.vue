@@ -60,18 +60,18 @@ export default {
   updated() {
     gsap.registerPlugin(ScrollTrigger);
 
-    let tl = gsap.timeline({
+    const tl = gsap.timeline({
       scrollTrigger: {
-        start: 'top top', // when the top of the trigger hits the top of the viewport
-        end: '+=500', // end after scrolling 500px beyond the start
-        scrub: 1, // smooth scrubbing, takes 1 second to "catch up" to the scrollbar
+        start: 'top top',
+        end: '+=500',
+        scrub: 1,
       },
     });
 
     this.categories.forEach(category => {
       category.items.map((skill, index) => {
         tl.to($(`#${category._id}-${index}`), {
-          className: this.getSkillItemPercentClass(skill.percents),
+          className: `+=${this.getSkillItemPercentClass(skill.percents)}`,
         });
       });
     });

@@ -1,36 +1,31 @@
 <template lang="pug">
-  ItemForm(
-    :handleSubmit="submit"
-    :handleDelete="removeItem"
-    :id="id"
-    :disabled="disabled"
+ItemForm(
+  :handleSubmit='submit',
+  :handleDelete='removeItem',
+  :id='id',
+  :disabled='disabled'
+)
+  InputEventElem(v-model='title', :val='$v.title', placeholder='Название')
+  InputEventElem(v-model='link', :val='$v.link', placeholder='Ссылка')
+  PictureInput(
+    ref='pictureInput',
+    @change='changeImage',
+    @remove='removeImage',
+    :removable='true',
+    removeButtonClass='ui red button',
+    accept='image/jpeg, image/png, image/gif',
+    buttonClass='ui button primary',
+    :customStrings='{ upload: "<h1>Bummer!</h1>", drag: "Drag a 😺 GIF or GTFO" }'
   )
-    InputEventElem(
-      v-model="title"
-      :val="$v.title"
-      placeholder="Название")
-    InputEventElem(
-      v-model="link"
-      :val="$v.link"
-      placeholder="Ссылка")
-    PictureInput(
-      ref="pictureInput"
-      @change="changeImage"
-      @remove="removeImage"
-      :removable="true"
-      removeButtonClass="ui red button"
-      accept="image/jpeg, image/png, image/gif"
-      buttonClass="ui button primary"
-      :customStrings="{upload: '<h1>Bummer!</h1>', drag: 'Drag a 😺 GIF or GTFO'}")
-    MultipleElem(
-      :vals="$v.techs.$each.$iter"
-      :items="techs"
-      :fields="fields"
-      :propTemplate="propTemplate")
+  MultipleElem(
+    :vals='$v.techs.$each.$iter',
+    :items='techs',
+    :fields='fields',
+    :propTemplate='propTemplate'
+  )
 </template>
 
 <script>
-import { validationMixin } from 'vuelidate';
 import {
   required,
   // alphaNum,
@@ -40,7 +35,6 @@ import {
 import axios from 'axios';
 import exist from '@common/helpers/exist';
 import uploadMixin from '@backend/mixins/uploadMixin';
-import backFormMixin from '@backend/mixins/backFormMixin';
 import itemFormMixin from '@backend/mixins/itemFormMixin';
 import PictureInput from 'vue-picture-input';
 import ItemForm from '@backCmp/forms/ItemForm';
@@ -55,7 +49,7 @@ export default {
     InputEventElem,
     MultipleElem,
   },
-  mixins: [uploadMixin, validationMixin, backFormMixin, itemFormMixin],
+  mixins: [uploadMixin, itemFormMixin],
   data() {
     const data = {
       image: null,

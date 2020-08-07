@@ -1,25 +1,25 @@
 <template lang="pug">
-  ItemForm(
-    :handleSubmit="submit"
-    :handleDelete="removeItem"
-    :id="id"
-    :disabled="disabled"
+ItemForm(
+  :handleSubmit='submit',
+  :handleDelete='removeItem',
+  :id='id',
+  :disabled='disabled'
+)
+  InputEventElem(
+    v-model='category',
+    :val='$v.category',
+    placeholder='Категория'
   )
-    InputEventElem(
-      v-model="category"
-      :val="$v.category"
-      placeholder="Категория")
-    MultipleElem(
-      :vals="$v.items.$each.$iter"
-      :items="items"
-      :fields="fields"
-      :propTemplate="propTemplate")
+  MultipleElem(
+    :vals='$v.items.$each.$iter',
+    :items='items',
+    :fields='fields',
+    :propTemplate='propTemplate'
+  )
 </template>
 
 <script>
-import { validationMixin } from 'vuelidate';
 import { required, minValue, maxValue } from 'vuelidate/lib/validators';
-import backFormMixin from '@backend/mixins/backFormMixin';
 import itemFormMixin from '@backend/mixins/itemFormMixin';
 import ItemForm from '@backCmp/forms/ItemForm';
 import InputEventElem from '@components/formElems/InputEventElem';
@@ -32,7 +32,7 @@ export default {
     InputEventElem,
     MultipleElem,
   },
-  mixins: [validationMixin, backFormMixin, itemFormMixin],
+  mixins: [itemFormMixin],
   data() {
     const data = {
       fields: [

@@ -1,28 +1,23 @@
 <template lang="pug">
-  AdminFormWrapper(@submit.prevent.native="handleSubmit")
-    slot
+AdminFormWrapper(@submit.prevent.native='handleSubmit')
+  slot
 
-    .form-row.form-row--buttons
-      ButtonElem(
-        v-if="id"
-        :addClasses="buttonWrapperClass"
-        :isDanger="true"
-        @click.prevent.native="remove()"
-      ) Удалить
-      ButtonElem(
-        :disabled="disabled"
-        :addClasses="buttonWrapperClass"
-      ) {{buttonValue}}
+  .form-row.form-row--buttons
+    ButtonElem(
+      v-if='id',
+      :addClasses='buttonWrapperClass',
+      :isDanger='true',
+      @click.prevent.native='remove()'
+    ) Удалить
+    ButtonElem(:disabled='disabled', :addClasses='buttonWrapperClass') {{ buttonValue }}
 </template>
 
 <script>
-import itemFormMixin from '@backend/mixins/itemFormMixin';
 import AdminFormWrapper from '@backCmp/AdminFormWrapper';
 import ButtonElem from '@components/formElems/ButtonElem';
 
 export default {
   name: 'ItemForm',
-  mixins: [itemFormMixin],
   components: {
     AdminFormWrapper,
     ButtonElem,

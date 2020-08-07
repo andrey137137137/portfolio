@@ -1,43 +1,40 @@
 <template lang="pug">
-  UserForm(
-    :handleSubmit="submit"
-    :disabled="disabled"
+UserForm(:handleSubmit='submit', :disabled='disabled')
+  InputEventElem(v-model='email', :val='$v.email', placeholder='Email')
+  InputEventElem(
+    v-model='username',
+    :val='$v.username',
+    placeholder='Имя пользователя'
   )
+  ChangeEventElem(
+    label='Изменить пароль',
+    v-model='changePassword',
+    type='checkbox'
+  )
+  div(v-if='changePassword')
     InputEventElem(
-      v-model="email"
-      :val="$v.email"
-      placeholder="Email")
+      type='password',
+      v-model='oldPassword',
+      :val='$v.oldPassword',
+      placeholder='Старый пароль'
+    )
     InputEventElem(
-      v-model="username"
-      :val="$v.username"
-      placeholder="Имя пользователя")
-    ChangeEventElem(
-      label="Изменить пароль"
-      v-model="changePassword"
-      type="checkbox")
-    div(v-if="changePassword")
-      InputEventElem(
-        type="password"
-        v-model="oldPassword"
-        :val="$v.oldPassword"
-        placeholder="Старый пароль")
-      InputEventElem(
-        type="password"
-        v-model="password"
-        :val="$v.password"
-        placeholder="Пароль")
-      InputEventElem(
-        type="password"
-        v-model="repPassword"
-        :val="$v.repPassword"
-        placeholder="Повторите пароль")
+      type='password',
+      v-model='password',
+      :val='$v.password',
+      placeholder='Пароль'
+    )
+    InputEventElem(
+      type='password',
+      v-model='repPassword',
+      :val='$v.repPassword',
+      placeholder='Повторите пароль'
+    )
 </template>
 
 <script>
-import { validationMixin } from 'vuelidate';
 import { required, email, sameAs } from 'vuelidate/lib/validators';
 import { userAlphaNumValids } from '@common/helpers/validators';
-import backFormMixin from '@backend/mixins/backFormMixin';
 import userFormMixin from '@backend/mixins/userFormMixin';
 import UserForm from '@backCmp/forms/UserForm';
 import InputEventElem from '@components/formElems/InputEventElem';
@@ -50,7 +47,7 @@ export default {
     InputEventElem,
     ChangeEventElem,
   },
-  mixins: [validationMixin, backFormMixin, userFormMixin],
+  mixins: [userFormMixin],
   data() {
     return {
       changePassword: false,

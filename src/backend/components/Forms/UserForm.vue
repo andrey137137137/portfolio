@@ -1,12 +1,9 @@
 <template lang="pug">
-  AdminFormWrapper(@submit.prevent.native="handleSubmit")
-    slot
+AdminFormWrapper(@submit.prevent.native='handleSubmit')
+  slot
 
-    .form-row.form-row--buttons
-      ButtonElem(
-        :disabled="disabled"
-        :addClasses="buttonWrapperClass"
-      ) Обновить
+  .form-row.form-row--buttons
+    ButtonElem(:disabled='disabled', :addClasses='buttonWrapperClass') Обновить
 </template>
 
 <script>

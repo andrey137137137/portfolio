@@ -1,32 +1,22 @@
 <template lang="pug">
-  UserForm(
-    :handleSubmit="submit"
-    :disabled="disabled"
+UserForm(:handleSubmit='submit', :disabled='disabled')
+  InputEventElem(v-model='firstName', :val='$v.firstName', placeholder='Имя')
+  InputEventElem(v-model='lastName', :val='$v.lastName', placeholder='Фамилия')
+  MultipleElem(
+    :vals='$v.contacts.$each.$iter',
+    :items='contacts',
+    :fields='contactFields',
+    :propTemplate='contactTemplate'
   )
-    InputEventElem(
-      v-model="firstName"
-      :val="$v.firstName"
-      placeholder="Имя")
-    InputEventElem(
-      v-model="lastName"
-      :val="$v.lastName"
-      placeholder="Фамилия")
-    MultipleElem(
-      :vals="$v.contacts.$each.$iter"
-      :items="contacts"
-      :fields="contactFields"
-      :propTemplate="contactTemplate")
 </template>
 
 <script>
-// import { validationMixin } from 'vuelidate';
 import {
   required,
   alphaNum,
   // minValue,
   // maxValue
 } from 'vuelidate/lib/validators';
-// import backFormMixin from '@backend/mixins/backFormMixin';
 import userFormMixin from '@backend/mixins/userFormMixin';
 import UserForm from '@backCmp/forms/UserForm';
 import InputEventElem from '@components/formElems/InputEventElem';
@@ -39,7 +29,6 @@ export default {
     InputEventElem,
     MultipleElem,
   },
-  // mixins: [validationMixin, backFormMixin, userFormMixin],
   mixins: [userFormMixin],
   data() {
     return {

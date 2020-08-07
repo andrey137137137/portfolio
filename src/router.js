@@ -90,6 +90,7 @@ const router = new VueRouter({
           props: () => {
             setDbPage('skill');
           },
+          meta: { title: 'Обо мне', isFront: false },
           component: () => import('@backViews/About.vue'),
         },
         {
@@ -97,6 +98,7 @@ const router = new VueRouter({
           props: () => {
             setDbPage('post');
           },
+          meta: { title: 'Блог', isFront: false },
           component: () => import('@backViews/Blog.vue'),
         },
         {
@@ -104,6 +106,7 @@ const router = new VueRouter({
           props: () => {
             setDbPage('work');
           },
+          meta: { title: 'Мои работы', isFront: false },
           component: () => import('@backViews/Works.vue'),
         },
         {
@@ -111,6 +114,7 @@ const router = new VueRouter({
           props: () => {
             setDbPage('user/profile');
           },
+          meta: { title: 'Личные данные', isFront: false },
           component: () => import('@backViews/Profile.vue'),
         },
         {
@@ -118,6 +122,7 @@ const router = new VueRouter({
           props: () => {
             setDbPage('user/config');
           },
+          meta: { title: 'Имя пользователя и email', isFront: false },
           component: () => import('@backViews/AuthConfig.vue'),
         },
       ],

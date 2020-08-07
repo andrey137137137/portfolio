@@ -15,25 +15,16 @@ import getRoutesMixin from '@common/mixins/getRoutesMixin';
 export default {
   name: 'AdminNav',
   mixins: [getRoutesMixin],
-  // data() {
-  //   return {
-  //     tabs: [
-  //       { meta: { title: 'Обо мне' }, path: '/admin/about' },
-  //       { meta: { title: 'Блог' }, path: '/admin/blog' },
-  //       { meta: { title: 'Мои работы' }, path: '/admin/works' },
-  //       { meta: { title: 'Личные данные' }, path: '/admin/profile' },
-  //       {
-  //         meta: { title: 'Имя пользователя и email' },
-  //         path: '/admin/authConfig',
-  //       },
-  //     ],
-  //   };
-  // },
   computed: {
     tabs() {
-      return this.getRoutes(
+      const routes = this.getRoutes(
         item => item.path == ADMIN && exist('children', item),
       )[0].children;
+
+      return routes.map(route => {
+        route.path = `${ADMIN}/${route.path}`;
+        return route;
+      });
     },
   },
   methods: {

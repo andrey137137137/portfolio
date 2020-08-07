@@ -1,38 +1,33 @@
 <template lang="pug">
-  ItemForm(
-    :handleSubmit="submit"
-    :handleDelete="removeItem"
-    :id="id"
-    :disabled="disabled"
+ItemForm(
+  :handleSubmit='submit',
+  :handleDelete='removeItem',
+  :id='id',
+  :disabled='disabled'
+)
+  InputEventElem(v-model='title', :val='$v.title', placeholder='Название')
+  InputEventElem(
+    v-if='item',
+    v-model='date',
+    :val='$v.date',
+    placeholder='Дата'
   )
-    InputEventElem(
-      v-model="title"
-      :val="$v.title"
-      placeholder="Название")
-    InputEventElem(
-      v-if="item"
-      v-model="date"
-      :val="$v.date"
-      placeholder="Дата")
-    InputEventElem(
-      type="textarea"
-      v-model="text"
-      :val="$v.text"
-      placeholder="Содержание")
+  InputEventElem(
+    type='textarea',
+    v-model='text',
+    :val='$v.text',
+    placeholder='Содержание'
+  )
 </template>
 
 <script>
-// import { validationMixin } from "vuelidate";
 import {
   required,
   // alphaNum,
   minLength,
   // maxLength
 } from 'vuelidate/lib/validators';
-// import formMixin from "@common/mixins/formMixin";
-// import backFormMixin from "@backend/mixins/backFormMixin";
-// import itemFormMixin from "@backend/mixins/itemFormMixin";
-// import exist from "@common/helpers/exist";
+import itemFormMixin from '@backend/mixins/itemFormMixin';
 import ItemForm from '@backCmp/forms/ItemForm';
 import InputEventElem from '@components/formElems/InputEventElem';
 
@@ -42,21 +37,13 @@ export default {
     ItemForm,
     InputEventElem,
   },
-  // mixins: [validationMixin, formMixin, backFormMixin, itemFormMixin],
+  mixins: [itemFormMixin],
   data() {
     const data = {
       dbPage: 'post',
     };
 
-    if (!this.item) {
-      return { ...data, ...this.defaultFields() };
-    }
-
-    // else {
-    //   data.title = this.post.title;
-    //   data.date = this.post.date;
-    //   data.text = this.post.body;
-    // }
+    if (!this.item) return { ...data, ...this.defaultFields() };
 
     return {
       ...data,
@@ -93,7 +80,6 @@ export default {
     },
     prepareData() {
       const data = {
-        // id: Math.round(Math.random() * 1000000),
         title: this.title,
         text: this.text,
       };

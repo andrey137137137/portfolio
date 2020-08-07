@@ -38,9 +38,12 @@ body {
       color: $white;
     }
 
+    #{$block}-error_wrap {
+      height: 20px;
+    }
+
     #{$block}-error {
       // @include padding("* 10px");
-      height: 20px;
       color: $red;
 
       &--required {

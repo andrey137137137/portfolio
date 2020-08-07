@@ -1,10 +1,10 @@
 <template lang="pug">
 PageWrapper(page='Обо мне')
-  UploadForm(
-    page='about',
-    :breakpoints='["sm", "md", "lg"]',
-    :stencilProps='stencilProps'
-  )
+  //- UploadForm(
+  //-   page='about',
+  //-   :breakpoints='["sm", "md", "lg"]',
+  //-   :stencilProps='stencilProps'
+  //- )
   SkillForm(v-for='skill in dbData', :key='skill._id', :item='skill')
   h3.form-legend Добавить навыки
   SkillForm

@@ -15,40 +15,38 @@ body {
 .form {
   $block: &;
 
-  &#{$block}--admin {
-    #{$block}-wrap {
-      &--text,
-      &--number,
-      &--textarea {
-        width: 300px;
-      }
+  &-wrap {
+    &--text,
+    &--number,
+    &--textarea {
+      width: 300px;
     }
+  }
 
-    #{$block}-input,
-    #{$block}-btn {
-      border-radius: 5px;
-      @include padding('* 17px');
-    }
+  &-input,
+  &-btn {
+    border-radius: 5px;
+    @include padding('* 17px');
+  }
 
-    #{$block}-legend {
-      line-height: 34px;
-    }
+  &-legend {
+    line-height: 34px;
+  }
 
-    #{$block}-checked {
-      color: $white;
-    }
+  &-checked {
+    color: $white;
+  }
 
-    #{$block}-error_wrap {
-      height: 20px;
-    }
+  &-error_wrap {
+    height: 20px;
+  }
 
-    #{$block}-error {
-      // @include padding("* 10px");
-      color: $red;
+  &-error {
+    // @include padding("* 10px");
+    color: $red;
 
-      &--required {
-        color: $orange;
-      }
+    &--required {
+      color: $orange;
     }
   }
 }

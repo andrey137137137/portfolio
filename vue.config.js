@@ -60,9 +60,7 @@ module.exports = {
     config
       .plugin('simple-progress-webpack-plugin')
       .use(require.resolve('simple-progress-webpack-plugin'), [
-        {
-          format: 'minimal',
-        },
+        { format: 'minimal' },
       ]);
     config.module
       .rule('svg-sprite')
@@ -107,5 +105,22 @@ module.exports = {
     );
     config.resolve.alias.set('@frontCmp', resolveFront('components'));
     config.resolve.alias.set('@frontViews', resolveFront('views'));
+  },
+  pages: {
+    index: {
+      entry: 'src/main.js',
+      template: 'public/index.html',
+      filename: 'index.html', // когда используется опция title, то <title> в шаблоне
+      // должен быть <title><%= htmlWebpackPlugin.options.title %></title>
+      title: 'Index Page',
+    },
+    admin: {
+      entry: 'src/admin.js',
+      template: 'public/admin.html',
+      filename: 'admin.html',
+      // когда используется опция title, то <title> в шаблоне
+      // должен быть <title><%= htmlWebpackPlugin.options.title %></title>
+      title: 'Admin Page',
+    },
   },
 };

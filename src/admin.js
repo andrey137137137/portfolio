@@ -4,7 +4,7 @@ import axios from 'axios';
 import myConfig from '@config';
 import isDev from '@common/helpers/isDev';
 import store from '@common/store';
-import App from './App.vue';
+import Admin from './Admin.vue';
 import router from '@/router';
 
 Vue.use(VueRx);
@@ -29,8 +29,8 @@ axios.interceptors.request.use(
 Vue.config.productionTip = !isDev();
 
 new Vue({
-  el: '#site',
+  el: '#admin',
   store,
   router,
-  render: h => h(App),
+  render: h => h(Admin),
 });

@@ -20,7 +20,7 @@ import FooterWrapper from '@frontCmp/FooterWrapper';
 import MainMenu from '@frontCmp/NavCmp/MainMenu';
 
 export default {
-  name: 'SiteApp',
+  name: 'SiteWrapper',
   components: {
     PageWrapper,
     HeaderWrapper,

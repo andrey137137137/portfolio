@@ -1,9 +1,9 @@
 <template lang="pug">
-  .admin
-    AdminHeader
-    AdminNav
-    main.section.main
-      router-view
+.admin
+  AdminHeader
+  AdminNav
+  main.section.main
+    router-view
 </template>
 
 <script>

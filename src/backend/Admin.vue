@@ -1,14 +1,13 @@
 <template lang="pug">
-transition(name='fade', mode='out-in')
-  router-view
+router-view
 </template>
 
 <script>
 export default {
-  name: 'Admin',
+  name: 'AdminApp',
 };
 </script>
 
 <style lang="scss">
-@import '@styles/app.scss';
+@import '@styles/app';
 </style>

@@ -5,10 +5,10 @@ transition(name='fade', mode='out-in')
 
 <script>
 export default {
-  name: 'App',
+  name: 'SiteApp',
 };
 </script>
 
 <style lang="scss">
-@import '@styles/app.scss';
+@import '@styles/app';
 </style>

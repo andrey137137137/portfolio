@@ -108,15 +108,15 @@ module.exports = {
   },
   pages: {
     index: {
-      entry: 'src/main.js',
+      entry: 'src/frontend/main.js',
       template: 'public/index.html',
       filename: 'index.html', // когда используется опция title, то <title> в шаблоне
       // должен быть <title><%= htmlWebpackPlugin.options.title %></title>
       title: 'Index Page',
     },
     admin: {
-      entry: 'src/admin.js',
-      template: 'public/admin.html',
+      entry: 'src/backend/admin.js',
+      template: 'public/index.html',
       filename: 'admin.html',
       // когда используется опция title, то <title> в шаблоне
       // должен быть <title><%= htmlWebpackPlugin.options.title %></title>

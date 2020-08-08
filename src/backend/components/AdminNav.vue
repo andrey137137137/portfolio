@@ -8,7 +8,8 @@ nav.admin_nav
 </template>
 
 <script>
-import { ADMIN } from '@common/constants/router.js';
+import { ROOT, ADMIN } from '@common/constants/router.js';
+// import { ROOT } from '@common/constants/router.js';
 import exist from '@common/helpers/exist';
 import getRoutesMixin from '@common/mixins/getRoutesMixin';
 
@@ -25,6 +26,8 @@ export default {
         route.path = `${ADMIN}/${route.path}`;
         return route;
       });
+
+      // return this.getRoutes(item => item.path != ROOT);
     },
   },
   methods: {

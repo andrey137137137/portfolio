@@ -29,7 +29,7 @@ axios.interceptors.request.use(
 Vue.config.productionTip = !isDev();
 
 new Vue({
-  el: '#site',
+  el: '#app',
   store,
   router,
   render: h => h(App),

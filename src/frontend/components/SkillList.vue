@@ -1,5 +1,5 @@
 <template lang="pug">
-div
+.skills-container
   section.skills-counters(
     v-for='(category, index) in categories',
     :class='getContainerClasses(index)'
@@ -31,7 +31,6 @@ div
 </template>
 
 <script>
-import $ from 'jquery';
 import { gsap, ScrollTrigger } from 'gsap/all';
 
 export default {
@@ -54,31 +53,34 @@ export default {
       };
     },
     getSkillItemPercentClass(percent) {
-      return 'skills-item skills-item--prs_' + percent;
+      return 'skills-item--prs_' + percent;
     },
   },
   updated() {
-    gsap.registerPlugin(ScrollTrigger);
-
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        start: 'top top',
-        end: '+=500',
-        scrub: 1,
-      },
-    });
-
     const $vm = this;
+
+    gsap.registerPlugin(ScrollTrigger);
 
     this.categories.forEach(category => {
       category.items.map((skill, index) => {
-        const $elem = $(`#${category._id}-${index}`);
+        const $elem = document.getElementById(`${category._id}-${index}`);
 
-        tl.to($elem, {
-          onComplete() {
-            $elem.addClass($vm.getSkillItemPercentClass(skill.percents));
-          },
-        });
+        gsap
+          .timeline({
+            scrollTrigger: {
+              trigger: $elem,
+            },
+          })
+          .to($elem, {
+            onComplete() {
+              $elem.classList.add($vm.getSkillItemPercentClass(skill.percents));
+            },
+            onReverseComplete() {
+              $elem.classList.remove(
+                $vm.getSkillItemPercentClass(skill.percents),
+              );
+            },
+          });
       });
     });
   },

@@ -56,10 +56,11 @@ export default {
       return 'skills-item--prs_' + percent;
     },
   },
+  created() {
+    gsap.registerPlugin(ScrollTrigger);
+  },
   updated() {
     const $vm = this;
-
-    gsap.registerPlugin(ScrollTrigger);
 
     this.categories.forEach(category => {
       category.items.map((skill, index) => {
@@ -67,9 +68,7 @@ export default {
 
         gsap
           .timeline({
-            scrollTrigger: {
-              trigger: $elem,
-            },
+            scrollTrigger: { trigger: $elem },
           })
           .to($elem, {
             onComplete() {

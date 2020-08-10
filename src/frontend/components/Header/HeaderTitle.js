@@ -1,3 +1,4 @@
+import { HOME, BLOG } from '@common/constants/router';
 import { createNamespacedHelpers } from 'vuex';
 const { mapGetters } = createNamespacedHelpers('profile');
 
@@ -9,10 +10,10 @@ export default {
   computed: {
     ...mapGetters(['firstName', 'lastName']),
     isContent() {
-      return this.$route.name != 'home';
+      return this.$route.name != HOME.name;
     },
     isBlog() {
-      return this.$route.name == 'blog';
+      return this.$route.name == BLOG;
     },
     titleClasses() {
       if (!this.isContent) {

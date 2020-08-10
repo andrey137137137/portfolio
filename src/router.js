@@ -13,7 +13,7 @@ import {
   ADMIN_WORKS,
   ADMIN_PROFILE,
   ADMIN_AUTHCONFIG,
-} from '@common/constants/router.js';
+} from '@common/constants/router';
 
 Vue.use(VueRouter);
 

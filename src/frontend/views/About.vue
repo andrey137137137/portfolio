@@ -1,6 +1,6 @@
 <template lang="pug">
 Fragment
-  TopWrapper
+  TopWrapper.top_wrap-content
     SectionWrapper(
       name='about',
       :isFullWidth='true',

@@ -1,8 +1,11 @@
 <template lang="pug">
-  a.icon(:class="classes" :href="anchor")
+a.icon(:class='classes', :href='anchor', @click.prevent='handle')
 </template>
 
 <script>
+import { gsap, ScrollToPlugin } from 'gsap/all';
+import { ABOUT } from '@common/constants/router';
+
 export default {
   name: 'ScrollButton',
   props: {
@@ -22,12 +25,29 @@ export default {
       };
     },
     anchor() {
-      return this.inHeader ? '#footer' : '#header';
+      return this.inHeader ? '.top_wrap-content' : '#bottomWrapper';
     },
+  },
+  methods: {
+    handle() {
+      let offsetY = 0;
+
+      if (this.$route.name == ABOUT) {
+        offsetY = document.getElementById('cornerBorder').offsetHeight;
+      }
+
+      gsap.to(window, {
+        duration: 0.5,
+        scrollTo: { y: this.anchor, offsetY: -offsetY },
+      });
+    },
+  },
+  created() {
+    gsap.registerPlugin(ScrollToPlugin);
   },
 };
 </script>
 
 <style lang="scss">
-@import '@frontStylesCmp/ScrollButton/import.scss';
+@import '@frontStylesCmp/ScrollButton/import';
 </style>

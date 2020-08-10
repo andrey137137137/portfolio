@@ -1,4 +1,5 @@
 <script>
+import { WORKS, BLOG } from '@common/constants/router';
 import TitleWrapper from '@frontCmp/TitleWrapper';
 
 export default {
@@ -17,21 +18,21 @@ export default {
   },
   computed: {
     isWorks() {
-      return this.$route.name == 'works';
+      return this.$route.name == WORKS;
     },
     cornerBorderClasses() {
       const name = this.$route.name;
       return {
         'top_wrap-corner_border': true,
         'top_wrap-corner_border--half_opacity': this.isWorks,
-        'top_wrap-corner_border--two_colors': !this.isWorks && name != 'blog',
-        'top_wrap-corner_border--beige': !this.isWorks && name == 'blog',
+        'top_wrap-corner_border--two_colors': !this.isWorks && name != BLOG,
+        'top_wrap-corner_border--beige': !this.isWorks && name == BLOG,
       };
     },
   },
   methods: {
     cornerBorderElem() {
-      return <div class={this.cornerBorderClasses} />;
+      return <div id="cornerBorder" class={this.cornerBorderClasses} />;
     },
     titleWrapperElem() {
       return (

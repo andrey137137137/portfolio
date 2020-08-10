@@ -2,21 +2,21 @@
 .bg(:class='classes')
   PreloaderCmp
   ParallaxCmp
-  WorksParallax(v-if='isWorks')
+  BottomParallax(v-if='isWorks')
   slot
 </template>
 
 <script>
 import PreloaderCmp from './PreloaderCmp';
 import ParallaxCmp from './ParallaxCmp';
-import WorksParallax from './WorksParallax';
+import BottomParallax from './BottomParallax';
 
 export default {
   name: 'PageWrapper',
   components: {
     PreloaderCmp,
     ParallaxCmp,
-    WorksParallax,
+    BottomParallax,
   },
   computed: {
     classes() {

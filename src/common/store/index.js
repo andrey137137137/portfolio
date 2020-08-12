@@ -8,6 +8,7 @@ import {
   SET_PAGE,
   SET_SUCCESS_MESSAGE,
   SET_FORM_MESSAGE,
+  CLOSE_FORM_MESSAGE,
   SET_AUTH_STATUS,
   ADD,
   UPDATE,
@@ -28,6 +29,7 @@ export default new Vuex.Store({
     },
     status: 0,
     message: '',
+    isFormMessageClosed: false,
     authStatus: false,
   },
   getters: {
@@ -35,6 +37,7 @@ export default new Vuex.Store({
     dbData: state => state.data.result,
     status: state => state.status,
     message: state => state.message,
+    isFormMessageClosed: state => state.isFormMessageClosed,
     isAuth: state => state.authStatus,
   },
   actions: {
@@ -49,6 +52,9 @@ export default new Vuex.Store({
     },
     setFormMessage({ commit }, data) {
       commit(SET_FORM_MESSAGE, data);
+    },
+    [CLOSE_FORM_MESSAGE]({ commit }) {
+      commit(CLOSE_FORM_MESSAGE);
     },
     readData({ state, commit }) {
       axios.get(state.data.page).then(res => {
@@ -121,6 +127,10 @@ export default new Vuex.Store({
       }
 
       state.status = status;
+      state.isFormMessageClosed = false;
+    },
+    [CLOSE_FORM_MESSAGE](state) {
+      state.isFormMessageClosed = true;
     },
     [SET](state, data) {
       state.data.result = data;

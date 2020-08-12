@@ -20,7 +20,7 @@ export default {
   },
   data() {
     return {
-      marginTop: 45,
+      marginTop: 51,
     };
   },
   computed: {

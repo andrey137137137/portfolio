@@ -35,43 +35,44 @@ body {
     }
   }
 
-  // &-error_wrap--tip
-  &-error_wrap {
-    position: absolute;
-    // height: auto;
-    // overflow: visible;
-    transition: all 0.5s;
-  }
-
-  &-error_tip_wrap {
-    position: relative;
-
-    &:before {
-      display: block;
-      @include position('absolute 0 * * 50%');
-      z-index: 1;
-      @include border(
-        '* 3px 5px 3px / * solid solid solid / * transparent #{$red} transparent'
-      );
-      transform: translateX(-50%);
-      content: '';
-    }
-  }
-
   &-error {
-    border-radius: 5px;
-    font-weight: 500;
-    color: $white $red;
+    $top: 8px;
+    $corner: $top + 1px;
 
-    // &--tip {
-    @include position('absolute 5px * * 50%');
-    z-index: 1;
-    transform: translateX(-50%);
-    min-height: 50px;
-    // }
+    &_wrap {
+      position: absolute;
+      transition: all 0.5s;
+    }
 
-    &--required {
-      background-color: $orange;
+    &_tip_wrap {
+      position: relative;
+
+      &:before {
+        display: block;
+        @include position('absolute 0 * * 50%');
+        z-index: 1;
+        @include border(
+          '* #{$corner} #{$top} #{$corner} / * solid solid solid / * transparent #{$red} transparent'
+        );
+        transform: translateX(-50%);
+        content: '';
+      }
+    }
+
+    & {
+      @include position('absolute #{$top} * * 50%');
+      z-index: 1;
+      border-radius: 5px;
+      @include padding('21px 17px');
+      font-weight: 500;
+      font-size: 16px;
+      text-align: center;
+      color: $white $red;
+      transform: translateX(-50%);
+
+      &--required {
+        background-color: $orange;
+      }
     }
   }
 

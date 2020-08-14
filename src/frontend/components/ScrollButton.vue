@@ -14,6 +14,9 @@ export default {
       default: true,
     },
   },
+  data() {
+    return { anchor: '.top_wrap-content' };
+  },
   computed: {
     classes() {
       return {
@@ -23,9 +26,6 @@ export default {
         'scroll_btn--to_top': !this.inHeader,
         'scroll_btn--to_bottom': this.inHeader,
       };
-    },
-    anchor() {
-      return this.inHeader ? '.top_wrap-content' : '#bottomWrapper';
     },
   },
   methods: {

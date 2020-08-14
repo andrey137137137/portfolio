@@ -39,4 +39,5 @@ process.on('SIGINT', () => {
 require('./models/post');
 require('./models/skill');
 require('./models/work');
+require('./models/comment');
 require('./models/user');

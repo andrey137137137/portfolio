@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import { SET, ADD, DELETE } from '@common/store/mutation-types';
-import reviews from '@common/store/data/reviews.json';
+// import reviews from '@common/store/data/reviews.json';
 
 const dbPage = 'comment';
 
@@ -11,13 +11,14 @@ export default {
     data: [],
   },
   getters: {
-    comments(state) {
-      return state.data;
-    },
+    comments: state => state.data,
   },
   actions: {
     readComments({ commit }) {
-      commit(SET, reviews);
+      // commit(SET, reviews);
+      axios.get(dbPage).then(res => {
+        commit(SET, res.data.result);
+      });
     },
     insertComment({ dispatch }, { data }) {
       axios.post(dbPage, data).then(() => {

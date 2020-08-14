@@ -1,15 +1,17 @@
 <template lang="pug">
-  PageWrapper(page="Личные данные")
-    UploadForm(
-      page="avatar"
-      :isRound="true"
-      :stencilProps="stencilProps"
-      :cropSize="cropSize")
-    ProfileForm(
-      :firstName="dbData.firstName"
-      :lastName="dbData.lastName"
-      :contacts="dbData.contacts"
-      :email="dbData.email")
+PageWrapper
+  UploadForm(
+    page='avatar',
+    :isRound='true',
+    :stencilProps='stencilProps',
+    :cropSize='cropSize'
+  )
+  ProfileForm(
+    :firstName='dbData.firstName',
+    :lastName='dbData.lastName',
+    :contacts='dbData.contacts',
+    :email='dbData.email'
+  )
 </template>
 
 <script>

@@ -1,8 +1,6 @@
 <template lang="pug">
-  PageWrapper(page="Имя пользователя и email")
-    UsernameForm(
-      :username="dbData.username"
-      :email="dbData.email")
+PageWrapper
+  UsernameForm(:username='dbData.username', :email='dbData.email')
 </template>
 
 <script>

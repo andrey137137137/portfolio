@@ -9,12 +9,12 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', isAuth, (req, res) => {
-  const { author, status, description } = req.body;
+  const { author, position, description } = req.body;
   crud.createItem(
     Model,
     {
       author,
-      status,
+      position,
       description,
       date: new Date(),
     },
@@ -23,13 +23,13 @@ router.post('/', isAuth, (req, res) => {
 });
 
 router.put('/:id', isAuth, (req, res) => {
-  const { author, status, description, date } = req.body;
+  const { author, position, description, date } = req.body;
   crud.updateItem(
     Model,
     req.params.id,
     {
       author,
-      status,
+      position,
       description,
       date: new Date(date),
     },

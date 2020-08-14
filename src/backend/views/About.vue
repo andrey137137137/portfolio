@@ -1,5 +1,5 @@
 <template lang="pug">
-PageWrapper(page='Обо мне')
+PageWrapper
   //- UploadForm(
   //-   page='about',
   //-   :breakpoints='["sm", "md", "lg"]',

@@ -5,7 +5,12 @@ ItemForm(
   :id='id',
   :disabled='disabled'
 )
-  InputEventElem(v-model='title', :val='$v.title', placeholder='Название')
+  InputEventElem(v-model='author', :val='$v.author', placeholder='Название')
+  InputEventElem(
+    v-model='position',
+    :val='$v.position',
+    placeholder='Должность'
+  )
   InputEventElem(
     v-if='item',
     v-model='date',
@@ -14,8 +19,8 @@ ItemForm(
   )
   InputEventElem(
     type='textarea',
-    v-model='text',
-    :val='$v.text',
+    v-model='description',
+    :val='$v.description',
     placeholder='Содержание'
   )
 </template>
@@ -32,7 +37,7 @@ import ItemForm from '@backCmp/forms/ItemForm';
 import InputEventElem from '@components/formElems/InputEventElem';
 
 export default {
-  name: 'PostForm',
+  name: 'CommentForm',
   components: {
     ItemForm,
     InputEventElem,
@@ -49,17 +54,21 @@ export default {
 
     return {
       ...data,
-      title: this.item.title,
+      author: this.item.author,
+      position: this.item.position,
       date: this.item.date,
-      text: this.item.body,
+      description: this.item.description,
     };
   },
   validations() {
     const data = {
-      title: {
+      author: {
         required,
       },
-      text: {
+      position: {
+        required,
+      },
+      description: {
         required,
         minLength: minLength(71),
       },
@@ -76,14 +85,16 @@ export default {
   methods: {
     defaultFields() {
       return {
-        title: '',
-        text: '',
+        author: '',
+        position: '',
+        description: '',
       };
     },
     prepareData() {
       const data = {
-        title: this.title,
-        text: this.text,
+        author: this.author,
+        position: this.position,
+        description: this.description,
       };
 
       if (this.item) {

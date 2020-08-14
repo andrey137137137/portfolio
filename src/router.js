@@ -11,6 +11,7 @@ import {
   ADMIN_ABOUT,
   ADMIN_BLOG,
   ADMIN_WORKS,
+  ADMIN_COMMENTS,
   ADMIN_PROFILE,
   ADMIN_AUTHCONFIG,
 } from '@common/constants/router';
@@ -108,6 +109,14 @@ const router = new VueRouter({
           },
           meta: { title: 'Мои работы', isFront: false },
           component: () => import('@backViews/Works.vue'),
+        },
+        {
+          path: ADMIN_COMMENTS,
+          props: () => {
+            setDbPage('comment');
+          },
+          meta: { title: 'Отзывы', isFront: false },
+          component: () => import('@backViews/Comments.vue'),
         },
         {
           path: ADMIN_PROFILE,

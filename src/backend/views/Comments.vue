@@ -1,20 +1,18 @@
 <template lang="pug">
 PageWrapper
-  PostForm(v-for='post in dbData', :key='post._id', :item='post')
-  h3.form-legend Добавить запись
-  PostForm
+  CommentForm(v-for='comment in dbData', :key='comment._id', :item='comment')
 </template>
 
 <script>
 import pageDataMixin from '@backend/mixins/pageDataMixin';
 import PageWrapper from '@backCmp/PageWrapper';
-import PostForm from '@backCmp/forms/PostForm';
+import CommentForm from '@backCmp/forms/CommentForm';
 
 export default {
-  name: 'AdminBlogView',
+  name: 'AdminCommentsView',
   components: {
     PageWrapper,
-    PostForm,
+    CommentForm,
   },
   mixins: [pageDataMixin],
 };

@@ -12,16 +12,17 @@ ItemForm(
     placeholder='Должность'
   )
   InputEventElem(
-    v-if='item',
-    v-model='date',
-    :val='$v.date',
-    placeholder='Дата'
-  )
-  InputEventElem(
     type='textarea',
     v-model='description',
     :val='$v.description',
     placeholder='Содержание'
+  )
+  InputEventElem(v-model='date', :val='$v.date', placeholder='Дата')
+  InputEventElem(
+    type='checkbox',
+    v-model='isPublished',
+    :val='$v.isPublished',
+    placeholder='Опубликован'
   )
 </template>
 
@@ -44,64 +45,39 @@ export default {
   },
   mixins: [itemFormMixin],
   data() {
-    const data = {
-      dbPage: 'post',
-    };
-
-    if (!this.item) {
-      return { ...data, ...this.defaultFields() };
-    }
-
     return {
-      ...data,
+      dbPage: 'comment',
       author: this.item.author,
       position: this.item.position,
-      date: this.item.date,
       description: this.item.description,
+      date: this.item.date,
+      isPublished: this.item.isPublished,
     };
   },
-  validations() {
-    const data = {
-      author: {
-        required,
-      },
-      position: {
-        required,
-      },
-      description: {
-        required,
-        minLength: minLength(71),
-      },
-    };
-
-    if (this.item) {
-      data.date = {
-        required,
-      };
-    }
-
-    return data;
+  validations: {
+    author: {
+      required,
+    },
+    position: {
+      required,
+    },
+    description: {
+      required,
+      minLength: minLength(71),
+    },
+    date: {
+      required,
+    },
   },
   methods: {
-    defaultFields() {
-      return {
-        author: '',
-        position: '',
-        description: '',
-      };
-    },
     prepareData() {
-      const data = {
+      this.submitData = {
         author: this.author,
         position: this.position,
         description: this.description,
+        date: this.date,
+        isPublished: this.isPublished,
       };
-
-      if (this.item) {
-        data.date = this.date;
-      }
-
-      this.submitData = data;
     },
   },
 };

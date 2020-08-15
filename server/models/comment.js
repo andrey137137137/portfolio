@@ -17,7 +17,10 @@ const CommentSchema = new Schema({
   date: {
     type: Date,
     default: Date.now,
-    required: [true, 'Укажите дату отзыва'],
+  },
+  isPublished: {
+    type: Boolean,
+    default: false,
   },
 });
 

@@ -5,7 +5,11 @@ const { isAuth } = require('@auth');
 const crud = require('@contr/crud');
 
 router.get('/', (req, res) => {
-  crud.getItems(Model, res, { date: 1 });
+  const sort = { date: 1, isPublished: true };
+
+  if (!req.session.token) sort.isPublished = true;
+
+  crud.getItems(Model, res, sort);
 });
 
 router.post('/', isAuth, (req, res) => {
@@ -16,14 +20,13 @@ router.post('/', isAuth, (req, res) => {
       author,
       position,
       description,
-      date: new Date(),
     },
     res,
   );
 });
 
 router.put('/:id', isAuth, (req, res) => {
-  const { author, position, description, date } = req.body;
+  const { author, position, description, date, isPublished } = req.body;
   crud.updateItem(
     Model,
     req.params.id,
@@ -32,6 +35,7 @@ router.put('/:id', isAuth, (req, res) => {
       position,
       description,
       date: new Date(date),
+      isPublished,
     },
     res,
   );

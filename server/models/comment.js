@@ -6,6 +6,10 @@ const CommentSchema = new Schema({
     type: String,
     required: [true, 'Укажите автора отзыва'],
   },
+  email: {
+    type: String,
+    required: [true, 'Укажите email отзыва'],
+  },
   position: {
     type: String,
     required: [true, 'Укажите должность отзыва'],

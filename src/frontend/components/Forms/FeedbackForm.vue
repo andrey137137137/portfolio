@@ -1,59 +1,57 @@
 <template lang="pug">
-  FrontFormWrapper#feedback.section.container.container--full_width.feedback_form(
-    @submit.prevent.native="handleSubmit"
+FrontFormWrapper#feedback.section.container.container--full_width.feedback_form(
+  @submit.prevent.native='handleSubmit'
+)
+  h2.section-title.section-title--uppercase.section-title--underlined.feedback_form-title Связаться со мной
+
+  InputEventElem(
+    :addInputClasses='inputClasses',
+    ref='author',
+    name='author',
+    v-model='author',
+    :val='$v.author',
+    placeholder='Пользователь'
   )
-    h2.section-title.section-title--uppercase.section-title--underlined.feedback_form-title Связаться со мной
 
-    //- .form-row.form-row--text_wrap.feedback_form-row
-    //-   input.form-input.feedback_form-text_input(type="text" name="name")
+  InputEventElem(
+    :addInputClasses='inputClasses',
+    ref='position',
+    name='position',
+    v-model='position',
+    :val='$v.position',
+    placeholder='Пользователь'
+  )
 
-    InputEventElem(
-      :addInputClasses="inputClasses",
-      ref="name",
-      name="name",
-      v-model="name",
-      :val="$v.name",
-      placeholder="Пользователь"
-    )
+  InputEventElem(
+    :addInputClasses='inputClasses',
+    type='email',
+    ref='email',
+    name='email',
+    v-model='email',
+    :val='$v.email',
+    placeholder='Почта'
+  )
 
-    //- .form-row.form-row--text_wrap.feedback_form-row
-    //-   input.form-input.feedback_form-text_input(type="email" name="email")
+  InputEventElem(
+    :addInputClasses='inputClasses',
+    type='textarea',
+    ref='description',
+    name='description',
+    v-model='description',
+    :val='$v.description',
+    placeholder='Сообщение'
+  )
 
-    InputEventElem(
-      :addInputClasses="inputClasses",
-      type="email",
-      ref="email",
-      name="email",
-      v-model="email",
-      :val="$v.email",
-      placeholder="Почта"
-    )
+  ErrorElem(:message='formError', :styleTop='errorStyleTop')
 
-    //- .form-row.form-row--textarea_wrap
-    //-   textarea.form-input.feedback_form-text_input(name="message")
-
-    InputEventElem(
-      :addInputClasses="inputClasses",
-      type="textarea",
-      ref="message",
-      name="message",
-      v-model="message",
-      :val="$v.message",
-      placeholder="Сообщение"
-    )
-
-    ErrorElem(:message="formError", :styleTop="errorStyleTop")
-
-    .menu.form-menu.feedback_form-menu
-      input.menu-link.btn(type="submit", value="Отправить")
-      input.menu-link.btn.btn--full_opacity(type="reset", value="Очистить")
-      //- li.menu-item
-      //-   input.menu-link.btn(type="submit", value="Отправить")
-      //- li.menu-item
-      //-   input.menu-link.btn.btn--full_opacity(type="reset" value="Очистить")
+  .menu.form-menu.feedback_form-menu
+    input.menu-link.btn(type='submit', value='Отправить')
+    input.menu-link.btn.btn--full_opacity(type='reset', value='Очистить')
+  SubmitMessage
 </template>
 
 <script>
+import axios from 'axios';
 import {
   required,
   alphaNum,
@@ -61,10 +59,14 @@ import {
   minLength,
   maxLength,
 } from 'vuelidate/lib/validators';
+import { SUCCESS, ERROR } from '@httpSt';
 import frontFormMixin from '@frontend/mixins/frontFormMixin';
 import FrontFormWrapper from '@frontCmp/FrontFormWrapper';
 import InputEventElem from '@components/formElems/InputEventElem';
 import ErrorElem from '@components/formElems/ErrorElem';
+import SubmitMessage from '@components/formElems/SubmitMessage';
+
+import { mapActions } from 'vuex';
 
 export default {
   name: 'FeedbackForm',
@@ -72,13 +74,15 @@ export default {
     FrontFormWrapper,
     InputEventElem,
     ErrorElem,
+    SubmitMessage,
   },
   mixins: [frontFormMixin],
   data() {
     return {
-      name: '',
+      author: '',
+      position: '',
       email: '',
-      message: '',
+      description: '',
     };
   },
   computed: {
@@ -99,18 +103,45 @@ export default {
     },
   },
   validations: {
-    name: {
+    author: {
       required,
       alphaNum,
     },
+    position: { required },
     email: {
       required,
       email,
     },
-    message: {
+    description: {
       required,
       minLength: minLength(27),
       maxLength: maxLength(527),
+    },
+  },
+  methods: {
+    ...mapActions(['setAuthStatus', 'setFormMessage']),
+    handleSubmit() {
+      if (!this.touchInvalidElem()) return false;
+
+      const $vm = this;
+      const { author, position, email, description } = $vm;
+
+      axios
+        .post('comment', { author, position, email, description })
+        .then(res => {
+          $vm.setFormMessage({ status: SUCCESS, message: res.data.message });
+          return;
+        })
+        .catch(err => {
+          if (!err.response) {
+            $vm.setFormMessage({ status: ERROR, message: '' });
+            return;
+          }
+
+          const status = err.response.status;
+          const message = err.response.data.message;
+          $vm.setFormMessage({ status, message });
+        });
     },
   },
 };

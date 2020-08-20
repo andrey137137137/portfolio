@@ -4,12 +4,14 @@ const Model = require('mongoose').model('comment');
 const { isAuth } = require('@auth');
 const crud = require('@contr/crud');
 
-router.get('/', (req, res) => {
+router.get('/:for', (req, res) => {
+  // router.get('/', (req, res) => {
   const sort = { date: 1 };
+  const filter = {};
 
-  if (!req.session.token) sort.isPublished = true;
+  if (req.params.for == 'front') filter.isPublished = true;
 
-  crud.getItems(Model, res, sort);
+  crud.getItems(Model, res, sort, filter);
 });
 
 router.post('/', isAuth, (req, res) => {

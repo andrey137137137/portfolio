@@ -57,7 +57,11 @@ export default new Vuex.Store({
       commit(CLOSE_FORM_MESSAGE);
     },
     readData({ state, commit }) {
-      axios.get(state.data.page).then(res => {
+      let { page } = state.data;
+
+      if (page == 'comment') page += '/back';
+
+      axios.get(page).then(res => {
         commit(SET, res.data.result);
       });
     },

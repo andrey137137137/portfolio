@@ -18,11 +18,11 @@ ItemForm(
     placeholder='Содержание'
   )
   InputEventElem(v-model='date', :val='$v.date', placeholder='Дата')
-  InputEventElem(
-    type='checkbox',
+  ChangeEventElem(
+    label='Опубликован',
     v-model='isPublished',
     :val='$v.isPublished',
-    placeholder='Опубликован'
+    type='checkbox'
   )
 </template>
 
@@ -36,12 +36,14 @@ import {
 import itemFormMixin from '@backend/mixins/itemFormMixin';
 import ItemForm from '@backCmp/forms/ItemForm';
 import InputEventElem from '@components/formElems/InputEventElem';
+import ChangeEventElem from '@components/formElems/ChangeEventElem';
 
 export default {
   name: 'CommentForm',
   components: {
     ItemForm,
     InputEventElem,
+    ChangeEventElem,
   },
   mixins: [itemFormMixin],
   data() {

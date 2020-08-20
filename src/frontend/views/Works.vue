@@ -3,8 +3,7 @@ Fragment
   TopWrapper
     SliderCmp.top_wrap-content(:items='dbData')
   BottomWrapper.bottom_wrap--without_bg
-    CommentCmp
-    FeedbackForm
+    FeedbackCmp
     ScrollButton(:inHeader='false')
 </template>
 
@@ -14,8 +13,7 @@ import pageConfigMixin from '@frontend/mixins/pageConfigMixin';
 import TopWrapper from '@frontCmp/TopWrapper';
 import SliderCmp from '@frontCmp/SliderCmp';
 import BottomWrapper from '@frontCmp/BottomWrapper';
-import CommentCmp from '@frontCmp/CommentCmp';
-import FeedbackForm from '@frontCmp/forms/FeedbackForm';
+import FeedbackCmp from '@frontCmp/FeedbackCmp';
 import ScrollButton from '@frontCmp/ScrollButton';
 
 export default {
@@ -25,8 +23,7 @@ export default {
     TopWrapper,
     SliderCmp,
     BottomWrapper,
-    CommentCmp,
-    FeedbackForm,
+    FeedbackCmp,
     ScrollButton,
   },
   mixins: [pageConfigMixin],

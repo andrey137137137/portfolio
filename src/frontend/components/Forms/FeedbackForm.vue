@@ -19,7 +19,7 @@ FrontFormWrapper#feedback.section.container.container--full_width.feedback_form(
     name='position',
     v-model='position',
     :val='$v.position',
-    placeholder='Пользователь'
+    placeholder='Должность'
   )
 
   InputEventElem(

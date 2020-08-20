@@ -16,7 +16,7 @@ export default {
   actions: {
     readComments({ commit }) {
       // commit(SET, reviews);
-      axios.get(dbPage).then(res => {
+      axios.get(`${dbPage}/front`).then(res => {
         commit(SET, res.data.result);
       });
     },

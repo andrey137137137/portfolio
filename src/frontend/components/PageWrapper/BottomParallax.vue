@@ -39,12 +39,12 @@ export default {
       if (this.timeOutID) clearTimeout(this.timeOutID);
 
       this.timeOutID = setTimeout(() => {
-        // $vm.$parallaxContainer.style.height =
-        //   $vm.$bottomWrapper.offsetHeight + $vm.$footer.offsetHeight + 'px';
         $vm.$parallaxContainer.style.height =
-          $vm.bottomHeight + $vm.footerHeight + 'px';
-        console.log($vm.bottomHeight);
-        console.log($vm.footerHeight);
+          $vm.$bottomWrapper.offsetHeight + $vm.$footer.offsetHeight + 'px';
+        // $vm.$parallaxContainer.style.height =
+        //   $vm.bottomHeight + $vm.footerHeight + 'px';
+        // console.log($vm.bottomHeight);
+        // console.log($vm.footerHeight);
         // $vm.moveLayers();
       }, 500);
     },

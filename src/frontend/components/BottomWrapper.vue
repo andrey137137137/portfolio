@@ -15,9 +15,14 @@ export default {
   methods: {
     ...mapActions(['setBottomHeight']),
   },
-  updated() {
-    this.setBottomHeight(this.$refs['bottomWrapper'].offsetHeight);
-  },
+  // updated() {
+  //   const $vm = this;
+
+  //   this.$nextTick(() => {
+  //     console.log($vm.$refs.bottomWrapper);
+  //     $vm.setBottomHeight($vm.$refs.bottomWrapper.offsetHeight);
+  //   });
+  // },
 };
 </script>
 

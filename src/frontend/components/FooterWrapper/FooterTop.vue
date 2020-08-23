@@ -1,15 +1,15 @@
 <template lang="pug">
-  ul.section.footer_top
-    li.container.footer_top-container
+ul.section.footer_top
+  li.container.footer_top-container
+    p.col.col--ds_float.col--ds_4.col--xds_4.section-desc.footer_top-col.footer_top-desc {{ footerDesc }}
 
-      p.col.col--ds_float.col--ds_4.col--xds_4.section-desc.footer_top-col.footer_top-desc {{footerDesc}}
+    NavCmp(:inHeader='false')
 
-      NavCmp(:inHeader="false")
-
-      ContactList(
-        classBlock="footer_top-contacts"
-        classElemSeparator="_"
-        :addClasses="contactClasses")
+    ContactList(
+      classBlock='footer_top-contacts',
+      classElemSeparator='_',
+      :addClasses='contactClasses'
+    )
 </template>
 
 <script>

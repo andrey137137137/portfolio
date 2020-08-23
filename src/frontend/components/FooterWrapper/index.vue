@@ -43,14 +43,21 @@ export default {
   },
   methods: {
     ...mapActions(['setFooterHeight']),
-  },
-  mounted() {
-    const $vm = this;
+    setHeight() {
+      const $vm = this;
 
-    this.$nextTick(() => {
-      $vm.setFooterHeight($vm.$refs['footer'].offsetHeight);
-    });
+      this.$nextTick(() => {
+        $vm.setFooterHeight($vm.$refs.footer.offsetHeight);
+        console.log($vm.$refs.footer);
+      });
+    },
   },
+  // mounted() {
+  //   this.setHeight();
+  // },
+  // updated() {
+  //   this.setHeight();
+  // },
 };
 </script>
 

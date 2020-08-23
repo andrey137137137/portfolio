@@ -6,6 +6,9 @@
 <script>
 import ImageWrapper from '@frontCmp/ImageWrapper';
 
+import { createNamespacedHelpers } from 'vuex';
+const { mapGetters } = createNamespacedHelpers('bottomParallaxHeight');
+
 export default {
   name: 'BottomParallax',
   components: {
@@ -20,6 +23,9 @@ export default {
       $footer: null,
     };
   },
+  computed: {
+    ...mapGetters(['bottomHeight', 'footerHeight']),
+  },
   methods: {
     // moveLayers() {
     //   const scrollY = window.pageYOffset || document.documentElement.scrollTop;
@@ -33,10 +39,12 @@ export default {
       if (this.timeOutID) clearTimeout(this.timeOutID);
 
       this.timeOutID = setTimeout(() => {
+        // $vm.$parallaxContainer.style.height =
+        //   $vm.$bottomWrapper.offsetHeight + $vm.$footer.offsetHeight + 'px';
         $vm.$parallaxContainer.style.height =
-          $vm.$bottomWrapper.offsetHeight + $vm.$footer.offsetHeight + 'px';
-        console.log($vm.$bottomWrapper.offsetHeight);
-        console.log($vm.$footer.offsetHeight);
+          $vm.bottomHeight + $vm.footerHeight + 'px';
+        console.log($vm.bottomHeight);
+        console.log($vm.footerHeight);
         // $vm.moveLayers();
       }, 500);
     },

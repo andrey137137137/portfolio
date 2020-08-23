@@ -1,4 +1,6 @@
 export const SET = 'SET';
+export const SET_BOTTOM_HEIGHT = 'SET_BOTTOM_HEIGHT';
+export const SET_FOOTER_HEIGHT = 'SET_FOOTER_HEIGHT';
 export const SET_PAGE = 'SET_PAGE';
 export const SET_SUCCESS_MESSAGE = 'SET_SUCCESS_MESSAGE';
 export const SET_FORM_MESSAGE = 'SET_FORM_MESSAGE';

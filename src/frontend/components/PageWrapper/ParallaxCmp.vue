@@ -19,7 +19,6 @@
 </template>
 
 <script>
-import $ from 'jquery';
 import ImageWrapper from '@frontCmp/ImageWrapper';
 
 export default {
@@ -110,30 +109,28 @@ export default {
   mounted() {
     const $vm = this;
 
-    $(document).ready(() => {
-      const isScroll = $vm.isScroll;
+    const isScroll = $vm.isScroll;
 
-      $vm.$parallaxContainer = document.getElementById('parallax');
+    $vm.$parallaxContainer = document.getElementById('parallax');
 
-      $vm.centerX = window.innerWidth / 2;
-      $vm.centerY = window.innerHeight / 2;
+    $vm.centerX = window.innerWidth / 2;
+    $vm.centerY = window.innerHeight / 2;
 
-      if ($vm.$parallaxContainer) {
-        // if ($vm.$parallaxContainer.classList.contains("parallax--scroll")) {
-        //   isScroll = true;
-        // }
+    if ($vm.$parallaxContainer) {
+      // if ($vm.$parallaxContainer.classList.contains("parallax--scroll")) {
+      //   isScroll = true;
+      // }
 
-        // $container = $vm.$parallaxContainer.firstElementChild
-        $vm.$layers = $vm.$parallaxContainer.children;
+      // $container = $vm.$parallaxContainer.firstElementChild
+      $vm.$layers = $vm.$parallaxContainer.children;
 
-        if (isScroll) {
-          window.addEventListener('scroll', $vm.moveLayers);
-          window.dispatchEvent(new Event('scroll'));
-        } else {
-          window.addEventListener('mousemove', $vm.moveLayers);
-        }
+      if (isScroll) {
+        window.addEventListener('scroll', $vm.moveLayers);
+        window.dispatchEvent(new Event('scroll'));
+      } else {
+        window.addEventListener('mousemove', $vm.moveLayers);
       }
-    });
+    }
   },
 };
 </script>

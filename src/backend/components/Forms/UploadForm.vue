@@ -1,23 +1,26 @@
 <template lang="pug">
-  Fragment
-    AdminFormWrapper.upload_form(
-      v-for="(item, index) in images"
-      :key="index"
-      @submit.prevent.native="uploadImage(index)"
+Fragment
+  AdminFormWrapper.upload_form(
+    v-for='(item, index) in images',
+    :key='index',
+    @submit.prevent.native='uploadImage(index)'
+  )
+    h3.section-title Изображение: "{{ item.title }}"
+    cropper(
+      :ref='"cropper" + index',
+      :src='image(index)',
+      :stencil-component='stencilComp',
+      :stencil-props='stencilProps'
     )
-      h3.section-title Изображение: "{{item.title}}"
-      cropper(
-        :ref="'cropper' + index"
-        :src="image(index)"
-        :stencil-component="stencilComp"
-        :stencil-props="stencilProps")
-      .form-row.form-row--buttons
-        input(
-          v-if="index == 0"
-          type="file"
-          :ref="'file' + index"
-          @change="loadImage($event, index)" accept="image/*")
-        ButtonElem(:addClasses="buttonWrapperClass") clip image
+    .form-row.form-row--buttons
+      input(
+        v-if='index == 0',
+        type='file',
+        :ref='"file" + index',
+        @change='loadImage($event, index)',
+        accept='image/*'
+      )
+      ButtonElem(:addClasses='buttonWrapperClass') clip image
 </template>
 
 <script>
@@ -106,19 +109,16 @@ export default {
       const root = '/upload';
 
       if (this.breakpoints) {
-        return `${root}/${this.page}/${this.images[index - 1].title}.${
-          this.ext
-        }`;
+        const prevIndex = index == 0 ? index : index - 1;
+
+        return `${root}/${this.page}/${this.images[prevIndex].title}.${this.ext}`;
       }
 
       return `${root}/${this.page}.${this.ext}`;
     },
     dataURItoBlob(dataURI) {
       const byteString = atob(dataURI.split(',')[1]);
-      const mimeString = dataURI
-        .split(',')[0]
-        .split(':')[1]
-        .split(';')[0];
+      const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
       const ab = new ArrayBuffer(byteString.length);
       const ia = new Uint8Array(ab);
       for (var i = 0; i < byteString.length; i++) {
@@ -182,9 +182,13 @@ export default {
   },
   created() {
     if (this.breakpoints) {
+      const tempArray = [];
+
       this.breakpoints.map(title => {
-        this.images.push({ title, value: null });
+        tempArray.push({ title, value: null });
       });
+
+      this.images = tempArray.reverse();
     } else {
       this.images = [{ title: this.page, value: null }];
     }

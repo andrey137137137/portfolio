@@ -12,5 +12,11 @@ router.post('/slider', isAuth, (req, res) => {
 router.post('/about', isAuth, (req, res) => {
   upload(req, res, 'about');
 });
+router.post('/works', isAuth, (req, res) => {
+  upload(req, res, 'works');
+});
+router.post('/parallax/:layer', isAuth, (req, res) => {
+  upload(req, res, 'parallax', req.params.layer);
+});
 
 module.exports = router;

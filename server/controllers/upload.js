@@ -7,14 +7,16 @@ const path = require('path');
 //   return name.slice(name.lastIndexOf(".") + 1);
 // }
 
-module.exports = function(req, res, dir = '') {
+module.exports = function(req, res, dir = '', layer = 0) {
   const form = new IncomingForm();
   const rootPath = 'public/upload';
-  const uploadPath = dir ? path.join(rootPath, dir) : rootPath;
+  let uploadPath = dir ? path.join(rootPath, dir) : rootPath;
   let fileName;
   let filePath;
 
-  console.log(uploadPath);
+  if (layer) {
+    uploadPath = path.join(uploadPath, 'layer_' + layer);
+  }
 
   if (!fs.existsSync(uploadPath)) {
     fs.mkdirSync(uploadPath);

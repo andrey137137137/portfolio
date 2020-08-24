@@ -12,6 +12,7 @@ import {
   ADMIN_BLOG,
   ADMIN_WORKS,
   ADMIN_COMMENTS,
+  ADMIN_PARALLAX,
   ADMIN_PROFILE,
   ADMIN_AUTHCONFIG,
 } from '@common/constants/router';
@@ -116,7 +117,14 @@ const router = new VueRouter({
             setDbPage('comment');
           },
           meta: { title: 'Отзывы', isFront: false },
-          component: () => import('@backViews/Comments.vue'),
+          component: () =>
+            import('@backViews/Comments.vue'),
+        },
+        {
+          path: ADMIN_PARALLAX,
+          meta: { title: 'Параллакс', isFront: false },
+          component: () =>
+            import('@backViews/Parallax.vue'),
         },
         {
           path: ADMIN_PROFILE,
@@ -131,8 +139,12 @@ const router = new VueRouter({
           props: () => {
             setDbPage('user/config');
           },
-          meta: { title: 'Имя пользователя и email', isFront: false },
-          component: () => import('@backViews/AuthConfig.vue'),
+          meta: {
+            title: 'Имя пользователя и email',
+            isFront: false,
+          },
+          component: () =>
+            import('@backViews/AuthConfig.vue'),
         },
       ],
     },

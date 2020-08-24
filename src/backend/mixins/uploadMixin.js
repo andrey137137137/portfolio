@@ -7,8 +7,14 @@ export default {
     };
   },
   methods: {
-    getUploadPage(page) {
-      return `${this.uploadHost}image/${page}`;
+    getUploadPage(page, layer) {
+      let url = `${this.uploadHost}image/${page}`;
+
+      if (layer >= 0) {
+        url += `/${layer}`;
+      }
+
+      return url;
     },
   },
 };

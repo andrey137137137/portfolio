@@ -1,10 +1,16 @@
 <template lang="pug">
 PageWrapper
+  .menu
+    a.menu-link.btn(
+      href='',
+      :class='menuLinkClasses',
+      v-for='(layer, index) in layers',
+      :key='index',
+      @click='curLayer = index'
+    ) Слой №{{ index + 1 }}
   UploadForm(
-    v-for='(layer, index) in layers',
-    :key='index',
-    :page='folder + "layer_" + (index + 1)',
-    :breakpoints='layer.breakpoints',
+    :page='folder + "/layer_" + curLayer',
+    :breakpoints='layers[curLayer].breakpoints',
     :stencilProps='stencilProps',
     ext='png'
   )
@@ -34,6 +40,16 @@ export default {
       default() {
         return {};
       },
+    },
+  },
+  data() {
+    return {
+      curLayer: 0,
+    };
+  },
+  computed: {
+    menuLinkClasses() {
+      return { 'menu-link--active': this.curLayer };
     },
   },
 };

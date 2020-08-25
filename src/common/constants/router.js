@@ -5,6 +5,7 @@ export const HOME = {
 };
 export const WORKS = 'works';
 export const ABOUT = 'about';
+export const COMMENT = 'comment';
 export const BLOG = 'blog';
 export const ADMIN = '/admin';
 export const ADMIN_ABOUT = 'about';

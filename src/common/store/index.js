@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import axios from 'axios';
 import { SUCCESS, ERROR } from '@httpSt';
 import isDev from '@common/helpers/isDev';
+import { COMMENT } from '@common/constants/router';
 import {
   SET,
   SET_PAGE,
@@ -27,6 +28,7 @@ export default new Vuex.Store({
     data: {
       page: '',
       result: [],
+      loaded: false,
     },
     status: 0,
     message: '',
@@ -36,6 +38,7 @@ export default new Vuex.Store({
   getters: {
     dbPage: state => state.data.page,
     dbData: state => state.data.result,
+    dbDataLoaded: state => state.data.loaded,
     status: state => state.status,
     message: state => state.message,
     isFormMessageClosed: state => state.isFormMessageClosed,
@@ -60,7 +63,7 @@ export default new Vuex.Store({
     readData({ state, commit }) {
       let { page } = state.data;
 
-      if (page == 'comment') page += '/back';
+      if (page == COMMENT) page += '/back';
 
       axios.get(page).then(res => {
         commit(SET, res.data.result);
@@ -73,9 +76,9 @@ export default new Vuex.Store({
         commit(ADD, data);
       });
     },
-    updateData({ state, dispatch, commit }, payload) {
+    updateData({ state, dispatch, commit }, { data, id }) {
       const { page } = state.data;
-      const { data, id } = payload;
+      // const { data, id } = payload;
 
       let isUser = false;
       let method = 'put';
@@ -116,10 +119,9 @@ export default new Vuex.Store({
   mutations: {
     [SET_PAGE](state, page) {
       state.data.page = page;
+      state.data.loaded = false;
     },
     [SET_FORM_MESSAGE](state, { status, message }) {
-      // const { status, message } = data;
-
       switch (status) {
         case ERROR:
           state.message = 'Невозможно подключиться к серверу';
@@ -139,13 +141,12 @@ export default new Vuex.Store({
     },
     [SET](state, data) {
       state.data.result = data;
+      state.data.loaded = true;
     },
     [ADD](state, newItem) {
       state.data.result.push(newItem);
     },
     [UPDATE](state, { id, data }) {
-      // const { id, data } = payload;
-
       if (id) {
         const index = state.data.result.findIndex(item => item._id == id);
         data._id = id;

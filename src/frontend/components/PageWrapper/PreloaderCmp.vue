@@ -8,8 +8,10 @@
 </template>
 
 <script>
-import $ from 'jquery';
+// import $ from 'jquery';
 import { gsap } from 'gsap';
+
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'PreloaderCmp',
@@ -29,7 +31,8 @@ export default {
     };
   },
   computed: {
-    animatedNumber: function () {
+    ...mapGetters(['dbDataLoaded']),
+    animatedNumber() {
       return this.tweenedNumber.toFixed(0);
     },
   },
@@ -43,10 +46,10 @@ export default {
       $vm.$preloader.classList.add(`preloader--prs_${$vm.prs}`);
 
       if ($vm.counter >= $vm.count) {
-        setTimeout(function () {
+        setTimeout(() => {
           $vm.$preloader.classList.remove('preloader--active');
         }, 500);
-        setTimeout(function () {
+        setTimeout(() => {
           $vm.$preloader.parentElement.removeChild($vm.$preloader);
         }, 1500);
       }
@@ -54,19 +57,39 @@ export default {
   },
   watch: {
     prs(newValue) {
-      gsap.to(this.$data, { duration: 0.5, tweenedNumber: newValue });
+      gsap.to(this.$data, {
+        duration: 0.5,
+        tweenedNumber: newValue,
+      });
+    },
+    dbDataLoaded(newValue) {
+      const $vm = this;
+
+      if (newValue) {
+        $vm.$images = document.images;
+        $vm.count = $vm.$images.length;
+
+        for (let i = 0; i < $vm.count; i++) {
+          $vm.$imageClone = new Image();
+          $vm.$imageClone.onload = $vm.imageLoaded;
+          $vm.$imageClone.onerror = $vm.imageLoaded;
+          $vm.$imageClone.src = $vm.$images[i].src;
+        }
+      }
     },
   },
   mounted() {
     const $vm = this;
 
-    $(document).ready(() => {
-      $vm.$preloader = document.getElementById('preloader');
-      $vm.$satellite = $vm.$preloader.querySelector(
-        '.preloader-satellite_circle',
-      );
-      $vm.$circle = $vm.$preloader.querySelector('.preloader-center_circle');
-      $vm.$counter = $vm.$preloader.querySelector('.preloader-counter');
+    // $(document).ready(() => {
+    $vm.$preloader = document.getElementById('preloader');
+    $vm.$satellite = $vm.$preloader.querySelector(
+      '.preloader-satellite_circle',
+    );
+    $vm.$circle = $vm.$preloader.querySelector('.preloader-center_circle');
+    $vm.$counter = $vm.$preloader.querySelector('.preloader-counter');
+
+    if ($vm.dbDataLoaded) {
       $vm.$images = document.images;
       $vm.count = $vm.$images.length;
 
@@ -76,7 +99,8 @@ export default {
         $vm.$imageClone.onerror = $vm.imageLoaded;
         $vm.$imageClone.src = $vm.$images[i].src;
       }
-    });
+    }
+    // });
   },
 };
 </script>

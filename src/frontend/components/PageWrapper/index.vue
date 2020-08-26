@@ -7,9 +7,14 @@
 </template>
 
 <script>
+import { HOME, WORKS } from '@common/constants/router';
+import exist from '@common/helpers/exist';
 import PreloaderCmp from './PreloaderCmp';
 import ParallaxCmp from './ParallaxCmp';
 import BottomParallax from './BottomParallax';
+
+import { mapActions, createNamespacedHelpers } from 'vuex';
+const profileMapActions = createNamespacedHelpers('profile').mapActions;
 
 export default {
   name: 'PageWrapper',
@@ -20,19 +25,42 @@ export default {
   },
   computed: {
     classes() {
-      const name = this.$route.name;
+      const { name } = this.$route;
+      const homeName = HOME.name;
+
       return {
-        full_screen: name == 'home',
-        main_wrap: name != 'home',
+        full_screen: name == homeName,
+        main_wrap: name != homeName,
       };
     },
     isWorks() {
-      return this.$route.name == 'works';
+      return this.$route.name == WORKS;
     },
+  },
+  methods: {
+    ...mapActions(['resetLoadedCounters', 'setPage', 'readData']),
+    ...profileMapActions(['readProfile']),
+    loadDbData() {
+      this.resetLoadedCounters();
+      this.readProfile();
+
+      if (exist('table', this.$route.meta)) {
+        this.setPage({ page: this.$route.meta.table, isFront: true });
+        this.readData();
+      }
+    },
+  },
+  created() {
+    console.log('Component created ' + this.$options.name);
+    this.loadDbData();
+  },
+  beforeUpdate() {
+    console.log('Component beforeUpdate ' + this.$options.name);
+    this.loadDbData();
   },
 };
 </script>
 
 <style lang="scss">
-@import '@frontStyles/common.scss';
+@import '@frontStyles/common';
 </style>

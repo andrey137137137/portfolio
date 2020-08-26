@@ -158,9 +158,9 @@ export default {
 
       e.preventDefault();
 
-      // const $flipBtn = $(this.$refs.flipBtn);
+      const $flipBtn = $(this.$refs.flipBtn);
       this.isFlipped = !this.isFlipped;
-      $(this.$refs.flipBtn)[this.isFlipped ? 'fadeOut' : 'fadeIn']();
+      $flipBtn[this.isFlipped ? 'fadeOut' : 'fadeIn']();
     },
     handleSubmit() {
       if (!this.touchInvalidElem()) return false;

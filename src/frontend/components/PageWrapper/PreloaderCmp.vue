@@ -8,9 +8,7 @@
 </template>
 
 <script>
-// import $ from 'jquery';
 import { gsap } from 'gsap';
-
 import { mapGetters } from 'vuex';
 
 export default {
@@ -23,20 +21,35 @@ export default {
       $counter: null,
       $images: null,
       $imageClone: null,
+      intervalID: 0,
       count: 0,
-      // circleLength: 106.811,
       counter: 0,
       prs: 0,
       tweenedNumber: 0,
     };
   },
   computed: {
-    ...mapGetters(['dbDataLoaded']),
+    ...mapGetters(['dbDataLoadingCount', 'dbDataLoadedCount']),
     animatedNumber() {
       return this.tweenedNumber.toFixed(0);
     },
   },
   methods: {
+    imagesLoading() {
+      if (this.dbDataLoadingCount == this.dbDataLoadedCount) {
+        clearInterval(this.intervalID);
+
+        this.$images = document.images;
+        this.count = this.$images.length;
+
+        for (let i = 0; i < this.count; i++) {
+          this.$imageClone = new Image();
+          this.$imageClone.onload = this.imageLoaded;
+          this.$imageClone.onerror = this.imageLoaded;
+          this.$imageClone.src = this.$images[i].src;
+        }
+      }
+    },
     imageLoaded() {
       const $vm = this;
 
@@ -62,26 +75,10 @@ export default {
         tweenedNumber: newValue,
       });
     },
-    dbDataLoaded(newValue) {
-      const $vm = this;
-
-      if (newValue) {
-        $vm.$images = document.images;
-        $vm.count = $vm.$images.length;
-
-        for (let i = 0; i < $vm.count; i++) {
-          $vm.$imageClone = new Image();
-          $vm.$imageClone.onload = $vm.imageLoaded;
-          $vm.$imageClone.onerror = $vm.imageLoaded;
-          $vm.$imageClone.src = $vm.$images[i].src;
-        }
-      }
-    },
   },
   mounted() {
     const $vm = this;
 
-    // $(document).ready(() => {
     $vm.$preloader = document.getElementById('preloader');
     $vm.$satellite = $vm.$preloader.querySelector(
       '.preloader-satellite_circle',
@@ -89,18 +86,9 @@ export default {
     $vm.$circle = $vm.$preloader.querySelector('.preloader-center_circle');
     $vm.$counter = $vm.$preloader.querySelector('.preloader-counter');
 
-    if ($vm.dbDataLoaded) {
-      $vm.$images = document.images;
-      $vm.count = $vm.$images.length;
-
-      for (let i = 0; i < $vm.count; i++) {
-        $vm.$imageClone = new Image();
-        $vm.$imageClone.onload = $vm.imageLoaded;
-        $vm.$imageClone.onerror = $vm.imageLoaded;
-        $vm.$imageClone.src = $vm.$images[i].src;
-      }
-    }
-    // });
+    $vm.intervalID = setInterval(() => {
+      $vm.imagesLoading();
+    }, 100);
   },
 };
 </script>

@@ -52,7 +52,6 @@ Fragment
 
 <script>
 import { Fragment } from 'vue-fragment';
-import pageConfigMixin from '@frontend/mixins/pageConfigMixin';
 import TopWrapper from '@frontCmp/TopWrapper';
 import SectionWrapper from '@frontCmp/SectionWrapper';
 import TitleWrapper from '@frontCmp/TitleWrapper';
@@ -62,8 +61,8 @@ import BottomWrapper from '@frontCmp/BottomWrapper';
 import ContactList from '@frontCmp/ContactList';
 import ScrollButton from '@frontCmp/ScrollButton';
 
-import { createNamespacedHelpers } from 'vuex';
-const { mapGetters } = createNamespacedHelpers('profile');
+import { mapGetters, createNamespacedHelpers } from 'vuex';
+const profileMapGetters = createNamespacedHelpers('profile').mapGetters;
 
 export default {
   name: 'AboutView',
@@ -78,7 +77,6 @@ export default {
     ContactList,
     ScrollButton,
   },
-  mixins: [pageConfigMixin],
   data() {
     return {
       image: {
@@ -101,7 +99,8 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['old', 'footerDesc']),
+    ...mapGetters(['dbData']),
+    ...profileMapGetters(['old', 'footerDesc']),
     compOld() {
       return this.old;
     },

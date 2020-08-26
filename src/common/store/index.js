@@ -11,6 +11,9 @@ import {
   SET_FORM_MESSAGE,
   CLOSE_FORM_MESSAGE,
   SET_AUTH_STATUS,
+  INC_LOADING,
+  INC_LOADED,
+  RESET_LOADED,
   ADD,
   UPDATE,
   DELETE,
@@ -28,8 +31,9 @@ export default new Vuex.Store({
     data: {
       page: '',
       result: [],
-      loaded: false,
     },
+    loadingCount: 1,
+    loadedCount: 0,
     status: 0,
     message: '',
     isFormMessageClosed: false,
@@ -38,14 +42,21 @@ export default new Vuex.Store({
   getters: {
     dbPage: state => state.data.page,
     dbData: state => state.data.result,
-    dbDataLoaded: state => state.data.loaded,
+    dbDataLoadingCount: state => state.loadingCount,
+    dbDataLoadedCount: state => state.loadedCount,
     status: state => state.status,
     message: state => state.message,
     isFormMessageClosed: state => state.isFormMessageClosed,
     isAuth: state => state.authStatus,
   },
   actions: {
-    setPage({ commit }, page) {
+    resetLoadedCounters({ commit }) {
+      commit(RESET_LOADED);
+    },
+    setPage({ commit }, { page, isFront }) {
+      if (isFront) {
+        commit(INC_LOADING);
+      }
       commit(SET_PAGE, page);
     },
     [SET_SUCCESS_MESSAGE]({ commit }, message) {
@@ -67,6 +78,7 @@ export default new Vuex.Store({
 
       axios.get(page).then(res => {
         commit(SET, res.data.result);
+        commit(INC_LOADED);
       });
     },
     insertData({ state, dispatch, commit }, data) {
@@ -78,7 +90,6 @@ export default new Vuex.Store({
     },
     updateData({ state, dispatch, commit }, { data, id }) {
       const { page } = state.data;
-      // const { data, id } = payload;
 
       let isUser = false;
       let method = 'put';
@@ -117,9 +128,18 @@ export default new Vuex.Store({
     },
   },
   mutations: {
+    [INC_LOADING](state) {
+      state.loadingCount++;
+    },
+    [INC_LOADED](state) {
+      state.loadedCount++;
+    },
+    [RESET_LOADED](state) {
+      state.loadingCount = 0;
+      state.loadedCount = 0;
+    },
     [SET_PAGE](state, page) {
       state.data.page = page;
-      state.data.loaded = false;
     },
     [SET_FORM_MESSAGE](state, { status, message }) {
       switch (status) {
@@ -141,7 +161,6 @@ export default new Vuex.Store({
     },
     [SET](state, data) {
       state.data.result = data;
-      state.data.loaded = true;
     },
     [ADD](state, newItem) {
       state.data.result.push(newItem);

@@ -9,12 +9,13 @@ Fragment
 
 <script>
 import { Fragment } from 'vue-fragment';
-import pageConfigMixin from '@frontend/mixins/pageConfigMixin';
 import TopWrapper from '@frontCmp/TopWrapper';
 import SliderCmp from '@frontCmp/SliderCmp';
 import BottomWrapper from '@frontCmp/BottomWrapper';
 import FeedbackCmp from '@frontCmp/FeedbackCmp';
 import ScrollButton from '@frontCmp/ScrollButton';
+
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'WorksView',
@@ -26,7 +27,9 @@ export default {
     FeedbackCmp,
     ScrollButton,
   },
-  mixins: [pageConfigMixin],
+  computed: {
+    ...mapGetters(['dbData']),
+  },
 };
 </script>
 

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { SET } from '@common/store/mutation-types';
+import { SET, INC_LOADING, INC_LOADED } from '@common/store/mutation-types';
 
 export default {
   namespaced: true,
@@ -20,9 +20,12 @@ export default {
     footerDesc: state => state.footerDesc,
   },
   actions: {
-    set({ commit }) {
+    readProfile({ commit }) {
+      commit(INC_LOADING, null, { root: true });
+
       axios.get('user/profile').then(res => {
         commit(SET, res.data.result);
+        commit(INC_LOADED, null, { root: true });
       });
     },
   },

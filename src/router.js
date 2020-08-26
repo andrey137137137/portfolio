@@ -19,15 +19,9 @@ import {
 
 Vue.use(VueRouter);
 
-function setDbPage(dbPage) {
-  store.dispatch('setPage', dbPage);
-}
-
-function pageConfig(dbPage) {
-  setDbPage(dbPage);
-  store.dispatch('profile/set');
-  return {};
-}
+// function setDbPage(dbPage) {
+//   store.dispatch('setPage', { page: dbPage });
+// }
 
 function redirect(cb) {
   if (store.state.authStatus) {
@@ -44,9 +38,6 @@ const router = new VueRouter({
     {
       path: HOME.path,
       name: HOME.name,
-      props: () => {
-        store.dispatch('profile/set');
-      },
       meta: { title: 'Главная', isFront: true },
       component: () => import('@frontend'),
     },
@@ -57,28 +48,19 @@ const router = new VueRouter({
         {
           path: WORKS,
           name: WORKS,
-          props: () => {
-            pageConfig('work');
-          },
-          meta: { title: 'Мои работы', isFront: true },
+          meta: { title: 'Мои работы', table: 'work', isFront: true },
           component: () => import('@frontViews/Works.vue'),
         },
         {
           path: ABOUT,
           name: ABOUT,
-          props: () => {
-            pageConfig('skill');
-          },
-          meta: { title: 'Обо мне', isFront: true },
+          meta: { title: 'Обо мне', table: 'skill', isFront: true },
           component: () => import('@frontViews/About.vue'),
         },
         {
           path: BLOG,
           name: BLOG,
-          props: () => {
-            pageConfig('post');
-          },
-          meta: { title: 'Блог', isFront: true },
+          meta: { title: 'Блог', table: 'post', isFront: true },
           component: () => import('@frontViews/Blog.vue'),
         },
       ],
@@ -117,14 +99,12 @@ const router = new VueRouter({
             setDbPage('comment');
           },
           meta: { title: 'Отзывы', isFront: false },
-          component: () =>
-            import('@backViews/Comments.vue'),
+          component: () => import('@backViews/Comments.vue'),
         },
         {
           path: ADMIN_PARALLAX,
           meta: { title: 'Параллакс', isFront: false },
-          component: () =>
-            import('@backViews/Parallax.vue'),
+          component: () => import('@backViews/Parallax.vue'),
         },
         {
           path: ADMIN_PROFILE,
@@ -143,8 +123,7 @@ const router = new VueRouter({
             title: 'Имя пользователя и email',
             isFront: false,
           },
-          component: () =>
-            import('@backViews/AuthConfig.vue'),
+          component: () => import('@backViews/AuthConfig.vue'),
         },
       ],
     },

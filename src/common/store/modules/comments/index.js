@@ -1,6 +1,11 @@
 import axios from 'axios';
-
-import { SET, ADD, DELETE } from '@common/store/mutation-types';
+import {
+  SET,
+  ADD,
+  DELETE,
+  INC_LOADING,
+  INC_LOADED,
+} from '@common/store/mutation-types';
 
 const dbPage = 'comment';
 
@@ -14,8 +19,11 @@ export default {
   },
   actions: {
     readComments({ commit }) {
+      commit(INC_LOADING, null, { root: true });
+
       axios.get(`${dbPage}/front`).then(res => {
         commit(SET, res.data.result);
+        commit(INC_LOADED, null, { root: true });
       });
     },
     insertComment({ dispatch }, { data }) {

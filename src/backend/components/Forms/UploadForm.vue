@@ -26,10 +26,7 @@ Fragment
 <script>
 import axios from 'axios';
 import { Fragment } from 'vue-fragment';
-import {
-  CircleStencil,
-  Cropper,
-} from 'vue-advanced-cropper';
+import { CircleStencil, Cropper } from 'vue-advanced-cropper';
 import uploadMixin from '@backend/mixins/uploadMixin';
 import AdminFormWrapper from '@backCmp/AdminFormWrapper';
 import ButtonElem from '@components/formElems/ButtonElem';
@@ -97,9 +94,7 @@ export default {
     //     : [{ title: this.page, value: null }];
     // },
     stencilComp() {
-      const COMP = this.isRound
-        ? 'CircleStencil'
-        : 'RectangleStencil';
+      const COMP = this.isRound ? 'CircleStencil' : 'RectangleStencil';
       return this.$options.components[COMP];
     },
     buttonWrapperClass() {
@@ -127,10 +122,7 @@ export default {
     },
     dataURItoBlob(dataURI) {
       const byteString = atob(dataURI.split(',')[1]);
-      const mimeString = dataURI
-        .split(',')[0]
-        .split(':')[1]
-        .split(';')[0];
+      const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
       const ab = new ArrayBuffer(byteString.length);
       const ia = new Uint8Array(ab);
       for (var i = 0; i < byteString.length; i++) {
@@ -157,14 +149,12 @@ export default {
 
           if (this.cropSize) {
             const { width, height } = this.cropSize;
-            this.$refs.cropper.setCoordinates(
-              (coordinates, imageSize) => ({
-                width,
-                height,
-                left: imageSize.width / 2 - width / 2,
-                top: imageSize.height / 2 - height / 2,
-              }),
-            );
+            this.$refs.cropper.setCoordinates((coordinates, imageSize) => ({
+              width,
+              height,
+              left: imageSize.width / 2 - width / 2,
+              top: imageSize.height / 2 - height / 2,
+            }));
           }
         };
         // Start the reader job - read file as a data url (base64 format)
@@ -172,14 +162,9 @@ export default {
       }
     },
     uploadImage(index) {
-      const { canvas } = this.$refs[
-        'cropper' + index
-      ][0].getResult();
+      const { canvas } = this.$refs['cropper' + index][0].getResult();
       if (canvas) {
-        this.resultURL = canvas.toDataURL(
-          `image/${this.ext}`,
-          1,
-        );
+        this.resultURL = canvas.toDataURL(`image/${this.ext}`, 1);
         const form = new FormData();
         form.append(
           'image',
@@ -187,10 +172,7 @@ export default {
           `${this.images[index].title}.${this.ext}`,
         );
         axios
-          .post(
-            this.getUploadPage(this.page, this.layer),
-            form,
-          )
+          .post(this.getUploadPage(this.page, this.layer), form)
           .then(res => {
             this.fileMsg = res.data.message;
 

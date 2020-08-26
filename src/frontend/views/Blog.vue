@@ -24,20 +24,17 @@ TopWrapper
 
 <script>
 import $ from 'jquery';
-import pageConfigMixin from '@frontend/mixins/pageConfigMixin';
 import TopWrapper from '@frontCmp/TopWrapper';
+
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'BlogView',
   components: {
     TopWrapper,
   },
-  mixins: [pageConfigMixin],
   data() {
     return {
-      // $news: $(".news"),
-      // $item: $(".menu__item"),
-      // $wrapMenu: $(".wrap-menu"),
       $posts: null,
       menu: {
         modifs: {
@@ -51,6 +48,9 @@ export default {
       offsetHeight: 0, // верхнее смещение для скролла
       flagAnimation: true,
     };
+  },
+  computed: {
+    ...mapGetters(['dbData']),
   },
   methods: {
     getTabLink(name) {
@@ -145,5 +145,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import '@frontStylesPgs/Blog/import.scss';
+@import '@frontStylesPgs/Blog/import';
 </style>

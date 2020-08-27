@@ -23,6 +23,9 @@ export default {
     ParallaxCmp,
     BottomParallax,
   },
+  data() {
+    return { profileIsLoaded: false };
+  },
   computed: {
     classes() {
       const { name } = this.$route;
@@ -41,8 +44,11 @@ export default {
     ...mapActions(['resetLoadedCounters', 'setPage', 'readData']),
     ...profileMapActions(['readProfile']),
     loadDbData() {
-      this.resetLoadedCounters();
-      this.readProfile();
+      if (!this.profileIsLoaded) {
+        this.resetLoadedCounters();
+        this.readProfile();
+        this.profileIsLoaded = true;
+      }
 
       if (exist('table', this.$route.meta)) {
         this.setPage({ page: this.$route.meta.table, isFront: true });

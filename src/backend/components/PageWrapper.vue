@@ -6,6 +6,7 @@
 </template>
 
 <script>
+import loadDataMixin from '@common/mixins/loadDataMixin';
 import SubmitMessage from '@components/formElems/SubmitMessage';
 
 import { mapGetters } from 'vuex';
@@ -15,6 +16,7 @@ export default {
   components: {
     SubmitMessage,
   },
+  mixins: [loadDataMixin],
   computed: {
     ...mapGetters(['isAuth']),
     title() {
@@ -22,6 +24,10 @@ export default {
         ? 'Вы не авторизированы!'
         : `Страница "${this.$route.meta.title}"`;
     },
+  },
+  created() {
+    this.isItFront(this.$route.meta.isFront);
+    this.loadData();
   },
 };
 </script>

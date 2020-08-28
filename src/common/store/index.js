@@ -8,6 +8,7 @@ import {
   SET,
   SET_PAGE,
   SET_SUCCESS_MESSAGE,
+  SET_IS_FRONT,
   SET_FORM_MESSAGE,
   CLOSE_FORM_MESSAGE,
   SET_AUTH_STATUS,
@@ -36,6 +37,7 @@ export default new Vuex.Store({
     loadedCount: 0,
     status: 0,
     message: '',
+    isFront: false,
     isFormMessageClosed: false,
     authStatus: false,
   },
@@ -50,11 +52,14 @@ export default new Vuex.Store({
     isAuth: state => state.authStatus,
   },
   actions: {
+    isItFront({ commit }, isFront) {
+      commit(SET_IS_FRONT, isFront);
+    },
     resetLoadedCounters({ commit }) {
       commit(RESET_LOADED);
     },
-    setPage({ commit }, { page, isFront }) {
-      if (isFront) {
+    setPage({ state, commit }, page) {
+      if (state.isFront) {
         commit(INC_LOADING);
       }
       commit(SET_PAGE, page);
@@ -78,7 +83,9 @@ export default new Vuex.Store({
 
       axios.get(page).then(res => {
         commit(SET, res.data.result);
-        commit(INC_LOADED);
+        if (state.isFront) {
+          commit(INC_LOADED);
+        }
       });
     },
     insertData({ state, dispatch, commit }, data) {
@@ -140,6 +147,9 @@ export default new Vuex.Store({
     },
     [SET_PAGE](state, page) {
       state.data.page = page;
+    },
+    [SET_IS_FRONT](state, isFront) {
+      state.isFront = isFront;
     },
     [SET_FORM_MESSAGE](state, { status, message }) {
       switch (status) {

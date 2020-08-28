@@ -8,7 +8,7 @@
 
 <script>
 import { HOME, WORKS } from '@common/constants/router';
-import exist from '@common/helpers/exist';
+import loadDataMixin from '@common/mixins/loadDataMixin';
 import PreloaderCmp from './PreloaderCmp';
 import ParallaxCmp from './ParallaxCmp';
 import BottomParallax from './BottomParallax';
@@ -23,6 +23,7 @@ export default {
     ParallaxCmp,
     BottomParallax,
   },
+  mixins: [loadDataMixin],
   data() {
     return { profileIsLoaded: false };
   },
@@ -43,26 +44,24 @@ export default {
   methods: {
     ...mapActions(['resetLoadedCounters', 'setPage', 'readData']),
     ...profileMapActions(['readProfile']),
-    loadDbData() {
+    loadProfileAndPageData() {
       if (!this.profileIsLoaded) {
+        this.isItFront(this.$route.meta.isFront);
         this.resetLoadedCounters();
         this.readProfile();
         this.profileIsLoaded = true;
       }
 
-      if (exist('table', this.$route.meta)) {
-        this.setPage({ page: this.$route.meta.table, isFront: true });
-        this.readData();
-      }
+      this.loadData();
     },
   },
   created() {
     console.log('Component created ' + this.$options.name);
-    this.loadDbData();
+    this.loadProfileAndPageData();
   },
   beforeUpdate() {
     console.log('Component beforeUpdate ' + this.$options.name);
-    this.loadDbData();
+    this.loadProfileAndPageData();
   },
 };
 </script>

@@ -19,10 +19,6 @@ import {
 
 Vue.use(VueRouter);
 
-// function setDbPage(dbPage) {
-//   store.dispatch('setPage', { page: dbPage });
-// }
-
 function redirect(cb) {
   if (store.state.authStatus) {
     cb();
@@ -48,19 +44,19 @@ const router = new VueRouter({
         {
           path: WORKS,
           name: WORKS,
-          meta: { title: 'Мои работы', table: 'work', isFront: true },
+          meta: { title: 'Мои работы', page: 'work', isFront: true },
           component: () => import('@frontViews/Works.vue'),
         },
         {
           path: ABOUT,
           name: ABOUT,
-          meta: { title: 'Обо мне', table: 'skill', isFront: true },
+          meta: { title: 'Обо мне', page: 'skill', isFront: true },
           component: () => import('@frontViews/About.vue'),
         },
         {
           path: BLOG,
           name: BLOG,
-          meta: { title: 'Блог', table: 'post', isFront: true },
+          meta: { title: 'Блог', page: 'post', isFront: true },
           component: () => import('@frontViews/Blog.vue'),
         },
       ],
@@ -71,34 +67,22 @@ const router = new VueRouter({
       children: [
         {
           path: ADMIN_ABOUT,
-          props: () => {
-            setDbPage('skill');
-          },
-          meta: { title: 'Обо мне', isFront: false },
+          meta: { title: 'Обо мне', page: 'skill', isFront: false },
           component: () => import('@backViews/About.vue'),
         },
         {
           path: ADMIN_BLOG,
-          props: () => {
-            setDbPage('post');
-          },
-          meta: { title: 'Блог', isFront: false },
+          meta: { title: 'Блог', page: 'post', isFront: false },
           component: () => import('@backViews/Blog.vue'),
         },
         {
           path: ADMIN_WORKS,
-          props: () => {
-            setDbPage('work');
-          },
-          meta: { title: 'Мои работы', isFront: false },
+          meta: { title: 'Мои работы', page: 'work', isFront: false },
           component: () => import('@backViews/Works.vue'),
         },
         {
           path: ADMIN_COMMENTS,
-          props: () => {
-            setDbPage('comment');
-          },
-          meta: { title: 'Отзывы', isFront: false },
+          meta: { title: 'Отзывы', page: 'comment', isFront: false },
           component: () => import('@backViews/Comments.vue'),
         },
         {
@@ -108,19 +92,18 @@ const router = new VueRouter({
         },
         {
           path: ADMIN_PROFILE,
-          props: () => {
-            setDbPage('user/profile');
+          meta: {
+            title: 'Личные данные',
+            page: 'user/profile',
+            isFront: false,
           },
-          meta: { title: 'Личные данные', isFront: false },
           component: () => import('@backViews/Profile.vue'),
         },
         {
           path: ADMIN_AUTHCONFIG,
-          props: () => {
-            setDbPage('user/config');
-          },
           meta: {
             title: 'Имя пользователя и email',
+            page: 'user/config',
             isFront: false,
           },
           component: () => import('@backViews/AuthConfig.vue'),

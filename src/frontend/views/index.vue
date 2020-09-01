@@ -5,7 +5,6 @@ PageWrapper
     HeaderContent
     ScrollButton
   router-view
-  FooterWrapper
   MainMenu
 </template>
 
@@ -16,7 +15,6 @@ import HeaderWrapper from '@frontCmp/header/HeaderWrapper';
 import NavCmp from '@frontCmp/NavCmp';
 import HeaderContent from '@frontCmp/header/HeaderContent';
 import ScrollButton from '@frontCmp/ScrollButton';
-import FooterWrapper from '@frontCmp/FooterWrapper';
 import MainMenu from '@frontCmp/NavCmp/MainMenu';
 
 export default {
@@ -27,7 +25,6 @@ export default {
     NavCmp,
     HeaderContent,
     ScrollButton,
-    FooterWrapper,
     MainMenu,
   },
   mixins: [menuCheckerMixin],

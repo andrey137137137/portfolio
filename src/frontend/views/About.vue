@@ -48,6 +48,7 @@ Fragment
         :isIconed='true'
       )
     ScrollButton.scroll_btn--on_map(:inHeader='false')
+  FooterWrapper
 </template>
 
 <script>
@@ -60,6 +61,7 @@ import SkillList from '@frontCmp/SkillList';
 import BottomWrapper from '@frontCmp/BottomWrapper';
 import ContactList from '@frontCmp/ContactList';
 import ScrollButton from '@frontCmp/ScrollButton';
+import FooterWrapper from '@frontCmp/FooterWrapper';
 
 import { mapGetters, createNamespacedHelpers } from 'vuex';
 const profileMapGetters = createNamespacedHelpers('profile').mapGetters;
@@ -76,6 +78,7 @@ export default {
     BottomWrapper,
     ContactList,
     ScrollButton,
+    FooterWrapper,
   },
   data() {
     return {

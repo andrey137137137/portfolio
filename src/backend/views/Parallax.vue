@@ -1,6 +1,6 @@
 <template lang="pug">
 PageWrapper
-  .menu
+  .menu(v-show='isLoaded')
     a.menu-link.btn(
       href='',
       :class='menuLinkClasses',
@@ -12,6 +12,8 @@ PageWrapper
     :page='"parallax/layer_" + curLayer',
     :breakpoints='breakpoints',
     :stencilProps='stencilProps',
+    :readyHandle='readyHandle',
+    :errorHandle='errorHandle',
     ext='png'
   )
   div
@@ -43,11 +45,21 @@ export default {
       layers: 0,
       curLayer: 0,
       breakpoints: ['sm', 'md', 'lg'],
+      isLoaded: false,
     };
   },
   computed: {
     menuLinkClasses() {
       return { 'menu-link--active': this.curLayer };
+    },
+  },
+  methods: {
+    readyHandle() {
+      this.layers++;
+      this.curLayer = this.layers;
+    },
+    errorHandle() {
+      this.isLoaded = true;
     },
   },
 };

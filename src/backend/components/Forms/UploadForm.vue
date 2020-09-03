@@ -10,7 +10,8 @@ Fragment
       :ref='"cropper" + index',
       :src='image(index)',
       :stencil-component='stencilComp',
-      :stencil-props='stencilProps'
+      :stencil-props='stencilProps',
+      @error='handleError'
     )
     .form-row.form-row--buttons
       input(
@@ -74,6 +75,18 @@ export default {
       type: Object,
       default() {
         return null;
+      },
+    },
+    readyHandle: {
+      type: Function,
+      default: () => {
+        return;
+      },
+    },
+    errorHandle: {
+      type: Function,
+      default: () => {
+        return;
       },
     },
   },

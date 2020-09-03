@@ -7,6 +7,7 @@ PageWrapper
 import pageDataMixin from '@backend/mixins/pageDataMixin';
 import PageWrapper from '@backCmp/PageWrapper';
 import UsernameForm from '@backCmp/forms/UsernameForm';
+
 export default {
   name: 'AdminAuthConfigView',
   components: {

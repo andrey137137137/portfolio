@@ -7,11 +7,14 @@
 </template>
 
 <script>
-import { HOME, WORKS } from '@common/constants/router';
+import {
+  HOME,
+  // WORKS
+} from '@common/constants/router';
 import loadDataMixin from '@common/mixins/loadDataMixin';
 import PreloaderCmp from './PreloaderCmp';
 import ParallaxCmp from './ParallaxCmp';
-import BottomParallax from './BottomParallax';
+// import BottomParallax from './BottomParallax';
 
 import { mapActions, createNamespacedHelpers } from 'vuex';
 const profileMapActions = createNamespacedHelpers('profile').mapActions;
@@ -21,7 +24,7 @@ export default {
   components: {
     PreloaderCmp,
     ParallaxCmp,
-    BottomParallax,
+    // BottomParallax,
   },
   mixins: [loadDataMixin],
   data() {
@@ -37,12 +40,12 @@ export default {
         main_wrap: name != homeName,
       };
     },
-    isWorks() {
-      return this.$route.name == WORKS;
-    },
+    // isWorks() {
+    //   return this.$route.name == WORKS;
+    // },
   },
   methods: {
-    ...mapActions(['resetLoadedCounters', 'setPage', 'readData']),
+    ...mapActions(['resetLoadedCounters']),
     ...profileMapActions(['readProfile']),
     loadProfileAndPageData() {
       if (!this.profileIsLoaded) {

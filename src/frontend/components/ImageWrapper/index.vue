@@ -1,16 +1,17 @@
 <template lang="pug">
-  picture(:class="containerClasses")
-    ImageCmp(
-      v-for="(item, index) in breakpoints"
-      :key="index"
-      :classes="imgClasses"
-      :path="path + '/' + item.name"
-      :breakpoint="item.value"
-      :title="title")
+picture(:class='containerClasses')
+  ImageCmp(
+    v-for='(item, index) in breakpoints',
+    :key='index',
+    :classes='imgClasses',
+    :path='path + "/" + item.name',
+    :breakpoint='item.value',
+    :title='title'
+  )
 </template>
 
 <script>
-import addClassesMixin from '@common/mixins/addClassesMixin.js';
+import addClassesMixin from '@common/mixins/addClassesMixin';
 import ImageCmp from './ImageCmp';
 
 export default {

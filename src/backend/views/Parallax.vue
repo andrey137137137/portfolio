@@ -9,32 +9,28 @@ PageWrapper
       @click='curLayer = index'
     ) Слой №{{ index + 1 }}
   UploadForm(
-    :page='folder + "/layer_" + curLayer',
-    :breakpoints='layers[curLayer].breakpoints',
+    :page='"parallax/layer_" + curLayer',
+    :breakpoints='breakpoints',
     :stencilProps='stencilProps',
     ext='png'
   )
+  div
+    ButtonElem Добавить слой
 </template>
 
 <script>
 import PageWrapper from '@backCmp/PageWrapper';
 import UploadForm from '@backCmp/forms/UploadForm';
+import ButtonElem from '@components/formElems/ButtonElem';
 
 export default {
   name: 'Parallax',
   components: {
     PageWrapper,
     UploadForm,
+    ButtonElem,
   },
   props: {
-    folder: {
-      type: String,
-      required: true,
-    },
-    layers: {
-      type: Array,
-      required: true,
-    },
     stencilProps: {
       type: Object,
       default() {
@@ -44,7 +40,9 @@ export default {
   },
   data() {
     return {
+      layers: 0,
       curLayer: 0,
+      breakpoints: ['sm', 'md', 'lg'],
     };
   },
   computed: {

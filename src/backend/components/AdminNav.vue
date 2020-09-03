@@ -8,8 +8,8 @@ nav.admin_nav
 </template>
 
 <script>
-import { ROOT, ADMIN } from '@common/constants/router.js';
-// import { ROOT } from '@common/constants/router.js';
+import { ADMIN } from '@common/constants/router';
+// import { ROOT } from '@common/constants/router';
 import exist from '@common/helpers/exist';
 import getRoutesMixin from '@common/mixins/getRoutesMixin';
 

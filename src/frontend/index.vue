@@ -87,7 +87,7 @@ import $ from 'jquery';
 import axios from 'axios';
 import { Fragment } from 'vue-fragment';
 import { ERROR } from '@httpSt';
-import { ADMIN } from '@common/constants/router.js';
+import { ADMIN } from '@common/constants/router';
 // import { required } from "vuelidate/lib/validators";
 import { userAlphaNumValids, checked } from '@common/helpers/validators';
 import frontFormMixin from '@frontend/mixins/frontFormMixin';

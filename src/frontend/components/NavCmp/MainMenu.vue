@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { ROOT, HOME } from '@common/constants/router.js';
+import { ROOT, HOME } from '@common/constants/router';
 import exist from '@common/helpers/exist';
 import getRoutesMixin from '@common/mixins/getRoutesMixin';
 

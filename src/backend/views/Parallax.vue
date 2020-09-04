@@ -10,8 +10,9 @@ PageWrapper
     ) Слой №{{ index + 1 }}
   UploadForm(
     :page='"parallax/layer_" + curLayer',
-    :breakpoints='breakpoints',
+    :breakpoints='["sm", "md", "lg", "xlg"]',
     :stencilProps='stencilProps',
+    :layer='curLayer',
     :readyHandle='readyHandle',
     :errorHandle='errorHandle',
     ext='png'
@@ -44,7 +45,6 @@ export default {
     return {
       layers: 0,
       curLayer: 0,
-      breakpoints: ['sm', 'md', 'lg'],
       isLoaded: false,
     };
   },
@@ -55,12 +55,24 @@ export default {
   },
   methods: {
     readyHandle() {
-      this.layers++;
-      this.curLayer = this.layers;
+      if (!this.isLoaded) {
+        this.layers++;
+        this.curLayer = this.layers;
+        console.log(this.curLayer + ' in ' + this.layers);
+      }
     },
     errorHandle() {
-      this.isLoaded = true;
+      if (!this.isLoaded) {
+        this.isLoaded = true;
+        this.curLayer = this.layers - 1;
+      }
     },
   },
 };
 </script>
+
+<style lang="scss">
+.menu {
+  color: $white;
+}
+</style>

@@ -11,7 +11,8 @@ Fragment
       :src='image(index)',
       :stencil-component='stencilComp',
       :stencil-props='stencilProps',
-      @error='handleError'
+      @ready='handle(index, "readyHandle")',
+      @error='handle(index, "errorHandle")'
     )
     .form-row.form-row--buttons
       input(
@@ -118,6 +119,12 @@ export default {
     },
   },
   methods: {
+    handle(index, eventMethod) {
+      if (index) return;
+      console.log(`[${this.layer}, ${index}]: ${eventMethod} - ${this.page}`);
+
+      this[eventMethod]();
+    },
     image(index) {
       if (this.images[index].value) {
         return this.images[index].value;
@@ -211,7 +218,6 @@ export default {
     } else {
       this.images = [{ title: this.page, value: null }];
     }
-    console.log(this.images);
   },
 };
 </script>

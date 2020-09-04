@@ -7,14 +7,14 @@ const path = require('path');
 //   return name.slice(name.lastIndexOf(".") + 1);
 // }
 
-module.exports = function(req, res, dir = '', layer = 0) {
+module.exports = function(req, res, dir = '', layer = -1) {
   const form = new IncomingForm();
   const rootPath = 'public/upload';
   let uploadPath = dir ? path.join(rootPath, dir) : rootPath;
   let fileName;
   let filePath;
 
-  if (layer) {
+  if (layer >= 0) {
     uploadPath = path.join(uploadPath, 'layer_' + layer);
   }
 

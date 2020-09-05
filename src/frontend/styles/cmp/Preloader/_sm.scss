@@ -5,7 +5,8 @@
 
   @include position('fixed 0');
   z-index: 100000;
-  color: $white rgba(#253468, 0.87);
+  // color: $white rgba(#253468, 0.87);
+  color: $white #253468;
   opacity: 0;
   transition: opacity 1s;
 

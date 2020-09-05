@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import { HOME } from '@common/constants/router';
 import ImageWrapper from '@frontCmp/ImageWrapper';
 
 export default {
@@ -54,7 +55,7 @@ export default {
   },
   computed: {
     isScroll() {
-      return this.$route.name != 'home';
+      return this.$route.name != HOME.name;
     },
     classes() {
       return { 'parallax--scroll': this.isScroll };
@@ -62,7 +63,7 @@ export default {
   },
   methods: {
     getLayerPath(index) {
-      return this.path + '/layer_' + (index + 1);
+      return this.path + '/layer_' + index;
     },
     getTitle(index) {
       return 'Слой ' + index;
@@ -81,7 +82,7 @@ export default {
         : this.centerY - event.pageY;
 
       if (this.$layers) {
-        [].slice.call(this.$layers).forEach(function($layer, index) {
+        [].slice.call(this.$layers).forEach(function ($layer, index) {
           if (isScroll) {
             $vm.divider = (index + 1) / 90;
           } else {

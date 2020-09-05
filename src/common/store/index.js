@@ -22,7 +22,6 @@ import {
 import frontFormError from '@common/store/modules/frontFormError';
 import profile from '@common/store/modules/profile';
 import comments from '@common/store/modules/comments';
-import bottomParallaxHeight from '@common/store/modules/bottomParallaxHeight';
 
 Vue.use(Vuex);
 
@@ -195,6 +194,5 @@ export default new Vuex.Store({
     frontFormError,
     profile,
     comments,
-    bottomParallaxHeight,
   },
 });

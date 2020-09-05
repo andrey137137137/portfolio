@@ -6,8 +6,9 @@ PageWrapper
       :class='menuLinkClasses',
       v-for='(layer, index) in layers',
       :key='index',
-      @click='curLayer = index'
+      @click.prevent='curLayer = index'
     ) Слой №{{ index + 1 }}
+    a.menu-link.btn(href='', @click.prevent='setNewLayer') Новый слой
   UploadForm(
     :page='"parallax/layer_" + curLayer',
     :breakpoints='["sm", "md", "lg", "xlg"]',
@@ -17,8 +18,6 @@ PageWrapper
     :errorHandle='errorHandle',
     ext='png'
   )
-  div
-    ButtonElem Добавить слой
 </template>
 
 <script>
@@ -54,9 +53,19 @@ export default {
     },
   },
   methods: {
+    addLayer() {
+      this.layers++;
+    },
+    setLastLayer() {
+      this.curLayer = this.layers - 1;
+    },
+    setNewLayer() {
+      this.addLayer();
+      this.setLastLayer();
+    },
     readyHandle() {
       if (!this.isLoaded) {
-        this.layers++;
+        this.addLayer();
         this.curLayer = this.layers;
         console.log(this.curLayer + ' in ' + this.layers);
       }
@@ -64,7 +73,7 @@ export default {
     errorHandle() {
       if (!this.isLoaded) {
         this.isLoaded = true;
-        this.curLayer = this.layers - 1;
+        this.setLastLayer();
       }
     },
   },

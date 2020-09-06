@@ -9,6 +9,7 @@ Fragment
     cropper(
       :ref='"cropper" + index',
       :src='image(index)',
+      :backgroundClass='"upload_form-cropper--bg"',
       :stencil-component='stencilComp',
       :stencil-props='stencilProps',
       @ready='handle(index, "readyHandle")',
@@ -131,14 +132,16 @@ export default {
       }
 
       const root = '/upload';
+      const dir =
+        this.layer >= 0 ? `${this.page}/layer_${this.layer}` : this.page;
 
       if (this.breakpoints) {
         const prevIndex = index == 0 ? index : index - 1;
 
-        return `${root}/${this.page}/${this.images[prevIndex].title}.${this.ext}`;
+        return `${root}/${dir}/${this.images[prevIndex].title}.${this.ext}`;
       }
 
-      return `${root}/${this.page}.${this.ext}`;
+      return `${root}/${dir}.${this.ext}`;
     },
     dataURItoBlob(dataURI) {
       const byteString = atob(dataURI.split(',')[1]);
@@ -231,6 +234,10 @@ export default {
 
   .container &-col {
     width: 50%;
+  }
+
+  .vue-advanced-cropper__image-wrapper {
+    background-color: $white;
   }
 
   &-placeholder {

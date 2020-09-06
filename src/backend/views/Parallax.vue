@@ -10,7 +10,7 @@ PageWrapper
     ) Слой №{{ index + 1 }}
     a.menu-link.btn(href='', @click.prevent='setNewLayer') Новый слой
   UploadForm(
-    :page='"parallax/layer_" + curLayer',
+    :page='"parallax"',
     :breakpoints='["sm", "md", "lg", "xlg"]',
     :stencilProps='stencilProps',
     :layer='curLayer',

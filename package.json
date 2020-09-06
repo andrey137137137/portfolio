@@ -1,6 +1,6 @@
 {
   "name": "portfolio",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "build": "vue-cli-service build",
@@ -72,13 +72,6 @@
     "babel-eslint": "^10.0.1",
     "eslint": "^5.14.0",
     "eslint-plugin-vue": "^5.2.1",
-    "gulp": "^4.0.2",
-    "gulp-cheerio": "^1.0.0",
-    "gulp-load-plugins": "^2.0.3",
-    "gulp-replace": "^1.0.0",
-    "gulp-svg-sprite": "^1.5.0",
-    "gulp-svgmin": "^2.2.0",
-    "jquery-parallax.js": "^1.5.0",
     "morgan": "^1.10.0",
     "nodemon": "^1.18.10",
     "simple-progress-webpack-plugin": "^1.1.2"

@@ -1,14 +1,26 @@
 const mongoose = require('mongoose');
 const { USER, PASSWORD, HOST, PORT, NAME } = require('@config').db;
+let isFirstConnected = false;
 
 mongoose.Promise = global.Promise;
 
-mongoose
-  .connect(`mongodb://${USER}:${PASSWORD}@${HOST}:${PORT}/${NAME}`)
-  .catch(e => {
-    console.error(e);
-    throw e;
-  });
+function connectDB() {
+  mongoose
+    .connect(`mongodb://${USER}:${PASSWORD}@${HOST}:${PORT}/${NAME}`, {
+      useNewUrlParser: true,
+      autoReconnect: true,
+      reconnectTries: 30,
+      reconnectInterval: 200,
+      // useUnifiedTopology: true,
+    })
+    .then(() => {
+      isFirstConnected = true;
+    })
+    .catch(e => {
+      console.error(e);
+      // throw e;
+    });
+}
 
 mongoose.connection.on('connected', () => {
   console.log(
@@ -19,6 +31,9 @@ mongoose.connection.on('connected', () => {
 // If the connection throws an error
 mongoose.connection.on('error', err => {
   console.log('Mongoose default connection error: ' + err);
+  if (!isFirstConnected) {
+    setTimeout(connectDB, 1000);
+  }
 });
 
 // When the connection is disconnected
@@ -35,6 +50,8 @@ process.on('SIGINT', () => {
     process.exit(0);
   });
 });
+
+connectDB();
 
 require('./models/post');
 require('./models/skill');

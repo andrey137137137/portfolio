@@ -19,6 +19,8 @@ const { PROTOCOL, HOST, PORT, FRONT_PORT, URL } = require('@config').server;
 const { SECRET, KEY } = require('@config').session;
 require('./db');
 
+// console.log(isFirstConnected);
+
 const isProduction = process.env.NODE_ENV === 'production';
 
 const app = express();
@@ -38,7 +40,9 @@ app.use(
   }),
 );
 
-app.use(logger('dev'));
+if (!isProduction) {
+  app.use(logger('dev'));
+}
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));

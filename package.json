@@ -6,7 +6,8 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "client": "vue-cli-service serve --open",
-    "server": "nodemon server/app.js",
+    "server": "node server/app.js",
+    "testServer": "nodemon server/app.js",
     "start": "concurrently \"nodemon server/app.js\" \"vue-cli-service serve --open\""
   },
   "dependencies": {

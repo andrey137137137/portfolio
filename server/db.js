@@ -5,30 +5,19 @@ let isFirstConnected = false;
 mongoose.Promise = global.Promise;
 
 function connectDB() {
-  mongoose
-    .connect(`mongodb://${USER}:${PASSWORD}@${HOST}:${PORT}/${NAME}`, {
-      useNewUrlParser: true,
-      autoReconnect: true,
-      reconnectTries: 30,
-      reconnectInterval: 200,
-      // useUnifiedTopology: true,
-    })
-    .then(() => {
-      isFirstConnected = true;
-    })
-    .catch(e => {
-      console.error(e);
-      // throw e;
-    });
+  mongoose.connect(`mongodb://${USER}:${PASSWORD}@${HOST}:${PORT}/${NAME}`, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
 }
 
 mongoose.connection.on('connected', () => {
   console.log(
     `Mongoose default connection open mongodb://${HOST}:${PORT}/${NAME}`,
   );
+  isFirstConnected = true;
 });
 
-// If the connection throws an error
 mongoose.connection.on('error', err => {
   console.log('Mongoose default connection error: ' + err);
   if (!isFirstConnected) {
@@ -36,12 +25,10 @@ mongoose.connection.on('error', err => {
   }
 });
 
-// When the connection is disconnected
 mongoose.connection.on('disconnected', () => {
   console.log('Mongoose default connection disconnected');
 });
 
-// If the Node process ends, close the Mongoose connection
 process.on('SIGINT', () => {
   mongoose.connection.close(() => {
     console.log(

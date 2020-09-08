@@ -74,7 +74,7 @@ export default {
     },
     setPostPositions() {
       const $vm = this;
-      $vm.$posts.each(function (item) {
+      $vm.$posts.each(function(item) {
         $vm.postPositions[item] = {};
         $vm.postPositions[item].top = $(this).offset().top - this.offsetHeight;
         $vm.postPositions[item].bottom =

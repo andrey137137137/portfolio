@@ -22,7 +22,7 @@ export default {
   },
   mixins: [loadDataMixin],
   data() {
-    return { profileIsLoaded: false };
+    return { loadedProfileCount: 0 };
   },
   computed: {
     classes() {
@@ -39,11 +39,11 @@ export default {
     ...mapActions(['resetLoadedCounters']),
     ...profileMapActions(['readProfile']),
     loadProfileAndPageData() {
-      if (!this.profileIsLoaded) {
+      if (!this.loadedProfileCount) {
         this.isItFront(this.$route.meta.isFront);
         this.resetLoadedCounters();
         this.readProfile();
-        this.profileIsLoaded = true;
+        this.loadedProfileCount++;
       }
 
       this.loadData();

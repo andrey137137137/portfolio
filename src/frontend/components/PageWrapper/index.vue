@@ -1,6 +1,6 @@
 <template lang="pug">
 .bg(:class='classes')
-  PreloaderCmp
+  PreloaderCmp(:isLoaded='isLoaded')
   ParallaxCmp
   slot
 </template>
@@ -22,9 +22,16 @@ export default {
   },
   mixins: [loadDataMixin],
   data() {
-    return { loadedProfileCount: 0 };
+    return {
+      curPage: '',
+      loadedProfileCount: 0,
+      isLoaded: false,
+    };
   },
   computed: {
+    isSamePage() {
+      return this.curPage == this.$route.name;
+    },
     classes() {
       const { name } = this.$route;
       const homeName = HOME.name;
@@ -39,9 +46,11 @@ export default {
     ...mapActions(['resetLoadedCounters']),
     ...profileMapActions(['readProfile']),
     loadProfileAndPageData() {
-      if (!this.loadedProfileCount) {
-        this.isItFront(this.$route.meta.isFront);
+      if (!this.loadedProfileCount || !this.isSamePage) {
         this.resetLoadedCounters();
+      }
+
+      if (!this.loadedProfileCount) {
         this.readProfile();
         this.loadedProfileCount++;
       }
@@ -51,6 +60,8 @@ export default {
   },
   created() {
     console.log('Component created ' + this.$options.name);
+    this.isItFront(this.$route.meta.isFront);
+    this.curPage = this.$route.name;
     this.loadProfileAndPageData();
   },
   beforeUpdate() {

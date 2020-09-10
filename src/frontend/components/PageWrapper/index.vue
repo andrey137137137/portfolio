@@ -1,6 +1,6 @@
 <template lang="pug">
 .bg(:class='classes')
-  PreloaderCmp(:isLoaded='isLoaded')
+  PreloaderCmp
   ParallaxCmp
   slot
 </template>
@@ -24,13 +24,19 @@ export default {
   data() {
     return {
       curPage: '',
+      changedPageCount: 0,
       loadedProfileCount: 0,
-      isLoaded: false,
     };
   },
   computed: {
     isSamePage() {
       return this.curPage == this.$route.name;
+    },
+    canLoadProfile() {
+      return !this.loadedProfileCount;
+    },
+    canResetLoaded() {
+      return this.canLoadProfile || this.changedPageCount || !this.isSamePage;
     },
     classes() {
       const { name } = this.$route;
@@ -45,12 +51,17 @@ export default {
   methods: {
     ...mapActions(['resetLoadedCounters']),
     ...profileMapActions(['readProfile']),
+    changedPage() {
+      if (this.isSamePage) return;
+
+      this.changedPageCount++;
+    },
     loadProfileAndPageData() {
-      if (!this.loadedProfileCount || !this.isSamePage) {
+      if (this.canResetLoaded) {
         this.resetLoadedCounters();
       }
 
-      if (!this.loadedProfileCount) {
+      if (this.canLoadProfile) {
         this.readProfile();
         this.loadedProfileCount++;
       }
@@ -59,13 +70,14 @@ export default {
     },
   },
   created() {
-    console.log('Component created ' + this.$options.name);
+    console.log('PageWrapper created ' + this.$options.name);
     this.isItFront(this.$route.meta.isFront);
     this.curPage = this.$route.name;
     this.loadProfileAndPageData();
   },
   beforeUpdate() {
-    console.log('Component beforeUpdate ' + this.$options.name);
+    console.log('PageWrapper beforeUpdate ' + this.$options.name);
+    this.changedPage();
     this.loadProfileAndPageData();
   },
 };

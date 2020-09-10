@@ -1,5 +1,5 @@
 <template lang="pug">
-.preloader.preloader--active(ref='preloader')
+.preloader.preloader--active(ref='preloader', :class='testClass')
   .preloader-container
     svg.preloader-circles
       circle.preloader-center_circle(ref='circle')
@@ -13,12 +13,6 @@ import { mapGetters } from 'vuex';
 
 export default {
   name: 'PreloaderCmp',
-  props: {
-    isLoaded: {
-      type: Boolean,
-      required: true,
-    },
-  },
   data() {
     return {
       activeClass: 'preloader--active',
@@ -31,6 +25,11 @@ export default {
   },
   computed: {
     ...mapGetters(['dbDataLoadingCount', 'dbDataLoadedCount']),
+    testClass() {
+      return {
+        isLoading: !this.dbDataLoadedCount,
+      };
+    },
     isDataLoading() {
       return (
         this.dbDataLoadingCount == 0 ||

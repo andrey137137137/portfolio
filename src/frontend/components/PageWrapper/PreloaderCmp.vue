@@ -1,6 +1,6 @@
 <template lang="pug">
-.preloader.preloader--active(ref='preloader', :class='testClass')
-  .preloader-container
+div(ref='preloader', :class='rootClass')
+  .preloader-container(:class='isChangedPage')
     svg.preloader-circles
       circle.preloader-center_circle(ref='circle')
       circle.preloader-satellite_circle(ref='satellite')
@@ -15,6 +15,7 @@ export default {
   name: 'PreloaderCmp',
   data() {
     return {
+      rootClass: 'preloader',
       activeClass: 'preloader--active',
       intervalID: 0,
       imageCount: 1000,
@@ -25,7 +26,7 @@ export default {
   },
   computed: {
     ...mapGetters(['dbDataLoadingCount', 'dbDataLoadedCount']),
-    testClass() {
+    isChangedPage() {
       return {
         isLoading: !this.dbDataLoadedCount,
       };
@@ -50,6 +51,8 @@ export default {
     startLoading() {
       const $vm = this;
 
+      $vm.$refs.preloader.classList.add(this.activeClass);
+
       this.intervalID = setInterval(() => {
         $vm.imagesLoading();
       }, 100);
@@ -60,9 +63,13 @@ export default {
         this.imageCounter = 0;
         this.prs = 0;
         this.tweenedNumber = 0;
-        this.$refs.preloader.classList.add(this.activeClass);
         this.$refs.preloader.style.display = 'block';
-        this.startLoading();
+
+        const $vm = this;
+
+        setTimeout(() => {
+          $vm.startLoading();
+        }, 1);
       }
     },
     imagesLoading() {
@@ -92,6 +99,7 @@ export default {
         setTimeout(() => {
           $vm.$refs.preloader.classList.remove(this.activeClass);
           setTimeout(() => {
+            $vm.$refs.preloader.className = $vm.rootClass;
             $vm.$refs.preloader.style.display = 'none';
           }, 500);
         }, 1000);

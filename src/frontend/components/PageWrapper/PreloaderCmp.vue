@@ -64,12 +64,7 @@ export default {
         this.prs = 0;
         this.tweenedNumber = 0;
         this.$refs.preloader.style.display = 'block';
-
-        const $vm = this;
-
-        setTimeout(() => {
-          $vm.startLoading();
-        }, 1);
+        this.startLoading();
       }
     },
     imagesLoading() {

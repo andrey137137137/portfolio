@@ -71,15 +71,18 @@ export default {
       if (this.dbDataLoadingCount == this.dbDataLoadedCount) {
         clearInterval(this.intervalID);
 
-        const $images = document.images;
-        this.imageCount = $images.length;
+        // const $images = document.images;
+        // this.imageCount = $images.length;
 
-        for (let i = 0; i < this.imageCount; i++) {
-          const $imageClone = new Image();
-          $imageClone.onload = this.imageLoaded;
-          $imageClone.onerror = this.imageLoaded;
-          $imageClone.src = $images[i].src;
-        }
+        // for (let i = 0; i < this.imageCount; i++) {
+        //   const $imageClone = new Image();
+        //   $imageClone.onload = this.imageLoaded;
+        //   $imageClone.onerror = this.imageLoaded;
+        //   $imageClone.src = $images[i].src;
+        // }
+
+        this.imageCounter = this.imageCount;
+        this.imageLoaded();
       }
     },
     imageLoaded() {

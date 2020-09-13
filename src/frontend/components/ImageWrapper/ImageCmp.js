@@ -1,7 +1,7 @@
 export default {
   name: 'ImageCmp',
   render(h) {
-    return this.breakpoint ? this.sourceElem() : this.imgElem(h);
+    return this.breakpoint ? this.sourceElem(h) : this.imgElem(h);
   },
   props: {
     path: {
@@ -20,6 +20,10 @@ export default {
       type: String,
       default: '',
     },
+    isLazyLoading: {
+      type: Boolean,
+      default: true,
+    },
   },
   data() {
     return {
@@ -29,21 +33,24 @@ export default {
     };
   },
   methods: {
-    sourceElem() {
-      const media = '(min-width: ' + this.breakpoint + 'px)';
-      return (
-        <source
-          ref={this.imgRef}
-          media={media}
-          data-src={this.path}
-          srcset=""
-        />
-      );
+    getSrcAttrs(srcNameAttr) {
+      return this.isLazyLoading
+        ? { 'data-src': this.path, [srcNameAttr]: '' }
+        : { [srcNameAttr]: this.path };
+    },
+    sourceElem(h) {
+      return h('source', {
+        attrs: {
+          media: '(min-width: ' + this.breakpoint + 'px)',
+          ...this.getSrcAttrs('srcset'),
+        },
+        ref: this.imgRef,
+      });
     },
     imgElem(h) {
       return h('img', {
         class: this.classes,
-        attrs: { 'data-src': this.path, src: '', alt: this.title },
+        attrs: { ...this.getSrcAttrs('src'), alt: this.title },
         ref: this.imgRef,
       });
     },
@@ -79,23 +86,28 @@ export default {
     },
   },
   mounted() {
-    const img = this.$refs[this.imgRef];
+    if (this.isLazyLoading) {
+      const img = this.$refs[this.imgRef];
 
-    if ('IntersectionObserver' in window) {
-      const $vm = this;
-      const imageObserver = new IntersectionObserver((entry, observer) => {
-        if (entry.isIntersecting) {
-          const image = entry.target;
-          $vm.setSrc();
-          imageObserver.unobserve(image);
-        }
-      });
+      if ('IntersectionObserver' in window) {
+        const $vm = this;
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              console.log(entry.target);
+              const image = entry.target;
+              $vm.setSrc();
+              imageObserver.unobserve(image);
+            }
+          });
+        });
 
-      imageObserver.observe(img);
-    } else {
-      document.addEventListener('scroll', this.lazyload);
-      window.addEventListener('resize', this.lazyload);
-      window.addEventListener('orientationChange', this.lazyload);
+        imageObserver.observe(img);
+      } else {
+        document.addEventListener('scroll', this.lazyload);
+        window.addEventListener('resize', this.lazyload);
+        window.addEventListener('orientationChange', this.lazyload);
+      }
     }
   },
 };

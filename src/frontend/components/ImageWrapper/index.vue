@@ -43,6 +43,10 @@ export default {
         return {};
       },
     },
+    isLazyLoading: {
+      type: Boolean,
+      default: true,
+    },
   },
   computed: {
     containerClasses() {

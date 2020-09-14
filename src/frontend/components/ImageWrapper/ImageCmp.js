@@ -12,6 +12,10 @@ export default {
       type: Object,
       required: true,
     },
+    isLazyLoading: {
+      type: Boolean,
+      reauired: true,
+    },
     breakpoint: {
       type: Number,
       default: 0,
@@ -19,10 +23,6 @@ export default {
     title: {
       type: String,
       default: '',
-    },
-    isLazyLoading: {
-      type: Boolean,
-      default: true,
     },
   },
   data() {
@@ -32,17 +32,22 @@ export default {
       lazyloadThrottleTimeout: 0,
     };
   },
-  methods: {
-    getSrcAttrs(srcNameAttr) {
-      return this.isLazyLoading
-        ? { 'data-src': this.path, [srcNameAttr]: '' }
-        : { [srcNameAttr]: this.path };
+  computed: {
+    srcAttr() {
+      return this.breakpoint ? 'srcset' : 'src';
     },
+    srcAttrs() {
+      return this.isLazyLoading
+        ? { 'data-src': this.path, [this.srcAttr]: '' }
+        : { [this.srcAttr]: this.path };
+    },
+  },
+  methods: {
     sourceElem(h) {
       return h('source', {
         attrs: {
           media: '(min-width: ' + this.breakpoint + 'px)',
-          ...this.getSrcAttrs('srcset'),
+          ...this.srcAttrs,
         },
         ref: this.imgRef,
       });
@@ -50,15 +55,14 @@ export default {
     imgElem(h) {
       return h('img', {
         class: this.classes,
-        attrs: { ...this.getSrcAttrs('src'), alt: this.title },
+        attrs: { ...this.srcAttrs, alt: this.title },
         ref: this.imgRef,
       });
     },
     setSrc() {
       const img = this.$refs[this.imgRef];
-      const srcAttr = this.breakpoint ? 'srcset' : 'src';
 
-      img[srcAttr] = img.dataset.src;
+      img[this.srcAttr] = img.dataset.src;
       img.removeAttribute('data-src');
       this.isVisible = true;
     },

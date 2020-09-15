@@ -6,7 +6,8 @@ picture(:class='containerClasses')
     :classes='imgClasses',
     :path='path + "/" + item.name',
     :breakpoint='item.value',
-    :title='title'
+    :title='title',
+    :isLazyLoading='isLazyLoading'
   )
 </template>
 

@@ -14,7 +14,7 @@ export default {
     },
     isLazyLoading: {
       type: Boolean,
-      reauired: true,
+      required: true,
     },
     breakpoint: {
       type: Number,
@@ -41,6 +41,9 @@ export default {
         ? { 'data-src': this.path, [this.srcAttr]: '' }
         : { [this.srcAttr]: this.path };
     },
+    lazyClass() {
+      return { lazy: this.isLazyLoading };
+    },
   },
   methods: {
     sourceElem(h) {
@@ -49,12 +52,13 @@ export default {
           media: '(min-width: ' + this.breakpoint + 'px)',
           ...this.srcAttrs,
         },
+        class: this.lazyClass,
         ref: this.imgRef,
       });
     },
     imgElem(h) {
       return h('img', {
-        class: this.classes,
+        class: { ...this.classes, ...this.lazyClass },
         attrs: { ...this.srcAttrs, alt: this.title },
         ref: this.imgRef,
       });

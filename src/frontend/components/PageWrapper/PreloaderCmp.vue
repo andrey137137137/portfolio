@@ -70,19 +70,22 @@ export default {
     imagesLoading() {
       if (this.dbDataLoadingCount == this.dbDataLoadedCount) {
         clearInterval(this.intervalID);
+        const $vm = this;
 
-        // const $images = document.images;
-        // this.imageCount = $images.length;
+        this.$nextTick(() => {
+          const $images = document.querySelectorAll(
+            'source:not(.lazy), img:not(.lazy)',
+          );
+          $vm.imageCount = $images.length;
 
-        // for (let i = 0; i < this.imageCount; i++) {
-        //   const $imageClone = new Image();
-        //   $imageClone.onload = this.imageLoaded;
-        //   $imageClone.onerror = this.imageLoaded;
-        //   $imageClone.src = $images[i].src;
-        // }
-
-        this.imageCounter = this.imageCount;
-        this.imageLoaded();
+          for (let i = 0; i < $vm.imageCount; i++) {
+            console.log($images[i]);
+            const $imageClone = new Image();
+            $imageClone.onload = $vm.imageLoaded;
+            $imageClone.onerror = $vm.imageLoaded;
+            $imageClone.src = $images[i].src;
+          }
+        });
       }
     },
     imageLoaded() {

@@ -2,8 +2,8 @@
 Fragment
   TopWrapper
     SliderCmp.top_wrap-content(:items='dbData')
-  BottomWrapper.bottom_wrap--without_bg.parallax_mirror
-    .parallax_mirror-img
+  BottomWrapper.bottom_wrap--without_bg.parallax_mirror(ref='parallax')
+    .parallax_mirror-img(ref='parallaxLayer')
     FeedbackCmp
     ScrollButton(:inHeader='false')
     FooterWrapper
@@ -33,6 +33,21 @@ export default {
   },
   computed: {
     ...mapGetters(['dbData']),
+  },
+  methods: {
+    moveLayers() {
+      const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+      const bottomImgPos =
+        (document.body.scrollHeight - (window.innerHeight + scrollY)) / 10000;
+      this.$refs[
+        'parallaxLayer'
+      ].style.transform = `translateY(${bottomImgPos}px)`;
+    },
+  },
+  mounted() {
+    window.addEventListener('scroll', this.moveLayers);
+    window.addEventListener('resize', this.moveLayers);
+    this.moveLayers();
   },
 };
 </script>

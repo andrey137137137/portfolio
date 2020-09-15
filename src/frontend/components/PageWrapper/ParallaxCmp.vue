@@ -13,7 +13,8 @@
     :breakpoints='breakpoints',
     :title='getTitle(index)',
     :isWrapperClass='false',
-    :imgAddClasses='{ "parallax-img": true }'
+    :imgAddClasses='{ "parallax-img": true }',
+    :isLazyLoading='false'
   )
   //- .parallax-content
 </template>
@@ -82,7 +83,7 @@ export default {
         : this.centerY - event.pageY;
 
       if (this.$layers) {
-        [].slice.call(this.$layers).forEach(function($layer, index) {
+        [].slice.call(this.$layers).forEach(function ($layer, index) {
           if (isScroll) {
             $vm.divider = (index + 1) / 90;
           } else {

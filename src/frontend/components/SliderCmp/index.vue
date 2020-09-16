@@ -103,6 +103,7 @@ export default {
     return {
       transitionMethod: 'scroll_up',
       duration: 3000,
+      direction: 1,
       curIndex: 0,
       // count: this.items.length,
       intervalID: null,
@@ -172,29 +173,26 @@ export default {
     },
   },
   methods: {
-    changeSlide(direction = 1) {
-      if (direction < 0) {
+    changeSlide(timestamp) {
+      if (this.direction < 0) {
         this.curIndex = this.prevIndex;
         this.transitionMethod = 'scroll_down';
       } else {
         this.curIndex = this.nextIndex;
         this.transitionMethod = 'scroll_up';
       }
+      requestAnimationFrame(this.changeSlide);
     },
     resetInterval() {
-      const $vm = this;
-
-      clearInterval(this.intervalID);
-      this.intervalID = setInterval(() => {
-        $vm.changeSlide();
-      }, $vm.duration);
+      cancelAnimationFrame(this.intervalID);
+      this.intervalID = requestAnimationFrame(this.changeSlide);
     },
     handlePrev() {
-      this.changeSlide(-1);
+      this.direction = -1;
       this.resetInterval();
     },
     handleNext() {
-      this.changeSlide();
+      this.direction = 1;
       this.resetInterval();
     },
   },

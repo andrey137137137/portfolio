@@ -116,11 +116,9 @@ export default {
     },
   },
   mounted() {
-    console.log('PreloaderCmp mounted ' + this.$options.name);
     this.startLoading();
   },
   beforeUpdate() {
-    console.log('PreloaderCmp beforeUpdate ' + this.$options.name);
     this.reset();
   },
 };

@@ -70,13 +70,11 @@ export default {
     },
   },
   created() {
-    console.log('PageWrapper created ' + this.$options.name);
     this.isItFront(this.$route.meta.isFront);
     this.curPage = this.$route.name;
     this.loadProfileAndPageData();
   },
   beforeUpdate() {
-    console.log('PageWrapper beforeUpdate ' + this.$options.name);
     this.changedPage();
     this.loadProfileAndPageData();
   },

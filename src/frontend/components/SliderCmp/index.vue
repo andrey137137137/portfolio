@@ -102,8 +102,10 @@ export default {
   data() {
     return {
       transitionMethod: 'scroll_up',
+      prevTime: 0,
       duration: 3000,
-      direction: 1,
+      durationStep: 0,
+      // direction: 1,
       curIndex: 0,
       // count: this.items.length,
       intervalID: null,
@@ -124,7 +126,7 @@ export default {
       return `slider--${this.transitionMethod}`;
     },
     prevIndex() {
-      let tempIndex = this.curIndex - 1;
+      const tempIndex = this.curIndex - 1;
 
       if (tempIndex < 0) {
         // return this.count - 1;
@@ -173,31 +175,53 @@ export default {
     },
   },
   methods: {
-    changeSlide(timestamp) {
-      if (this.direction < 0) {
-        this.curIndex = this.prevIndex;
-        this.transitionMethod = 'scroll_down';
-      } else {
-        this.curIndex = this.nextIndex;
-        this.transitionMethod = 'scroll_up';
-      }
-      requestAnimationFrame(this.changeSlide);
+    animate() {
+      this.intervalID = requestAnimationFrame(this.nextSlide);
+      // this.intervalID = setTimeout(this.nextSlide, this.duration);
     },
     resetInterval() {
       cancelAnimationFrame(this.intervalID);
-      this.intervalID = requestAnimationFrame(this.changeSlide);
+      // clearTimeout(this.intervalID);
+      this.durationStep = 0;
+      this.prevTime = 0;
+    },
+    incDurationStep(nowTime) {
+      this.durationStep += Math.floor(nowTime - (this.prevTime || nowTime));
+
+      if (this.durationStep >= this.duration) {
+        this.durationStep = 0;
+      }
+
+      this.prevTime = nowTime;
+    },
+    prevSlide(nowTime) {
+      this.incDurationStep(nowTime);
+      if (!this.durationStep) {
+        this.curIndex = this.prevIndex;
+        this.transitionMethod = 'scroll_down';
+      }
+      this.animate();
+    },
+    nextSlide(nowTime) {
+      this.incDurationStep(nowTime);
+      if (!this.durationStep) {
+        this.curIndex = this.nextIndex;
+        this.transitionMethod = 'scroll_up';
+      }
+      this.animate();
     },
     handlePrev() {
-      this.direction = -1;
       this.resetInterval();
+      this.prevSlide(performance.now());
     },
     handleNext() {
-      this.direction = 1;
       this.resetInterval();
+      this.nextSlide(performance.now());
     },
   },
-  created() {
-    this.resetInterval();
+  mounted() {
+    this.prevTime = performance.now();
+    this.animate();
   },
 };
 </script>

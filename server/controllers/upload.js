@@ -1,11 +1,21 @@
 const { ERROR } = require('@httpSt');
 const { IncomingForm } = require('formidable');
+const sharp = require('sharp');
 const fs = require('fs');
 const path = require('path');
 
 // function getExt(name) {
 //   return name.slice(name.lastIndexOf(".") + 1);
 // }
+
+function saveSlideImages(input, name, path) {
+  const source = sharp(input);
+  const background = { r: 0, g: 0, b: 0, alpha: 0 };
+
+  source
+    .resize(320, 240, { background })
+    .toFile(name + '.png', (err, info) => {});
+}
 
 module.exports = function(req, res, dir = '', layer = -1) {
   const form = new IncomingForm();

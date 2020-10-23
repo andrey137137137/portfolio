@@ -8,13 +8,29 @@ const path = require('path');
 //   return name.slice(name.lastIndexOf(".") + 1);
 // }
 
-function saveSlideImages(input, name, path) {
-  const source = sharp(input);
-  const background = { r: 0, g: 0, b: 0, alpha: 0 };
+function sendMessage(res, err, info = false) {
+  if (err) {
+    return res.status(ERROR).json({
+      message: 'Не удалось переместить изображение',
+    });
+  }
 
-  source
-    .resize(320, 240, { background })
-    .toFile(name + '.png', (err, info) => {});
+  res.send({
+    message: 'Изображение успешно добавлено',
+  });
+}
+
+function resizeImage(image, name, sizes, res) {
+  const params = { background: { r: 0, g: 0, b: 0, alpha: 0 } };
+
+  if (sizes.width) params.width = sizes.width;
+  if (sizes.height) params.height = sizes.height;
+
+  sharp(image)
+    .resize(params)
+    .toFile(name, (err, info) => {
+      sendMessage(res, err, info);
+    });
 }
 
 module.exports = function(req, res, dir = '', layer = -1) {
@@ -44,18 +60,15 @@ module.exports = function(req, res, dir = '', layer = -1) {
     fileName = files.image.name;
     filePath = path.join(uploadPath, fileName);
 
-    fs.rename(files.image.path, filePath, err => {
-      if (err) {
-        // fs.unlink(filePath);
-        // fs.rename(files.image.path, filePath);
-        return res.status(ERROR).json({
-          message: 'Не удалось переместить изображение',
-        });
-      }
-
-      res.send({
-        message: 'Изображение успешно добавлено',
+    if (dir == 'slider') {
+      resizeImage(files.image.path, fileName, { height: 569 }, res);
+      resizeImage(files.image.path, fileName, { height: 525 }, res);
+      resizeImage(files.image.path, fileName, { height: 529 }, res);
+      resizeImage(files.image.path, fileName, { height: 257 }, res);
+    } else {
+      fs.rename(files.image.path, filePath, err => {
+        sendMessage(res, err);
       });
-    });
+    }
   });
 };

@@ -4,6 +4,10 @@ const sharp = require('sharp');
 const fs = require('fs');
 const path = require('path');
 
+let uploadPath;
+let filePath;
+let fileName;
+
 // function getExt(name) {
 //   return name.slice(name.lastIndexOf(".") + 1);
 // }
@@ -20,15 +24,16 @@ function sendMessage(res, err, info = false) {
   });
 }
 
-function resizeImage(image, name, sizes, res) {
+function resizeImage(breakpoint, res) {
   const params = { background: { r: 0, g: 0, b: 0, alpha: 0 } };
+  const resizeUploadPath = path.join(uploadPath, breakpoint.name);
 
-  if (sizes.width) params.width = sizes.width;
-  if (sizes.height) params.height = sizes.height;
+  if (breakpoint.width) params.width = breakpoint.width;
+  if (breakpoint.height) params.height = breakpoint.height;
 
-  sharp(image)
+  sharp(filePath)
     .resize(params)
-    .toFile(name, (err, info) => {
+    .toFile(path.join(resizeUploadPath, fileName), (err, info) => {
       sendMessage(res, err, info);
     });
 }
@@ -36,9 +41,8 @@ function resizeImage(image, name, sizes, res) {
 module.exports = function(req, res, dir = '', layer = -1) {
   const form = new IncomingForm();
   const rootPath = 'public/upload';
-  let uploadPath = dir ? path.join(rootPath, dir) : rootPath;
-  let fileName;
-  let filePath;
+
+  uploadPath = dir ? path.join(rootPath, dir) : rootPath;
 
   if (layer >= 0) {
     uploadPath = path.join(uploadPath, 'layer_' + layer);
@@ -57,16 +61,22 @@ module.exports = function(req, res, dir = '', layer = -1) {
       });
     }
 
+    filePath = files.image.path;
     fileName = files.image.name;
-    filePath = path.join(uploadPath, fileName);
 
     if (dir == 'slider') {
-      resizeImage(files.image.path, fileName, { height: 569 }, res);
-      resizeImage(files.image.path, fileName, { height: 525 }, res);
-      resizeImage(files.image.path, fileName, { height: 529 }, res);
-      resizeImage(files.image.path, fileName, { height: 257 }, res);
+      const breakpoints = [
+        {name:'xl', height:569},
+        {name:'lg', height:525},
+        {name:'md', height:529},
+        {name:'sm', height:257},
+      ];
+
+      breakpoints.map(item => {
+        resizeImage(item, res);
+      });
     } else {
-      fs.rename(files.image.path, filePath, err => {
+      fs.rename(filePath, path.join(uploadPath, fileName), err => {
         sendMessage(res, err);
       });
     }

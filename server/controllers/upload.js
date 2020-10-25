@@ -66,10 +66,10 @@ module.exports = function(req, res, dir = '', layer = -1) {
 
     if (dir == 'slider') {
       const breakpoints = [
-        {name:'xl', height:569},
-        {name:'lg', height:525},
-        {name:'md', height:529},
-        {name:'sm', height:257},
+        { name: 'xl', height: 569 },
+        { name: 'lg', height: 525 },
+        { name: 'md', height: 529 },
+        { name: 'sm', height: 257 },
       ];
 
       breakpoints.map(item => {

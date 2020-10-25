@@ -20,15 +20,15 @@ const ContactSchema = new Schema({
 const UserSchema = new Schema({
   firstName: {
     type: String,
-    required: [true, 'Укажите описание картинки'],
+    required: [true, 'Укажите имя пользователя'],
   },
   lastName: {
     type: String,
-    required: [true, 'Укажите описание картинки'],
+    required: [true, 'Укажите фамилию пользователя'],
   },
   old: {
     type: Number,
-    required: [true, 'Укажите описание картинки'],
+    required: [true, 'Укажите возраст пользователя'],
   },
   contacts: {
     type: Array,
@@ -37,12 +37,12 @@ const UserSchema = new Schema({
   email: {
     type: String,
     unique: true,
-    required: [true, 'Укажите описание картинки'],
+    required: [true, 'Укажите email пользователя'],
   },
   username: {
     type: String,
     unique: true,
-    required: [true, 'Укажите описание картинки'],
+    required: [true, 'Укажите nikname пользователя'],
   },
   password: {
     type: String,

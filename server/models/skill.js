@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const SkillSchema = new Schema({
   name: {
     type: String,
-    required: [true, 'Укажите заголовок статьи'],
+    required: [true, 'Укажите заголовок навыка'],
   },
   percents: {
     type: Number,

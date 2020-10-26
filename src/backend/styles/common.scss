@@ -53,6 +53,7 @@ body {
 
 .admin .form-popup {
   @include position('fixed 0 * * *');
+  z-index: 1000000;
   display: block;
   size: 100% 30px;
   color: $white $blue;

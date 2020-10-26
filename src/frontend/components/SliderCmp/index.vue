@@ -221,7 +221,7 @@ export default {
   },
   mounted() {
     this.prevTime = performance.now();
-    this.animate();
+    // this.animate();
   },
 };
 </script>

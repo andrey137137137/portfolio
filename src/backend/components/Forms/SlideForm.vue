@@ -33,6 +33,7 @@ import {
   // maxLength
 } from 'vuelidate/lib/validators';
 import axios from 'axios';
+import { SUCCESS } from '@httpSt';
 import exist from '@common/helpers/exist';
 import uploadMixin from '@backend/mixins/uploadMixin';
 import itemFormMixin from '@backend/mixins/itemFormMixin';
@@ -141,7 +142,7 @@ export default {
       this.submitData = {
         title: this.title,
         link: this.link,
-        image: this.image ? this.image.name : '',
+        // image: this.image ? this.image.name : '',
         techs: this.techs.map(item => item.name),
       };
     },
@@ -153,47 +154,34 @@ export default {
       this.image = '';
     },
     uploadImage() {
-      let data = new FormData();
-      data.append('image', this.image, this.image.name);
+      const form = new FormData();
+      form.append('image', this.image, this.image.name);
 
-      axios.post(this.getUploadPage('slider'), data).then(response => {
-        this.fileMsg = response.data.msg;
+      axios.post(this.getUploadPage('slider'), form).then(res => {
+        this.fileMsg = res.data.msg;
 
-        if (response.data.status === 'Ok') {
+        if (res.data.status == SUCCESS) {
           this.image = null;
           this.$refs.upload.value = null;
         }
 
-        console.log('image upload response > ', response);
+        console.log('image upload response > ', res);
       });
     },
-    // submit() {
-    //   if (this.$v.$invalid) {
-    //     return false;
-    //   }
+    submit() {
+      if (this.$v.$invalid) {
+        return false;
+      }
 
-    //   const image = this.image ? this.image.name : "";
-    //   const data = {
-    //     title: this.title,
-    //     link: this.link,
-    //     image,
-    //     techs: this.techs.map(item => item.name)
-    //   };
+      const image = this.image ? this.image.name : '';
+      this.sendData();
 
-    //   if (!this.slide) {
-    //     console.log(data);
-    //     this.insertData(data);
-    //   } else {
-    //     data.date = this.date;
-    //     this.updateData({ id: this.slide._id, data });
-    //   }
+      if (image) {
+        this.uploadImage();
+      }
 
-    //   if (image) {
-    //     this.uploadImage();
-    //   }
-
-    //   return true;
-    // }
+      return true;
+    },
   },
 };
 </script>

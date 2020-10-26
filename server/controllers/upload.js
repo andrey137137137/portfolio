@@ -25,14 +25,13 @@ function sendMessage(res, err, info = false) {
 }
 
 function resizeImage(breakpoint, res) {
-  const params = { background: { r: 0, g: 0, b: 0, alpha: 0 } };
   const resizeUploadPath = path.join(uploadPath, breakpoint.name);
 
-  if (breakpoint.width) params.width = breakpoint.width;
-  if (breakpoint.height) params.height = breakpoint.height;
-
   sharp(filePath)
-    .resize(params)
+    .resize({
+      background: { r: 0, g: 0, b: 0, alpha: 0 },
+      height: breakpoint.height,
+    })
     .toFile(path.join(resizeUploadPath, fileName), (err, info) => {
       sendMessage(res, err, info);
     });
@@ -66,10 +65,10 @@ module.exports = function(req, res, dir = '', layer = -1) {
 
     if (dir == 'slider') {
       const breakpoints = [
-        { name: 'xl', height: 569 },
-        { name: 'lg', height: 525 },
-        { name: 'md', height: 529 },
-        { name: 'sm', height: 257 },
+        { name: 'xl', height: 525 },
+        { name: 'lg', height: 257 },
+        { name: 'md', height: 215 },
+        { name: 'sm', height: 93 },
       ];
 
       breakpoints.map(item => {

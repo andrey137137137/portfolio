@@ -31,11 +31,7 @@ export default {
         this.deleteData(this.id);
       }
     },
-    submit() {
-      if (this.$v.$invalid) {
-        return false;
-      }
-
+    sendData() {
       this.prepareData();
 
       if (!this.item) {
@@ -44,7 +40,13 @@ export default {
       } else {
         this.updateData({ id: this.item._id, data: this.submitData });
       }
+    },
+    submit() {
+      if (this.$v.$invalid) {
+        return false;
+      }
 
+      this.sendData();
       return true;
     },
   },

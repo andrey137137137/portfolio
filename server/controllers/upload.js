@@ -5,6 +5,7 @@ const fs = require('fs');
 const path = require('path');
 
 let uploadPath;
+let resizeUploadPath;
 let filePath;
 let fileName;
 
@@ -25,7 +26,7 @@ function sendMessage(res, err, info = false) {
 }
 
 function resizeImage(breakpoint, res) {
-  const resizeUploadPath = path.join(uploadPath, breakpoint.name);
+  console.log(resizeUploadPath);
 
   sharp(filePath)
     .resize({
@@ -33,7 +34,7 @@ function resizeImage(breakpoint, res) {
       height: breakpoint.height,
     })
     .toFile(path.join(resizeUploadPath, fileName), (err, info) => {
-      sendMessage(res, err, info);
+      // sendMessage(res, err, info);
     });
 }
 
@@ -72,6 +73,12 @@ module.exports = function(req, res, dir = '', layer = -1) {
       ];
 
       breakpoints.map(item => {
+        resizeUploadPath = path.join(uploadPath, item.name);
+
+        if (!fs.existsSync(resizeUploadPath)) {
+          fs.mkdirSync(resizeUploadPath);
+        }
+
         resizeImage(item, res);
       });
     } else {

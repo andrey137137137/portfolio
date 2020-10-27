@@ -173,10 +173,13 @@ export default {
         return false;
       }
 
-      const image = this.image ? this.image.name : '';
-      this.sendData();
+      // const image = this.image ? this.image.name : '';
 
-      if (image) {
+      if (this.$v.$anyDirty) {
+        this.sendData();
+      }
+
+      if (this.image) {
         this.uploadImage();
       }
 

@@ -10,7 +10,12 @@ SectionWrapper(
   ul.slider-demo
     transition(:name='transitionName')
       li.img_wrap.slider-item.slider-demo_item(:key='curIndex')
-        img.img_wrap-img.slider-img(:src='demoImg', :alt='alt')
+        ImageWrapper.img_wrap-img.slider-img(
+          :path='image.path',
+          :breakpoints='image.breakpoints',
+          :title='alt',
+          :isLazyLoading='false'
+        )
 
   article.slider-text_wrap
     AnimateStr(
@@ -57,6 +62,7 @@ SectionWrapper(
 
 // import getImg from "@common/helpers/getImg";
 import SectionWrapper from '@frontCmp/SectionWrapper';
+import ImageWrapper from '@frontCmp/ImageWrapper';
 import AnimateStr from './AnimateStr';
 import ArrowButton from './ArrowButton';
 
@@ -64,6 +70,7 @@ export default {
   name: 'SliderCmp',
   components: {
     SectionWrapper,
+    ImageWrapper,
     AnimateStr,
     ArrowButton,
   },
@@ -109,6 +116,13 @@ export default {
       curIndex: 0,
       // count: this.items.length,
       intervalID: null,
+      image: {
+        path: '/upload/slider',
+        breakpoints: [
+          { name: 'xl/reasanik.png', value: 768 },
+          { name: 'lg/reasanik.png', value: 0 },
+        ],
+      },
       titleClasses: {
         'section-title': true,
         'section-title--uppercase': true,

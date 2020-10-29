@@ -64,28 +64,6 @@ export default {
       propTemplate: { name: '' },
     };
 
-    // if (!this.slide) {
-    //   data.title = "";
-    //   data.link = "";
-    //   data.techs = [
-    //     {
-    //       name: "Html"
-    //     },
-    //     {
-    //       name: "Css"
-    //     },
-    //     {
-    //       name: "JavaScript"
-    //     }
-    //   ];
-    // } else {
-    //   data.title = this.slide.title;
-    //   data.link = this.slide.link;
-    //   data.techs = this.slide.techs.map(item => {
-    //     return { name: item };
-    //   });
-    // }
-
     if (!this.item) {
       return { ...data, ...this.defaultFields() };
     }
@@ -117,6 +95,19 @@ export default {
       },
     },
   },
+  computed: {
+    imageName() {
+      if (!this.id) {
+        return '';
+      }
+
+      if (!this.image) {
+        return '';
+      }
+
+      return `${this.id}_${this.image.name}`;
+    },
+  },
   methods: {
     // getIndex(index) {
     //   return parseInt(index) + 1;
@@ -142,7 +133,7 @@ export default {
       this.submitData = {
         title: this.title,
         link: this.link,
-        // image: this.image ? this.image.name : '',
+        image: this.imageName,
         techs: this.techs.map(item => item.name),
       };
     },
@@ -151,11 +142,11 @@ export default {
       console.log(this.image);
     },
     removeImage() {
-      this.image = '';
+      this.image = null;
     },
     uploadImage() {
       const form = new FormData();
-      form.append('image', this.image, this.image.name);
+      form.append('image', this.image, this.imageName);
 
       axios.post(this.getUploadPage('slider'), form).then(res => {
         this.fileMsg = res.data.msg;
@@ -173,13 +164,11 @@ export default {
         return false;
       }
 
-      // const image = this.image ? this.image.name : '';
-
       if (this.$v.$anyDirty) {
         this.sendData();
       }
 
-      if (this.image) {
+      if (this.imageName) {
         this.uploadImage();
       }
 

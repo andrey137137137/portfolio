@@ -11,7 +11,7 @@ SectionWrapper(
     transition(:name='transitionName')
       li.img_wrap.slider-item.slider-demo_item(:key='curIndex')
         ImageWrapper.img_wrap-img.slider-img(
-          :path='image.path',
+          :path='imagePath',
           :breakpoints='image.breakpoints',
           :title='alt',
           :isLazyLoading='false'
@@ -116,13 +116,7 @@ export default {
       curIndex: 0,
       // count: this.items.length,
       intervalID: null,
-      image: {
-        path: '/upload/slider',
-        breakpoints: [
-          { name: 'xl/reasanik.png', value: 768 },
-          { name: 'lg/reasanik.png', value: 0 },
-        ],
-      },
+      imagePath: '/upload/slider',
       titleClasses: {
         'section-title': true,
         'section-title--uppercase': true,
@@ -155,8 +149,13 @@ export default {
     },
     demoImg() {
       // return getImg(this.items[this.curIndex].image, images);
-      // return "/upload/slider/" + this.items[this.curIndex].image;
-      return '/upload/slider/slide.png';
+      return this.items[this.curIndex].image;
+    },
+    demoImgBreakpoints() {
+      return [
+        { name: `xl/${this.demoImg}.png`, value: 768 },
+        { name: `lg/${this.demoImg}.png`, value: 0 },
+      ];
     },
     prevImg() {
       // return getImg(this.items[this.prevIndex].image, images);

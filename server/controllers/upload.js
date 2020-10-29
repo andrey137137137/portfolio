@@ -1,9 +1,9 @@
 const { ERROR } = require('@httpSt');
 const { IncomingForm } = require('formidable');
-const async     = require('async');
-const sharp = require('sharp');
-const fs = require('fs');
 const path = require('path');
+const fs = require('fs');
+const each = require('async/each');
+const sharp = require('sharp');
 
 let uploadPath;
 let resizeUploadPath;
@@ -21,23 +21,27 @@ function sendMessage(res, err, info = false) {
     });
   }
 
-  res.send({
+  const data = {
     message: 'Изображение успешно добавлено',
-  });
+  };
+
+  if (info) data.info = info;
+
+  res.send(data);
 }
 
-function resizeImage(breakpoint, res) {
-  console.log(resizeUploadPath);
+// function resizeImage(breakpoint, res) {
+//   console.log(resizeUploadPath);
 
-  sharp(filePath)
-    .resize({
-      background: { r: 0, g: 0, b: 0, alpha: 0 },
-      height: breakpoint.height,
-    })
-    .toFile(path.join(resizeUploadPath, fileName), (err, info) => {
-      // sendMessage(res, err, info);
-    });
-}
+//   sharp(filePath)
+//     .resize({
+//       background: { r: 0, g: 0, b: 0, alpha: 0 },
+//       height: breakpoint.height,
+//     })
+//     .toFile(path.join(resizeUploadPath, fileName), (err, info) => {
+//       sendMessage(res, err, info);
+//     });
+// }
 
 module.exports = function(req, res, dir = '', layer = -1) {
   const form = new IncomingForm();
@@ -66,15 +70,15 @@ module.exports = function(req, res, dir = '', layer = -1) {
     fileName = files.image.name;
 
     if (dir == 'slider') {
-      async.each(
+      each(
         [
           { name: 'xl', height: 525 },
           { name: 'lg', height: 257 },
           { name: 'md', height: 215 },
           { name: 'sm', height: 93 },
         ],
-        (item, callback) => {
-          resizeUploadPath = path.join(uploadPath, item.name);
+        (breakpoint, callback) => {
+          resizeUploadPath = path.join(uploadPath, breakpoint.name);
 
           if (!fs.existsSync(resizeUploadPath)) {
             fs.mkdirSync(resizeUploadPath);
@@ -88,19 +92,19 @@ module.exports = function(req, res, dir = '', layer = -1) {
               height: breakpoint.height,
             })
             .toFile(path.join(resizeUploadPath, fileName), callback);
-  },
-  (err) => {
-    sendMessage(res, err);
+        },
+        (err, info) => {
+          sendMessage(res, err, info);
 
-    fs.unlink(filePath, (err) => {
-      if (err) {
-        res.status(ERROR).json({
-          message: 'Не удалось удалить временный файл',
-        });
-      }
-    });
-  }
-      });
+          fs.unlink(filePath, err => {
+            if (err) {
+              res.status(ERROR).json({
+                message: 'Не удалось удалить временный файл',
+              });
+            }
+          });
+        },
+      );
     } else {
       fs.rename(filePath, path.join(uploadPath, fileName), err => {
         sendMessage(res, err);

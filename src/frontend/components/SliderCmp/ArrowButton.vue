@@ -4,10 +4,10 @@ a(href='#', :class='containerClasses', @click.prevent='handle')
     ImageWrapper.img_wrap.slider-item(
       :key='index',
       :path='imagePath',
-      :breakpoints='imgBreakpoints',
+      :breakpoints='imageBreakpoints',
       :title='alt',
       :isLazyLoading='false',
-      :addClasses='imgClasses'
+      :imgAddClasses='imgClasses'
     )
 </template>
 
@@ -32,11 +32,11 @@ export default {
       type: Function,
       required: true,
     },
-    imgPath: {
+    imagePath: {
       type: String,
       required: true,
     },
-    imgBreakpoints: {
+    imageBreakpoints: {
       type: Array,
       required: true,
     },

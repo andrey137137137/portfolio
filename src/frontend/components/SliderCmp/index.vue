@@ -7,15 +7,16 @@ SectionWrapper(
   ul(style='display:none')
     li(v-for='item in items') {{ item.title }}
 
-  ul.slider-demo
+  .slider-demo
     transition(:name='transitionName')
-      li.img_wrap.slider-item.slider-demo_item(:key='curIndex')
-        ImageWrapper.img_wrap-img.slider-img(
-          :path='imagePath',
-          :breakpoints='image.breakpoints',
-          :title='alt',
-          :isLazyLoading='false'
-        )
+      ImageWrapper.img_wrap.slider-item.slider-demo_item(
+        :key='curIndex',
+        :path='imagePath',
+        :breakpoints='demoImgBreakpoints',
+        :title='alt',
+        :isLazyLoading='false',
+        :imgAddClasses='demoImgClasses'
+      )
 
   article.slider-text_wrap
     AnimateStr(
@@ -41,8 +42,8 @@ SectionWrapper(
       :index='curIndex',
       :newIndex='prevIndex',
       :handle='handlePrev',
-      :imgPath='imagepath',
-      :imgBreakpoints='prevImgBreakpoints',
+      :imagePath='imagePath',
+      :imageBreakpoints='prevImgBreakpoints',
       :title='prevTitle',
       :isNext='false'
     )
@@ -50,8 +51,8 @@ SectionWrapper(
       :index='curIndex',
       :newIndex='nextIndex',
       :handle='handleNext',
-      :imgPath='imagepath',
-      :imgBreakpoints='nextImgBreakpoints',
+      :imagePath='imagePath',
+      :imageBreakpoints='nextImgBreakpoints',
       :title='nextTitle'
     )
 </template>
@@ -125,6 +126,10 @@ export default {
         { name: 'md', value: 768 },
         { name: 'sm', value: 0 },
       ],
+      demoImgClasses: {
+        'img_wrap-img': true,
+        'slider-img': true,
+      },
       titleClasses: {
         'section-title': true,
         'section-title--uppercase': true,
@@ -169,8 +174,8 @@ export default {
     },
     demoImgBreakpoints() {
       return [
-        { name: `xl/${this.demoImg}.${this.imageExt}`, value: 768 },
-        { name: `lg/${this.demoImg}.${this.imageExt}`, value: 0 },
+        { name: `xl/${this.demoImg}`, value: 768 },
+        { name: `lg/${this.demoImg}`, value: 0 },
       ];
     },
     prevImgBreakpoints() {
@@ -200,10 +205,10 @@ export default {
     },
   },
   methods: {
-    getArrowImgBreakpoints(imageName, imageExt) {
+    getArrowImgBreakpoints(imageName) {
       return this.arrowImageBreakpoints.map(breakpoint => {
         return {
-          name: `${breakpoint.name}/${imageName}.${imageExt}`,
+          name: `${breakpoint.name}/${imageName}`,
           value: breakpoint.value,
         };
       });
@@ -233,7 +238,7 @@ export default {
         this.curIndex = this.prevIndex;
         this.transitionMethod = 'scroll_down';
       }
-      this.animate();
+      // this.animate();
     },
     nextSlide(nowTime) {
       this.incDurationStep(nowTime);
@@ -241,7 +246,7 @@ export default {
         this.curIndex = this.nextIndex;
         this.transitionMethod = 'scroll_up';
       }
-      this.animate();
+      // this.animate();
     },
     handlePrev() {
       this.resetInterval();

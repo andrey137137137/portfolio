@@ -79,7 +79,6 @@ export default {
           $vm.imageCount = $images.length;
 
           for (let i = 0; i < $vm.imageCount; i++) {
-            console.log($images[i]);
             const $imageClone = new Image();
             $imageClone.onload = $vm.imageLoaded;
             $imageClone.onerror = $vm.imageLoaded;

@@ -41,7 +41,8 @@ SectionWrapper(
       :index='curIndex',
       :newIndex='prevIndex',
       :handle='handlePrev',
-      :imgSrc='prevImg',
+      :imgPath='imagepath',
+      :imgBreakpoints='prevImgBreakpoints',
       :title='prevTitle',
       :isNext='false'
     )
@@ -49,7 +50,8 @@ SectionWrapper(
       :index='curIndex',
       :newIndex='nextIndex',
       :handle='handleNext',
-      :imgSrc='nextImg',
+      :imgPath='imagepath',
+      :imgBreakpoints='nextImgBreakpoints',
       :title='nextTitle'
     )
 </template>
@@ -117,6 +119,12 @@ export default {
       // count: this.items.length,
       intervalID: null,
       imagePath: '/upload/slider',
+      imageExt: 'png',
+      arrowImageBreakpoints: [
+        { name: 'lg', value: 1200 },
+        { name: 'md', value: 768 },
+        { name: 'sm', value: 0 },
+      ],
       titleClasses: {
         'section-title': true,
         'section-title--uppercase': true,
@@ -151,21 +159,25 @@ export default {
       // return getImg(this.items[this.curIndex].image, images);
       return this.items[this.curIndex].image;
     },
-    demoImgBreakpoints() {
-      return [
-        { name: `xl/${this.demoImg}.png`, value: 768 },
-        { name: `lg/${this.demoImg}.png`, value: 0 },
-      ];
-    },
     prevImg() {
       // return getImg(this.items[this.prevIndex].image, images);
-      // return "/upload/slider/" + this.items[this.prevIndex].image;
-      return '/upload/slider/slide.png';
+      return this.items[this.prevIndex].image;
     },
     nextImg() {
       // return getImg(this.items[this.nextIndex()].image, images);
-      // return "/upload/slider/" + this.items[this.nextIndex].image;
-      return '/upload/slider/slide.png';
+      return this.items[this.nextIndex].image;
+    },
+    demoImgBreakpoints() {
+      return [
+        { name: `xl/${this.demoImg}.${this.imageExt}`, value: 768 },
+        { name: `lg/${this.demoImg}.${this.imageExt}`, value: 0 },
+      ];
+    },
+    prevImgBreakpoints() {
+      return this.getArrowImgBreakpoints(this.prevImg, this.imageExt);
+    },
+    nextImgBreakpoints() {
+      return this.getArrowImgBreakpoints(this.nextImg, this.imageExt);
     },
     title() {
       return this.items[this.curIndex].title;
@@ -188,6 +200,14 @@ export default {
     },
   },
   methods: {
+    getArrowImgBreakpoints(imageName, imageExt) {
+      return this.arrowImageBreakpoints.map(breakpoint => {
+        return {
+          name: `${breakpoint.name}/${imageName}.${imageExt}`,
+          value: breakpoint.value,
+        };
+      });
+    },
     animate() {
       this.intervalID = requestAnimationFrame(this.nextSlide);
       // this.intervalID = setTimeout(this.nextSlide, this.duration);

@@ -1,13 +1,24 @@
 <template lang="pug">
-  a(href="#" :class="classes" @click.prevent="handle")
-    transition(:name="transitionName")
-      .img_wrap.slider-item(:key="index")
-        img.img_wrap-img.slider-img.slider-img--in_arrow(:src="imgSrc" :alt="alt")
+a(href='#', :class='containerClasses', @click.prevent='handle')
+  transition(:name='transitionName')
+    ImageWrapper.img_wrap.slider-item(
+      :key='index',
+      :path='imagePath',
+      :breakpoints='imgBreakpoints',
+      :title='alt',
+      :isLazyLoading='false',
+      :addClasses='imgClasses'
+    )
 </template>
 
 <script>
+import ImageWrapper from '@frontCmp/ImageWrapper';
+
 export default {
   name: 'ArrowButton',
+  components: {
+    ImageWrapper,
+  },
   props: {
     index: {
       type: Number,
@@ -21,8 +32,12 @@ export default {
       type: Function,
       required: true,
     },
-    imgSrc: {
+    imgPath: {
       type: String,
+      required: true,
+    },
+    imgBreakpoints: {
+      type: Array,
       required: true,
     },
     title: {
@@ -34,8 +49,17 @@ export default {
       default: true,
     },
   },
+  data() {
+    return {
+      imgClasses: {
+        'img_wrap-img': true,
+        'slider-img': true,
+        'slider-img--in_arrow': true,
+      },
+    };
+  },
   computed: {
-    classes() {
+    containerClasses() {
       return {
         icon: true,
         'icon--chevron_down': !this.isNext,

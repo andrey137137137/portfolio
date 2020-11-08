@@ -7,6 +7,11 @@ ItemForm(
 )
   InputEventElem(v-model='title', :val='$v.title', placeholder='Название')
   InputEventElem(v-model='link', :val='$v.link', placeholder='Ссылка')
+  .img_wrap
+    img.img_wrap-img(
+      src='"public/upload/slider/xl/" + imageName',
+      alt='imageName'
+    )
   PictureInput(
     ref='pictureInput',
     @change='changeImage',

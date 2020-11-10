@@ -8,10 +8,7 @@ ItemForm(
   InputEventElem(v-model='title', :val='$v.title', placeholder='Название')
   InputEventElem(v-model='link', :val='$v.link', placeholder='Ссылка')
   .img_wrap
-    img.img_wrap-img(
-      src='"public/upload/slider/xl/" + imageName',
-      alt='imageName'
-    )
+    img.img_wrap-img(:src='imagePreview', :alt='imageName')
   PictureInput(
     ref='pictureInput',
     @change='changeImage',
@@ -58,7 +55,7 @@ export default {
   mixins: [uploadMixin, itemFormMixin],
   data() {
     const data = {
-      image: null,
+      uploadingImage: null,
       fields: [
         {
           name: 'name',
@@ -77,6 +74,7 @@ export default {
       ...data,
       title: this.item.title,
       link: this.item.link,
+      image: this.item.image,
       techs: exist('techs', this.item)
         ? this.item.techs.map(item => {
             return { name: item };
@@ -106,11 +104,14 @@ export default {
         return '';
       }
 
-      if (!this.image) {
+      if (!this.uploadingImage) {
         return '';
       }
 
-      return `${this.id}_${this.image.name}`;
+      return this.uploadingImage.name;
+    },
+    imagePreview() {
+      return '/upload/slider/xl/' + this.getFullImageName(this.image);
     },
   },
   methods: {
@@ -121,6 +122,7 @@ export default {
       return {
         title: '',
         link: '',
+        image: '',
         techs: [
           {
             name: 'HTML',
@@ -138,26 +140,32 @@ export default {
       this.submitData = {
         title: this.title,
         link: this.link,
-        image: this.imageName,
+        image: this.imageName ? this.imageName : this.image,
         techs: this.techs.map(item => item.name),
       };
     },
+    getFullImageName(name) {
+      return `${this.id}_${name}`;
+    },
     changeImage() {
-      this.image = this.$refs.pictureInput.file;
-      console.log(this.image);
+      this.uploadingImage = this.$refs.pictureInput.file;
     },
     removeImage() {
-      this.image = null;
+      this.uploadingImage = null;
     },
     uploadImage() {
       const form = new FormData();
-      form.append('image', this.image, this.imageName);
+      form.append(
+        'image',
+        this.uploadingImage,
+        this.getFullImageName(this.uploadingImage.name),
+      );
 
       axios.post(this.getUploadPage('slider'), form).then(res => {
         this.fileMsg = res.data.msg;
 
         if (res.data.status == SUCCESS) {
-          this.image = null;
+          this.uploadingImage = null;
           this.$refs.upload.value = null;
         }
 
@@ -169,9 +177,9 @@ export default {
         return false;
       }
 
-      if (this.$v.$anyDirty) {
-        this.sendData();
-      }
+      // if (this.$v.$anyDirty) {
+      this.sendData();
+      // }
 
       if (this.imageName) {
         this.uploadImage();

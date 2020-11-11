@@ -1,12 +1,13 @@
 const packageJson = require('./package.json');
 const path = require('path');
+const srcDir = 'src';
 
 function resolve(dir) {
   return path.join(__dirname, dir);
 }
 
 function resolveSrc(dir) {
-  return resolve(path.join('src', dir));
+  return resolve(path.join(srcDir, dir));
 }
 
 function resolveCommon(dir) {
@@ -108,14 +109,14 @@ module.exports = {
   },
   pages: {
     index: {
-      entry: 'src/frontend/main.js',
+      entry: srcDir + '/frontend/main.js',
       template: 'public/index.html',
       filename: 'index.html', // когда используется опция title, то <title> в шаблоне
       // должен быть <title><%= htmlWebpackPlugin.options.title %></title>
       title: 'Index Page',
     },
     admin: {
-      entry: 'src/backend/admin.js',
+      entry: srcDir + '/backend/admin.js',
       template: 'public/index.html',
       filename: 'admin.html',
       // когда используется опция title, то <title> в шаблоне

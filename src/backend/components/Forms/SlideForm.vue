@@ -37,6 +37,7 @@ import {
 import axios from 'axios';
 import { SUCCESS } from '@httpSt';
 import exist from '@common/helpers/exist';
+import imageMixin from '@common/mixins/imageMixin';
 import uploadMixin from '@backend/mixins/uploadMixin';
 import itemFormMixin from '@backend/mixins/itemFormMixin';
 import PictureInput from 'vue-picture-input';
@@ -52,7 +53,7 @@ export default {
     InputEventElem,
     MultipleElem,
   },
-  mixins: [uploadMixin, itemFormMixin],
+  mixins: [imageMixin, uploadMixin, itemFormMixin],
   data() {
     const data = {
       uploadingImage: null,
@@ -111,7 +112,7 @@ export default {
       return this.uploadingImage.name;
     },
     imagePreview() {
-      return '/upload/slider/xl/' + this.getFullImageName(this.image);
+      return '/upload/slider/xl/' + this.getFullImageName(this.id, this.image);
     },
   },
   methods: {
@@ -144,9 +145,6 @@ export default {
         techs: this.techs.map(item => item.name),
       };
     },
-    getFullImageName(name) {
-      return `${this.id}_${name}`;
-    },
     changeImage() {
       this.uploadingImage = this.$refs.pictureInput.file;
     },
@@ -158,7 +156,7 @@ export default {
       form.append(
         'image',
         this.uploadingImage,
-        this.getFullImageName(this.uploadingImage.name),
+        this.getFullImageName(this.id, this.uploadingImage.name),
       );
 
       axios.post(this.getUploadPage('slider'), form).then(res => {

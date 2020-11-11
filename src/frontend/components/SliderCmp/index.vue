@@ -58,12 +58,7 @@ SectionWrapper(
 </template>
 
 <script>
-// const images = {
-//   png: require.context("@/../public/userfiles/", false, /\.png$/),
-//   jpg: require.context("@/../public/userfiles/", false, /\.jpg$/)
-// };
-
-// import getImg from "@common/helpers/getImg";
+import imageMixin from '@common/mixins/imageMixin';
 import SectionWrapper from '@frontCmp/SectionWrapper';
 import ImageWrapper from '@frontCmp/ImageWrapper';
 import AnimateStr from './AnimateStr';
@@ -77,10 +72,10 @@ export default {
     AnimateStr,
     ArrowButton,
   },
+  mixins: [imageMixin],
   props: {
     items: {
       type: Array,
-      // required: true,
       default() {
         return [
           {
@@ -161,16 +156,13 @@ export default {
       return (this.curIndex + 1) % this.items.length;
     },
     demoImg() {
-      // return getImg(this.items[this.curIndex].image, images);
-      return this.items[this.curIndex].image;
+      return this.getImg(this.curIndex);
     },
     prevImg() {
-      // return getImg(this.items[this.prevIndex].image, images);
-      return this.items[this.prevIndex].image;
+      return this.getImg(this.prevIndex);
     },
     nextImg() {
-      // return getImg(this.items[this.nextIndex()].image, images);
-      return this.items[this.nextIndex].image;
+      return this.getImg(this.nextIndex);
     },
     demoImgBreakpoints() {
       return [
@@ -205,6 +197,12 @@ export default {
     },
   },
   methods: {
+    getImg(index) {
+      return this.getFullImageName(
+        this.items[index]._id,
+        this.items[index].image,
+      );
+    },
     getArrowImgBreakpoints(imageName) {
       return this.arrowImageBreakpoints.map(breakpoint => {
         return {

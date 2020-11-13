@@ -180,7 +180,26 @@ export default {
       // }
 
       if (this.imageName) {
-        this.uploadImage();
+        if (this.image) {
+          axios
+            .delete(
+              `${this.getUploadPage('slider')}/${this.getFullImageName(
+                this.id,
+                this.image,
+              )}`,
+            )
+            .then(res => {
+              this.fileMsg = res.data.msg;
+
+              if (res.data.status == SUCCESS) {
+                this.uploadImage();
+              }
+
+              console.log('image delete response > ', res);
+            });
+        } else {
+          this.uploadImage();
+        }
       }
 
       return true;

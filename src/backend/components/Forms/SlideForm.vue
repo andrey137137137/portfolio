@@ -7,8 +7,15 @@ ItemForm(
 )
   InputEventElem(v-model='title', :val='$v.title', placeholder='Название')
   InputEventElem(v-model='link', :val='$v.link', placeholder='Ссылка')
-  .img_wrap
-    img.img_wrap-img(:src='imagePreview', :alt='imageName')
+  div
+    .img_wrap
+      img.img_wrap-img(:src='imagePreview', :alt='imageName')
+    ButtonElem(
+      v-if='id',
+      :disabled='!image',
+      :isDanger='true',
+      @click.prevent.native='removeUploadedImage'
+    ) Удалить изображение
   PictureInput(
     ref='pictureInput',
     @change='changeImage',
@@ -43,6 +50,7 @@ import itemFormMixin from '@backend/mixins/itemFormMixin';
 import PictureInput from 'vue-picture-input';
 import ItemForm from '@backCmp/forms/ItemForm';
 import InputEventElem from '@components/formElems/InputEventElem';
+import ButtonElem from '@components/formElems/ButtonElem';
 import MultipleElem from '@components/formElems/MultipleElem';
 
 export default {
@@ -51,6 +59,7 @@ export default {
     PictureInput,
     ItemForm,
     InputEventElem,
+    ButtonElem,
     MultipleElem,
   },
   mixins: [imageMixin, uploadMixin, itemFormMixin],
@@ -170,6 +179,24 @@ export default {
         console.log('image upload response > ', res);
       });
     },
+    removeUploadedImage(toUploadImage = false) {
+      axios
+        .delete(
+          `${this.getUploadPage('slider')}/${this.getFullImageName(
+            this.id,
+            this.image,
+          )}`,
+        )
+        .then(res => {
+          this.fileMsg = res.data.msg;
+
+          if (toUploadImage && res.data.status == SUCCESS) {
+            this.uploadImage();
+          }
+
+          console.log('image delete response > ', res);
+        });
+    },
     submit() {
       if (this.$v.$invalid) {
         return false;
@@ -180,25 +207,10 @@ export default {
       // }
 
       if (this.imageName) {
-        if (this.image) {
-          axios
-            .delete(
-              `${this.getUploadPage('slider')}/${this.getFullImageName(
-                this.id,
-                this.image,
-              )}`,
-            )
-            .then(res => {
-              this.fileMsg = res.data.msg;
-
-              if (res.data.status == SUCCESS) {
-                this.uploadImage();
-              }
-
-              console.log('image delete response > ', res);
-            });
-        } else {
+        if (!this.image) {
           this.uploadImage();
+        } else {
+          this.removeUploadedImage(true);
         }
       }
 

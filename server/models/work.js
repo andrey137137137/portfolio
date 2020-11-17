@@ -10,7 +10,15 @@ const WorkSchema = new Schema({
     type: String,
     required: [true, 'Укажите ссылку работы'],
   },
-  image: {
+  imageName: {
+    type: String,
+    default: '',
+  },
+  imageName2: {
+    type: String,
+    default: '',
+  },
+  imageName3: {
     type: String,
     default: '',
   },

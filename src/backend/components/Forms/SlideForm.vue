@@ -9,10 +9,10 @@ ItemForm(
   InputEventElem(v-model='link', :val='$v.link', placeholder='Ссылка')
   div
     .img_wrap
-      img.img_wrap-img(:src='imagePreview', :alt='imageName')
+      img.img_wrap-img(:src='imagePreview', :alt='uploadingImageName')
     ButtonElem(
       v-if='id',
-      :disabled='!image',
+      :disabled='!imageName',
       :isDanger='true',
       @click.prevent.native='removeUploadedImage'
     ) Удалить изображение
@@ -65,7 +65,7 @@ export default {
   mixins: [imageMixin, uploadMixin, itemFormMixin],
   data() {
     const data = {
-      uploadingImage: null,
+      image: null,
       fields: [
         {
           name: 'name',
@@ -84,7 +84,7 @@ export default {
       ...data,
       title: this.item.title,
       link: this.item.link,
-      image: this.item.image,
+      imageName: this.item.imageName,
       techs: exist('techs', this.item)
         ? this.item.techs.map(item => {
             return { name: item };
@@ -109,30 +109,29 @@ export default {
     },
   },
   computed: {
-    imageName() {
+    uploadingImageName() {
       if (!this.id) {
         return '';
       }
 
-      if (!this.uploadingImage) {
+      if (!this.image) {
         return '';
       }
 
-      return this.uploadingImage.name;
+      return this.image.name;
     },
     imagePreview() {
-      return '/upload/slider/xl/' + this.getFullImageName(this.id, this.image);
+      return (
+        '/upload/slider/xl/' + this.getFullImageName(this.id, this.imageName)
+      );
     },
   },
   methods: {
-    // getIndex(index) {
-    //   return parseInt(index) + 1;
-    // },
     defaultFields() {
       return {
         title: '',
         link: '',
-        image: '',
+        imageName: '',
         techs: [
           {
             name: 'HTML',
@@ -147,36 +146,59 @@ export default {
       };
     },
     prepareData() {
-      this.submitData = {
+      const data = {
         title: this.title,
         link: this.link,
-        image: this.imageName ? this.imageName : this.image,
+        imageName: this.uploadingImageName
+          ? this.uploadingImageName
+          : this.imageName,
         techs: this.techs.map(item => item.name),
       };
+
+      if (!this.uploadingImageName) {
+        this.submitData = data;
+      } else {
+        const form = new FormData();
+
+        form.append(
+          'image',
+          this.image,
+          this.getFullImageName(this.id, this.image.name),
+        );
+
+        for (const key in data) {
+          if (data.hasOwnProperty(key)) {
+            form.append(key, data[key]);
+          }
+        }
+
+        this.submitData = form;
+      }
     },
     changeImage() {
-      this.uploadingImage = this.$refs.pictureInput.file;
+      this.image = this.$refs.pictureInput.file;
     },
     removeImage() {
-      this.uploadingImage = null;
+      this.image = null;
     },
     uploadImage() {
       const form = new FormData();
+
       form.append(
         'image',
-        this.uploadingImage,
-        this.getFullImageName(this.id, this.uploadingImage.name),
+        this.image,
+        this.getFullImageName(this.id, this.image.name),
       );
 
       axios.post(this.getUploadPage('slider'), form).then(res => {
         this.fileMsg = res.data.msg;
 
         if (res.data.status == SUCCESS) {
-          this.uploadingImage = null;
+          this.image = null;
           this.$refs.upload.value = null;
         }
 
-        console.log('image upload response > ', res);
+        console.log('Image upload response > ', res);
       });
     },
     removeUploadedImage(toUploadImage = false) {
@@ -184,7 +206,7 @@ export default {
         .delete(
           `${this.getUploadPage('slider')}/${this.getFullImageName(
             this.id,
-            this.image,
+            this.imageName,
           )}`,
         )
         .then(res => {
@@ -194,7 +216,7 @@ export default {
             this.uploadImage();
           }
 
-          console.log('image delete response > ', res);
+          console.log('Image delete response > ', res);
         });
     },
     submit() {
@@ -202,16 +224,8 @@ export default {
         return false;
       }
 
-      // if (this.$v.$anyDirty) {
-      this.sendData();
-      // }
-
-      if (this.imageName) {
-        if (!this.image) {
-          this.uploadImage();
-        } else {
-          this.removeUploadedImage(true);
-        }
+      if (this.$v.$anyDirty) {
+        this.sendData();
       }
 
       return true;

@@ -155,25 +155,27 @@ export default {
         techs: this.techs.map(item => item.name),
       };
 
-      if (!this.uploadingImageName) {
-        this.submitData = data;
-      } else {
-        const form = new FormData();
+      // if (!this.uploadingImageName) {
+      //   this.submitData = data;
+      // } else {
+      const form = new FormData();
 
+      if (this.uploadingImageName) {
         form.append(
           'image',
           this.image,
           this.getFullImageName(this.id, this.image.name),
         );
-
-        for (const key in data) {
-          if (data.hasOwnProperty(key)) {
-            form.append(key, data[key]);
-          }
-        }
-
-        this.submitData = form;
       }
+
+      for (const key in data) {
+        if (data.hasOwnProperty(key)) {
+          form.append(key, data[key]);
+        }
+      }
+
+      this.submitData = form;
+      // }
     },
     changeImage() {
       this.image = this.$refs.pictureInput.file;

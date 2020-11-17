@@ -62,7 +62,7 @@ function get(Model, res, filter, fields, options, mode = 'many') {
     });
 }
 
-function update(Model, query, data, res) {
+function update(Model, query, data, res, isNotCB = false) {
   const FUNC = query.id ? 'findByIdAndUpdate' : 'findOneAndUpdate';
   const filter = query.id ? query.id : query;
 

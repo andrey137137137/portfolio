@@ -3,9 +3,8 @@ const { IncomingForm } = require('formidable');
 const path = require('path');
 const fs = require('fs');
 const each = require('async/each');
-const sharp = require('sharp');
 
-const rootPath = 'public/upload';
+const rootPath = path.join('public', 'upload');
 const sliderDir = 'slider';
 const sliderBreakpoints = [
   { name: 'xl', height: 525 },
@@ -19,7 +18,7 @@ let uploadPath;
 // let filePath;
 // let fileName;
 
-function sendMessage(res, err, messages, info = false) {
+const sendMessage = (res, err, messages, info = false) => {
   if (err) {
     return res.status(ERROR).json({ message: messages.error });
   }
@@ -29,13 +28,25 @@ function sendMessage(res, err, messages, info = false) {
   if (info) data.info = info;
 
   res.send(data);
-}
+};
 
-function setUploadPath(dir) {
+const makeDir = dir => {
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir);
+  }
+};
+
+const setUploadPath = (dir, layer = -1) => {
   uploadPath = dir ? path.join(rootPath, dir) : rootPath;
-}
 
-// function resizeImage(breakpoint, res) {
+  if (layer >= 0) {
+    uploadPath = path.join(uploadPath, 'layer_' + layer);
+  }
+
+  makeDir(uploadPath);
+};
+
+// const resizeImage = (breakpoint, res) => {
 //   console.log(resizeUploadPath);
 
 //   sharp(filePath)
@@ -46,9 +57,9 @@ function setUploadPath(dir) {
 //     .toFile(path.join(resizeUploadPath, fileName), (err, info) => {
 //       sendMessage(res, err, info);
 //     });
-// }
+// };
 
-function deleteImage(res, path, msgError, msgSuccess = false) {
+const unlinkImage = (res, path, msgError, msgSuccess = false) => {
   fs.unlink(path, err => {
     if (err) {
       res.status(ERROR).json({ message: msgError });
@@ -58,23 +69,14 @@ function deleteImage(res, path, msgError, msgSuccess = false) {
       res.send({ message: msgSuccess });
     }
   });
-}
+};
 
-module.exports.upload = (req, res, dir = '', layer = -1) => {
+const upload = (req, res, dir = '', layer = -1) => {
   const form = new IncomingForm();
 
-  setUploadPath(dir);
-
-  if (layer >= 0) {
-    uploadPath = path.join(uploadPath, 'layer_' + layer);
-  }
-
-  if (!fs.existsSync(uploadPath)) {
-    fs.mkdirSync(uploadPath);
-  }
+  setUploadPath(dir, layer);
 
   form.uploadDir = path.join(process.cwd(), uploadPath);
-
   form.parse(req, (err, fields, files) => {
     if (err) {
       return res.status(ERROR).json({
@@ -90,43 +92,12 @@ module.exports.upload = (req, res, dir = '', layer = -1) => {
         sendMessage(res, err);
       });
     } else {
-      each(
-        sliderBreakpoints,
-        (breakpoint, callback) => {
-          const resizeUploadPath = path.join(uploadPath, breakpoint.name);
-
-          if (!fs.existsSync(resizeUploadPath)) {
-            fs.mkdirSync(resizeUploadPath);
-          }
-
-          console.log(resizeUploadPath);
-
-          sharp(filePath)
-            .resize({
-              background: { r: 0, g: 0, b: 0, alpha: 0 },
-              height: breakpoint.height,
-            })
-            .toFile(path.join(resizeUploadPath, fileName), callback);
-        },
-        (err, info) => {
-          sendMessage(
-            res,
-            err,
-            {
-              success: 'Изображение успешно добавлено',
-              error: 'Не удалось переместить изображение',
-            },
-            info,
-          );
-
-          deleteImage(res, filePath, 'Не удалось удалить временный файл');
-        },
-      );
+      uploadSlide(res, filePath, fileName);
     }
   });
 };
 
-module.exports.delete = (res, imageName, dir = '') => {
+const remove = (res, imageName, dir = '') => {
   const messages = {
     success: 'Изображение успешно удалено',
     error: 'Не удалось удалить изображение',
@@ -135,7 +106,7 @@ module.exports.delete = (res, imageName, dir = '') => {
   setUploadPath(dir);
 
   if (dir != sliderDir) {
-    deleteImage(
+    unlinkImage(
       res,
       path.join(uploadPath, imageName),
       messages.error,
@@ -156,4 +127,13 @@ module.exports.delete = (res, imageName, dir = '') => {
       },
     );
   }
+};
+
+module.exports = {
+  uploadPath,
+  makeDir,
+  setUploadPath,
+  upload,
+  uploadSlide,
+  remove,
 };

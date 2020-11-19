@@ -46,6 +46,11 @@ const setUploadPath = (dir, layer = -1) => {
   makeDir(uploadPath);
 };
 
+const getUploadDir = (dir, layer = -1) => {
+  setUploadPath(dir, layer);
+  return path.join(process.cwd(), uploadPath);
+};
+
 // const resizeImage = (breakpoint, res) => {
 //   console.log(resizeUploadPath);
 
@@ -74,9 +79,7 @@ const unlinkImage = (res, path, msgError, msgSuccess = false) => {
 const upload = (req, res, dir = '', layer = -1) => {
   const form = new IncomingForm();
 
-  setUploadPath(dir, layer);
-
-  form.uploadDir = path.join(process.cwd(), uploadPath);
+  form.uploadDir = getUploadDir(dir, layer);
   form.parse(req, (err, fields, files) => {
     if (err) {
       return res.status(ERROR).json({
@@ -87,13 +90,9 @@ const upload = (req, res, dir = '', layer = -1) => {
     const filePath = files.image.path;
     const fileName = files.image.name;
 
-    if (dir != sliderDir) {
-      fs.rename(filePath, path.join(uploadPath, fileName), err => {
-        sendMessage(res, err);
-      });
-    } else {
-      uploadSlide(res, filePath, fileName);
-    }
+    fs.rename(filePath, path.join(uploadPath, fileName), err => {
+      sendMessage(res, err);
+    });
   });
 };
 
@@ -133,7 +132,7 @@ module.exports = {
   uploadPath,
   makeDir,
   setUploadPath,
+  getUploadDir,
   upload,
-  uploadSlide,
   remove,
 };

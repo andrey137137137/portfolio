@@ -1,7 +1,7 @@
 const { SUCCESS, FORBIDDEN, NOT_FOUND, ERROR } = require('@httpSt');
 const waterfall = require('async/waterfall');
 
-function getMessage(mode, isError = false) {
+const getMessage = (mode, isError = false) => {
   switch (mode) {
     case 'find':
       return 'чтении записей';
@@ -17,42 +17,9 @@ function getMessage(mode, isError = false) {
       if (isError) return 'удалении записи';
       return 'удалена';
   }
-}
+};
 
-function get(Model, res, filter, fields, options, mode = 'many') {
-  const types = {
-    many: 'find',
-    one: 'findOne',
-    id: 'findById',
-  };
-  const method = types[mode];
-
-  Model[method](filter, fields, options)
-    .then(result => {
-      res.status(SUCCESS).json({ result });
-    })
-    .catch(err => {
-      module.exports.sendError(err, res, mode == 'many' ? 'find' : 'findOne');
-    });
-}
-
-function update(Model, query, data, res, isNotCB = false) {
-  const method = query.id ? 'findByIdAndUpdate' : 'findOneAndUpdate';
-  const filter = query.id ? query.id : query;
-  const func = Model[method](filter, { $set: data });
-
-  if (isNotCB) return func;
-
-  func
-    .then(result => {
-      module.exports.sendResult(result, res, 'update');
-    })
-    .catch(err => {
-      module.exports.sendError(err, res, 'update');
-    });
-}
-
-module.exports.sendResult = (result, res, mode = 'insert') => {
+const sendResult = (result, res, mode = 'insert') => {
   if (!result) {
     let message = 'Запись в БД не обнаружена';
 
@@ -72,60 +39,96 @@ module.exports.sendResult = (result, res, mode = 'insert') => {
   res.status(SUCCESS).json(data);
 };
 
-module.exports.sendError = (err, res, mode) => {
+const sendError = (err, res, mode) => {
   res.status(ERROR).json({
     message: `При ${getMessage(mode, true)} произошла ошибка: ${err}`,
   });
 };
 
-module.exports.getItemById = (Model, res, id, fields = {}, options = {}) => {
-  get(Model, res, id, fields, options, 'id');
-};
-
-module.exports.getItem = (
+const get = (
   Model,
   res,
-  filter = {},
-  fields = {},
-  options = {},
+  filter,
+  fields,
+  options,
+  mode = 'many',
+  cb = false,
 ) => {
+  const types = {
+    many: 'find',
+    one: 'findOne',
+    id: 'findById',
+  };
+  const method = types[mode];
+
+  if (cb !== false) {
+    return Model[method](filter, fields, options, cb);
+  }
+
+  Model[method](filter, fields, options)
+    .then(result => {
+      res.status(SUCCESS).json({ result });
+    })
+    .catch(err => {
+      sendError(err, res, mode == 'many' ? 'find' : 'findOne');
+    });
+};
+
+const getItemById = (Model, res, id, fields = {}, options = {}, cb = false) => {
+  get(Model, res, id, fields, options, 'id', cb);
+};
+
+const getItem = (Model, res, filter = {}, fields = {}, options = {}) => {
   get(Model, res, filter, fields, options, 'one');
 };
 
-module.exports.getItems = (Model, res, sort, filter = {}, fields = {}) => {
+const getItems = (Model, res, sort, filter = {}, fields = {}) => {
   get(Model, res, filter, fields, { sort });
 };
 
-module.exports.createItem = (Model, data, res, cb = false) => {
+const createItem = (Model, data, res, cb = false) => {
   const item = new Model(data);
 
-  if (cb !== false) return item.save(cb);
+  if (cb !== false) {
+    return item.save(cb);
+  }
 
   item
     .save()
     .then(result => {
-      module.exports.sendResult(result, res, 'insert');
+      sendResult(result, res, 'insert');
     })
     .catch(err => {
-      module.exports.sendError(err, res, 'insert');
+      sendError(err, res, 'insert');
     });
 };
 
-module.exports.updateItem = (Model, id, data, res, isNotCB = false) => {
+const update = (Model, query, data, res, cb = false) => {
+  const method = query.id ? 'findByIdAndUpdate' : 'findOneAndUpdate';
+  const filter = query.id ? query.id : query;
+
+  if (cb !== false) {
+    return Model[method](filter, { $set: data }, cb);
+  }
+
+  Model[method](filter, { $set: data })
+    .then(result => {
+      sendResult(result, res, 'update');
+    })
+    .catch(err => {
+      sendError(err, res, 'update');
+    });
+};
+
+const updateItem = (Model, id, data, res, isNotCB = false) => {
   update(Model, { id }, data, res, isNotCB);
 };
 
-module.exports.updateItemByQuery = (
-  Model,
-  query,
-  data,
-  res,
-  isNotCB = false,
-) => {
+const updateItemByQuery = (Model, query, data, res, isNotCB = false) => {
   update(Model, query, data, res, isNotCB);
 };
 
-module.exports.updateUserPassword = (Model, id, data, res) => {
+const updateUserPassword = (Model, id, data, res) => {
   const { email, username, oldPassword, password, repPassword } = data;
 
   waterfall(
@@ -155,21 +158,38 @@ module.exports.updateUserPassword = (Model, id, data, res) => {
     ],
     (err, user) => {
       if (err) {
-        module.exports.sendError(err, res, 'update');
+        sendError(err, res, 'update');
       }
 
-      module.exports.sendResult(user, res, 'update');
+      sendResult(user, res, 'update');
     },
   );
 };
 
-module.exports.deleteItem = (Model, id, res) => {
+const deleteItem = (Model, id, res, cb = false) => {
+  if (cb !== false) {
+    Model.findByIdAndRemove(id, cb);
+  }
+
   Model.findByIdAndRemove(id).then(
     result => {
-      module.exports.sendResult(result, res, 'delete');
+      sendResult(result, res, 'delete');
     },
     err => {
-      module.exports.sendError(err, res, 'delete');
+      sendError(err, res, 'delete');
     },
   );
+};
+
+module.exports = {
+  sendResult,
+  sendError,
+  getItemById,
+  getItem,
+  getItems,
+  createItem,
+  updateItem,
+  updateItemByQuery,
+  updateUserPassword,
+  deleteItem,
 };

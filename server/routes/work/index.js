@@ -4,6 +4,7 @@ const Model = require('mongoose').model('work');
 const { IncomingForm } = require('formidable');
 const { waterfall, each } = require('async');
 const sharp = require('sharp');
+const fs = require('fs');
 
 const { isAuth } = require('@auth');
 const crud = require('@contr/crud');
@@ -50,15 +51,36 @@ const uploadSlide = (res, filePath, fileName) => {
   );
 };
 
+const removeSlide = (res, imageName, dir = '') => {
+  const messages = {
+    success: 'Изображение успешно удалено',
+    error: 'Не удалось удалить изображение',
+  };
+
+  image.setUploadPath(dir);
+
+  each(
+    sliderBreakpoints,
+    (breakpoint, callback) => {
+      const deleteUploadPath = path.join(image.uploadPath, breakpoint.name);
+
+      console.log(deleteUploadPath);
+
+      fs.unlink(path.join(deleteUploadPath, imageName), callback);
+    },
+    (err, info) => {
+      image.sendMessage(res, err, messages, info);
+    },
+  );
+};
+
 router.get('/', (req, res) => {
   crud.getItems(Model, res, { title: 1 });
 });
 
 router.post('/', isAuth, (req, res) => {
-  image.setUploadPath(sliderDir);
-
   const form = new IncomingForm({
-    uploadDir: path.join(process.cwd(), image.uploadPath),
+    uploadDir: image.getUploadDir(sliderDir),
   });
 
   form.parse(req, (err, fields, files) => {
@@ -112,7 +134,29 @@ router.put('/:id', isAuth, (req, res) => {
 });
 
 router.delete('/:id', isAuth, (req, res) => {
-  crud.deleteItem(Model, req.params.id, res);
+  waterfall(
+    [
+      cb => {
+        crud.getItemById(Model, res, req.params.id, {}, {}, cb);
+      },
+      (result, cb) => {
+        if (result.imageName) {
+          removeSlide(res, `${req.params.id}_${result.imageName}`, sliderDir);
+        }
+        cb(null, result);
+      },
+      (result, cb) => {
+        crud.deleteItem(Model, req.params.id, res, cb);
+      },
+    ],
+    (err, result) => {
+      if (err) {
+        return crud.sendError(err, res, 'delete');
+      }
+
+      crud.sendResult(result, res, 'delete');
+    },
+  );
 });
 
 module.exports = router;

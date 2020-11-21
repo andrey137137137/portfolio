@@ -14,9 +14,6 @@ const sliderBreakpoints = [
 ];
 
 let uploadPath;
-// let resizeUploadPath;
-// let filePath;
-// let fileName;
 
 const sendMessage = (res, err, messages, info = false) => {
   if (err) {
@@ -50,19 +47,6 @@ const getUploadDir = (dir, layer = -1) => {
   setUploadPath(dir, layer);
   return path.join(process.cwd(), uploadPath);
 };
-
-// const resizeImage = (breakpoint, res) => {
-//   console.log(resizeUploadPath);
-
-//   sharp(filePath)
-//     .resize({
-//       background: { r: 0, g: 0, b: 0, alpha: 0 },
-//       height: breakpoint.height,
-//     })
-//     .toFile(path.join(resizeUploadPath, fileName), (err, info) => {
-//       sendMessage(res, err, info);
-//     });
-// };
 
 const unlinkImage = (res, path, msgError, msgSuccess = false) => {
   fs.unlink(path, err => {

@@ -17,6 +17,18 @@ const sliderBreakpoints = [
   { name: 'md', height: 215 },
   { name: 'sm', height: 93 },
 ];
+const deleteImageMessages = {
+  success: 'Изображение успешно удалено',
+  error: 'Не удалось удалить изображение',
+};
+
+const callbackMessage = (err, result, res, mode) => {
+  if (err) {
+    return crud.sendError(err, res, mode);
+  }
+
+  crud.sendResult(result, res, mode);
+};
 
 const uploadSlide = (res, filePath, fileName) => {
   each(
@@ -51,25 +63,24 @@ const uploadSlide = (res, filePath, fileName) => {
   );
 };
 
-const removeSlide = (res, imageName, dir = '') => {
-  const messages = {
-    success: 'Изображение успешно удалено',
-    error: 'Не удалось удалить изображение',
-  };
-
-  image.setUploadPath(dir);
+const deleteSlide = (res, imageName, highCB) => {
+  image.setUploadPath(sliderDir);
 
   each(
     sliderBreakpoints,
-    (breakpoint, callback) => {
+    (breakpoint, cb) => {
       const deleteUploadPath = path.join(image.uploadPath, breakpoint.name);
 
       console.log(deleteUploadPath);
 
-      fs.unlink(path.join(deleteUploadPath, imageName), callback);
+      fs.unlink(path.join(deleteUploadPath, imageName), cb);
     },
     (err, info) => {
-      image.sendMessage(res, err, messages, info);
+      image.sendMessage(res, err, deleteImageMessages, info);
+
+      if (err) {
+        return highCB(err, null);
+      }
     },
   );
 };
@@ -79,6 +90,8 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', isAuth, (req, res) => {
+  // const { title, link, image, techs } = req.body;
+
   const form = new IncomingForm({
     uploadDir: image.getUploadDir(sliderDir),
   });
@@ -105,32 +118,57 @@ router.post('/', isAuth, (req, res) => {
           },
         ],
         (err, result) => {
-          if (err) {
-            return crud.sendError(err, res, 'insert');
-          }
-
-          crud.sendResult(result, res, 'insert');
+          callbackMessage(err, result, res, 'insert');
         },
       );
     }
   });
-
-  // const { title, link, image, techs } = req.body;
 });
 
 router.put('/:id', isAuth, (req, res) => {
-  const { title, link, image, techs } = req.body;
-  crud.updateItem(
-    Model,
-    req.params.id,
-    {
-      title,
-      link,
-      image,
-      techs,
-    },
-    res,
-  );
+  // const { title, link, image, techs } = req.body;
+
+  const form = new IncomingForm({
+    uploadDir: image.getUploadDir(sliderDir),
+  });
+
+  form.parse(req, (err, fields, files) => {
+    if (err) {
+      return crud.sendError(err, res, 'insert');
+    }
+
+    console.log('fields:', fields);
+    console.log('files:', files);
+
+    if (!files.length) {
+      crud.updateItem(Model, req.params.id, fields, res);
+    } else {
+      waterfall(
+        [
+          cb => {
+            crud.getItemById(Model, res, req.params.id, {}, {}, cb);
+          },
+          (result, cb) => {
+            if (result.imageName) {
+              deleteSlide(res, `${req.params.id}_${result.imageName}`, cb);
+            } else {
+              cb(null, result);
+            }
+          },
+          (result, cb) => {
+            crud.updateItem(Model, req.params.id, fields, res, cb);
+          },
+          (result, cb) => {
+            uploadSlide(res, files.image.path, files.image.name);
+            cb(null, result);
+          },
+        ],
+        (err, result) => {
+          callbackMessage(err, result, res, 'update');
+        },
+      );
+    }
+  });
 });
 
 router.delete('/:id', isAuth, (req, res) => {
@@ -141,20 +179,17 @@ router.delete('/:id', isAuth, (req, res) => {
       },
       (result, cb) => {
         if (result.imageName) {
-          removeSlide(res, `${req.params.id}_${result.imageName}`, sliderDir);
+          deleteSlide(res, `${req.params.id}_${result.imageName}`, cb);
+        } else {
+          cb(null, result);
         }
-        cb(null, result);
       },
       (result, cb) => {
         crud.deleteItem(Model, req.params.id, res, cb);
       },
     ],
     (err, result) => {
-      if (err) {
-        return crud.sendError(err, res, 'delete');
-      }
-
-      crud.sendResult(result, res, 'delete');
+      callbackMessage(err, result, res, 'delete');
     },
   );
 });

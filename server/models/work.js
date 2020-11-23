@@ -14,14 +14,14 @@ const WorkSchema = new Schema({
     type: String,
     default: '',
   },
-  imageName2: {
-    type: String,
-    default: '',
-  },
-  imageName3: {
-    type: String,
-    default: '',
-  },
+  // imageName2: {
+  //   type: String,
+  //   default: '',
+  // },
+  // imageName3: {
+  //   type: String,
+  //   default: '',
+  // },
   techs: {
     type: Array,
     required: [true, 'Укажите картинку работы'],

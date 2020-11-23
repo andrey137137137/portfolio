@@ -41,8 +41,8 @@ import {
   // minLength,
   // maxLength
 } from 'vuelidate/lib/validators';
-import axios from 'axios';
-import { SUCCESS } from '@httpSt';
+// import axios from 'axios';
+// import { SUCCESS } from '@httpSt';
 import exist from '@common/helpers/exist';
 import imageMixin from '@common/mixins/imageMixin';
 import uploadMixin from '@backend/mixins/uploadMixin';
@@ -110,9 +110,9 @@ export default {
   },
   computed: {
     uploadingImageName() {
-      if (!this.id) {
-        return '';
-      }
+      // if (!this.id) {
+      //   return '';
+      // }
 
       if (!this.image) {
         return '';
@@ -183,55 +183,55 @@ export default {
     removeImage() {
       this.image = null;
     },
-    uploadImage() {
-      const form = new FormData();
+    // uploadImage() {
+    //   const form = new FormData();
 
-      form.append(
-        'image',
-        this.image,
-        this.getFullImageName(this.id, this.image.name),
-      );
+    //   form.append(
+    //     'image',
+    //     this.image,
+    //     this.getFullImageName(this.id, this.image.name),
+    //   );
 
-      axios.post(this.getUploadPage('slider'), form).then(res => {
-        this.fileMsg = res.data.msg;
+    //   axios.post(this.getUploadPage('slider'), form).then(res => {
+    //     this.fileMsg = res.data.msg;
 
-        if (res.data.status == SUCCESS) {
-          this.image = null;
-          this.$refs.upload.value = null;
-        }
+    //     if (res.data.status == SUCCESS) {
+    //       this.image = null;
+    //       this.$refs.upload.value = null;
+    //     }
 
-        console.log('Image upload response > ', res);
-      });
-    },
-    removeUploadedImage(toUploadImage = false) {
-      axios
-        .delete(
-          `${this.getUploadPage('slider')}/${this.getFullImageName(
-            this.id,
-            this.imageName,
-          )}`,
-        )
-        .then(res => {
-          this.fileMsg = res.data.msg;
+    //     console.log('Image upload response > ', res);
+    //   });
+    // },
+    // removeUploadedImage(toUploadImage = false) {
+    //   axios
+    //     .delete(
+    //       `${this.getUploadPage('slider')}/${this.getFullImageName(
+    //         this.id,
+    //         this.imageName,
+    //       )}`,
+    //     )
+    //     .then(res => {
+    //       this.fileMsg = res.data.msg;
 
-          if (toUploadImage && res.data.status == SUCCESS) {
-            this.uploadImage();
-          }
+    //       if (toUploadImage && res.data.status == SUCCESS) {
+    //         this.uploadImage();
+    //       }
 
-          console.log('Image delete response > ', res);
-        });
-    },
-    submit() {
-      if (this.$v.$invalid) {
-        return false;
-      }
+    //       console.log('Image delete response > ', res);
+    //     });
+    // },
+    // submit() {
+    //   if (this.$v.$invalid) {
+    //     return false;
+    //   }
 
-      if (this.$v.$anyDirty) {
-        this.sendData();
-      }
+    //   if (this.$v.$anyDirty) {
+    //     this.sendData();
+    //   }
 
-      return true;
-    },
+    //   return true;
+    // },
   },
 };
 </script>

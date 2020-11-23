@@ -22,19 +22,17 @@ const deleteImageMessages = {
   error: 'Не удалось удалить изображение',
 };
 
-const callbackMessage = (err, result, res, mode) => {
-  if (err) {
-    return crud.sendError(err, res, mode);
-  }
+let globalFields;
+let globalFiles;
 
-  crud.sendResult(result, res, mode);
-};
-
-const uploadSlide = (res, filePath, fileName) => {
+function uploadSlide(res, filePath, fileName) {
   each(
     sliderBreakpoints,
     (breakpoint, callback) => {
-      const resizeUploadPath = path.join(image.uploadPath, breakpoint.name);
+      const resizeUploadPath = path.join(
+        image.getUploadPath(),
+        breakpoint.name,
+      );
 
       image.makeDir(resizeUploadPath);
 
@@ -61,15 +59,20 @@ const uploadSlide = (res, filePath, fileName) => {
       image.unlinkImage(res, filePath, 'Не удалось удалить временный файл');
     },
   );
-};
+}
 
-const deleteSlide = (res, imageName, highCB) => {
+function deleteSlide(res, imageName, highCB) {
   image.setUploadPath(sliderDir);
+
+  console.log('uploadPath: ' + image.getUploadPath());
 
   each(
     sliderBreakpoints,
     (breakpoint, cb) => {
-      const deleteUploadPath = path.join(image.uploadPath, breakpoint.name);
+      const deleteUploadPath = path.join(
+        image.getUploadPath(),
+        breakpoint.name,
+      );
 
       console.log(deleteUploadPath);
 
@@ -83,109 +86,119 @@ const deleteSlide = (res, imageName, highCB) => {
       }
     },
   );
-};
+}
+
+function callbackMessage(err, result, res, mode) {
+  if (err) {
+    return crud.sendError(err, res, mode);
+  }
+
+  crud.sendResult(result, res, mode);
+}
+
+function formParse(req, res, mode, withoutSlideCB, withSlideArrayCallbacks) {
+  // const { title, link, image, techs } = req.body;
+
+  const form = new IncomingForm({
+    uploadDir: image.getTempPath(sliderDir),
+  });
+
+  console.log('uploadPath: ' + image.getUploadPath());
+
+  form.parse(req, (err, fields, files) => {
+    if (err) {
+      return crud.sendError(err, res, mode);
+    }
+
+    // console.log('fields:', fields);
+    // console.log('files:', files);
+
+    globalFields = fields;
+    globalFiles = files;
+
+    if (!globalFiles.image) {
+      withoutSlideCB();
+    } else {
+      waterfall(withSlideArrayCallbacks, (err, result) => {
+        callbackMessage(err, result, res, mode);
+      });
+    }
+  });
+}
 
 router.get('/', (req, res) => {
   crud.getItems(Model, res, { title: 1 });
 });
 
 router.post('/', isAuth, (req, res) => {
-  // const { title, link, image, techs } = req.body;
-
-  const form = new IncomingForm({
-    uploadDir: image.getUploadDir(sliderDir),
-  });
-
-  form.parse(req, (err, fields, files) => {
-    if (err) {
-      return crud.sendError(err, res, 'insert');
-    }
-
-    console.log('fields:', fields);
-    console.log('files:', files);
-
-    if (!files.length) {
-      crud.createItem(Model, fields, res);
-    } else {
-      waterfall(
-        [
-          cb => {
-            crud.createItem(Model, fields, res, cb);
-          },
-          (result, cb) => {
-            uploadSlide(res, files.image.path, files.image.name);
-            cb(null, result);
-          },
-        ],
-        (err, result) => {
-          callbackMessage(err, result, res, 'insert');
-        },
-      );
-    }
-  });
+  formParse(
+    req,
+    res,
+    'insert',
+    () => {
+      crud.createItem(Model, globalFields, res);
+    },
+    [
+      cb => {
+        crud.createItem(Model, globalFields, res, cb);
+      },
+      (result, cb) => {
+        uploadSlide(res, globalFiles.image.path, globalFiles.image.name);
+        cb(null, result);
+      },
+    ],
+  );
 });
 
 router.put('/:id', isAuth, (req, res) => {
-  // const { title, link, image, techs } = req.body;
+  const { id } = req.params;
 
-  const form = new IncomingForm({
-    uploadDir: image.getUploadDir(sliderDir),
-  });
-
-  form.parse(req, (err, fields, files) => {
-    if (err) {
-      return crud.sendError(err, res, 'insert');
-    }
-
-    console.log('fields:', fields);
-    console.log('files:', files);
-
-    if (!files.length) {
-      crud.updateItem(Model, req.params.id, fields, res);
-    } else {
-      waterfall(
-        [
-          cb => {
-            crud.getItemById(Model, res, req.params.id, {}, {}, cb);
-          },
-          (result, cb) => {
-            if (result.imageName) {
-              deleteSlide(res, `${req.params.id}_${result.imageName}`, cb);
-            } else {
-              cb(null, result);
-            }
-          },
-          (result, cb) => {
-            crud.updateItem(Model, req.params.id, fields, res, cb);
-          },
-          (result, cb) => {
-            uploadSlide(res, files.image.path, files.image.name);
-            cb(null, result);
-          },
-        ],
-        (err, result) => {
-          callbackMessage(err, result, res, 'update');
-        },
-      );
-    }
-  });
-});
-
-router.delete('/:id', isAuth, (req, res) => {
-  waterfall(
+  formParse(
+    req,
+    res,
+    'update',
+    () => {
+      crud.updateItem(Model, id, globalFields, res);
+    },
     [
       cb => {
-        crud.getItemById(Model, res, req.params.id, {}, {}, cb);
+        crud.getItemById(Model, res, id, {}, {}, cb);
       },
       (result, cb) => {
         if (result.imageName) {
-          deleteSlide(res, `${req.params.id}_${result.imageName}`, cb);
+          deleteSlide(res, `${id}_${result.imageName}`, cb);
+        } else {
+          cb(null, result);
+        }
+      },
+      // (result, cb) => {
+      //   crud.updateItem(Model, id, globalFields, res, cb);
+      // },
+      // (result, cb) => {
+      //   uploadSlide(res, globalFiles.image.path, globalFiles.image.name);
+      //   cb(null, result);
+      // },
+    ],
+  );
+});
+
+router.delete('/:id', isAuth, (req, res) => {
+  const { id } = req.params;
+
+  waterfall(
+    [
+      cb => {
+        crud.getItemById(Model, res, id, {}, {}, cb);
+      },
+      (result, cb) => {
+        if (result.imageName) {
+          deleteSlide(res, `${id}_${result.imageName}`, cb);
         } else {
           cb(null, result);
         }
       },
       (result, cb) => {
-        crud.deleteItem(Model, req.params.id, res, cb);
+        crud.deleteItem(Model, id, res, cb);
       },
     ],
     (err, result) => {

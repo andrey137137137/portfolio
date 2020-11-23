@@ -2,16 +2,8 @@ const { ERROR } = require('@httpSt');
 const { IncomingForm } = require('formidable');
 const path = require('path');
 const fs = require('fs');
-const each = require('async/each');
 
 const rootPath = path.join('public', 'upload');
-const sliderDir = 'slider';
-const sliderBreakpoints = [
-  { name: 'xl', height: 525 },
-  { name: 'lg', height: 257 },
-  { name: 'md', height: 215 },
-  { name: 'sm', height: 93 },
-];
 
 let uploadPath;
 
@@ -43,7 +35,11 @@ const setUploadPath = (dir, layer = -1) => {
   makeDir(uploadPath);
 };
 
-const getUploadDir = (dir, layer = -1) => {
+const getUploadPath = () => {
+  return uploadPath;
+};
+
+const getTempPath = (dir, layer = -1) => {
   setUploadPath(dir, layer);
   return path.join(process.cwd(), uploadPath);
 };
@@ -63,7 +59,7 @@ const unlinkImage = (res, path, msgError, msgSuccess = false) => {
 const upload = (req, res, dir = '', layer = -1) => {
   const form = new IncomingForm();
 
-  form.uploadDir = getUploadDir(dir, layer);
+  form.uploadDir = getTempPath(dir, layer);
   form.parse(req, (err, fields, files) => {
     if (err) {
       return res.status(ERROR).json({
@@ -88,35 +84,20 @@ const remove = (res, imageName, dir = '') => {
 
   setUploadPath(dir);
 
-  if (dir != sliderDir) {
-    unlinkImage(
-      res,
-      path.join(uploadPath, imageName),
-      messages.error,
-      messages.success,
-    );
-  } else {
-    each(
-      sliderBreakpoints,
-      (breakpoint, callback) => {
-        const deleteUploadPath = path.join(uploadPath, breakpoint.name);
-
-        console.log(deleteUploadPath);
-
-        fs.unlink(path.join(deleteUploadPath, imageName), callback);
-      },
-      (err, info) => {
-        sendMessage(res, err, messages, info);
-      },
-    );
-  }
+  unlinkImage(
+    res,
+    path.join(uploadPath, imageName),
+    messages.error,
+    messages.success,
+  );
 };
 
 module.exports = {
-  uploadPath,
+  sendMessage,
   makeDir,
   setUploadPath,
-  getUploadDir,
+  getUploadPath,
+  getTempPath,
   upload,
   remove,
 };

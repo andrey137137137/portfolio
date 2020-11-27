@@ -49,7 +49,6 @@ const unlinkImage = (res, path, msgError, msgSuccess = false) => {
     if (err) {
       res.status(ERROR).json({ message: msgError });
     }
-
     if (msgSuccess) {
       res.send({ message: msgSuccess });
     }
@@ -98,6 +97,7 @@ module.exports = {
   setUploadPath,
   getUploadPath,
   getTempPath,
+  unlinkImage,
   upload,
   remove,
 };

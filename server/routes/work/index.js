@@ -46,15 +46,15 @@ function uploadSlide(res, filePath, fileName) {
         .toFile(path.join(resizeUploadPath, fileName), callback);
     },
     (err, info) => {
-      image.sendMessage(
-        res,
-        err,
-        {
-          success: 'Изображение успешно добавлено',
-          error: 'Не удалось переместить изображение',
-        },
-        info,
-      );
+      // image.sendMessage(
+      //   res,
+      //   err,
+      //   {
+      //     success: 'Изображение успешно добавлено',
+      //     error: 'Не удалось переместить изображение',
+      //   },
+      //   info,
+      // );
 
       image.unlinkImage(res, filePath, 'Не удалось удалить временный файл');
     },
@@ -79,11 +79,11 @@ function deleteSlide(res, imageName, highCB) {
       fs.unlink(path.join(deleteUploadPath, imageName), cb);
     },
     (err, info) => {
-      image.sendMessage(res, err, deleteImageMessages, info);
+      // image.sendMessage(res, err, deleteImageMessages, info);
 
-      if (err) {
-        return highCB(err, null);
-      }
+      // if (err) {
+      highCB(err, info);
+      // }
     },
   );
 }
@@ -171,13 +171,13 @@ router.put('/:id', isAuth, (req, res) => {
           cb(null, result);
         }
       },
-      // (result, cb) => {
-      //   crud.updateItem(Model, id, globalFields, res, cb);
-      // },
-      // (result, cb) => {
-      //   uploadSlide(res, globalFiles.image.path, globalFiles.image.name);
-      //   cb(null, result);
-      // },
+      (result, cb) => {
+        crud.updateItem(Model, id, globalFields, res, cb);
+      },
+      (result, cb) => {
+        uploadSlide(res, globalFiles.image.path, globalFiles.image.name);
+        cb(null, result);
+      },
     ],
   );
 });

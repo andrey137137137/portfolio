@@ -44,13 +44,18 @@ const getTempPath = (dir, layer = -1) => {
   return path.join(process.cwd(), uploadPath);
 };
 
-const unlinkImage = (res, path, msgError, msgSuccess = false) => {
+const unlinkImage = (path, cb = false, res = null, messages = null) => {
+  if (cb !== false) {
+    return fs.unlink(path, cb);
+  }
+
   fs.unlink(path, err => {
     if (err) {
-      res.status(ERROR).json({ message: msgError });
+      res.status(ERROR).json({ message: messages.error });
     }
-    if (msgSuccess) {
-      res.send({ message: msgSuccess });
+
+    if (Object.prototype.hasOwnProperty.call(messages, 'success')) {
+      res.send({ message: messages.success });
     }
   });
 };
@@ -76,19 +81,12 @@ const upload = (req, res, dir = '', layer = -1) => {
 };
 
 const remove = (res, imageName, dir = '') => {
-  const messages = {
-    success: 'Изображение успешно удалено',
-    error: 'Не удалось удалить изображение',
-  };
-
   setUploadPath(dir);
 
-  unlinkImage(
-    res,
-    path.join(uploadPath, imageName),
-    messages.error,
-    messages.success,
-  );
+  unlinkImage(path.join(uploadPath, imageName), false, res, {
+    success: 'Изображение успешно удалено',
+    error: 'Не удалось удалить изображение',
+  });
 };
 
 module.exports = {

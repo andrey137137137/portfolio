@@ -161,11 +161,7 @@ export default {
       const form = new FormData();
 
       if (this.uploadingImageName) {
-        form.append(
-          'image',
-          this.image,
-          this.getFullImageName(this.id, this.image.name),
-        );
+        form.append('image', this.image, this.image.name);
       }
 
       for (const key in data) {

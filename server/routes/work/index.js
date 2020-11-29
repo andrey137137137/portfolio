@@ -17,18 +17,21 @@ const sliderBreakpoints = [
   { name: 'md', height: 215 },
   { name: 'sm', height: 93 },
 ];
-const deleteImageMessages = {
-  success: 'Изображение успешно удалено',
-  error: 'Не удалось удалить изображение',
-};
 
+let curRes;
+let curID;
+let curMode;
 let globalFields;
 let globalFiles;
 
-function uploadSlide(res, filePath, fileName) {
+function getImageNameWithID(imageName) {
+  return `${curID}_${imageName}`;
+}
+
+function uploadSlide(highCB) {
   each(
     sliderBreakpoints,
-    (breakpoint, callback) => {
+    (breakpoint, cb) => {
       const resizeUploadPath = path.join(
         image.getUploadPath(),
         breakpoint.name,
@@ -38,30 +41,33 @@ function uploadSlide(res, filePath, fileName) {
 
       console.log(resizeUploadPath);
 
-      sharp(filePath)
+      sharp(globalFiles.image.path)
         .resize({
           background: { r: 0, g: 0, b: 0, alpha: 0 },
           height: breakpoint.height,
         })
-        .toFile(path.join(resizeUploadPath, fileName), callback);
+        .toFile(
+          path.join(
+            resizeUploadPath,
+            getImageNameWithID(globalFiles.image.name),
+          ),
+          cb,
+        );
     },
     (err, info) => {
-      // image.sendMessage(
-      //   res,
-      //   err,
-      //   {
-      //     success: 'Изображение успешно добавлено',
-      //     error: 'Не удалось переместить изображение',
-      //   },
-      //   info,
-      // );
+      if (err) {
+        return image.sendMessage(curRes, err, {
+          success: 'Изображение успешно добавлено',
+          error: 'Не удалось переместить изображение',
+        });
+      }
 
-      image.unlinkImage(res, filePath, 'Не удалось удалить временный файл');
+      highCB(err, info);
     },
   );
 }
 
-function deleteSlide(res, imageName, highCB) {
+function deleteSlide(imageName, highCB) {
   image.setUploadPath(sliderDir);
 
   console.log('uploadPath: ' + image.getUploadPath());
@@ -76,28 +82,44 @@ function deleteSlide(res, imageName, highCB) {
 
       console.log(deleteUploadPath);
 
-      fs.unlink(path.join(deleteUploadPath, imageName), cb);
+      fs.unlink(path.join(deleteUploadPath, getImageNameWithID(imageName)), cb);
     },
     (err, info) => {
-      // image.sendMessage(res, err, deleteImageMessages, info);
+      if (err) {
+        return image.sendMessage(curRes, err, {
+          success: 'Изображение успешно удалено',
+          error: 'Не удалось удалить изображение',
+        });
+      }
 
-      // if (err) {
       highCB(err, info);
-      // }
     },
   );
 }
 
-function callbackMessage(err, result, res, mode) {
+function waterfallCB(err, result) {
   if (err) {
-    return crud.sendError(err, res, mode);
+    return crud.sendError(err, curRes, curMode);
   }
 
-  crud.sendResult(result, res, mode);
+  crud.sendResult(result, curRes, curMode);
+}
+
+function startWaterfall(withSlideArrayCallbacks) {
+  waterfall(withSlideArrayCallbacks, (err, result) => {
+    if (globalFiles.image) {
+      return image.unlinkImage(globalFiles.image.path, waterfallCB);
+    }
+
+    waterfallCB(err, result);
+  });
 }
 
 function formParse(req, res, mode, withoutSlideCB, withSlideArrayCallbacks) {
   // const { title, link, image, techs } = req.body;
+
+  curRes = res;
+  curMode = mode;
 
   const form = new IncomingForm({
     uploadDir: image.getTempPath(sliderDir),
@@ -107,7 +129,7 @@ function formParse(req, res, mode, withoutSlideCB, withSlideArrayCallbacks) {
 
   form.parse(req, (err, fields, files) => {
     if (err) {
-      return crud.sendError(err, res, mode);
+      return crud.sendError(err, curRes, curMode);
     }
 
     // console.log('fields:', fields);
@@ -119,11 +141,17 @@ function formParse(req, res, mode, withoutSlideCB, withSlideArrayCallbacks) {
     if (!globalFiles.image) {
       withoutSlideCB();
     } else {
-      waterfall(withSlideArrayCallbacks, (err, result) => {
-        callbackMessage(err, result, res, mode);
-      });
+      startWaterfall(withSlideArrayCallbacks);
     }
   });
+}
+
+function deleteCB(result, cb) {
+  if (result.imageName) {
+    deleteSlide(result.imageName, cb);
+  } else {
+    cb(null, result);
+  }
 }
 
 router.get('/', (req, res) => {
@@ -143,68 +171,56 @@ router.post('/', isAuth, (req, res) => {
         crud.createItem(Model, globalFields, res, cb);
       },
       (result, cb) => {
-        uploadSlide(res, globalFiles.image.path, globalFiles.image.name);
-        cb(null, result);
+        curID = result._id;
+        uploadSlide(cb);
       },
     ],
   );
 });
 
 router.put('/:id', isAuth, (req, res) => {
-  const { id } = req.params;
+  curID = req.params.id;
 
   formParse(
     req,
     res,
     'update',
     () => {
-      crud.updateItem(Model, id, globalFields, res);
+      crud.updateItem(Model, curID, globalFields, res);
     },
     [
       cb => {
-        crud.getItemById(Model, res, id, {}, {}, cb);
+        crud.getItemById(Model, res, curID, {}, {}, cb);
       },
       (result, cb) => {
-        if (result.imageName) {
-          deleteSlide(res, `${id}_${result.imageName}`, cb);
-        } else {
-          cb(null, result);
-        }
+        deleteCB(result, cb);
       },
       (result, cb) => {
-        crud.updateItem(Model, id, globalFields, res, cb);
+        crud.updateItem(Model, curID, globalFields, res, cb);
       },
       (result, cb) => {
-        uploadSlide(res, globalFiles.image.path, globalFiles.image.name);
-        cb(null, result);
+        uploadSlide(cb);
       },
     ],
   );
 });
 
 router.delete('/:id', isAuth, (req, res) => {
-  const { id } = req.params;
+  curID = req.params.id;
+  curRes = res;
+  curMode = 'delete';
 
-  waterfall(
-    [
-      cb => {
-        crud.getItemById(Model, res, id, {}, {}, cb);
-      },
-      (result, cb) => {
-        if (result.imageName) {
-          deleteSlide(res, `${id}_${result.imageName}`, cb);
-        } else {
-          cb(null, result);
-        }
-      },
-      (result, cb) => {
-        crud.deleteItem(Model, id, res, cb);
-      },
-    ],
-    (err, result) => {
-      callbackMessage(err, result, res, 'delete');
+  startWaterfall([
+    cb => {
+      crud.getItemById(Model, res, curID, {}, {}, cb);
     },
-  );
+    (result, cb) => {
+      deleteCB(result, cb);
+    },
+    (result, cb) => {
+      crud.deleteItem(Model, curID, res, cb);
+    },
+  ]);
 });
 
 module.exports = router;

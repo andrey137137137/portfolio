@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
 import { SUCCESS, ERROR } from '@httpSt';
+import exist from '@common/helpers/exist';
 import isDev from '@common/helpers/isDev';
 import { COMMENT } from '@common/constants/router';
 import {
@@ -24,6 +25,20 @@ import profile from '@common/store/modules/profile';
 import comments from '@common/store/modules/comments';
 
 Vue.use(Vuex);
+
+function convertData(data) {
+  const newData = {};
+
+  if (exist('append', data) && exist('entries', data)) {
+    for (const pair of data.entries()) {
+      newData[pair[0]] = pair[1];
+    }
+  } else {
+    return data;
+  }
+
+  return newData;
+}
 
 export default new Vuex.Store({
   strict: isDev(),
@@ -89,6 +104,7 @@ export default new Vuex.Store({
     },
     insertData({ state, dispatch, commit }, data) {
       axios.post(state.data.page, data).then(res => {
+        data = convertData(data);
         data._id = res.data._id;
         dispatch(SET_SUCCESS_MESSAGE, res.data.message);
         commit(ADD, data);
@@ -108,7 +124,7 @@ export default new Vuex.Store({
       }
 
       axios[method](url, data).then(res => {
-        const commitPayload = { id: 0, data };
+        const commitPayload = { id: 0, data: convertData(data) };
 
         if (!isUser) {
           commitPayload.id = id;

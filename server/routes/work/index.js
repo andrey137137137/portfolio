@@ -98,16 +98,22 @@ function deleteSlide(imageName, highCB) {
 }
 
 function waterfallCB(err, result) {
+  if (globalFiles) {
+    globalFiles = false;
+  }
+
   if (err) {
     return crud.sendError(err, curRes, curMode);
   }
 
-  crud.sendResult(result, curRes, curMode);
+  return crud.sendResult(result, curRes, curMode);
 }
 
 function startWaterfall(withSlideArrayCallbacks) {
   waterfall(withSlideArrayCallbacks, (err, result) => {
-    if (globalFiles.image) {
+    console.log('globalFiles: ' + globalFiles);
+
+    if (globalFiles) {
       return image.unlinkImage(globalFiles.image.path, waterfallCB);
     }
 
@@ -116,8 +122,6 @@ function startWaterfall(withSlideArrayCallbacks) {
 }
 
 function formParse(req, res, mode, withoutSlideCB, withSlideArrayCallbacks) {
-  // const { title, link, image, techs } = req.body;
-
   curRes = res;
   curMode = mode;
 
@@ -135,7 +139,14 @@ function formParse(req, res, mode, withoutSlideCB, withSlideArrayCallbacks) {
     // console.log('fields:', fields);
     // console.log('files:', files);
 
-    globalFields = fields;
+    const { title, link, imageName, techs } = fields;
+
+    globalFields = { title, link, imageName };
+
+    if (techs) {
+      globalFields.techs = JSON.parse(techs);
+    }
+
     globalFiles = files;
 
     if (!globalFiles.image) {

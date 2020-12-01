@@ -5,15 +5,8 @@ ItemForm(
   :id='id',
   :disabled='disabled'
 )
-  div
-    .img_wrap
-      img.img_wrap-img(:src='imagePreview', :alt='uploadingImageName')
-    ButtonElem(
-      v-if='id',
-      :disabled='!imageName',
-      :isDanger='true',
-      @click.prevent.native='removeUploadedImage'
-    ) Удалить изображение
+  .img_wrap
+    img.img_wrap-img(:src='imagePreview', :alt='uploadingImageName')
   PictureInput(
     ref='pictureInput',
     @change='changeImage',
@@ -24,6 +17,11 @@ ItemForm(
     buttonClass='ui button primary',
     :customStrings='{ upload: "<h1>Bummer!</h1>", drag: "Drag a 😺 GIF or GTFO" }'
   )
+  ButtonElem(
+    v-show='imageName',
+    :isDanger='true',
+    @click.prevent.native='removeUploadedImage'
+  ) Удалить изображение
   InputEventElem(v-model='title', :val='$v.title', placeholder='Название')
   InputEventElem(v-model='link', :val='$v.link', placeholder='Ссылка')
   MultipleElem(
@@ -110,10 +108,6 @@ export default {
   },
   computed: {
     uploadingImageName() {
-      // if (!this.id) {
-      //   return '';
-      // }
-
       if (!this.image) {
         return '';
       }
@@ -175,6 +169,12 @@ export default {
     },
     removeImage() {
       this.image = null;
+    },
+    removeUploadedImage() {
+      this.imageName = '';
+
+      this.removeImage();
+      this.submit();
     },
   },
 };

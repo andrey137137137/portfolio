@@ -4,7 +4,7 @@ SectionWrapper(
   :isContainerClass='false',
   :isOwnContainerClass='true'
 )
-  ul(style='display:none')
+  ul(style='display: none')
     li(v-for='item in items') {{ item.title }}
 
   .slider-demo
@@ -79,19 +79,19 @@ export default {
       default() {
         return [
           {
-            image: 'test1.jpg',
+            imageName: 'test1.jpg',
             link: 'http://test1.link/',
             techs: ['html 1', 'css 1', 'js 1'],
             title: 'Test Title 1',
           },
           {
-            image: 'test2.jpg',
+            imageName: 'test2.jpg',
             link: 'http://test2.link/',
             techs: ['html 2', 'css 2', 'js 2'],
             title: 'Test Title 2',
           },
           {
-            image: 'test3.jpg',
+            imageName: 'test3.jpg',
             link: 'http://test3.link/',
             techs: ['html 3', 'css 3', 'js 3'],
             title: 'Test Title 3',
@@ -110,7 +110,6 @@ export default {
       prevTime: 0,
       duration: 3000,
       durationStep: 0,
-      // direction: 1,
       curIndex: 0,
       // count: this.items.length,
       intervalID: null,
@@ -200,7 +199,7 @@ export default {
     getImg(index) {
       return this.getFullImageName(
         this.items[index]._id,
-        this.items[index].image,
+        this.items[index].imageName,
       );
     },
     getArrowImgBreakpoints(imageName) {
@@ -213,11 +212,9 @@ export default {
     },
     animate() {
       this.intervalID = requestAnimationFrame(this.nextSlide);
-      // this.intervalID = setTimeout(this.nextSlide, this.duration);
     },
     resetInterval() {
       cancelAnimationFrame(this.intervalID);
-      // clearTimeout(this.intervalID);
       this.durationStep = 0;
       this.prevTime = 0;
     },
@@ -236,7 +233,7 @@ export default {
         this.curIndex = this.prevIndex;
         this.transitionMethod = 'scroll_down';
       }
-      // this.animate();
+      this.animate();
     },
     nextSlide(nowTime) {
       this.incDurationStep(nowTime);
@@ -244,7 +241,7 @@ export default {
         this.curIndex = this.nextIndex;
         this.transitionMethod = 'scroll_up';
       }
-      // this.animate();
+      this.animate();
     },
     handlePrev() {
       this.resetInterval();
@@ -257,7 +254,7 @@ export default {
   },
   mounted() {
     this.prevTime = performance.now();
-    // this.animate();
+    this.animate();
   },
 };
 </script>

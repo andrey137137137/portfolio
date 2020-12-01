@@ -28,7 +28,13 @@ function getImageNameWithID(imageName) {
   return `${curID}_${imageName}`;
 }
 
-function uploadSlide(highCB) {
+function uploadSlide(data, highCB) {
+  if (!globalFiles.image) {
+    return highCB(null, data);
+  }
+
+  curID = data._id;
+
   each(
     sliderBreakpoints,
     (breakpoint, cb) => {
@@ -39,7 +45,7 @@ function uploadSlide(highCB) {
 
       image.makeDir(resizeUploadPath);
 
-      console.log(resizeUploadPath);
+      // console.log(resizeUploadPath);
 
       sharp(globalFiles.image.path)
         .resize({
@@ -55,22 +61,26 @@ function uploadSlide(highCB) {
         );
     },
     (err, info) => {
-      if (err) {
-        return image.sendMessage(curRes, err, {
-          success: 'Изображение успешно добавлено',
-          error: 'Не удалось переместить изображение',
-        });
-      }
+      // if (err) {
+      //   return image.sendMessage(curRes, err, {
+      //     success: 'Изображение успешно добавлено',
+      //     error: 'Не удалось переместить изображение',
+      //   });
+      // }
 
       highCB(err, info);
     },
   );
 }
 
-function deleteSlide(imageName, highCB) {
+function deleteSlide(data, highCB) {
+  if (!data.imageName) {
+    return highCB(null, data);
+  }
+
   image.setUploadPath(sliderDir);
 
-  console.log('uploadPath: ' + image.getUploadPath());
+  // console.log('uploadPath: ' + image.getUploadPath());
 
   each(
     sliderBreakpoints,
@@ -80,17 +90,20 @@ function deleteSlide(imageName, highCB) {
         breakpoint.name,
       );
 
-      console.log(deleteUploadPath);
+      // console.log(deleteUploadPath);
 
-      fs.unlink(path.join(deleteUploadPath, getImageNameWithID(imageName)), cb);
+      fs.unlink(
+        path.join(deleteUploadPath, getImageNameWithID(data.imageName)),
+        cb,
+      );
     },
     (err, info) => {
-      if (err) {
-        return image.sendMessage(curRes, err, {
-          success: 'Изображение успешно удалено',
-          error: 'Не удалось удалить изображение',
-        });
-      }
+      // if (err) {
+      //   return image.sendMessage(curRes, err, {
+      //     success: 'Изображение успешно удалено',
+      //     error: 'Не удалось удалить изображение',
+      //   });
+      // }
 
       highCB(err, info);
     },
@@ -98,8 +111,8 @@ function deleteSlide(imageName, highCB) {
 }
 
 function waterfallCB(err, result) {
-  if (globalFiles) {
-    globalFiles = false;
+  if (globalFiles.image) {
+    globalFiles.image = false;
   }
 
   if (err) {
@@ -109,11 +122,12 @@ function waterfallCB(err, result) {
   return crud.sendResult(result, curRes, curMode);
 }
 
-function startWaterfall(withSlideArrayCallbacks) {
-  waterfall(withSlideArrayCallbacks, (err, result) => {
-    console.log('globalFiles: ' + globalFiles);
+function startWaterfall(callbackArray) {
+  waterfall(callbackArray, (err, result) => {
+    // console.log('globalFiles:');
+    // console.log(globalFiles);
 
-    if (globalFiles) {
+    if (globalFiles.image) {
       return image.unlinkImage(globalFiles.image.path, waterfallCB);
     }
 
@@ -121,7 +135,7 @@ function startWaterfall(withSlideArrayCallbacks) {
   });
 }
 
-function formParse(req, res, mode, withoutSlideCB, withSlideArrayCallbacks) {
+function formParse(req, res, mode, withoutSlideCB, withSlideCallbacksArray) {
   curRes = res;
   curMode = mode;
 
@@ -129,7 +143,7 @@ function formParse(req, res, mode, withoutSlideCB, withSlideArrayCallbacks) {
     uploadDir: image.getTempPath(sliderDir),
   });
 
-  console.log('uploadPath: ' + image.getUploadPath());
+  // console.log('uploadPath: ' + image.getUploadPath());
 
   form.parse(req, (err, fields, files) => {
     if (err) {
@@ -140,6 +154,7 @@ function formParse(req, res, mode, withoutSlideCB, withSlideArrayCallbacks) {
     // console.log('files:', files);
 
     const { title, link, imageName, techs } = fields;
+    const condition = mode == 'update' ? !imageName : false;
 
     globalFields = { title, link, imageName };
 
@@ -149,20 +164,12 @@ function formParse(req, res, mode, withoutSlideCB, withSlideArrayCallbacks) {
 
     globalFiles = files;
 
-    if (!globalFiles.image) {
-      withoutSlideCB();
+    if (files.image || condition) {
+      startWaterfall(withSlideCallbacksArray);
     } else {
-      startWaterfall(withSlideArrayCallbacks);
+      withoutSlideCB();
     }
   });
-}
-
-function deleteCB(result, cb) {
-  if (result.imageName) {
-    deleteSlide(result.imageName, cb);
-  } else {
-    cb(null, result);
-  }
 }
 
 router.get('/', (req, res) => {
@@ -182,8 +189,7 @@ router.post('/', isAuth, (req, res) => {
         crud.createItem(Model, globalFields, res, cb);
       },
       (result, cb) => {
-        curID = result._id;
-        uploadSlide(cb);
+        uploadSlide(result, cb);
       },
     ],
   );
@@ -204,13 +210,13 @@ router.put('/:id', isAuth, (req, res) => {
         crud.getItemById(Model, res, curID, {}, {}, cb);
       },
       (result, cb) => {
-        deleteCB(result, cb);
+        deleteSlide(result, cb);
       },
       (result, cb) => {
         crud.updateItem(Model, curID, globalFields, res, cb);
       },
       (result, cb) => {
-        uploadSlide(cb);
+        uploadSlide(result, cb);
       },
     ],
   );
@@ -225,9 +231,9 @@ router.delete('/:id', isAuth, (req, res) => {
     cb => {
       crud.getItemById(Model, res, curID, {}, {}, cb);
     },
-    (result, cb) => {
-      deleteCB(result, cb);
-    },
+    // (result, cb) => {
+    //   deleteSlide(result, cb);
+    // },
     (result, cb) => {
       crud.deleteItem(Model, curID, res, cb);
     },

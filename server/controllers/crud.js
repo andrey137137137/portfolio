@@ -168,7 +168,7 @@ const updateUserPassword = (Model, id, data, res) => {
 
 const deleteItem = (Model, id, res, cb = false) => {
   if (cb !== false) {
-    Model.findByIdAndRemove(id, cb);
+    return Model.findByIdAndRemove(id, cb);
   }
 
   Model.findByIdAndRemove(id).then(

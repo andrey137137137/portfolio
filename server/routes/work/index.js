@@ -21,15 +21,15 @@ const sliderBreakpoints = [
 let curRes;
 let curID;
 let curMode;
-let globalFields;
-let globalFiles;
+let curFields;
+let uplImage;
 
 function getImageNameWithID(imageName) {
   return `${curID}_${imageName}`;
 }
 
 function uploadSlide(data, highCB) {
-  if (!globalFiles.image) {
+  if (!uplImage) {
     return highCB(null, data);
   }
 
@@ -45,18 +45,13 @@ function uploadSlide(data, highCB) {
 
       image.makeDir(resizeUploadPath);
 
-      // console.log(resizeUploadPath);
-
-      sharp(globalFiles.image.path)
+      sharp(uplImage.path)
         .resize({
           background: { r: 0, g: 0, b: 0, alpha: 0 },
           height: breakpoint.height,
         })
         .toFile(
-          path.join(
-            resizeUploadPath,
-            getImageNameWithID(globalFiles.image.name),
-          ),
+          path.join(resizeUploadPath, getImageNameWithID(uplImage.name)),
           cb,
         );
     },
@@ -80,8 +75,6 @@ function deleteSlide(data, highCB) {
 
   image.setUploadPath(sliderDir);
 
-  // console.log('uploadPath: ' + image.getUploadPath());
-
   each(
     sliderBreakpoints,
     (breakpoint, cb) => {
@@ -89,8 +82,6 @@ function deleteSlide(data, highCB) {
         image.getUploadPath(),
         breakpoint.name,
       );
-
-      // console.log(deleteUploadPath);
 
       fs.unlink(
         path.join(deleteUploadPath, getImageNameWithID(data.imageName)),
@@ -111,8 +102,8 @@ function deleteSlide(data, highCB) {
 }
 
 function waterfallCB(err, result) {
-  if (globalFiles.image) {
-    globalFiles.image = false;
+  if (uplImage) {
+    uplImage = false;
   }
 
   if (err) {
@@ -124,11 +115,11 @@ function waterfallCB(err, result) {
 
 function startWaterfall(callbackArray) {
   waterfall(callbackArray, (err, result) => {
-    // console.log('globalFiles:');
-    // console.log(globalFiles);
+    // console.log('uplImage:');
+    // console.log(uplImage);
 
-    if (globalFiles.image) {
-      return image.unlinkImage(globalFiles.image.path, waterfallCB);
+    if (uplImage) {
+      return image.unlinkImage(uplImage.path, waterfallCB);
     }
 
     waterfallCB(err, result);
@@ -143,8 +134,6 @@ function formParse(req, res, mode, withoutSlideCB, withSlideCallbacksArray) {
     uploadDir: image.getTempPath(sliderDir),
   });
 
-  // console.log('uploadPath: ' + image.getUploadPath());
-
   form.parse(req, (err, fields, files) => {
     if (err) {
       return crud.sendError(err, curRes, curMode);
@@ -156,15 +145,15 @@ function formParse(req, res, mode, withoutSlideCB, withSlideCallbacksArray) {
     const { title, link, imageName, techs } = fields;
     const condition = mode == 'update' ? !imageName : false;
 
-    globalFields = { title, link, imageName };
+    curFields = { title, link, imageName };
 
     if (techs) {
-      globalFields.techs = JSON.parse(techs);
+      curFields.techs = JSON.parse(techs);
     }
 
-    globalFiles = files;
+    uplImage = files.image;
 
-    if (files.image || condition) {
+    if (uplImage || condition) {
       startWaterfall(withSlideCallbacksArray);
     } else {
       withoutSlideCB();
@@ -182,11 +171,11 @@ router.post('/', isAuth, (req, res) => {
     res,
     'insert',
     () => {
-      crud.createItem(Model, globalFields, res);
+      crud.createItem(Model, curFields, res);
     },
     [
       cb => {
-        crud.createItem(Model, globalFields, res, cb);
+        crud.createItem(Model, curFields, res, cb);
       },
       (result, cb) => {
         uploadSlide(result, cb);
@@ -203,7 +192,7 @@ router.put('/:id', isAuth, (req, res) => {
     res,
     'update',
     () => {
-      crud.updateItem(Model, curID, globalFields, res);
+      crud.updateItem(Model, curID, curFields, res);
     },
     [
       cb => {
@@ -213,7 +202,7 @@ router.put('/:id', isAuth, (req, res) => {
         deleteSlide(result, cb);
       },
       (result, cb) => {
-        crud.updateItem(Model, curID, globalFields, res, cb);
+        crud.updateItem(Model, curID, curFields, res, cb);
       },
       (result, cb) => {
         uploadSlide(result, cb);
@@ -231,9 +220,9 @@ router.delete('/:id', isAuth, (req, res) => {
     cb => {
       crud.getItemById(Model, res, curID, {}, {}, cb);
     },
-    // (result, cb) => {
-    //   deleteSlide(result, cb);
-    // },
+    (result, cb) => {
+      deleteSlide(result, cb);
+    },
     (result, cb) => {
       crud.deleteItem(Model, curID, res, cb);
     },

@@ -104,8 +104,6 @@ export default new Vuex.Store({
     },
     insertData({ state, dispatch, commit }, data) {
       axios.post(state.data.page, data).then(res => {
-        // data = convertData(data);
-        // data._id = res.data._id;
         dispatch(SET_SUCCESS_MESSAGE, res.data.message);
         commit(ADD, {
           _id: res.data._id,

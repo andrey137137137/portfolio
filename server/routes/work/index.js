@@ -63,7 +63,7 @@ function uploadSlide(data, highCB) {
       //   });
       // }
 
-      highCB(err, info);
+      return highCB(err, info);
     },
   );
 }
@@ -96,7 +96,7 @@ function deleteSlide(data, highCB) {
       //   });
       // }
 
-      highCB(err, info);
+      return highCB(err, info);
     },
   );
 }
@@ -115,11 +115,8 @@ function waterfallCB(err, result) {
 
 function startWaterfall(callbackArray) {
   waterfall(callbackArray, (err, result) => {
-    // console.log('uplImage:');
-    // console.log(uplImage);
-
     if (uplImage) {
-      return image.unlinkImage(uplImage.path, waterfallCB);
+      return fs.unlink(uplImage.path, waterfallCB);
     }
 
     waterfallCB(err, result);
@@ -138,9 +135,6 @@ function formParse(req, res, mode, withoutSlideCB, withSlideCallbacksArray) {
     if (err) {
       return crud.sendError(err, curRes, curMode);
     }
-
-    // console.log('fields:', fields);
-    // console.log('files:', files);
 
     const { title, link, imageName, techs } = fields;
     const condition = mode == 'update' ? !imageName : false;

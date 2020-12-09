@@ -23,6 +23,7 @@ function resolveBack(dir) {
 }
 
 module.exports = {
+  publicPath: process.env.NODE_ENV === 'production' ? '/dist/' : '/',
   pluginOptions: {
     svgSprite: {
       /*

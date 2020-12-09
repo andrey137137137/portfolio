@@ -67,7 +67,6 @@ export default {
       if (!this.isLoaded) {
         this.addLayer();
         this.curLayer = this.layers;
-        console.log(this.curLayer + ' in ' + this.layers);
       }
     },
     errorHandle() {

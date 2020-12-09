@@ -48,7 +48,6 @@ export default {
 
       this.$nextTick(() => {
         $vm.setFooterHeight($vm.$refs.footer.offsetHeight);
-        console.log($vm.$refs.footer);
       });
     },
   },

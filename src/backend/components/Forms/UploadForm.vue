@@ -122,8 +122,6 @@ export default {
   methods: {
     handle(index, eventMethod) {
       if (index) return;
-      console.log(`[${this.layer}, ${index}]: ${eventMethod} - ${this.page}`);
-
       this[eventMethod]();
     },
     image(index) {
@@ -145,10 +143,7 @@ export default {
     },
     dataURItoBlob(dataURI) {
       const byteString = atob(dataURI.split(',')[1]);
-      const mimeString = dataURI
-        .split(',')[0]
-        .split(':')[1]
-        .split(';')[0];
+      const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
       const ab = new ArrayBuffer(byteString.length);
       const ia = new Uint8Array(ab);
       for (var i = 0; i < byteString.length; i++) {
@@ -206,8 +201,6 @@ export default {
             //   this.resultURL = "";
             //   // this.$refs.upload.value = null;
             // }
-
-            console.log('image upload response > ', res);
           });
       }
     },

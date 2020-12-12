@@ -32,6 +32,7 @@ const app = express();
 
 app.use(
   cors({
+    // origin: `${PROTOCOL}://${HOST}:${FRONT_PORT}`,
     origin: `${PROTOCOL}://${HOST}:${FRONT_PORT}`,
     optionsSuccessStatus: SUCCESS,
     credentials: true,

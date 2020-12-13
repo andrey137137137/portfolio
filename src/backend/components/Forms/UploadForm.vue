@@ -94,9 +94,7 @@ export default {
   },
   data() {
     return {
-      // image:
-      //   "https://images.unsplash.com/photo-1485178575877-1a13bf489dfe?ixlib=rb-1.2.1&auto=format&fit=crop&w=991&q=80",
-      resultURL: '',
+      // resultURL: '',
       images: [],
     };
   },
@@ -143,10 +141,7 @@ export default {
     },
     dataURItoBlob(dataURI) {
       const byteString = atob(dataURI.split(',')[1]);
-      const mimeString = dataURI
-        .split(',')[0]
-        .split(':')[1]
-        .split(';')[0];
+      const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
       const ab = new ArrayBuffer(byteString.length);
       const ia = new Uint8Array(ab);
       for (var i = 0; i < byteString.length; i++) {
@@ -187,14 +182,18 @@ export default {
     },
     uploadImage(index) {
       const { canvas } = this.$refs['cropper' + index][0].getResult();
+
       if (canvas) {
-        this.resultURL = canvas.toDataURL(`image/${this.ext}`, 1);
         const form = new FormData();
+        // this.resultURL = canvas.toDataURL(`image/${this.ext}`, 1);
+
         form.append(
           'image',
-          this.dataURItoBlob(this.resultURL),
+          // this.dataURItoBlob(this.resultURL),
+          this.dataURItoBlob(canvas.toDataURL(`image/${this.ext}`, 1)),
           `${this.images[index].title}.${this.ext}`,
         );
+
         axios
           .post(this.getUploadPage(this.page, this.layer), form)
           .then(res => {

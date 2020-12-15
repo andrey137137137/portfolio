@@ -27,8 +27,10 @@ Fragment
 </template>
 
 <script>
-import axios from 'axios';
-import { saveAs } from 'file-saver';
+// import axios from 'axios';
+// import { saveAs } from 'file-saver';
+import path from 'path';
+import fs from 'fs';
 import { Fragment } from 'vue-fragment';
 import { CircleStencil, Cropper } from 'vue-advanced-cropper';
 import uploadMixin from '@backend/mixins/uploadMixin';
@@ -207,7 +209,15 @@ export default {
         //   });
 
         canvas.toBlob(blob => {
-          saveAs(blob, 'mypng.png');
+          const rootPath = path.join('public', 'upload');
+          const filePath = URL.createObjectURL(blob);
+
+          console.log(filePath);
+
+          fs.rename(filePath, path.join(rootPath, 'frontUploaded.png'), err => {
+            // sendMessage(res, err);
+          });
+          // saveAs(blob, 'mypng.png');
         });
       }
     },

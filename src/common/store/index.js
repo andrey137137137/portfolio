@@ -2,8 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
 import { SUCCESS, ERROR } from '@httpSt';
-import exist from '@common/helpers/exist';
-import isDev from '@common/helpers/isDev';
+import { exist, isDev } from '@apiHelpers';
 import { COMMENT } from '@common/constants/router';
 import {
   SET,

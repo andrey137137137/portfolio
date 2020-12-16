@@ -1,13 +1,16 @@
-const packageJson = require('./package.json');
 const path = require('path');
-const srcDir = 'src';
+const packageJson = require('./package.json');
+const configPath = resolve(packageJson._moduleAliases['@config']);
+const { ROOT_DEV_PATH, ASSETS_PATH } = require(configPath).client;
+
+console.log(packageJson);
 
 function resolve(dir) {
   return path.join(__dirname, dir);
 }
 
 function resolveSrc(dir) {
-  return resolve(path.join(srcDir, dir));
+  return resolve(path.join(ROOT_DEV_PATH, dir));
 }
 
 function resolveCommon(dir) {
@@ -30,7 +33,7 @@ module.exports = {
       /*
        * The directory containing your SVG files.
        */
-      dir: srcDir + '/assets/svg',
+      dir: `${ROOT_DEV_PATH}/${ASSETS_PATH}/svg`,
       /*
        * The reqex that will be used for the Webpack rule.
        */
@@ -40,7 +43,7 @@ module.exports = {
        */
       loaderOptions: {
         extract: true,
-        spriteFilename: 'assets/icons.[hash:8].svg', // or 'assets/icons.svg' if filenameHashing == false
+        spriteFilename: ASSETS_PATH + '/icons.[hash:8].svg', // or 'assets/icons.svg' if filenameHashing == false
         // publicPath: "/"
       },
       /*
@@ -65,19 +68,23 @@ module.exports = {
       .use(require.resolve('simple-progress-webpack-plugin'), [
         { format: 'minimal' },
       ]);
+
     config.module
       .rule('svg-sprite')
       .use('svgo-loader')
       .loader('svgo-loader');
-    config.resolve.alias.set(
-      '@config',
-      resolve(packageJson._moduleAliases['@config']),
-    );
+
+    config.resolve.alias.set('@config', configPath);
     config.resolve.alias.set(
       '@httpSt',
       resolve(packageJson._moduleAliases['@httpSt']),
     );
-    config.resolve.alias.set('@assets', resolveSrc('assets'));
+    config.resolve.alias.set(
+      '@apiHelpers',
+      resolve(packageJson._moduleAliases['@apiHelpers']),
+    );
+
+    config.resolve.alias.set('@assets', resolveSrc(ASSETS_PATH));
     config.resolve.alias.set('@common', resolveSrc('common'));
     config.resolve.alias.set('@frontend', resolveSrc('frontend'));
     config.resolve.alias.set('@backend', resolveSrc('backend'));
@@ -111,14 +118,14 @@ module.exports = {
   },
   pages: {
     index: {
-      entry: srcDir + '/frontend/main.js',
+      entry: ROOT_DEV_PATH + '/frontend/main.js',
       template: 'public/index.html',
       filename: 'index.html', // когда используется опция title, то <title> в шаблоне
       // должен быть <title><%= htmlWebpackPlugin.options.title %></title>
       title: 'Index Page',
     },
     admin: {
-      entry: srcDir + '/backend/admin.js',
+      entry: ROOT_DEV_PATH + '/backend/admin.js',
       template: 'public/index.html',
       filename: 'admin.html',
       // когда используется опция title, то <title> в шаблоне

@@ -89,7 +89,7 @@ import { Fragment } from 'vue-fragment';
 import { ERROR } from '@httpSt';
 import { ADMIN } from '@common/constants/router';
 // import { required } from "vuelidate/lib/validators";
-import { userAlphaNumValids, checked } from '@common/helpers/validators';
+import { userAlphaNumValids, checked } from '@common/helpers';
 import frontFormMixin from '@frontend/mixins/frontFormMixin';
 import getAuthStatusMixin from '@frontend/mixins/getAuthStatusMixin';
 import PageWrapper from '@frontCmp/PageWrapper';

@@ -1,4 +1,4 @@
-import exist from '@common/helpers/exist';
+import { exist } from '@apiHelpers';
 import formMixin from '@common/mixins/formMixin';
 
 import { mapActions } from 'vuex';

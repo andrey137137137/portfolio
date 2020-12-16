@@ -1,6 +1,6 @@
 import types from '@common/constants/validation/types';
 import errors from '@common/constants/validation/errors';
-import exist from '@common/helpers/exist';
+import { exist } from '@apiHelpers';
 import addClassesMixin from '@common/mixins/addClassesMixin';
 import ErrorElem from '@components/formElems/ErrorElem';
 

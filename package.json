@@ -80,8 +80,9 @@
     "vue-template-compiler": "^2.6.6"
   },
   "_moduleAliases": {
-    "@config": "api/config.json",
+    "@config": "api/config.js",
     "@httpSt": "api/httpStatuses.js",
+    "@apiHelpers": "api/helpers.js",
     "@contr": "server/controllers",
     "@auth": "server/routes/auth.js"
   }

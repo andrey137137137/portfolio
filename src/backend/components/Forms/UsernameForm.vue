@@ -34,7 +34,7 @@ UserForm(:handleSubmit='submit', :disabled='disabled')
 
 <script>
 import { required, email, sameAs } from 'vuelidate/lib/validators';
-import { userAlphaNumValids } from '@common/helpers/validators';
+import { userAlphaNumValids } from '@common/helpers';
 import userFormMixin from '@backend/mixins/userFormMixin';
 import UserForm from '@backCmp/forms/UserForm';
 import InputEventElem from '@components/formElems/InputEventElem';

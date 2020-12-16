@@ -113,7 +113,7 @@ export default {
       curIndex: 0,
       // count: this.items.length,
       intervalID: null,
-      imagePath: '/upload/slider',
+      imagePath: '@assets/upload/slider',
       imageExt: 'png',
       arrowImageBreakpoints: [
         { name: 'lg', value: 1200 },

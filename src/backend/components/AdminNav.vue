@@ -10,7 +10,7 @@ nav.admin_nav
 <script>
 import { ADMIN } from '@common/constants/router';
 // import { ROOT } from '@common/constants/router';
-import exist from '@common/helpers/exist';
+import { exist } from '@apiHelpers';
 import getRoutesMixin from '@common/mixins/getRoutesMixin';
 
 export default {

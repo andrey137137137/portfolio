@@ -1,9 +1,8 @@
+const { uploadingPath } = require('@config');
 const { ERROR } = require('@httpSt');
 const { IncomingForm } = require('formidable');
 const path = require('path');
 const fs = require('fs');
-
-const rootPath = path.join('public', 'upload');
 
 let uploadPath;
 
@@ -26,7 +25,7 @@ const makeDir = dir => {
 };
 
 const setUploadPath = (dir, layer = -1) => {
-  uploadPath = dir ? path.join(rootPath, dir) : rootPath;
+  uploadPath = dir ? path.join(uploadingPath, dir) : uploadingPath;
 
   if (layer >= 0) {
     uploadPath = path.join(uploadPath, 'layer_' + layer);

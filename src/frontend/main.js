@@ -1,14 +1,14 @@
 import Vue from 'vue';
 import VueRx from 'vue-rx';
-import axiosConfig from '@common/helpers/axiosConfig';
-import isDev from '@common/helpers/isDev';
+import { isDev } from '@apiHelpers';
+import { axiosConfig } from '@common/helpers';
 import store from '@common/store';
 import App from './App.vue';
 import router from '@/router';
 
 Vue.use(VueRx);
-axiosConfig();
 Vue.config.productionTip = !isDev();
+axiosConfig();
 
 new Vue({
   el: '#app',

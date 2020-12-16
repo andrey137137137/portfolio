@@ -41,7 +41,7 @@ import {
 } from 'vuelidate/lib/validators';
 // import axios from 'axios';
 // import { SUCCESS } from '@httpSt';
-import exist from '@common/helpers/exist';
+import { exist } from '@apiHelpers';
 import imageMixin from '@common/mixins/imageMixin';
 import uploadMixin from '@backend/mixins/uploadMixin';
 import itemFormMixin from '@backend/mixins/itemFormMixin';

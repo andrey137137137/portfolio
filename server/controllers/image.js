@@ -13,7 +13,9 @@ const sendMessage = (res, err, messages, info = false) => {
 
   const data = { message: messages.success };
 
-  if (info) data.info = info;
+  if (info) {
+    data.info = info;
+  }
 
   res.send(data);
 };

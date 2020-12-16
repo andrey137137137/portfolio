@@ -1,13 +1,12 @@
 const path = require('path');
 const packageJson = require('./package.json');
-const configPath = resolve(packageJson._moduleAliases['@config']);
-const { ROOT_DEV_PATH, ASSETS_PATH } = require(configPath).client;
-
-console.log(packageJson);
 
 function resolve(dir) {
   return path.join(__dirname, dir);
 }
+
+const configPath = resolve(packageJson._moduleAliases['@config']);
+const { ROOT_DEV_PATH, ASSETS_PATH } = require(configPath).client;
 
 function resolveSrc(dir) {
   return resolve(path.join(ROOT_DEV_PATH, dir));

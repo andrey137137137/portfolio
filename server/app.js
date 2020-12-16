@@ -1,10 +1,5 @@
 require('module-alias/register');
 
-const {
-  SUCCESS,
-  // NOT_FOUND,
-  ERROR,
-} = require('@httpSt');
 const express = require('express');
 const cors = require('cors');
 const logger = require('morgan');
@@ -18,8 +13,13 @@ const errorHandler = require('errorhandler');
 const { PROTOCOL, HOST, PORT, FRONT_PORT, URL } = require('@config').server;
 const { SECRET, KEY } = require('@config').session;
 require('./db');
-
-const isProduction = process.env.NODE_ENV === 'production';
+const {
+  SUCCESS,
+  // NOT_FOUND,
+  ERROR,
+} = require('@httpSt');
+const { isDev } = require('@apiHelpers');
+const curPort = PORT || process.env.PORT;
 
 const app = express();
 
@@ -38,7 +38,7 @@ app.use(
   }),
 );
 
-if (!isProduction) {
+if (isDev) {
   app.use(logger('dev'));
 }
 
@@ -63,7 +63,7 @@ app.use(
 
 app.use(URL, require('./routes/index'));
 
-if (!isProduction) {
+if (isDev) {
   app.use(errorHandler());
 }
 
@@ -75,7 +75,7 @@ if (!isProduction) {
 // });
 
 //Error handlers & middlewares
-if (!isProduction) {
+if (isDev) {
   app.use((err, req, res, next) => {
     // set locals, only providing error in development
     // console.log(err);
@@ -88,6 +88,6 @@ if (!isProduction) {
   });
 }
 
-app.listen(process.env.PORT || PORT, () => {
-  console.log(`server is running on port: ${PORT}`);
+app.listen(curPort, () => {
+  console.log(`server is running on port: ${curPort}`);
 });

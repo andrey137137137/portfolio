@@ -1,6 +1,16 @@
 const { isDev } = require('./helpers');
 const path = require('path');
-const config = {
+
+const ROOT_DEV_PATH = 'src';
+const ASSETS_PATH = 'assets';
+const rootPath = isDev ? path.join(ROOT_DEV_PATH, ASSETS_PATH) : ASSETS_PATH;
+
+module.exports = {
+  client: {
+    ROOT_DEV_PATH,
+    ASSETS_PATH,
+    UPLOADING_PATH: path.join(rootPath, 'upload'),
+  },
   server: {
     PROTOCOL: 'http',
     HOST: 'localhost',
@@ -34,14 +44,4 @@ const config = {
     EMAIL: 'someMail@gmail.com',
     PASSWORD: 'mailPassword',
   },
-  client: {
-    ROOT_DEV_PATH: 'src',
-    ASSETS_PATH: 'assets',
-    UPLOADING_PATH: '',
-  },
 };
-const rootPath = isDev ? path.join('src', 'assets') : 'assets';
-
-config.UPLOADING_PATH = path.join(rootPath, 'upload');
-
-module.exports = config;

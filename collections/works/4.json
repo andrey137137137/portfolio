@@ -1,0 +1,10 @@
+{
+  "_id": {
+    "$oid": "5fd6266bf40deb0b0c2fb8a1"
+  },
+  "imageName": "slide.png",
+  "techs": ["HTML", "CSS", "JavaScript"],
+  "title": "fdghfdgdfgdfg",
+  "link": "dfgdfgdfgdfgdfg",
+  "__v": 0
+}

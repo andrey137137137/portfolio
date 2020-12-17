@@ -6,7 +6,10 @@ src/assets/img/parallax
 src/assets/img
 
 api/config.json
+api/config.js
 package-lock.json
+collections/sessions
+collections/users
 
 # local env files
 .env.local

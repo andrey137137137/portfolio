@@ -1,0 +1,21 @@
+{
+  "_id": {
+    "$oid": "5ec436aa14833d0b0c6c23a6"
+  },
+  "items": [
+    {
+      "name": "HTML5",
+      "percents": "75"
+    },
+    {
+      "name": "CSS3",
+      "percents": "75"
+    },
+    {
+      "name": "JavaScript5",
+      "percents": "71"
+    }
+  ],
+  "category": "Frontend",
+  "__v": 0
+}

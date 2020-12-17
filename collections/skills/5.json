@@ -1,0 +1,17 @@
+{
+  "_id": {
+    "$oid": "5ec437b314833d0b0c6c23a8"
+  },
+  "items": [
+    {
+      "name": "MySQL",
+      "percents": "67"
+    },
+    {
+      "name": "MongoDB",
+      "percents": "27"
+    }
+  ],
+  "category": "DataBase",
+  "__v": 0
+}

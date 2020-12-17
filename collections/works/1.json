@@ -1,0 +1,19 @@
+{
+  "_id": {
+    "$oid": "5fbb1fcf495ba30ed4bfe969"
+  },
+  "imageName": "reasanik.png",
+  "techs": [
+    "PHP",
+    "YII2",
+    "Gulp4",
+    "SASS",
+    "Vue",
+    "JQuery",
+    "Sly",
+    "Slick 1.8.1"
+  ],
+  "title": "Reasanik",
+  "link": "http://reasanik.com/",
+  "__v": 0
+}

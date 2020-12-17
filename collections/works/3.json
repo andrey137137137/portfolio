@@ -1,0 +1,10 @@
+{
+  "_id": {
+    "$oid": "5fc5e63b6df60b14c80c945d"
+  },
+  "imageName": "Resume.jpg",
+  "techs": ["HTML5", "CSS3", "FlexBox"],
+  "title": "Resume",
+  "link": "https://elated-ritchie-8db324.netlify.app/",
+  "__v": 0
+}

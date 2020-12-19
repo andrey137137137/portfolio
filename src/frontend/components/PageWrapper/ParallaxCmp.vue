@@ -1,10 +1,5 @@
 <template lang="pug">
 #parallax.parallax(:class='classes')
-  //- .parallax-container
-  //- li.parallax-layer(
-  //-   v-for="(item, index) in layers"
-  //-   :key="index"
-  //-   :data-depth="item")
   ImageWrapper.parallax-layer(
     v-for='(item, index) in layers',
     :key='index',
@@ -16,7 +11,6 @@
     :imgAddClasses='{ "parallax-img": true }',
     :isLazyLoading='false'
   )
-  //- .parallax-content
 </template>
 
 <script>
@@ -31,7 +25,6 @@ export default {
   data() {
     return {
       $parallaxContainer: null,
-      // $container,
       $layers: false,
       centerX: 0,
       centerY: 0,
@@ -43,7 +36,7 @@ export default {
       positionY: 0,
       bottomPosition: 0,
       transformString: '',
-      path: '/upload/parallax',
+      path: '@assets/upload/parallax',
       ext: 'png',
       layers: [100, 100, 90, 80, 70, 60, 15, 10],
       breakpoints: [
@@ -83,14 +76,12 @@ export default {
         : this.centerY - event.pageY;
 
       if (this.$layers) {
-        [].slice.call(this.$layers).forEach(function($layer, index) {
+        [].slice.call(this.$layers).forEach(function ($layer, index) {
           if (isScroll) {
             $vm.divider = (index + 1) / 90;
           } else {
             $vm.divider = ((index + 1) * $layer.dataset.depth) / 10000;
           }
-
-          // console.log($layer.dataset.depth);
 
           $vm.positionY = $vm.initialY * $vm.divider;
           $vm.bottomPosition = (window.innerHeight / 2) * $vm.divider;

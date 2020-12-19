@@ -1,9 +1,8 @@
 .DS_Store
 node_modules
 dist
-public/upload
-src/assets/img/parallax
 src/assets/img
+src/assets/upload
 
 api/config.json
 api/config.js

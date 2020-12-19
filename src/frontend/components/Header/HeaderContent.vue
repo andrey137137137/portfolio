@@ -1,12 +1,11 @@
 <template lang="pug">
-  article.header-article(:class="containerClasses")
+article.header-article(:class='containerClasses')
+  SvgCmp.header-logo(v-if='isContent', name='stars1', :addClasses='svgClasses')
 
-    SvgCmp.header-logo(v-if="isContent" name="stars1" :addClasses="svgClasses")
+  router-link.img_wrap.header-avatar(:class='avatarClasses', to='/')
+    img.img_wrap-img(src='@assets/upload/avatar.jpg', alt='Аватарка')
 
-    router-link.img_wrap.header-avatar(:class="avatarClasses" to="/")
-      img.img_wrap-img(src="/upload/avatar.jpg" alt="Аватарка")
-
-    HeaderTitle
+  HeaderTitle
 </template>
 
 <script>

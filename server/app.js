@@ -10,7 +10,8 @@ const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo')(session);
 const errorHandler = require('errorhandler');
 
-const { PROTOCOL, HOST, PORT, FRONT_PORT, URL } = require('@config').server;
+const { PROTOCOL, HOST, PORT, URL } = require('@config').server;
+const clientPort = require('@config').client.PORT;
 const { SECRET, KEY } = require('@config').session;
 require('./db');
 const {
@@ -32,7 +33,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: `${PROTOCOL}://${HOST}:${FRONT_PORT}`,
+    origin: `${PROTOCOL}://${HOST}:${clientPort}`,
     optionsSuccessStatus: SUCCESS,
     credentials: true,
   }),

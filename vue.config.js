@@ -1,15 +1,17 @@
 const path = require('path');
 const packageJson = require('./package.json');
 
+const configPath = resolve(packageJson._moduleAliases['@config']);
+const { PORT, PROD_PATH } = require(configPath).client;
+const ASSETS_PATH = 'assets';
+const DEV_PATH = 'src';
+
 function resolve(dir) {
   return path.join(__dirname, dir);
 }
 
-const configPath = resolve(packageJson._moduleAliases['@config']);
-const { ROOT_DEV_PATH, ASSETS_PATH } = require(configPath).client;
-
 function resolveSrc(dir) {
-  return resolve(path.join(ROOT_DEV_PATH, dir));
+  return resolve(path.join(DEV_PATH, dir));
 }
 
 function resolveCommon(dir) {
@@ -25,14 +27,15 @@ function resolveBack(dir) {
 }
 
 module.exports = {
-  // publicPath: process.env.NODE_ENV === 'production' ? '/dist/' : '/',
   publicPath: '/',
+  outputDir: PROD_PATH,
+  devServer: { port: PORT },
   pluginOptions: {
     svgSprite: {
       /*
        * The directory containing your SVG files.
        */
-      dir: `${ROOT_DEV_PATH}/${ASSETS_PATH}/svg`,
+      dir: `${DEV_PATH}/${ASSETS_PATH}/svg`,
       /*
        * The reqex that will be used for the Webpack rule.
        */
@@ -117,14 +120,14 @@ module.exports = {
   },
   pages: {
     index: {
-      entry: ROOT_DEV_PATH + '/frontend/main.js',
+      entry: DEV_PATH + '/frontend/main.js',
       template: 'public/index.html',
       filename: 'index.html', // когда используется опция title, то <title> в шаблоне
       // должен быть <title><%= htmlWebpackPlugin.options.title %></title>
       title: 'Index Page',
     },
     admin: {
-      entry: ROOT_DEV_PATH + '/backend/admin.js',
+      entry: DEV_PATH + '/backend/admin.js',
       template: 'public/index.html',
       filename: 'admin.html',
       // когда используется опция title, то <title> в шаблоне

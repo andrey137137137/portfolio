@@ -111,9 +111,8 @@ export default {
       duration: 3000,
       durationStep: 0,
       curIndex: 0,
-      // count: this.items.length,
       intervalID: null,
-      imagePath: '@assets/upload/slider',
+      imagePath: '/upload/slider',
       imageExt: 'png',
       arrowImageBreakpoints: [
         { name: 'lg', value: 1200 },
@@ -144,14 +143,12 @@ export default {
       const tempIndex = this.curIndex - 1;
 
       if (tempIndex < 0) {
-        // return this.count - 1;
         return this.items.length - 1;
       }
 
       return tempIndex;
     },
     nextIndex() {
-      // return (this.curIndex + 1) % this.count;
       return (this.curIndex + 1) % this.items.length;
     },
     demoImg() {

@@ -86,7 +86,7 @@ export default {
         classes: {
           'about-img_wrap': true,
         },
-        path: '@assets/upload/about',
+        path: '/upload/about',
         breakpoints: [
           { name: 'lg.jpg', value: 1200 },
           { name: 'md.jpg', value: 768 },

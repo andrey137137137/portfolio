@@ -36,7 +36,7 @@ export default {
       positionY: 0,
       bottomPosition: 0,
       transformString: '',
-      path: '@assets/upload/parallax',
+      path: '/upload/parallax',
       ext: 'png',
       layers: [100, 100, 90, 80, 70, 60, 15, 10],
       breakpoints: [
@@ -76,7 +76,7 @@ export default {
         : this.centerY - event.pageY;
 
       if (this.$layers) {
-        [].slice.call(this.$layers).forEach(function ($layer, index) {
+        [].slice.call(this.$layers).forEach(function($layer, index) {
           if (isScroll) {
             $vm.divider = (index + 1) / 90;
           } else {

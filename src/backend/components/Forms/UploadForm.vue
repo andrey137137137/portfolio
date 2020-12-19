@@ -27,10 +27,7 @@ Fragment
 </template>
 
 <script>
-// import axios from 'axios';
-// import { saveAs } from 'file-saver';
-import path from 'path';
-import fs from 'fs';
+import axios from 'axios';
 import { Fragment } from 'vue-fragment';
 import { CircleStencil, Cropper } from 'vue-advanced-cropper';
 import uploadMixin from '@backend/mixins/uploadMixin';
@@ -187,38 +184,26 @@ export default {
       const { canvas } = this.$refs['cropper' + index][0].getResult();
 
       if (canvas) {
-        // const form = new FormData();
-        // // this.resultURL = canvas.toDataURL(`image/${this.ext}`, 1);
+        const form = new FormData();
+        // this.resultURL = canvas.toDataURL(`image/${this.ext}`, 1);
 
-        // form.append(
-        //   'image',
-        //   // this.dataURItoBlob(this.resultURL),
-        //   this.dataURItoBlob(canvas.toDataURL(`image/${this.ext}`, 1)),
-        //   `${this.images[index].title}.${this.ext}`,
-        // );
+        form.append(
+          'image',
+          // this.dataURItoBlob(this.resultURL),
+          this.dataURItoBlob(canvas.toDataURL(`image/${this.ext}`, 1)),
+          `${this.images[index].title}.${this.ext}`,
+        );
 
-        // axios
-        //   .post(this.getUploadPage(this.page, this.layer), form)
-        //   .then(res => {
-        //     this.fileMsg = res.data.message;
+        axios
+          .post(this.getUploadPage(this.page, this.layer), form)
+          .then(res => {
+            this.fileMsg = res.data.message;
 
-        //     // if (res.data.status === "Ok") {
-        //     //   this.resultURL = "";
-        //     //   // this.$refs.upload.value = null;
-        //     // }
-        //   });
-
-        canvas.toBlob(blob => {
-          const rootPath = path.join('public', 'upload');
-          const filePath = URL.createObjectURL(blob);
-
-          console.log(filePath);
-
-          fs.rename(filePath, path.join(rootPath, 'frontUploaded.png'), err => {
-            // sendMessage(res, err);
+            // if (res.data.status === "Ok") {
+            //   this.resultURL = "";
+            //   // this.$refs.upload.value = null;
+            // }
           });
-          // saveAs(blob, 'mypng.png');
-        });
       }
     },
   },

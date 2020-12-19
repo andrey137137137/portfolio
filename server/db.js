@@ -1,20 +1,20 @@
 const mongoose = require('mongoose');
-const { USER, PASSWORD, HOST, PORT, NAME } = require('@config').db;
+const { USER, PASSWORD, HOST, NAME } = require('@config').db;
+const driver = 'mongodb+srv';
+const db = `${HOST}/${NAME}`;
 let isFirstConnected = false;
 
 mongoose.Promise = global.Promise;
 
 function connectDB() {
-  mongoose.connect(`mongodb://${USER}:${PASSWORD}@${HOST}:${PORT}/${NAME}`, {
+  mongoose.connect(`${driver}://${USER}:${PASSWORD}@${db}`, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
 }
 
 mongoose.connection.on('connected', () => {
-  console.log(
-    `Mongoose default connection open mongodb://${HOST}:${PORT}/${NAME}`,
-  );
+  console.log(`Mongoose default connection open ${driver}://${db}`);
   isFirstConnected = true;
 });
 

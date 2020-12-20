@@ -72,6 +72,8 @@
     "@vue/cli-service": "^3.4.0",
     "@vue/eslint-config-prettier": "^4.0.1",
     "babel-eslint": "^10.0.1",
+    "bunyan": "^1.8.14",
+    "debug": "^4.3.1",
     "eslint": "^5.14.0",
     "eslint-plugin-vue": "^5.2.1",
     "morgan": "^1.10.0",

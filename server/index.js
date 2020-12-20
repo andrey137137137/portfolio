@@ -9,6 +9,7 @@ const session = require('express-session');
 const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo')(session);
 const errorHandler = require('errorhandler');
+const bunyan = require('bunyan');
 
 const { PROTOCOL, HOST, PORT, URL } = require('@config').server;
 const clientPort = require('@config').client.PORT;
@@ -23,6 +24,14 @@ const { isDev } = require('@apiHelpers');
 const curPort = PORT || process.env.PORT;
 
 const app = express();
+
+const log = bunyan.createLogger({
+  name: 'myserver',
+  serializers: {
+    req: bunyan.stdSerializers.req,
+    res: bunyan.stdSerializers.res,
+  },
+});
 
 // const cookieExpirationDate = new Date();
 // const cookieExpirationDays = 365;

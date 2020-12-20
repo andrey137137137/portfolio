@@ -15,6 +15,7 @@ export const getImg = (img, files) => {
 
   return files[ext](`./${img}`);
 };
+
 export const axiosConfig = () => {
   axios.interceptors.request.use(
     config => {
@@ -36,10 +37,12 @@ export const axiosConfig = () => {
     },
   );
 };
+
 export const checked = helpers.withParams(
   { type: 'checked' },
   value => !helpers.req(value) || value === true,
 );
+
 export const userAlphaNumValids = {
   required,
   alphaNum,

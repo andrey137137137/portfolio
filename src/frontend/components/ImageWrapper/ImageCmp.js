@@ -102,7 +102,6 @@ export default {
         const imageObserver = new IntersectionObserver((entries, observer) => {
           entries.forEach(entry => {
             if (entry.isIntersecting) {
-              console.log(entry.target);
               const image = entry.target;
               $vm.setSrc();
               imageObserver.unobserve(image);

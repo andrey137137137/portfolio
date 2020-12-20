@@ -40,7 +40,7 @@ function convertData(data) {
 }
 
 export default new Vuex.Store({
-  strict: isDev(),
+  strict: isDev,
   state: {
     data: {
       page: '',

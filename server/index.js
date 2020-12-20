@@ -39,9 +39,9 @@ app.use(
   }),
 );
 
-console.log('isDev: ' + isDev());
+console.log('isDev: ' + isDev);
 
-if (isDev()) {
+if (isDev) {
   app.use(logger('dev'));
 }
 
@@ -66,7 +66,7 @@ app.use(
 
 app.use(URL, require('./routes/index'));
 
-if (isDev()) {
+if (isDev) {
   app.use(errorHandler());
 }
 
@@ -78,7 +78,7 @@ if (isDev()) {
 // });
 
 //Error handlers & middlewares
-if (isDev()) {
+if (isDev) {
   app.use((err, req, res, next) => {
     // set locals, only providing error in development
     // console.log(err);

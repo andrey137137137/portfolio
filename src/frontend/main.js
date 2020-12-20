@@ -7,7 +7,7 @@ import App from './App.vue';
 import router from '@/router';
 
 Vue.use(VueRx);
-Vue.config.productionTip = !isDev();
+Vue.config.productionTip = !isDev;
 axiosConfig();
 
 new Vue({

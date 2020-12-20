@@ -81,12 +81,14 @@ function deleteSlide(data, highCB) {
       const deleteUploadPath = path.join(
         image.getUploadPath(),
         breakpoint.name,
+        getImageNameWithID(data.imageName),
       );
 
-      fs.unlink(
-        path.join(deleteUploadPath, getImageNameWithID(data.imageName)),
-        cb,
-      );
+      if (fs.existsSync(deleteUploadPath)) {
+        fs.unlink(deleteUploadPath, cb);
+      } else {
+        cb(null, data);
+      }
     },
     (err, info) => {
       // if (err) {
@@ -146,6 +148,8 @@ function formParse(req, res, mode, withoutSlideCB, withSlideCallbacksArray) {
     }
 
     uplImage = files.image;
+
+    console.log('Value: ' + imageName);
 
     if (uplImage || condition) {
       startWaterfall(withSlideCallbacksArray);

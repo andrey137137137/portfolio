@@ -56,13 +56,6 @@ function uploadSlide(data, highCB) {
         );
     },
     (err, info) => {
-      // if (err) {
-      //   return image.sendMessage(curRes, err, {
-      //     success: 'Изображение успешно добавлено',
-      //     error: 'Не удалось переместить изображение',
-      //   });
-      // }
-
       return highCB(err, info);
     },
   );
@@ -91,13 +84,6 @@ function deleteSlide(data, highCB) {
       }
     },
     (err, info) => {
-      // if (err) {
-      //   return image.sendMessage(curRes, err, {
-      //     success: 'Изображение успешно удалено',
-      //     error: 'Не удалось удалить изображение',
-      //   });
-      // }
-
       return highCB(err, info);
     },
   );

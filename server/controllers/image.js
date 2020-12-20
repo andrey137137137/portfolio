@@ -60,7 +60,10 @@ const upload = (req, res, dir = '', layer = -1) => {
     const fileName = files.image.name;
 
     fs.rename(filePath, path.join(uploadPath, fileName), err => {
-      sendMessage(res, err);
+      sendMessage(res, err, {
+        success: 'Изображение успешно добавлено',
+        error: 'Не удалось переместить изображение',
+      });
     });
   });
 };
@@ -69,11 +72,10 @@ const remove = (res, imageName, dir = '') => {
   setUploadPath(dir);
 
   fs.unlink(path.join(uploadPath, imageName), err => {
-    if (err) {
-      res.status(ERROR).json({ message: 'Не удалось удалить изображение' });
-    }
-
-    res.send({ message: 'Изображение успешно удалено' });
+    sendMessage(res, err, {
+      success: 'Изображение успешно удалено',
+      error: 'Не удалось удалить изображение',
+    });
   });
 };
 

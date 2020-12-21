@@ -2,7 +2,9 @@ const path = require('path');
 const packageJson = require('./package.json');
 
 const configPath = resolve(packageJson._moduleAliases['@config']);
-const { PORT, PROD_PATH } = require(configPath).client;
+// const { server, client } = require(configPath);
+// const { HOST, URL } = server;
+const { PROD_PATH, PORT } = require(configPath).client;
 const ASSETS_PATH = 'assets';
 const DEV_PATH = 'src';
 
@@ -26,10 +28,13 @@ function resolveBack(dir) {
   return resolveSrc(path.join('backend', dir));
 }
 
-module.exports = {
+const vueConfig = {
   publicPath: '/',
   outputDir: PROD_PATH,
-  devServer: { port: PORT },
+  devServer: {
+    // port: client.PORT,
+    port: PORT,
+  },
   pluginOptions: {
     svgSprite: {
       /*
@@ -136,3 +141,7 @@ module.exports = {
     },
   },
 };
+
+// vueConfig.devServer.proxy[URL] = `http://${HOST}:${server.PORT}`;
+
+module.exports = vueConfig;

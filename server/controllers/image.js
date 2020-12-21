@@ -27,6 +27,8 @@ const makeDir = dir => {
 };
 
 const setUploadPath = (dir, layer = -1) => {
+  makeDir(UPLOAD_PATH);
+
   uploadPath = dir ? path.join(UPLOAD_PATH, dir) : UPLOAD_PATH;
 
   if (layer >= 0) {

@@ -8,7 +8,7 @@
     "lint": "vue-cli-service lint",
     "build": "vue-cli-service build",
     "start": "concurrently \"nodemon server/index.js\" \"vue-cli-service serve --open\"",
-    "prod": "concurrently \"cross-env NODE_ENV=production node server/index.js\" \"serve -s client\""
+    "prod": "cross-env NODE_ENV=production nodemon server/index.js"
   },
   "dependencies": {
     "async": "^3.2.0",
@@ -18,7 +18,7 @@
     "babel-plugin-transform-vue-jsx": "^3.7.0",
     "babel-preset-env": "^1.7.0",
     "body-parser": "^1.18.3",
-    "concurrently": "^5.1.0",
+    "connect-history-api-fallback": "^1.6.0",
     "connect-mongo": "^3.2.0",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
@@ -73,6 +73,7 @@
     "@vue/eslint-config-prettier": "^4.0.1",
     "babel-eslint": "^10.0.1",
     "bunyan": "^1.8.14",
+    "concurrently": "^5.1.0",
     "debug": "^4.3.1",
     "eslint": "^5.14.0",
     "eslint-plugin-vue": "^5.2.1",
@@ -86,6 +87,7 @@
     "@httpSt": "api/httpStatuses.js",
     "@apiHelpers": "api/helpers.js",
     "@contr": "server/controllers",
-    "@auth": "server/routes/auth.js"
+    "@auth": "server/routes/auth.js",
+    "@client": "client"
   }
 }

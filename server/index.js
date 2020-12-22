@@ -1,29 +1,18 @@
 require('module-alias/register');
 
-const express = require('express');
-const cors = require('cors');
-const logger = require('morgan');
 const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
+// const cookieParser = require('cookie-parser');
 const session = require('express-session');
-const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo')(session);
-const errorHandler = require('errorhandler');
 // const bunyan = require('bunyan');
 
 const { NAME, PROTOCOL, HOST, PORT, URL } = require('@config').server;
 const CLIENT_PORT = require('@config').client.PORT;
 const { SECRET, KEY } = require('@config').session;
 require('./db');
-const {
-  SUCCESS,
-  // NOT_FOUND,
-  ERROR,
-} = require('@httpSt');
+const { SUCCESS, NOT_FOUND } = require('@httpSt');
 const { isDev } = require('@apiHelpers');
-const curPort = PORT || process.env.PORT;
-
-const app = express();
+const SERVER_PORT = PORT || process.env.PORT;
 
 // const log = bunyan.createLogger({
 //   name: NAME,
@@ -40,30 +29,35 @@ const app = express();
 //   cookieExpirationDate.getDate() + cookieExpirationDays
 // );
 
-app.use(
-  cors({
-    origin: `${PROTOCOL}://${HOST}:${CLIENT_PORT}`,
-    optionsSuccessStatus: SUCCESS,
-    credentials: true,
-  }),
-);
+const app = require('express')();
+
+if (isDev) {
+  app.use(require('errorhandler')());
+  app.use(
+    require('cors')({
+      origin: `${PROTOCOL}://${HOST}:${CLIENT_PORT}`,
+      optionsSuccessStatus: SUCCESS,
+      credentials: true,
+    }),
+  );
+}
 
 console.log('isDev: ' + isDev);
 
 // if (isDev) {
-app.use(logger('dev'));
+app.use(require('morgan')('dev'));
 // }
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use(cookieParser());
+// app.use(require('cookie-parser')());
 app.use(
   session({
     secret: SECRET,
     key: KEY,
     store: new MongoStore({
-      mongooseConnection: mongoose.connection,
+      mongooseConnection: require('mongoose').connection,
     }),
     resave: false,
     saveUninitialized: false,
@@ -73,51 +67,17 @@ app.use(
   }),
 );
 
-if (!isDev) {
-  const history = require('connect-history-api-fallback');
-  const path = require('path');
-
-  app.use(history());
-  app.use(express.static('client'));
-
-  // D:\Web-development\nodeJS_domains\portfolio\client\index.html
-  console.log('client: ' + path.resolve('client', 'admin.html'));
-
-  app.get('/admin/', (req, res) => {
-    res.sendFile(path.resolve('client', 'admin.html'));
-  });
-  app.get('/', (req, res) => {
-    res.sendFile(path.resolve('client', 'index.html'));
-  });
-}
-
 app.use(URL, require('./routes/index'));
 
-if (isDev) {
-  app.use(errorHandler());
-}
-
-// catch 404 and forward to error handler
-// app.use((req, res, next) => {
-//   const err = new Error("Not Found");
-//   err.status = NOT_FOUND;
-//   next(err);
-// });
-
-//Error handlers & middlewares
-if (isDev) {
-  app.use((err, req, res, next) => {
-    // set locals, only providing error in development
-    // console.log(err);
-    // res.locals.message = err.message;
-    // res.locals.error = req.app.get("env") === "development" ? err : {};
-    console.log(err.message);
-    // render the error page
-    res.status(ERROR).json(err.message);
-    // res.render("error");
+if (!isDev) {
+  require('./client')(app);
+} else {
+  // catch 404 and forward to error handler
+  app.get('/*', (req, res) => {
+    res.status(NOT_FOUND).json({ msg: 'Not Found' });
   });
 }
 
-app.listen(curPort, () => {
-  console.log(`${NAME} is running on port: ${curPort}`);
+app.listen(SERVER_PORT, () => {
+  console.log(`${NAME} is running on port: ${SERVER_PORT}`);
 });

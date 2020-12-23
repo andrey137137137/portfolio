@@ -2,8 +2,6 @@ const path = require('path');
 const packageJson = require('./package.json');
 
 const configPath = resolve(packageJson._moduleAliases['@config']);
-// const { server, client } = require(configPath);
-// const { HOST, URL } = server;
 const { PROD_PATH, PORT } = require(configPath).client;
 const ASSETS_PATH = 'assets';
 const DEV_PATH = 'src';
@@ -28,7 +26,7 @@ function resolveBack(dir) {
   return resolveSrc(path.join('backend', dir));
 }
 
-const vueConfig = {
+module.exports = {
   publicPath: '/',
   outputDir: PROD_PATH,
   devServer: {
@@ -141,7 +139,3 @@ const vueConfig = {
     },
   },
 };
-
-// vueConfig.devServer.proxy[URL] = `http://${HOST}:${server.PORT}`;
-
-module.exports = vueConfig;

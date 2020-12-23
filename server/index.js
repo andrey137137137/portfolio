@@ -17,8 +17,7 @@ require('./parsersAndSession')(app);
 require('./router')(app);
 
 const { NAME, PORT } = require('@config').server;
-const SERVER_PORT = process.env.PORT || PORT;
 
-app.listen(SERVER_PORT, () => {
-  console.log(`${NAME} is running on port: ${SERVER_PORT}`);
+app.listen(PORT, () => {
+  console.log(`${NAME} is running on port: ${PORT}`);
 });

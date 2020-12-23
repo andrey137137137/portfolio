@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
 import { SUCCESS, ERROR } from '@httpSt';
-import { exist, isDev } from '@apiHelpers';
+import { exist, IS_DEV } from '@apiHelpers';
 import { COMMENT } from '@common/constants/router';
 import {
   SET,
@@ -40,7 +40,7 @@ function convertData(data) {
 }
 
 export default new Vuex.Store({
-  strict: isDev,
+  strict: IS_DEV,
   state: {
     data: {
       page: '',

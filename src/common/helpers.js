@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { server } from '@config';
-import { isDev } from '@apiHelpers';
+import { IS_DEV } from '@apiHelpers';
 import {
   required,
   alphaNum,
@@ -29,7 +29,7 @@ export const axiosConfig = () => {
       return config;
     },
     err => {
-      if (isDev()) {
+      if (IS_DEV) {
         console.log(err.response.status);
       }
 

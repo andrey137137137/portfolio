@@ -3,9 +3,9 @@ const exist = (property, obj = window) => {
   return typeof obj[property] !== 'undefined';
 };
 
-const isDev = process.env.NODE_ENV !== 'production';
+const IS_DEV = process.env.NODE_ENV !== 'production';
 
 module.exports = {
   exist,
-  isDev,
+  IS_DEV,
 };

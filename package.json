@@ -87,7 +87,7 @@
     "@httpSt": "api/httpStatuses.js",
     "@apiHelpers": "api/helpers.js",
     "@contr": "server/controllers",
-    "@auth": "server/routes/auth.js",
-    "@client": "client"
+    "@routes": "server/routes",
+    "@auth": "server/routes/auth.js"
   }
 }

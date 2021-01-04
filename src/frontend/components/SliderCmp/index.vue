@@ -8,15 +8,15 @@ SectionWrapper(
     li(v-for='item in items') {{ item.title }}
 
   .slider-demo
-    transition(:name='transitionName')
-      ImageWrapper.img_wrap.slider-item.slider-demo_item(
-        :key='curIndex',
-        :path='imagePath',
-        :breakpoints='demoImgBreakpoints',
-        :title='alt',
-        :isLazyLoading='false',
-        :imgAddClasses='demoImgClasses'
-      )
+    ImageList(
+      :isDemoSlide='true',
+      :transitionName='transitionName',
+      :index='curIndex',
+      :path='imagePath',
+      :breakpoints='demoImgBreakpoints',
+      :alt='alt',
+      :imgAddClasses='demoImgClasses'
+    )
 
   article.slider-text_wrap
     AnimateStr(
@@ -61,6 +61,7 @@ SectionWrapper(
 import imageMixin from '@common/mixins/imageMixin';
 import SectionWrapper from '@frontCmp/SectionWrapper';
 import ImageWrapper from '@frontCmp/ImageWrapper';
+import ImageList from './ImageList';
 import AnimateStr from './AnimateStr';
 import ArrowButton from './ArrowButton';
 
@@ -69,6 +70,7 @@ export default {
   components: {
     SectionWrapper,
     ImageWrapper,
+    ImageList,
     AnimateStr,
     ArrowButton,
   },

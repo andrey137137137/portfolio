@@ -1,22 +1,23 @@
 <template lang="pug">
 a(href='#', :class='containerClasses', @click.prevent='handle')
-  transition(:name='transitionName')
-    ImageWrapper.img_wrap.slider-item(
-      :key='index',
-      :path='imagePath',
-      :breakpoints='imageBreakpoints',
-      :title='alt',
-      :isLazyLoading='false',
-      :imgAddClasses='imgClasses'
-    )
+  ImageList(
+    :transitionName='transitionName',
+    :index='index',
+    :path='imagePath',
+    :breakpoints='imageBreakpoints',
+    :alt='alt',
+    :imgAddClasses='imgClasses'
+  )
 </template>
 
 <script>
 import ImageWrapper from '@frontCmp/ImageWrapper';
+import ImageList from './ImageList';
 
 export default {
   name: 'ArrowButton',
   components: {
+    ImageList,
     ImageWrapper,
   },
   props: {

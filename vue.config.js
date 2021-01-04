@@ -30,7 +30,6 @@ module.exports = {
   publicPath: '/',
   outputDir: PROD_PATH,
   devServer: {
-    // port: client.PORT,
     port: PORT,
   },
   pluginOptions: {

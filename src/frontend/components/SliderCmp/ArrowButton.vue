@@ -25,10 +25,10 @@ export default {
       type: Number,
       required: true,
     },
-    newIndex: {
-      type: Number,
-      required: true,
-    },
+    // newIndex: {
+    //   type: Number,
+    //   required: true,
+    // },
     handle: {
       type: Function,
       required: true,

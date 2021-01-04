@@ -40,21 +40,21 @@ SectionWrapper(
   .clearfix.slider-nav
     ArrowButton(
       :index='curIndex',
-      :newIndex='prevIndex',
       :handle='handlePrev',
       :imagePath='imagePath',
       :imageBreakpoints='prevImgBreakpoints',
       :title='prevTitle',
       :isNext='false'
     )
+    //- :newIndex='prevIndex',
     ArrowButton(
       :index='curIndex',
-      :newIndex='nextIndex',
       :handle='handleNext',
       :imagePath='imagePath',
       :imageBreakpoints='nextImgBreakpoints',
       :title='nextTitle'
     )
+    //- :newIndex='nextIndex',
 </template>
 
 <script>
@@ -232,7 +232,7 @@ export default {
         this.curIndex = this.prevIndex;
         this.transitionMethod = 'scroll_down';
       }
-      this.animate();
+      // this.animate();
     },
     nextSlide(nowTime) {
       this.incDurationStep(nowTime);
@@ -240,7 +240,7 @@ export default {
         this.curIndex = this.nextIndex;
         this.transitionMethod = 'scroll_up';
       }
-      this.animate();
+      // this.animate();
     },
     handlePrev() {
       this.resetInterval();
@@ -253,7 +253,7 @@ export default {
   },
   mounted() {
     this.prevTime = performance.now();
-    this.animate();
+    // this.animate();
   },
 };
 </script>

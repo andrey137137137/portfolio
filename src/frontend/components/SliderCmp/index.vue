@@ -1,5 +1,6 @@
 <template lang="pug">
 SectionWrapper(
+  ref='container',
   :name='id',
   :isContainerClass='false',
   :isOwnContainerClass='true'
@@ -108,11 +109,13 @@ export default {
   },
   data() {
     return {
+      isVisible: false,
       transitionMethod: 'scroll_up',
       prevTime: 0,
       duration: 3000,
       durationStep: 0,
       curIndex: 0,
+      timeoutID: null,
       intervalID: null,
       imagePath: '/upload/slider',
       imageExt: 'png',
@@ -195,6 +198,34 @@ export default {
     },
   },
   methods: {
+    getScrollY() {
+      return window.pageYOffset || document.documentElement.scrollTop;
+    },
+    getElemCenterTop() {
+      return (
+        this.$refs.container.$el.offsetTop -
+        parseInt(document.documentElement.clientHeight / 3)
+      );
+    },
+    isVisibleElem() {
+      const scrollY = this.getScrollY();
+      const topBorder = this.getElemCenterTop();
+      const bottomBorder =
+        topBorder + parseInt(this.$refs.container.$el.offsetHeight);
+
+      if (scrollY >= topBorder && scrollY <= bottomBorder) {
+        return true;
+      }
+
+      return false;
+    },
+    isVisibleSlider() {
+      this.isVisible = this.isVisibleElem();
+
+      if (this.isVisible) {
+        this.handleNext();
+      }
+    },
     getImg(index) {
       return this.getFullImageName(
         this.items[index]._id,
@@ -210,7 +241,9 @@ export default {
       });
     },
     animate() {
-      this.intervalID = requestAnimationFrame(this.nextSlide);
+      if (this.isVisible) {
+        this.intervalID = requestAnimationFrame(this.nextSlide);
+      }
     },
     resetInterval() {
       cancelAnimationFrame(this.intervalID);
@@ -232,7 +265,7 @@ export default {
         this.curIndex = this.prevIndex;
         this.transitionMethod = 'scroll_down';
       }
-      // this.animate();
+      this.animate();
     },
     nextSlide(nowTime) {
       this.incDurationStep(nowTime);
@@ -240,7 +273,7 @@ export default {
         this.curIndex = this.nextIndex;
         this.transitionMethod = 'scroll_up';
       }
-      // this.animate();
+      this.animate();
     },
     handlePrev() {
       this.resetInterval();
@@ -250,10 +283,26 @@ export default {
       this.resetInterval();
       this.nextSlide(performance.now());
     },
+    handleScreen() {
+      const self = this;
+
+      if (this.timeoutID) {
+        clearTimeout(this.timeoutID);
+      }
+
+      this.timeoutID = setTimeout(() => {
+        self.isVisibleSlider();
+      }, 100);
+    },
   },
   mounted() {
-    this.prevTime = performance.now();
-    // this.animate();
+    const self = this;
+    this.$nextTick(() => {
+      self.prevTime = performance.now();
+      window.addEventListener('resize', self.handleScreen);
+      window.addEventListener('scroll', self.handleScreen);
+      self.isVisibleSlider();
+    });
   },
 };
 </script>

@@ -15,6 +15,7 @@
 
 <script>
 import { HOME } from '@common/constants/router';
+import { getScrollY } from '@common/helpers';
 import ImageWrapper from '@frontCmp/ImageWrapper';
 
 export default {
@@ -67,7 +68,7 @@ export default {
       const isScroll = this.isScroll;
 
       if (isScroll) {
-        this.scrollY = window.pageYOffset || document.documentElement.scrollTop;
+        this.scrollY = getScrollY();
       }
 
       this.initialX = isScroll ? this.centerX : this.centerX - event.pageX;
@@ -76,7 +77,7 @@ export default {
         : this.centerY - event.pageY;
 
       if (this.$layers) {
-        [].slice.call(this.$layers).forEach(function($layer, index) {
+        [].slice.call(this.$layers).forEach(function ($layer, index) {
           if (isScroll) {
             $vm.divider = (index + 1) / 90;
           } else {

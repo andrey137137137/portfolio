@@ -38,6 +38,10 @@ export const axiosConfig = () => {
   );
 };
 
+export const getScrollY = () => {
+  return window.pageYOffset || document.documentElement.scrollTop;
+};
+
 export const checked = helpers.withParams(
   { type: 'checked' },
   value => !helpers.req(value) || value === true,

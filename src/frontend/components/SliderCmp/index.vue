@@ -59,6 +59,7 @@ SectionWrapper(
 </template>
 
 <script>
+import { getScrollY } from '@common/helpers';
 import imageMixin from '@common/mixins/imageMixin';
 import SectionWrapper from '@frontCmp/SectionWrapper';
 import ImageWrapper from '@frontCmp/ImageWrapper';
@@ -198,34 +199,6 @@ export default {
     },
   },
   methods: {
-    getScrollY() {
-      return window.pageYOffset || document.documentElement.scrollTop;
-    },
-    getElemCenterTop() {
-      return (
-        this.$refs.container.$el.offsetTop -
-        parseInt(document.documentElement.clientHeight / 3)
-      );
-    },
-    isVisibleElem() {
-      const scrollY = this.getScrollY();
-      const topBorder = this.getElemCenterTop();
-      const bottomBorder =
-        topBorder + parseInt(this.$refs.container.$el.offsetHeight);
-
-      if (scrollY >= topBorder && scrollY <= bottomBorder) {
-        return true;
-      }
-
-      return false;
-    },
-    isVisibleSlider() {
-      this.isVisible = this.isVisibleElem();
-
-      if (this.isVisible) {
-        this.handleNext();
-      }
-    },
     getImg(index) {
       return this.getFullImageName(
         this.items[index]._id,
@@ -239,6 +212,30 @@ export default {
           value: breakpoint.value,
         };
       });
+    },
+    calcVisible() {
+      for (; !this.$refs.container.$el; );
+
+      const container = this.$refs.container.$el;
+      const scrollY = getScrollY();
+      console.log(container);
+      const topBorder =
+        container.offsetTop -
+        parseInt(document.documentElement.clientHeight / 3);
+      const bottomBorder = topBorder + parseInt(container.offsetHeight);
+
+      if (scrollY >= topBorder && scrollY <= bottomBorder) {
+        return true;
+      }
+
+      return false;
+    },
+    autoplay() {
+      this.isVisible = this.calcVisible();
+
+      if (this.isVisible) {
+        this.handleNext();
+      }
     },
     animate() {
       if (this.isVisible) {
@@ -276,12 +273,16 @@ export default {
       this.animate();
     },
     handlePrev() {
+      // if (!this.durationStep) {
       this.resetInterval();
       this.prevSlide(performance.now());
+      // }
     },
     handleNext() {
+      // if (!this.durationStep) {
       this.resetInterval();
       this.nextSlide(performance.now());
+      // }
     },
     handleScreen() {
       const self = this;
@@ -291,7 +292,7 @@ export default {
       }
 
       this.timeoutID = setTimeout(() => {
-        self.isVisibleSlider();
+        self.autoplay();
       }, 100);
     },
   },
@@ -301,7 +302,7 @@ export default {
       self.prevTime = performance.now();
       window.addEventListener('resize', self.handleScreen);
       window.addEventListener('scroll', self.handleScreen);
-      self.isVisibleSlider();
+      self.autoplay();
     });
   },
 };

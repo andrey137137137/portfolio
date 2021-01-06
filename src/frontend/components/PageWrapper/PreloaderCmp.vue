@@ -10,6 +10,11 @@ div(ref='preloader', :class='rootClass')
 <script>
 import { gsap } from 'gsap';
 import { mapGetters } from 'vuex';
+import {
+  IMAGES_LOADING,
+  PRELOADER_CLASSES_REMOVING,
+  PRELOADER_HIDDEN,
+} from '@common/constants/timeouts';
 
 export default {
   name: 'PreloaderCmp',
@@ -55,7 +60,7 @@ export default {
 
       this.intervalID = setInterval(() => {
         $vm.imagesLoading();
-      }, 100);
+      }, IMAGES_LOADING);
     },
     reset() {
       if (this.dbDataLoadedCount == 0) {
@@ -72,7 +77,7 @@ export default {
         clearInterval(this.intervalID);
         const $vm = this;
 
-        this.$nextTick(() => {
+        $vm.$nextTick(() => {
           const $images = document.querySelectorAll(
             'source:not(.lazy), img:not(.lazy)',
           );
@@ -101,8 +106,8 @@ export default {
           setTimeout(() => {
             $vm.$refs.preloader.className = $vm.rootClass;
             $vm.$refs.preloader.style.display = 'none';
-          }, 500);
-        }, 1000);
+          }, PRELOADER_CLASSES_REMOVING);
+        }, PRELOADER_HIDDEN);
       }
     },
   },

@@ -1,0 +1,3 @@
+export const IMAGES_LOADING = 100;
+export const PRELOADER_CLASSES_REMOVING = 500;
+export const PRELOADER_HIDDEN = 1000;

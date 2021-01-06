@@ -34,9 +34,14 @@ SectionWrapper(
       :commonKey='curIndex',
       :addClasses='techsClasses'
     )
-    a.clearfix.btn.slider-btn(:href='link', target='_blank')
-      span.icon.icon--link.slider-btn_icon
-      span.slider-btn_text Посмотреть сайт
+    transition(appear, name='slide-fade')
+      a.clearfix.btn.slider-btn(
+        v-show='isLoaded',
+        :href='link',
+        target='_blank'
+      )
+        span.icon.icon--link.slider-btn_icon
+        span.slider-btn_text Посмотреть сайт
 
   .clearfix.slider-nav
     ArrowButton(
@@ -47,7 +52,6 @@ SectionWrapper(
       :title='prevTitle',
       :isNext='false'
     )
-    //- :newIndex='prevIndex',
     ArrowButton(
       :index='curIndex',
       :handle='handleNext',
@@ -55,10 +59,14 @@ SectionWrapper(
       :imageBreakpoints='nextImgBreakpoints',
       :title='nextTitle'
     )
-    //- :newIndex='nextIndex',
 </template>
 
 <script>
+import {
+  IMAGES_LOADING,
+  PRELOADER_CLASSES_REMOVING,
+  PRELOADER_HIDDEN,
+} from '@common/constants/timeouts';
 import { getScrollY } from '@common/helpers';
 import imageMixin from '@common/mixins/imageMixin';
 import SectionWrapper from '@frontCmp/SectionWrapper';
@@ -110,6 +118,7 @@ export default {
   },
   data() {
     return {
+      isLoaded: false,
       isVisible: false,
       transitionMethod: 'scroll_up',
       prevTime: 0,
@@ -218,7 +227,6 @@ export default {
 
       const container = this.$refs.container.$el;
       const scrollY = getScrollY();
-      console.log(container);
       const topBorder =
         container.offsetTop -
         parseInt(document.documentElement.clientHeight / 3);
@@ -297,13 +305,38 @@ export default {
     },
   },
   mounted() {
-    const self = this;
-    this.$nextTick(() => {
-      self.prevTime = performance.now();
-      window.addEventListener('resize', self.handleScreen);
-      window.addEventListener('scroll', self.handleScreen);
-      self.autoplay();
+    const $vm = this;
+
+    $vm.$nextTick(() => {
+      $vm.prevTime = performance.now();
+
+      // setTimeout(() => {
+      //   $vm.isLoaded = true;
+      // }, IMAGES_LOADING + PRELOADER_CLASSES_REMOVING + PRELOADER_HIDDEN);
+
+      setTimeout(() => {
+        window.addEventListener('resize', $vm.handleScreen);
+        window.addEventListener('scroll', self.handleScreen);
+        $vm.autoplay();
+        $vm.isLoaded = true;
+      }, $vm.duration + IMAGES_LOADING + PRELOADER_CLASSES_REMOVING + PRELOADER_HIDDEN);
     });
   },
 };
 </script>
+
+<style>
+.slide-fade-enter-active {
+  transition: all 0.3s ease;
+}
+
+.slide-fade-leave-active {
+  transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.slide-fade-enter,
+.slide-fade-leave-to {
+  transform: translateX(10px);
+  opacity: 0;
+}
+</style>

@@ -1,5 +1,5 @@
 <template lang="pug">
-transition(:name='transitionName')
+transition(appear, :name='transitionName')
   .slider-item(:class='containerClasses', :key='index')
     ImageWrapper.img_wrap(
       v-for='(item, number) in 3',
@@ -29,10 +29,6 @@ export default {
       type: Number,
       required: true,
     },
-    // newIndex: {
-    //   type: Number,
-    //   required: true,
-    // },
     path: {
       type: String,
       required: true,

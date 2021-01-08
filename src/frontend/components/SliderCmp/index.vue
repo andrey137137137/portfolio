@@ -12,6 +12,7 @@ SectionWrapper(
     ImageList(
       :isDemoSlide='true',
       :transitionName='transitionName',
+      :isLoaded='isLoaded',
       :index='curIndex',
       :path='imagePath',
       :breakpoints='demoImgBreakpoints',
@@ -45,6 +46,7 @@ SectionWrapper(
 
   .clearfix.slider-nav
     ArrowButton(
+      :isLoaded='isLoaded',
       :index='curIndex',
       :handle='handlePrev',
       :imagePath='imagePath',
@@ -53,6 +55,7 @@ SectionWrapper(
       :isNext='false'
     )
     ArrowButton(
+      :isLoaded='isLoaded',
       :index='curIndex',
       :handle='handleNext',
       :imagePath='imagePath',
@@ -222,29 +225,6 @@ export default {
         };
       });
     },
-    calcVisible() {
-      for (; !this.$refs.container.$el; );
-
-      const container = this.$refs.container.$el;
-      const scrollY = getScrollY();
-      const topBorder =
-        container.offsetTop -
-        parseInt(document.documentElement.clientHeight / 3);
-      const bottomBorder = topBorder + parseInt(container.offsetHeight);
-
-      if (scrollY >= topBorder && scrollY <= bottomBorder) {
-        return true;
-      }
-
-      return false;
-    },
-    autoplay() {
-      this.isVisible = this.calcVisible();
-
-      if (this.isVisible) {
-        this.handleNext();
-      }
-    },
     animate() {
       if (this.isVisible) {
         this.intervalID = requestAnimationFrame(this.nextSlide);
@@ -292,15 +272,44 @@ export default {
       this.nextSlide(performance.now());
       // }
     },
-    handleScreen() {
-      const self = this;
+    calcVisible() {
+      for (; !this.$refs.container.$el; );
 
+      const container = this.$refs.container.$el;
+      const scrollY = getScrollY();
+      // const topBorder =
+      //   container.offsetTop -
+      //   parseInt(document.documentElement.clientHeight / 3);
+      const topBorder = container.offsetTop + 601;
+      const bottomBorder = topBorder + parseInt(container.offsetHeight);
+
+      console.log('Container:');
+      console.log(scrollY);
+      console.log(topBorder);
+      console.log(bottomBorder);
+
+      if (scrollY >= topBorder && scrollY <= bottomBorder) {
+        return true;
+      }
+
+      return false;
+    },
+    autoplay() {
+      this.isVisible = this.calcVisible();
+
+      if (this.isVisible) {
+        this.handleNext();
+      }
+    },
+    handleScreen() {
       if (this.timeoutID) {
         clearTimeout(this.timeoutID);
       }
 
-      this.timeoutID = setTimeout(() => {
-        self.autoplay();
+      const $vm = this;
+
+      $vm.timeoutID = setTimeout(() => {
+        $vm.autoplay();
       }, 100);
     },
   },
@@ -316,7 +325,7 @@ export default {
 
       setTimeout(() => {
         window.addEventListener('resize', $vm.handleScreen);
-        window.addEventListener('scroll', self.handleScreen);
+        window.addEventListener('scroll', $vm.handleScreen);
         $vm.autoplay();
         $vm.isLoaded = true;
       }, $vm.duration + IMAGES_LOADING + PRELOADER_CLASSES_REMOVING + PRELOADER_HIDDEN);

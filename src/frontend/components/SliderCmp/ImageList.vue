@@ -10,6 +10,7 @@ transition(appear, :name='transitionName')
       :isLazyLoading='false',
       :imgAddClasses='imgAddClasses'
     )
+    //- v-show='isLoaded',
 </template>
 
 <script>
@@ -23,6 +24,10 @@ export default {
   props: {
     transitionName: {
       type: String,
+      required: true,
+    },
+    isLoaded: {
+      type: Boolean,
       required: true,
     },
     index: {

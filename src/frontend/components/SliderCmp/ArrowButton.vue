@@ -2,6 +2,7 @@
 a(href='#', :class='containerClasses', @click.prevent='handle')
   ImageList(
     :transitionName='transitionName',
+    :isLoaded='isLoaded',
     :index='index',
     :path='imagePath',
     :breakpoints='imageBreakpoints',
@@ -21,6 +22,10 @@ export default {
     ImageWrapper,
   },
   props: {
+    isLoaded: {
+      type: Boolean,
+      required: true,
+    },
     index: {
       type: Number,
       required: true,

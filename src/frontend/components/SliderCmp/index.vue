@@ -70,7 +70,7 @@ import {
   PRELOADER_CLASSES_REMOVING,
   PRELOADER_HIDDEN,
 } from '@common/constants/timeouts';
-import { getScrollY } from '@common/helpers';
+// import { getScrollY } from '@common/helpers';
 import imageMixin from '@common/mixins/imageMixin';
 import SectionWrapper from '@frontCmp/SectionWrapper';
 import ImageWrapper from '@frontCmp/ImageWrapper';
@@ -244,21 +244,24 @@ export default {
 
       this.prevTime = nowTime;
     },
-    prevSlide(nowTime) {
+    changeSlide(nowTime, prevIndex, transitionMethod) {
       this.incDurationStep(nowTime);
+
       if (!this.durationStep) {
-        this.curIndex = this.prevIndex;
-        this.transitionMethod = 'scroll_down';
+        this.curIndex = prevIndex;
+        this.transitionMethod = transitionMethod;
+
+        console.log('Slider:');
+        console.log(this.curIndex);
       }
+
       this.animate();
     },
+    prevSlide(nowTime) {
+      this.changeSlide(nowTime, this.prevIndex, 'scroll_down');
+    },
     nextSlide(nowTime) {
-      this.incDurationStep(nowTime);
-      if (!this.durationStep) {
-        this.curIndex = this.nextIndex;
-        this.transitionMethod = 'scroll_up';
-      }
-      this.animate();
+      this.changeSlide(nowTime, this.nextIndex, 'scroll_up');
     },
     handlePrev() {
       // if (!this.durationStep) {
@@ -276,19 +279,20 @@ export default {
       for (; !this.$refs.container.$el; );
 
       const container = this.$refs.container.$el;
-      const scrollY = getScrollY();
+      // const scrollY = getScrollY();
       // const topBorder =
       //   container.offsetTop -
       //   parseInt(document.documentElement.clientHeight / 3);
-      const topBorder = container.offsetTop + 601;
+      const windowHeight = document.documentElement.clientHeight;
+      const topBorder = container.getBoundingClientRect().top;
       const bottomBorder = topBorder + parseInt(container.offsetHeight);
 
       console.log('Container:');
-      console.log(scrollY);
+      console.log(windowHeight);
       console.log(topBorder);
       console.log(bottomBorder);
 
-      if (scrollY >= topBorder && scrollY <= bottomBorder) {
+      if (topBorder <= windowHeight && bottomBorder >= 0) {
         return true;
       }
 

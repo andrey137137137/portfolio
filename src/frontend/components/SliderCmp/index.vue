@@ -70,7 +70,6 @@ import {
   PRELOADER_CLASSES_REMOVING,
   PRELOADER_HIDDEN,
 } from '@common/constants/timeouts';
-// import { getScrollY } from '@common/helpers';
 import imageMixin from '@common/mixins/imageMixin';
 import SectionWrapper from '@frontCmp/SectionWrapper';
 import ImageWrapper from '@frontCmp/ImageWrapper';
@@ -228,6 +227,8 @@ export default {
     animate() {
       if (this.isVisible) {
         this.intervalID = requestAnimationFrame(this.nextSlide);
+      } else {
+        this.resetInterval();
       }
     },
     resetInterval() {
@@ -244,11 +245,11 @@ export default {
 
       this.prevTime = nowTime;
     },
-    changeSlide(nowTime, prevIndex, transitionMethod) {
+    changeSlide(nowTime, oldIndex, transitionMethod) {
       this.incDurationStep(nowTime);
 
       if (!this.durationStep) {
-        this.curIndex = prevIndex;
+        this.curIndex = oldIndex;
         this.transitionMethod = transitionMethod;
 
         console.log('Slider:');
@@ -263,36 +264,48 @@ export default {
     nextSlide(nowTime) {
       this.changeSlide(nowTime, this.nextIndex, 'scroll_up');
     },
-    handlePrev() {
+    handleChangeSlide(isNext = true) {
+      const time = performance.now();
+
+      console.log(this.durationStep);
+
       // if (!this.durationStep) {
       this.resetInterval();
-      this.prevSlide(performance.now());
+
+      if (isNext) {
+        this.nextSlide(time);
+      } else {
+        this.prevSlide(time);
+      }
       // }
     },
+    handlePrev() {
+      this.handleChangeSlide(false);
+    },
     handleNext() {
-      // if (!this.durationStep) {
-      this.resetInterval();
-      this.nextSlide(performance.now());
-      // }
+      this.handleChangeSlide();
     },
     calcVisible() {
       for (; !this.$refs.container.$el; );
 
       const container = this.$refs.container.$el;
-      // const scrollY = getScrollY();
-      // const topBorder =
-      //   container.offsetTop -
-      //   parseInt(document.documentElement.clientHeight / 3);
       const windowHeight = document.documentElement.clientHeight;
+      const elemHeight = container.offsetHeight;
+      const targetHeight =
+        windowHeight > elemHeight ? windowHeight : elemHeight;
+      const targetHalfHeight = parseInt(targetHeight / 2);
       const topBorder = container.getBoundingClientRect().top;
-      const bottomBorder = topBorder + parseInt(container.offsetHeight);
+      const bottomBorder = topBorder + parseInt(elemHeight);
 
       console.log('Container:');
       console.log(windowHeight);
       console.log(topBorder);
       console.log(bottomBorder);
 
-      if (topBorder <= windowHeight && bottomBorder >= 0) {
+      if (
+        topBorder <= targetHeight + targetHalfHeight &&
+        bottomBorder >= targetHalfHeight
+      ) {
         return true;
       }
 
@@ -301,7 +314,7 @@ export default {
     autoplay() {
       this.isVisible = this.calcVisible();
 
-      if (this.isVisible) {
+      if (this.isVisible && !this.durationStep) {
         this.handleNext();
       }
     },

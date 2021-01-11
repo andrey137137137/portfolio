@@ -265,17 +265,17 @@ export default {
       this.changeSlide(nowTime, this.nextIndex, 'scroll_up');
     },
     handleChangeSlide(isNext = true) {
-      const time = performance.now();
-
       console.log(this.durationStep);
 
       // if (!this.durationStep) {
       this.resetInterval();
 
-      if (isNext) {
-        this.nextSlide(time);
-      } else {
+      const time = performance.now();
+
+      if (!isNext) {
         this.prevSlide(time);
+      } else {
+        this.nextSlide(time);
       }
       // }
     },
@@ -312,10 +312,12 @@ export default {
       return false;
     },
     autoplay() {
+      const oldIsVisible = this.isVisible;
+
       this.isVisible = this.calcVisible();
 
-      if (this.isVisible && !this.durationStep) {
-        this.handleNext();
+      if (!oldIsVisible && this.isVisible && !this.durationStep) {
+        this.nextSlide(performance.now());
       }
     },
     handleScreen() {

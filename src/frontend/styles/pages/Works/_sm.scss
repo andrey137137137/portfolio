@@ -41,17 +41,39 @@
   }
 
   &-item {
-    @include position('absolute 0 * * 0');
+    @include position('absolute 50% * * 50%');
     size: 100%;
     text-align: center;
     color: $red;
     // background: $black;
     // background-size: cover;
+    transform: translate(-50%, -50%);
 
     &_number {
       @include position('absolute 0 * * 0');
       z-index: 1;
       size: 100%;
+    }
+  }
+
+  &-img_wrap {
+    @include position('absolute 50% * * *');
+    size: 33%;
+    transform: translateY(-50%);
+
+    &--left {
+      left: 0;
+    }
+
+    &--center {
+      left: 50%;
+      z-index: 1;
+      size: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    &--right {
+      right: 0;
     }
   }
 

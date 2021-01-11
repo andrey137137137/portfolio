@@ -1,13 +1,14 @@
 <template lang="pug">
 transition(appear, :name='transitionName')
   .slider-item(:class='containerClasses', :key='index')
-    ImageWrapper.img_wrap(
+    ImageWrapper(
       v-for='(item, number) in 3',
       :key='number',
       :path='path',
       :breakpoints='breakpoints',
       :title='alt',
       :isLazyLoading='false',
+      :addClasses='imgWrapClasses(number)',
       :imgAddClasses='imgAddClasses'
     )
     //- v-show='isLoaded',
@@ -63,6 +64,16 @@ export default {
     containerClasses() {
       return {
         'slider-demo_item': this.isDemoSlide,
+      };
+    },
+  },
+  methods: {
+    imgWrapClasses(number) {
+      return {
+        'slider-img_wrap': true,
+        'slider-img_wrap--left': number == 0,
+        'slider-img_wrap--center': number == 1,
+        'slider-img_wrap--right': number == 2,
       };
     },
   },

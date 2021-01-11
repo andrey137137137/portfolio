@@ -54,7 +54,7 @@ export default {
   data() {
     return {
       imgClasses: {
-        'img_wrap-img': true,
+        // 'img_wrap-img': true,
         'slider-img': true,
         'slider-img--in_arrow': true,
       },

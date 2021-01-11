@@ -298,12 +298,12 @@ export default {
       const bottomBorder = topBorder + parseInt(elemHeight);
 
       console.log('Container:');
-      console.log(windowHeight);
+      console.log(targetHeight);
       console.log(topBorder);
       console.log(bottomBorder);
 
       if (
-        topBorder <= targetHeight + targetHalfHeight &&
+        topBorder + targetHalfHeight <= targetHeight &&
         bottomBorder >= targetHalfHeight
       ) {
         return true;
@@ -343,9 +343,9 @@ export default {
       // }, IMAGES_LOADING + PRELOADER_CLASSES_REMOVING + PRELOADER_HIDDEN);
 
       setTimeout(() => {
-        window.addEventListener('resize', $vm.handleScreen);
-        window.addEventListener('scroll', $vm.handleScreen);
-        $vm.autoplay();
+        // window.addEventListener('resize', $vm.handleScreen);
+        // window.addEventListener('scroll', $vm.handleScreen);
+        // $vm.autoplay();
         $vm.isLoaded = true;
       }, $vm.duration + IMAGES_LOADING + PRELOADER_CLASSES_REMOVING + PRELOADER_HIDDEN);
     });

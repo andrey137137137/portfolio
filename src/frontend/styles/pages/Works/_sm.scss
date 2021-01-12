@@ -41,13 +41,17 @@
   }
 
   &-item {
-    @include position('absolute 50% * * 50%');
+    @include position('absolute 0 * * 0');
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 0 1 auto;
     size: 100%;
     text-align: center;
     color: $red;
     // background: $black;
     // background-size: cover;
-    transform: translate(-50%, -50%);
+    // transform: translate(-50%, -50%);
 
     &_number {
       @include position('absolute 0 * * 0');
@@ -57,33 +61,33 @@
   }
 
   &-img_wrap {
-    @include position('absolute 50% * * *');
-    size: 33%;
-    transform: translateY(-50%);
+    // @include position('absolute 50% * * *');
+    border-radius: 10px;
+    width: 33%;
+    box-shadow: 12px 12px 2px 1px rgba(0, 0, 255, 0.2);
+    // transform: translateY(-50%);
 
-    &--left {
-      left: 0;
+    &--side {
+      @include margin('* 10px');
     }
 
     &--center {
-      left: 50%;
+      // display: none;
+      @include position('absolute 50% * * 50%');
+      // left: 50%;
       z-index: 1;
-      size: 50%;
+      width: 50%;
       transform: translate(-50%, -50%);
-    }
-
-    &--right {
-      right: 0;
     }
   }
 
   &-img {
-    @include position('absolute 50% * * 50%');
+    // @include position('absolute 50% * * 50%');
     display: block;
     max-height: 100%;
     font-family: $mainFont;
     line-height: 1;
-    transform: translate(-50%, -50%);
+    // transform: translate(-50%, -50%);
 
     &--in_arrow {
       font-size: 28px;

@@ -71,9 +71,8 @@ export default {
     imgWrapClasses(number) {
       return {
         'slider-img_wrap': true,
-        'slider-img_wrap--left': number == 0,
+        'slider-img_wrap--side': number == 0 || number == 2,
         'slider-img_wrap--center': number == 1,
-        'slider-img_wrap--right': number == 2,
       };
     },
   },

@@ -5,23 +5,31 @@ ItemForm(
   :id='id',
   :disabled='disabled'
 )
-  .img_wrap
-    img.img_wrap-img(:src='imagePreview', :alt='uploadingImageName')
-  PictureInput(
-    ref='pictureInput',
-    @change='changeImage',
-    @remove='removeImage',
-    :removable='true',
-    removeButtonClass='ui red button',
-    accept='image/jpeg, image/png, image/gif',
-    buttonClass='ui button primary',
-    :customStrings='{ upload: "<h1>Bummer!</h1>", drag: "Drag a 😺 GIF or GTFO" }'
-  )
-  ButtonElem(
-    v-show='imageName',
-    :isDanger='true',
-    @click.prevent.native='removeUploadedImage'
-  ) Удалить изображение
+  .form_images
+    div
+      .img_wrap
+        img.img_wrap-img(
+          v-for='(item, index) in imageNames',
+          :src='imagePreview(index)',
+          :alt='item'
+        )
+      ButtonElem(
+        v-show='item',
+        :isDanger='true',
+        @click.prevent.native='removeUploadedImage(index)'
+      ) Удалить изображение
+  .form_images
+    PictureInput(
+      v-for='(item, index) in images',
+      removeButtonClass='ui red button',
+      accept='image/jpeg, image/png, image/gif',
+      buttonClass='ui button primary',
+      :ref='"pictureInput" + index',
+      :removable='true',
+      :customStrings='{ upload: "<h1>Bummer!</h1>", drag: "Drag a 😺 JPEG, PNG or GIF" }',
+      @change='changeImage(index)',
+      @remove='removeImage(index)'
+    )
   InputEventElem(v-model='title', :val='$v.title', placeholder='Название')
   InputEventElem(v-model='link', :val='$v.link', placeholder='Ссылка')
   MultipleElem(
@@ -63,7 +71,7 @@ export default {
   mixins: [imageMixin, uploadMixin, itemFormMixin],
   data() {
     const data = {
-      image: null,
+      images: [null, null, null],
       fields: [
         {
           name: 'name',
@@ -82,7 +90,7 @@ export default {
       ...data,
       title: this.item.title,
       link: this.item.link,
-      imageName: this.item.imageName,
+      imageNames: this.item.imageNames,
       techs: exist('techs', this.item)
         ? this.item.techs.map(item => {
             return { name: item };
@@ -106,26 +114,12 @@ export default {
       },
     },
   },
-  computed: {
-    uploadingImageName() {
-      if (!this.image) {
-        return '';
-      }
-
-      return this.image.name;
-    },
-    imagePreview() {
-      return (
-        '/upload/slider/xl/' + this.getFullImageName(this.id, this.imageName)
-      );
-    },
-  },
   methods: {
     defaultFields() {
       return {
         title: '',
         link: '',
-        imageName: '',
+        imageNames: '',
         techs: [
           {
             name: 'HTML',
@@ -143,15 +137,23 @@ export default {
       const data = {
         title: this.title,
         link: this.link,
-        imageName: this.uploadingImageName
-          ? this.uploadingImageName
-          : this.imageName,
+        imageNames: this.imageNames,
       };
       const techs = this.techs.map(item => item.name);
       const form = new FormData();
+      let index;
+      let isUploadingImageName = false;
 
-      if (this.uploadingImageName) {
-        form.append('image', this.image, this.image.name);
+      for (index = 0; index < this.images.length; index++) {
+        if (this.images[index]) {
+          isUploadingImageName = true;
+          break;
+        }
+      }
+
+      if (isUploadingImageName) {
+        data.imageNames[index] = this.images[index].name;
+        form.append('image', this.images[index], this.images[index].name);
       }
 
       for (const key in data) {
@@ -164,14 +166,28 @@ export default {
 
       this.submitData = form;
     },
-    changeImage() {
-      this.image = this.$refs.pictureInput.file;
+    getUploadingImageName(index = -1) {
+      if (!this.images[index]) {
+        return '';
+      }
+
+      return this.images[index].name;
     },
-    removeImage() {
-      this.image = null;
+    imagePreview(index) {
+      return (
+        '/upload/slider/xl/' +
+        this.getFullImageName(this.id, this.imageNames[index]) +
+        index
+      );
     },
-    removeUploadedImage() {
-      this.imageName = '';
+    changeImage(index) {
+      this.images[index] = this.$refs.pictureInput.file;
+    },
+    removeImage(index) {
+      this.images[index] = null;
+    },
+    removeUploadedImage(index) {
+      this.imageNames[index] = '';
 
       this.removeImage();
       this.submit();
@@ -179,3 +195,10 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+.form_images {
+  display: flex;
+  justify-content: space-between;
+}
+</style>

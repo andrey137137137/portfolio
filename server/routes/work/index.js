@@ -7,6 +7,7 @@ const sharp = require('sharp');
 const fs = require('fs');
 
 const { isAuth } = require('@auth');
+const { getSlideName } = require('@apiHelpers');
 const crud = require('@contr/crud');
 const image = require('@contr/image');
 
@@ -22,11 +23,8 @@ let curRes;
 let curID;
 let curMode;
 let curFields;
+let curSlide;
 let uplImage;
-
-function getImageNameWithID(imageName) {
-  return `${curID}_${imageName}`;
-}
 
 function uploadSlide(data, highCB) {
   if (!uplImage) {
@@ -51,7 +49,10 @@ function uploadSlide(data, highCB) {
           height: breakpoint.height,
         })
         .toFile(
-          path.join(resizeUploadPath, getImageNameWithID(uplImage.name)),
+          path.join(
+            resizeUploadPath,
+            getSlideName(curID, uplImage.name, curSlide),
+          ),
           cb,
         );
     },
@@ -62,7 +63,7 @@ function uploadSlide(data, highCB) {
 }
 
 function deleteSlide(data, highCB) {
-  if (!data.imageName) {
+  if (!data.imageNames[curSlide]) {
     return highCB(null, data);
   }
 
@@ -74,7 +75,7 @@ function deleteSlide(data, highCB) {
       const deleteUploadPath = path.join(
         image.getUploadPath(),
         breakpoint.name,
-        getImageNameWithID(data.imageName),
+        getSlideName(curID, data.imageNames[curSlide], curSlide),
       );
 
       if (fs.existsSync(deleteUploadPath)) {
@@ -124,10 +125,12 @@ function formParse(req, res, mode, withoutSlideCB, withSlideCallbacksArray) {
       return crud.sendError(err, curRes, curMode);
     }
 
-    const { title, link, imageName, techs } = fields;
-    const condition = mode == 'update' ? !imageName : false;
+    const { title, link, imageNames, selectedImageIndex, techs } = fields;
+    curSlide = selectedImageIndex;
+    const condition =
+      mode == 'update' && curSlide >= 0 ? !imageNames[curSlide] : false;
 
-    curFields = { title, link, imageName };
+    curFields = { title, link, imageNames };
 
     if (techs) {
       curFields.techs = JSON.parse(techs);
@@ -135,7 +138,7 @@ function formParse(req, res, mode, withoutSlideCB, withSlideCallbacksArray) {
 
     uplImage = files.image;
 
-    console.log('Value: ' + imageName);
+    console.log('Value: ' + imageNames);
 
     if (uplImage || condition) {
       startWaterfall(withSlideCallbacksArray);

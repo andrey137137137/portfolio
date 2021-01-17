@@ -21,7 +21,6 @@ const SkillCategorySchema = new Schema({
   items: {
     type: Array,
     required: '',
-    // default: [],
     children: [SkillSchema],
   },
 });

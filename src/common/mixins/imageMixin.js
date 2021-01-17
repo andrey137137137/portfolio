@@ -1,7 +1,7 @@
 export default {
   methods: {
-    getFullImageName(id, name) {
-      return `${id}_${name}`;
+    getSlideName(id, name, index) {
+      return `${id}_${name}_${index}`;
     },
   },
 };

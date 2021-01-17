@@ -10,21 +10,13 @@ const WorkSchema = new Schema({
     type: String,
     required: [true, 'Укажите ссылку работы'],
   },
-  imageName: {
-    type: String,
-    default: '',
+  imageNames: {
+    type: Array,
+    default: [],
   },
-  // imageName2: {
-  //   type: String,
-  //   default: '',
-  // },
-  // imageName3: {
-  //   type: String,
-  //   default: '',
-  // },
   techs: {
     type: Array,
-    required: [true, 'Укажите картинку работы'],
+    default: [],
   },
 });
 

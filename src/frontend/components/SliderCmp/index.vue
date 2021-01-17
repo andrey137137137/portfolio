@@ -65,12 +65,12 @@ SectionWrapper(
 </template>
 
 <script>
+import { getSlideName } from '@apiHelpers';
 import {
   IMAGES_LOADING,
   PRELOADER_CLASSES_REMOVING,
   PRELOADER_HIDDEN,
 } from '@common/constants/timeouts';
-import imageMixin from '@common/mixins/imageMixin';
 import SectionWrapper from '@frontCmp/SectionWrapper';
 import ImageWrapper from '@frontCmp/ImageWrapper';
 import ImageList from './ImageList';
@@ -86,7 +86,6 @@ export default {
     AnimateStr,
     ArrowButton,
   },
-  mixins: [imageMixin],
   props: {
     items: {
       type: Array,
@@ -211,10 +210,7 @@ export default {
   },
   methods: {
     getImg(index) {
-      return this.getFullImageName(
-        this.items[index]._id,
-        this.items[index].imageName,
-      );
+      return getSlideName(this.items[index]._id, this.items[index].imageName);
     },
     getArrowImgBreakpoints(imageName) {
       return this.arrowImageBreakpoints.map(breakpoint => {

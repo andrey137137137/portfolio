@@ -41,16 +41,13 @@ ItemForm(
 </template>
 
 <script>
+import { exist, getSlideName } from '@apiHelpers';
 import {
   required,
   // alphaNum,
   // minLength,
   // maxLength
 } from 'vuelidate/lib/validators';
-// import axios from 'axios';
-// import { SUCCESS } from '@httpSt';
-import { exist } from '@apiHelpers';
-import imageMixin from '@common/mixins/imageMixin';
 import uploadMixin from '@backend/mixins/uploadMixin';
 import itemFormMixin from '@backend/mixins/itemFormMixin';
 import PictureInput from 'vue-picture-input';
@@ -68,9 +65,10 @@ export default {
     ButtonElem,
     MultipleElem,
   },
-  mixins: [imageMixin, uploadMixin, itemFormMixin],
+  mixins: [uploadMixin, itemFormMixin],
   data() {
     const data = {
+      selectedImageIndex: -1,
       images: [null, null, null],
       fields: [
         {
@@ -138,6 +136,7 @@ export default {
         title: this.title,
         link: this.link,
         imageNames: this.imageNames,
+        selectedImageIndex: this.selectedImageIndex,
       };
       const techs = this.techs.map(item => item.name);
       const form = new FormData();
@@ -153,6 +152,7 @@ export default {
 
       if (isUploadingImageName) {
         data.imageNames[index] = this.images[index].name;
+        data.selectedImageIndex = index;
         form.append('image', this.images[index], this.images[index].name);
       }
 
@@ -166,18 +166,9 @@ export default {
 
       this.submitData = form;
     },
-    getUploadingImageName(index = -1) {
-      if (!this.images[index]) {
-        return '';
-      }
-
-      return this.images[index].name;
-    },
     imagePreview(index) {
       return (
-        '/upload/slider/xl/' +
-        this.getFullImageName(this.id, this.imageNames[index]) +
-        index
+        '/upload/slider/xl/' + getSlideName(this.id, this.imageNames, index)
       );
     },
     changeImage(index) {
@@ -185,11 +176,12 @@ export default {
     },
     removeImage(index) {
       this.images[index] = null;
+      this.selectedImageIndex = index;
     },
     removeUploadedImage(index) {
       this.imageNames[index] = '';
 
-      this.removeImage();
+      this.removeImage(index);
       this.submit();
     },
   },

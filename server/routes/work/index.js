@@ -90,6 +90,31 @@ function deleteSlide(data, highCB) {
   );
 }
 
+function deleteAllSlides(data, highCB) {
+  for (curSlide = 0; curSlide < data.imageNames.length; curSlide++) {
+    if (data.imageNames[curSlide]) {
+      break;
+    }
+  }
+
+  if (curSlide >= data.imageNames.length) {
+    return highCB(null, data);
+  }
+
+  curSlide = 0;
+
+  each(
+    data.imageNames,
+    (item, cb) => {
+      deleteSlide(data, cb);
+      curSlide++;
+    },
+    (err, info) => {
+      return highCB(err, info);
+    },
+  );
+}
+
 function waterfallCB(err, result) {
   if (uplImage) {
     uplImage = false;
@@ -208,7 +233,7 @@ router.delete('/:id', isAuth, (req, res) => {
       crud.getItemById(Model, res, curID, {}, {}, cb);
     },
     (result, cb) => {
-      deleteSlide(result, cb);
+      deleteAllSlides(result, cb);
     },
     (result, cb) => {
       crud.deleteItem(Model, curID, res, cb);

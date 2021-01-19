@@ -6,13 +6,9 @@ ItemForm(
   :disabled='disabled'
 )
   .form_images
-    div
+    div(v-for='(item, index) in imageNames', :key='index')
       .img_wrap
-        img.img_wrap-img(
-          v-for='(item, index) in imageNames',
-          :src='imagePreview(index)',
-          :alt='item'
-        )
+        img.img_wrap-img(:src='imagePreview(index)', :alt='item')
       ButtonElem(
         v-show='item',
         :isDanger='true',
@@ -21,6 +17,7 @@ ItemForm(
   .form_images
     PictureInput(
       v-for='(item, index) in images',
+      :key='index',
       removeButtonClass='ui red button',
       accept='image/jpeg, image/png, image/gif',
       buttonClass='ui button primary',
@@ -117,7 +114,7 @@ export default {
       return {
         title: '',
         link: '',
-        imageNames: '',
+        imageNames: ['', '', ''],
         techs: [
           {
             name: 'HTML',
@@ -150,6 +147,8 @@ export default {
         }
       }
 
+      console.log(isUploadingImageName);
+
       if (isUploadingImageName) {
         data.imageNames[index] = this.images[index].name;
         data.selectedImageIndex = index;
@@ -172,7 +171,7 @@ export default {
       );
     },
     changeImage(index) {
-      this.images[index] = this.$refs.pictureInput.file;
+      this.images[index] = this.$refs['pictureInput' + index][0].file;
     },
     removeImage(index) {
       this.images[index] = null;

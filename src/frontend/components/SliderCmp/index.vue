@@ -168,13 +168,13 @@ export default {
       return (this.curIndex + 1) % this.items.length;
     },
     demoImg() {
-      return this.getImg(this.curIndex);
+      return this.getImages(this.curIndex);
     },
     prevImg() {
-      return this.getImg(this.prevIndex);
+      return this.getImages(this.prevIndex);
     },
     nextImg() {
-      return this.getImg(this.nextIndex);
+      return this.getImages(this.nextIndex);
     },
     demoImgBreakpoints() {
       return [
@@ -209,8 +209,8 @@ export default {
     },
   },
   methods: {
-    getImg(index) {
-      return getSlideName(this.items[index]._id, this.items[index].imageName);
+    getImages(index) {
+      return getSlideName(this.items[index]._id, this.items[index].imageNames);
     },
     getArrowImgBreakpoints(imageName) {
       return this.arrowImageBreakpoints.map(breakpoint => {

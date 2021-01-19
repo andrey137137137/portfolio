@@ -5,8 +5,8 @@ const exist = (property, obj = window) => {
   return typeof obj[property] !== 'undefined';
 };
 
-const getSlideName = (id, name, index) => {
-  return `${id}_${name}_${index}`;
+const getSlideName = (id, name, ext, index) => {
+  return `${id}_${name}.${ext}_${index}`;
 };
 
 module.exports = {

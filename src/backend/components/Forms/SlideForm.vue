@@ -18,9 +18,9 @@ ItemForm(
     PictureInput(
       v-for='(item, index) in images',
       :key='index',
-      removeButtonClass='ui red button',
       accept='image/jpeg, image/png, image/gif',
-      buttonClass='ui button primary',
+      buttonClass='btn form-btn',
+      removeButtonClass='btn form-btn form-btn--danger',
       :ref='"pictureInput" + index',
       :removable='true',
       :customStrings='{ upload: "<h1>Bummer!</h1>", drag: "Drag a 😺 JPEG, PNG or GIF" }',
@@ -114,7 +114,12 @@ export default {
       return {
         title: '',
         link: '',
-        imageNames: ['', '', ''],
+        imageNames: [
+          // { name: String, ext: String },
+          null,
+          null,
+          null,
+        ],
         techs: [
           {
             name: 'HTML',
@@ -132,27 +137,32 @@ export default {
       const data = {
         title: this.title,
         link: this.link,
-        imageNames: this.imageNames,
         selectedImageIndex: this.selectedImageIndex,
       };
       const techs = this.techs.map(item => item.name);
       const form = new FormData();
+
       let index;
-      let isUploadingImageName = false;
+      let isUplImageName = false;
 
       for (index = 0; index < this.images.length; index++) {
         if (this.images[index]) {
-          isUploadingImageName = true;
+          isUplImageName = true;
           break;
         }
       }
 
-      console.log(isUploadingImageName);
+      console.log(isUplImageName);
 
-      if (isUploadingImageName) {
-        data.imageNames[index] = this.images[index].name;
+      if (isUplImageName) {
+        const uplImageName = this.images[index].name;
+        const pos = name.lastIndexOf('.');
+
+        this.imageNames[index].name = uplImageName.slice(0, pos);
+        this.imageNames[index].ext = uplImageName.slice(pos);
+
         data.selectedImageIndex = index;
-        form.append('image', this.images[index], this.images[index].name);
+        form.append('image', this.images[index], uplImageName);
       }
 
       for (const key in data) {
@@ -161,14 +171,14 @@ export default {
         }
       }
 
+      form.append('imageNames', JSON.stringify(this.imageNames));
       form.append('techs', JSON.stringify(techs));
 
       this.submitData = form;
     },
     imagePreview(index) {
-      return (
-        '/upload/slider/xl/' + getSlideName(this.id, this.imageNames, index)
-      );
+      const { name, ext } = this.imageNames[index];
+      return '/upload/slider/xl/' + getSlideName(this.id, name, ext, index);
     },
     changeImage(index) {
       this.images[index] = this.$refs['pictureInput' + index][0].file;
@@ -178,7 +188,7 @@ export default {
       this.selectedImageIndex = index;
     },
     removeUploadedImage(index) {
-      this.imageNames[index] = '';
+      this.imageNames[index] = null;
 
       this.removeImage(index);
       this.submit();

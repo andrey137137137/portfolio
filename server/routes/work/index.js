@@ -151,7 +151,9 @@ function formParse(req, res, mode, withoutSlideCB, withSlideCallbacksArray) {
     }
 
     const { title, link, imageNames, selectedImageIndex, techs } = fields;
+
     curSlide = selectedImageIndex;
+
     const condition =
       mode == 'update' && curSlide >= 0 ? !imageNames[curSlide] : false;
 

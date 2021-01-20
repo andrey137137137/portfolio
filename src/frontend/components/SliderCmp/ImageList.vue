@@ -5,7 +5,7 @@ transition(appear, :name='transitionName')
       v-for='(item, number) in 3',
       :key='number',
       :path='path',
-      :breakpoints='breakpoints',
+      :breakpoints='getFullBreakpoints(number)',
       :title='alt',
       :isLazyLoading='false',
       :addClasses='imgWrapClasses(number)',
@@ -44,6 +44,10 @@ export default {
       type: Array,
       required: true,
     },
+    imageFullNames: {
+      type: Object,
+      required: true,
+    },
     alt: {
       type: String,
       required: true,
@@ -76,8 +80,9 @@ export default {
         'slider-img_wrap--center': number == 1,
       };
     },
-    getImages(index) {
-      return getSlideName(this.items[index]._id, this.items[index].imageNames);
+    getFullBreakpoints(index) {
+      const { id, imageNames } = this.imageFullNames;
+      return getSlideName(id, imageNames, index);
     },
   },
 };

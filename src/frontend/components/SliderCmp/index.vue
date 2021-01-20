@@ -16,7 +16,7 @@ SectionWrapper(
       :index='curIndex',
       :path='imagePath',
       :breakpoints='demoImgBreakpoints',
-      :imageNames='demoFullImageNames',
+      :imageFullNames='demoImageFullNames',
       :alt='alt',
       :imgAddClasses='demoImgClasses'
     )
@@ -52,7 +52,7 @@ SectionWrapper(
       :handle='handlePrev',
       :imagePath='imagePath',
       :imageBreakpoints='prevImgBreakpoints',
-      :imageNames='prevFullImageNames',
+      :imageFullNames='prevImageFullNames',
       :title='prevTitle',
       :isNext='false'
     )
@@ -62,7 +62,7 @@ SectionWrapper(
       :handle='handleNext',
       :imagePath='imagePath',
       :imageBreakpoints='nextImgBreakpoints',
-      :imageNames='nextFullImageNames',
+      :imageFullNames='nextImageFullNames',
       :title='nextTitle'
     )
 </template>
@@ -173,14 +173,14 @@ export default {
     nextIndex() {
       return (this.curIndex + 1) % this.items.length;
     },
-    demoFullImageNames() {
-      return this.getFullImageNames(this.curIndex);
+    demoImageFullNames() {
+      return this.getImageFullNames(this.curIndex);
     },
-    prevFullImageNames() {
-      return this.getFullImageNames(this.prevIndex);
+    prevImageFullNames() {
+      return this.getImageFullNames(this.prevIndex);
     },
-    nextFullImageNames() {
-      return this.getFullImageNames(this.nextIndex);
+    nextImageFullNames() {
+      return this.getImageFullNames(this.nextIndex);
     },
     prevImgBreakpoints() {
       return this.getArrowImgBreakpoints(this.prevImg, this.imageExt);
@@ -209,7 +209,7 @@ export default {
     },
   },
   methods: {
-    getFullImageNames(index) {
+    getImageFullNames(index) {
       return {
         id: this.items[index]._id,
         imageNames: this.items[index].imageNames,

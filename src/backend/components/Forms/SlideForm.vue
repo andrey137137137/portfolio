@@ -81,13 +81,15 @@ export default {
       return { ...data, ...this.defaultFields() };
     }
 
+    const { title, link, imageNames, techs } = this.item;
+
     return {
       ...data,
-      title: this.item.title,
-      link: this.item.link,
-      imageNames: this.item.imageNames,
+      title,
+      link,
+      imageNames,
       techs: exist('techs', this.item)
-        ? this.item.techs.map(item => {
+        ? techs.map(item => {
             return { name: item };
           })
         : [],
@@ -177,8 +179,9 @@ export default {
       this.submitData = form;
     },
     imagePreview(index) {
-      const { name, ext } = this.imageNames[index];
-      return '/upload/slider/xl/' + getSlideName(this.id, name, ext, index);
+      return (
+        '/upload/slider/xl/' + getSlideName(this.id, this.imageNames, index)
+      );
     },
     changeImage(index) {
       this.images[index] = this.$refs['pictureInput' + index][0].file;

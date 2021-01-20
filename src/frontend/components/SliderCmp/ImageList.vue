@@ -15,6 +15,7 @@ transition(appear, :name='transitionName')
 </template>
 
 <script>
+import { getSlideName } from '@apiHelpers';
 import ImageWrapper from '@frontCmp/ImageWrapper';
 
 export default {
@@ -74,6 +75,9 @@ export default {
         'slider-img_wrap--side': number == 0 || number == 2,
         'slider-img_wrap--center': number == 1,
       };
+    },
+    getImages(index) {
+      return getSlideName(this.items[index]._id, this.items[index].imageNames);
     },
   },
 };

@@ -16,6 +16,7 @@ SectionWrapper(
       :index='curIndex',
       :path='imagePath',
       :breakpoints='demoImgBreakpoints',
+      :imageNames='demoFullImageNames',
       :alt='alt',
       :imgAddClasses='demoImgClasses'
     )
@@ -51,6 +52,7 @@ SectionWrapper(
       :handle='handlePrev',
       :imagePath='imagePath',
       :imageBreakpoints='prevImgBreakpoints',
+      :imageNames='prevFullImageNames',
       :title='prevTitle',
       :isNext='false'
     )
@@ -60,12 +62,12 @@ SectionWrapper(
       :handle='handleNext',
       :imagePath='imagePath',
       :imageBreakpoints='nextImgBreakpoints',
+      :imageNames='nextFullImageNames',
       :title='nextTitle'
     )
 </template>
 
 <script>
-import { getSlideName } from '@apiHelpers';
 import {
   IMAGES_LOADING,
   PRELOADER_CLASSES_REMOVING,
@@ -130,6 +132,10 @@ export default {
       intervalID: null,
       imagePath: '/upload/slider',
       imageExt: 'png',
+      demoImgBreakpoints: [
+        { name: `xl/`, value: 768 },
+        { name: `lg/`, value: 0 },
+      ],
       arrowImageBreakpoints: [
         { name: 'lg', value: 1200 },
         { name: 'md', value: 768 },
@@ -167,20 +173,14 @@ export default {
     nextIndex() {
       return (this.curIndex + 1) % this.items.length;
     },
-    demoImg() {
-      return this.getImages(this.curIndex);
+    demoFullImageNames() {
+      return this.getFullImageNames(this.curIndex);
     },
-    prevImg() {
-      return this.getImages(this.prevIndex);
+    prevFullImageNames() {
+      return this.getFullImageNames(this.prevIndex);
     },
-    nextImg() {
-      return this.getImages(this.nextIndex);
-    },
-    demoImgBreakpoints() {
-      return [
-        { name: `xl/${this.demoImg}`, value: 768 },
-        { name: `lg/${this.demoImg}`, value: 0 },
-      ];
+    nextFullImageNames() {
+      return this.getFullImageNames(this.nextIndex);
     },
     prevImgBreakpoints() {
       return this.getArrowImgBreakpoints(this.prevImg, this.imageExt);
@@ -209,8 +209,11 @@ export default {
     },
   },
   methods: {
-    getImages(index) {
-      return getSlideName(this.items[index]._id, this.items[index].imageNames);
+    getFullImageNames(index) {
+      return {
+        id: this.items[index]._id,
+        imageNames: this.items[index].imageNames,
+      };
     },
     getArrowImgBreakpoints(imageName) {
       return this.arrowImageBreakpoints.map(breakpoint => {

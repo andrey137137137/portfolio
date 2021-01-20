@@ -51,7 +51,7 @@ function uploadSlide(data, highCB) {
         .toFile(
           path.join(
             resizeUploadPath,
-            getSlideName(curID, uplImage.name, curSlide),
+            getSlideName(curID, curFields.imageNames, curSlide),
           ),
           cb,
         );
@@ -75,7 +75,7 @@ function deleteSlide(data, highCB) {
       const deleteUploadPath = path.join(
         image.getUploadPath(),
         breakpoint.name,
-        getSlideName(curID, data.imageNames[curSlide], curSlide),
+        getSlideName(curID, data.imageNames, curSlide),
       );
 
       if (fs.existsSync(deleteUploadPath)) {
@@ -153,15 +153,15 @@ function formParse(req, res, mode, withoutSlideCB, withSlideCallbacksArray) {
     const { title, link, imageNames, selectedImageIndex, techs } = fields;
 
     curSlide = selectedImageIndex;
+    curFields = {
+      title,
+      link,
+      imageNames: JSON.parse(imageNames),
+      techs: JSON.parse(techs),
+    };
 
     const condition =
       mode == 'update' && curSlide >= 0 ? !imageNames[curSlide] : false;
-
-    curFields = { title, link, imageNames };
-
-    if (techs) {
-      curFields.techs = JSON.parse(techs);
-    }
 
     uplImage = files.image;
 

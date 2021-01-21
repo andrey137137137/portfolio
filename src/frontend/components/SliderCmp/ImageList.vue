@@ -82,7 +82,10 @@ export default {
     },
     getFullBreakpoints(index) {
       const { id, imageNames } = this.imageFullNames;
-      return getSlideName(id, imageNames, index);
+      return this.breakpoints.map(item => {
+        const { name, value } = item;
+        return { name: name + getSlideName(id, imageNames, index), value };
+      });
     },
   },
 };

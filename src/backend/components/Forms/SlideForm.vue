@@ -158,11 +158,7 @@ export default {
 
       if (isUplImageName) {
         const uplImageName = this.images[index].name;
-        const pos = name.lastIndexOf('.');
-
-        this.imageNames[index].name = uplImageName.slice(0, pos);
-        this.imageNames[index].ext = uplImageName.slice(pos);
-
+        this.imageNames[index] = uplImageName;
         data.selectedImageIndex = index;
         form.append('image', this.images[index], uplImageName);
       }

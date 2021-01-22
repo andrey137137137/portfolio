@@ -19,7 +19,7 @@ import { getSlideName } from '@apiHelpers';
 import ImageWrapper from '@frontCmp/ImageWrapper';
 
 export default {
-  name: 'ArrowButton',
+  name: 'ImageList',
   components: {
     ImageWrapper,
   },

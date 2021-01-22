@@ -6,6 +6,7 @@ a(href='#', :class='containerClasses', @click.prevent='handle')
     :index='index',
     :path='imagePath',
     :breakpoints='imageBreakpoints',
+    :imageFullNames='imageFullNames',
     :alt='alt',
     :imgAddClasses='imgClasses'
   )
@@ -40,6 +41,10 @@ export default {
     },
     imageBreakpoints: {
       type: Array,
+      required: true,
+    },
+    imageFullNames: {
+      type: Object,
       required: true,
     },
     title: {

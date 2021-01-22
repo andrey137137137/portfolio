@@ -7,7 +7,7 @@ const sharp = require('sharp');
 const fs = require('fs');
 
 const { isAuth } = require('@auth');
-const { getSlideName } = require('@apiHelpers');
+const { getSlideImageName } = require('@apiHelpers');
 const crud = require('@contr/crud');
 const image = require('@contr/image');
 
@@ -23,10 +23,10 @@ let curRes;
 let curID;
 let curMode;
 let curFields;
-let curSlide;
+let curImage;
 let uplImage;
 
-function uploadSlide(data, highCB) {
+function uploadImage(data, highCB) {
   if (!uplImage) {
     return highCB(null, data);
   }
@@ -51,7 +51,7 @@ function uploadSlide(data, highCB) {
         .toFile(
           path.join(
             resizeUploadPath,
-            getSlideName(curID, curFields.imageNames, curSlide),
+            getSlideImageName(curID, curFields.imageNames[curImage]),
           ),
           cb,
         );
@@ -62,8 +62,8 @@ function uploadSlide(data, highCB) {
   );
 }
 
-function deleteSlide(data, highCB) {
-  if (!data.imageNames[curSlide]) {
+function deleteImage(data, highCB) {
+  if (!data.imageNames[curImage]) {
     return highCB(null, data);
   }
 
@@ -75,7 +75,7 @@ function deleteSlide(data, highCB) {
       const deleteUploadPath = path.join(
         image.getUploadPath(),
         breakpoint.name,
-        getSlideName(curID, data.imageNames, curSlide),
+        getSlideImageName(curID, data.imageNames[curImage]),
       );
 
       if (fs.existsSync(deleteUploadPath)) {
@@ -90,24 +90,24 @@ function deleteSlide(data, highCB) {
   );
 }
 
-function deleteAllSlides(data, highCB) {
-  for (curSlide = 0; curSlide < data.imageNames.length; curSlide++) {
-    if (data.imageNames[curSlide]) {
+function deleteAllImages(data, highCB) {
+  for (curImage = 0; curImage < data.imageNames.length; curImage++) {
+    if (data.imageNames[curImage]) {
       break;
     }
   }
 
-  if (curSlide >= data.imageNames.length) {
+  if (curImage >= data.imageNames.length) {
     return highCB(null, data);
   }
 
-  curSlide = 0;
+  curImage = 0;
 
   each(
     data.imageNames,
-    (item, cb) => {
-      deleteSlide(data, cb);
-      curSlide++;
+    (imageName, cb) => {
+      deleteImage(data, cb);
+      curImage++;
     },
     (err, info) => {
       return highCB(err, info);
@@ -137,7 +137,7 @@ function startWaterfall(callbackArray) {
   });
 }
 
-function formParse(req, res, mode, withoutSlideCB, withSlideCallbacksArray) {
+function formParse(req, res, mode, withoutImageCB, withImageCallbacksArray) {
   curRes = res;
   curMode = mode;
 
@@ -152,7 +152,7 @@ function formParse(req, res, mode, withoutSlideCB, withSlideCallbacksArray) {
 
     const { title, link, imageNames, selectedImageIndex, techs } = fields;
 
-    curSlide = selectedImageIndex;
+    curImage = selectedImageIndex;
     curFields = {
       title,
       link,
@@ -161,16 +161,16 @@ function formParse(req, res, mode, withoutSlideCB, withSlideCallbacksArray) {
     };
 
     const condition =
-      mode == 'update' && curSlide >= 0 ? !imageNames[curSlide] : false;
+      mode == 'update' && curImage >= 0 ? !imageNames[curImage] : false;
 
     uplImage = files.image;
 
     console.log('Value: ' + imageNames);
 
     if (uplImage || condition) {
-      startWaterfall(withSlideCallbacksArray);
+      startWaterfall(withImageCallbacksArray);
     } else {
-      withoutSlideCB();
+      withoutImageCB();
     }
   });
 }
@@ -192,7 +192,7 @@ router.post('/', isAuth, (req, res) => {
         crud.createItem(Model, curFields, res, cb);
       },
       (result, cb) => {
-        uploadSlide(result, cb);
+        uploadImage(result, cb);
       },
     ],
   );
@@ -213,13 +213,13 @@ router.put('/:id', isAuth, (req, res) => {
         crud.getItemById(Model, res, curID, {}, {}, cb);
       },
       (result, cb) => {
-        deleteSlide(result, cb);
+        deleteImage(result, cb);
       },
       (result, cb) => {
         crud.updateItem(Model, curID, curFields, res, cb);
       },
       (result, cb) => {
-        uploadSlide(result, cb);
+        uploadImage(result, cb);
       },
     ],
   );
@@ -235,7 +235,7 @@ router.delete('/:id', isAuth, (req, res) => {
       crud.getItemById(Model, res, curID, {}, {}, cb);
     },
     (result, cb) => {
-      deleteAllSlides(result, cb);
+      deleteAllImages(result, cb);
     },
     (result, cb) => {
       crud.deleteItem(Model, curID, res, cb);

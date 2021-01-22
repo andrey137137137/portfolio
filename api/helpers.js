@@ -5,16 +5,12 @@ const exist = (property, obj = window) => {
   return typeof obj[property] !== 'undefined';
 };
 
-const getSlideName = (id, imageNames, index) => {
-  const uplImageName = imageNames[index];
-  const pos = uplImageName.lastIndexOf('.');
-  const name = uplImageName.slice(0, pos);
-  const ext = uplImageName.slice(pos);
-  return `${id}_${name}.${ext}_${index}`;
+const getSlideImageName = (id, name) => {
+  return `${id}_${name}`;
 };
 
 module.exports = {
   IS_DEV,
   exist,
-  getSlideName,
+  getSlideImageName,
 };

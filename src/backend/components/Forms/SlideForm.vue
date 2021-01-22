@@ -38,7 +38,7 @@ ItemForm(
 </template>
 
 <script>
-import { exist, getSlideName } from '@apiHelpers';
+import { exist, getSlideImageName } from '@apiHelpers';
 import {
   required,
   // alphaNum,
@@ -87,7 +87,7 @@ export default {
       ...data,
       title,
       link,
-      imageNames,
+      imageNames: exist('imageNames', this.item) ? imageNames : ['', '', ''],
       techs: exist('techs', this.item)
         ? techs.map(item => {
             return { name: item };
@@ -116,12 +116,7 @@ export default {
       return {
         title: '',
         link: '',
-        imageNames: [
-          // { name: String, ext: String },
-          null,
-          null,
-          null,
-        ],
+        imageNames: ['', '', ''],
         techs: [
           {
             name: 'HTML',
@@ -176,7 +171,8 @@ export default {
     },
     imagePreview(index) {
       return (
-        '/upload/slider/xl/' + getSlideName(this.id, this.imageNames, index)
+        '/upload/slider/xl/' +
+        getSlideImageName(this.id, this.imageNames[index])
       );
     },
     changeImage(index) {

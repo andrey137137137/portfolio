@@ -12,7 +12,7 @@ const WorkSchema = new Schema({
   },
   imageNames: {
     type: Array,
-    default: [],
+    default: ['', '', ''],
   },
   techs: {
     type: Array,

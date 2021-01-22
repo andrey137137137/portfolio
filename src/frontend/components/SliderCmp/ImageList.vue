@@ -15,7 +15,7 @@ transition(appear, :name='transitionName')
 </template>
 
 <script>
-import { getSlideName } from '@apiHelpers';
+import { getSlideImageName } from '@apiHelpers';
 import ImageWrapper from '@frontCmp/ImageWrapper';
 
 export default {
@@ -82,9 +82,16 @@ export default {
     },
     getFullBreakpoints(index) {
       const { id, imageNames } = this.imageFullNames;
+
       return this.breakpoints.map(item => {
         const { name, value } = item;
-        return { name: name + getSlideName(id, imageNames, index), value };
+        return {
+          name:
+            name + imageNames[index]
+              ? getSlideImageName(id, imageNames[index])
+              : '',
+          value,
+        };
       });
     },
   },

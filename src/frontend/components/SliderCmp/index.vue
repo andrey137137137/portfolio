@@ -49,9 +49,10 @@ SectionWrapper(
     ArrowButton(
       :isLoaded='isLoaded',
       :index='curIndex',
+      :newIndex='prevIndex',
       :handle='handlePrev',
       :imagePath='imagePath',
-      :imageBreakpoints='prevImgBreakpoints',
+      :imageBreakpoints='arrowImageBreakpoints',
       :imageFullNames='prevImageFullNames',
       :title='prevTitle',
       :isNext='false'
@@ -59,9 +60,10 @@ SectionWrapper(
     ArrowButton(
       :isLoaded='isLoaded',
       :index='curIndex',
+      :newIndex='nextIndex',
       :handle='handleNext',
       :imagePath='imagePath',
-      :imageBreakpoints='nextImgBreakpoints',
+      :imageBreakpoints='arrowImageBreakpoints',
       :imageFullNames='nextImageFullNames',
       :title='nextTitle'
     )
@@ -137,9 +139,9 @@ export default {
         { name: `lg/`, value: 0 },
       ],
       arrowImageBreakpoints: [
-        { name: 'lg', value: 1200 },
-        { name: 'md', value: 768 },
-        { name: 'sm', value: 0 },
+        { name: 'lg/', value: 1200 },
+        { name: 'md/', value: 768 },
+        { name: 'sm/', value: 0 },
       ],
       demoImgClasses: {
         'img_wrap-img': true,
@@ -183,10 +185,10 @@ export default {
       return this.getImageFullNames(this.nextIndex);
     },
     prevImgBreakpoints() {
-      return this.getArrowImgBreakpoints(this.prevImg, this.imageExt);
+      return this.getArrowImgBreakpoints(this.prevImg);
     },
     nextImgBreakpoints() {
-      return this.getArrowImgBreakpoints(this.nextImg, this.imageExt);
+      return this.getArrowImgBreakpoints(this.nextImg);
     },
     title() {
       return this.items[this.curIndex].title;
@@ -214,14 +216,6 @@ export default {
         id: this.items[index]._id,
         imageNames: this.items[index].imageNames,
       };
-    },
-    getArrowImgBreakpoints(imageName) {
-      return this.arrowImageBreakpoints.map(breakpoint => {
-        return {
-          name: `${breakpoint.name}/${imageName}`,
-          value: breakpoint.value,
-        };
-      });
     },
     animate() {
       if (this.isVisible) {

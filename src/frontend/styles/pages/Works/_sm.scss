@@ -61,14 +61,15 @@
   }
 
   &-img_wrap {
+    $shadowColor: rgba(0, 0, 255, 0.2);
+
     // @include position('absolute 50% * * *');
-    border-radius: 10px;
-    width: 33%;
-    box-shadow: 12px 12px 2px 1px rgba(0, 0, 255, 0.2);
+    size: 104px 139px;
+    box-shadow: 0 4px 2px 1px $shadowColor;
     // transform: translateY(-50%);
 
     &--side {
-      @include margin('* 10px');
+      @include margin('* 12px');
     }
 
     &--center {
@@ -76,7 +77,8 @@
       @include position('absolute 50% * * 50%');
       // left: 50%;
       z-index: 1;
-      width: 50%;
+      size: 114px 153px;
+      box-shadow: 0 5px 2px 1px $shadowColor;
       transform: translate(-50%, -50%);
     }
   }

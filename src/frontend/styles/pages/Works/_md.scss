@@ -3,8 +3,20 @@
 .slider {
   background-color: #f2f0e8;
 
-  &-list {
+  &-demo {
     height: 529px;
+  }
+
+  &-img_wrap {
+    size: 249px 336px;
+
+    &--side {
+      @include margin('* 31px');
+    }
+
+    &--center {
+      size: 274px 369px;
+    }
   }
 
   &-img--in_arrow {

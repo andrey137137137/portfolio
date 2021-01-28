@@ -2,6 +2,7 @@
 
 .slider {
   $animHeight: 100%;
+  $demoBGColor: #e3e2de;
 
   width: 100%;
   background-color: #f2f0e8;
@@ -27,7 +28,7 @@
 
     position: relative;
     height: 257px;
-    background-color: #e3e2de;
+    background-color: $demoBGColor;
     overflow: hidden;
 
     &_item {
@@ -61,35 +62,45 @@
   }
 
   &-img_wrap {
-    $shadowColor: rgba(0, 0, 255, 0.2);
+    $shadowColor: rgba(0, 0, 0, 0.2);
 
-    // @include position('absolute 50% * * *');
+    // position: relative;
     size: 104px 139px;
-    box-shadow: 0 4px 2px 1px $shadowColor;
-    // transform: translateY(-50%);
+    background-color: $demoBGColor;
+    box-shadow: 0 4px 5px 0px $shadowColor;
+    // overflow: visible;
+
+    // &:after {
+    //   @include position('absolute * * -5px 0');
+    //   display: block;
+    //   // margin-top: 5px;
+    //   size: 100% 1px;
+    //   background-color: red;
+    //   box-shadow: 0 -4px 4px 0px $shadowColor;
+    //   content: '';
+    // }
 
     &--side {
       @include margin('* 12px');
     }
 
     &--center {
-      // display: none;
       @include position('absolute 50% * * 50%');
-      // left: 50%;
       z-index: 1;
       size: 114px 153px;
-      box-shadow: 0 5px 2px 1px $shadowColor;
+      box-shadow: 0 5px 6px 0px $shadowColor;
       transform: translate(-50%, -50%);
     }
   }
 
   &-img {
-    // @include position('absolute 50% * * 50%');
+    @include position('relative 50% * * 50%');
     display: block;
+    max-width: unset;
     max-height: 100%;
     font-family: $mainFont;
     line-height: 1;
-    // transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
 
     &--in_arrow {
       font-size: 28px;

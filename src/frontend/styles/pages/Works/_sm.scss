@@ -1,6 +1,7 @@
 // SLIDER
 
 .slider {
+  $block: &;
   $animHeight: 100%;
   $demoBGColor: #e3e2de;
 
@@ -163,6 +164,18 @@
     // &_number {
     //   font-size: 90px/93px;
     // }
+
+    #{$block}-img_wrap {
+      size: 52px 69px;
+
+      &--side {
+        @include margin('* 6px');
+      }
+
+      &--center {
+        size: 57px 76px;
+      }
+    }
 
     &:before {
       position: absolute;

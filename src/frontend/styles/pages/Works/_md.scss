@@ -1,6 +1,8 @@
 // SLIDER
 
 .slider {
+  $block: &;
+
   background-color: #f2f0e8;
 
   &-demo {
@@ -42,6 +44,18 @@
 
   &-arrow {
     line-height: 199px;
+
+    #{$block}-img_wrap {
+      size: 52px 69px;
+
+      &--side {
+        @include margin('* 6px');
+      }
+
+      &--center {
+        size: 57px 76px;
+      }
+    }
   }
 }
 

@@ -46,14 +46,14 @@
     line-height: 199px;
 
     #{$block}-img_wrap {
-      size: 52px 69px;
+      size: 125px 168px;
 
       &--side {
-        @include margin('* 6px');
+        @include margin('* 15px');
       }
 
       &--center {
-        size: 57px 76px;
+        size: 138px 186px;
       }
     }
   }

@@ -1,7 +1,8 @@
 <template lang="pug">
-#parallax.parallax(:class='classes')
+.parallax(:class='classes')
   ImageWrapper.parallax-layer(
     v-for='(item, index) in layers',
+    ref='layers',
     :key='index',
     :data-depth='item',
     :path='getLayerPath(index)',
@@ -64,21 +65,20 @@ export default {
       return 'Слой ' + index;
     },
     moveLayers(event) {
-      const $vm = this;
-      const isScroll = this.isScroll;
+      if (this.$refs.layers) {
+        const $vm = this;
 
-      if (isScroll) {
-        this.scrollY = getScrollY();
-      }
+        if ($vm.isScroll) {
+          $vm.scrollY = getScrollY();
+        }
 
-      this.initialX = isScroll ? this.centerX : this.centerX - event.pageX;
-      this.initialY = isScroll
-        ? this.centerY - this.scrollY
-        : this.centerY - event.pageY;
+        $vm.initialX = $vm.isScroll ? $vm.centerX : $vm.centerX - event.pageX;
+        $vm.initialY = $vm.isScroll
+          ? $vm.centerY - $vm.scrollY
+          : $vm.centerY - event.pageY;
 
-      if (this.$layers) {
-        [].slice.call(this.$layers).forEach(function ($layer, index) {
-          if (isScroll) {
+        $vm.$layers.forEach(($layer, index) => {
+          if ($vm.isScroll) {
             $vm.divider = (index + 1) / 90;
           } else {
             $vm.divider = ((index + 1) * $layer.dataset.depth) / 10000;
@@ -87,7 +87,7 @@ export default {
           $vm.positionY = $vm.initialY * $vm.divider;
           $vm.bottomPosition = (window.innerHeight / 2) * $vm.divider;
 
-          if (isScroll) {
+          if ($vm.isScroll) {
             $vm.transformString = `translateY(${$vm.positionY}px)`;
           } else {
             $vm.positionX = $vm.initialX * $vm.divider;
@@ -103,22 +103,20 @@ export default {
   mounted() {
     const $vm = this;
 
-    const isScroll = $vm.isScroll;
-
-    $vm.$parallaxContainer = document.getElementById('parallax');
+    // $vm.$parallaxContainer = document.getElementById('parallax');
 
     $vm.centerX = window.innerWidth / 2;
     $vm.centerY = window.innerHeight / 2;
 
-    if ($vm.$parallaxContainer) {
+    if ($vm.$refs.layers[1]) {
       // if ($vm.$parallaxContainer.classList.contains("parallax--scroll")) {
-      //   isScroll = true;
+      //   $vm.isScroll = true;
       // }
 
       // $container = $vm.$parallaxContainer.firstElementChild
-      $vm.$layers = $vm.$parallaxContainer.children;
+      // $vm.$layers = $vm.$parallaxContainer.children;
 
-      if (isScroll) {
+      if ($vm.isScroll) {
         window.addEventListener('scroll', $vm.moveLayers);
         window.dispatchEvent(new Event('scroll'));
       } else {

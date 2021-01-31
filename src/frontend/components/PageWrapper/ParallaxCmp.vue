@@ -4,7 +4,7 @@
     v-for='(item, index) in layers',
     ref='layers',
     :key='index',
-    :data-depth='item',
+    :data-depth='calcDivider(index)',
     :path='getLayerPath(index)',
     :breakpoints='breakpoints',
     :title='getTitle(index)',
@@ -59,6 +59,9 @@ export default {
     },
   },
   methods: {
+    calcDivider(index) {
+      return (this.$refs.layers.length - index) * 10;
+    },
     getLayerPath(index) {
       return this.path + '/layer_' + index;
     },
@@ -78,17 +81,17 @@ export default {
           ? $vm.centerY - $vm.scrollY
           : $vm.centerY - event.pageY;
 
-        $vm.$refs.layers.forEach(($layerCmp, index) => {
+        $vm.$refs.layers.forEach($layerCmp => {
           const $layer = $layerCmp.$el;
 
           if ($vm.isScroll) {
-            $vm.divider = (index + 1) / 90;
+            $vm.divider = $layer.dataset.depth / 90;
           } else {
-            $vm.divider = ((index + 1) * $layer.dataset.depth) / 10000;
+            $vm.divider = $layer.dataset.depth / 10000;
           }
 
           $vm.positionY = $vm.initialY * $vm.divider;
-          $vm.bottomPosition = (window.innerHeight / 2) * $vm.divider;
+          $vm.bottomPosition = $vm.centerY * $vm.divider;
 
           if ($vm.isScroll) {
             $vm.transformString = `translateY(${$vm.positionY}px)`;

@@ -26,8 +26,6 @@ export default {
   },
   data() {
     return {
-      $parallaxContainer: null,
-      $layers: false,
       centerX: 0,
       centerY: 0,
       initialX: 0,
@@ -50,6 +48,9 @@ export default {
     };
   },
   computed: {
+    areSomeLayers() {
+      return this.$refs.layers[1];
+    },
     isScroll() {
       return this.$route.name != HOME.name;
     },
@@ -65,7 +66,7 @@ export default {
       return 'Слой ' + index;
     },
     moveLayers(event) {
-      if (this.$refs.layers) {
+      if (this.areSomeLayers) {
         const $vm = this;
 
         if ($vm.isScroll) {
@@ -77,7 +78,9 @@ export default {
           ? $vm.centerY - $vm.scrollY
           : $vm.centerY - event.pageY;
 
-        $vm.$layers.forEach(($layer, index) => {
+        $vm.$refs.layers.forEach(($layerCmp, index) => {
+          const $layer = $layerCmp.$el;
+
           if ($vm.isScroll) {
             $vm.divider = (index + 1) / 90;
           } else {
@@ -103,18 +106,15 @@ export default {
   mounted() {
     const $vm = this;
 
-    // $vm.$parallaxContainer = document.getElementById('parallax');
-
     $vm.centerX = window.innerWidth / 2;
     $vm.centerY = window.innerHeight / 2;
 
-    if ($vm.$refs.layers[1]) {
+    if ($vm.areSomeLayers) {
       // if ($vm.$parallaxContainer.classList.contains("parallax--scroll")) {
       //   $vm.isScroll = true;
       // }
 
       // $container = $vm.$parallaxContainer.firstElementChild
-      // $vm.$layers = $vm.$parallaxContainer.children;
 
       if ($vm.isScroll) {
         window.addEventListener('scroll', $vm.moveLayers);

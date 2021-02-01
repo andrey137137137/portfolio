@@ -18,6 +18,9 @@ import { HOME } from '@common/constants/router';
 import { getScrollY } from '@common/helpers';
 import ImageWrapper from '@frontCmp/ImageWrapper';
 
+import { createNamespacedHelpers } from 'vuex';
+const { mapGetters, mapActions } = createNamespacedHelpers('parallax');
+
 export default {
   name: 'ParallaxCmp',
   components: {
@@ -47,6 +50,7 @@ export default {
     };
   },
   computed: {
+    ...mapGetters(['layers']),
     isScroll() {
       return this.$route.name != HOME.name;
     },
@@ -55,6 +59,7 @@ export default {
     },
   },
   methods: {
+    ...mapActions(['readLayers']),
     areSomeLayers() {
       return this.$refs.layers[1];
     },
@@ -104,6 +109,9 @@ export default {
       }
     },
   },
+  // created() {
+  //   this.readLayers();
+  // },
   mounted() {
     const $vm = this;
 

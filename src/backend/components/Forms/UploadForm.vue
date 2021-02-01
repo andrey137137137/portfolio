@@ -7,7 +7,7 @@ Fragment
   )
     h3.section-title Изображение: "{{ item.title }}"
     cropper(
-      :ref='"cropper" + index',
+      :ref='croppers',
       :src='image(index)',
       :backgroundClass='"upload_form-cropper--bg"',
       :stencil-component='stencilComp',
@@ -141,10 +141,7 @@ export default {
     },
     dataURItoBlob(dataURI) {
       const byteString = atob(dataURI.split(',')[1]);
-      const mimeString = dataURI
-        .split(',')[0]
-        .split(':')[1]
-        .split(';')[0];
+      const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
       const ab = new ArrayBuffer(byteString.length);
       const ia = new Uint8Array(ab);
       for (var i = 0; i < byteString.length; i++) {
@@ -171,12 +168,14 @@ export default {
 
           if (this.cropSize) {
             const { width, height } = this.cropSize;
-            this.$refs.cropper.setCoordinates((coordinates, imageSize) => ({
-              width,
-              height,
-              left: imageSize.width / 2 - width / 2,
-              top: imageSize.height / 2 - height / 2,
-            }));
+            this.$refs.croppers[index].setCoordinates(
+              (coordinates, imageSize) => ({
+                width,
+                height,
+                left: imageSize.width / 2 - width / 2,
+                top: imageSize.height / 2 - height / 2,
+              }),
+            );
           }
         };
         // Start the reader job - read file as a data url (base64 format)
@@ -184,7 +183,7 @@ export default {
       }
     },
     uploadImage(index) {
-      const { canvas } = this.$refs['cropper' + index][0].getResult();
+      const { canvas } = this.$refs.croppers[index].getResult();
 
       if (canvas) {
         const form = new FormData();

@@ -4,7 +4,7 @@ PageWrapper
     a.menu-link.btn(
       href='',
       :class='menuLinkClasses',
-      v-for='(layer, index) in layers',
+      v-for='(layer, index) in count',
       :key='index',
       @click.prevent='curLayer = index'
     ) Слой №{{ index + 1 }}
@@ -25,6 +25,9 @@ import PageWrapper from '@backCmp/PageWrapper';
 import UploadForm from '@backCmp/forms/UploadForm';
 import ButtonElem from '@components/formElems/ButtonElem';
 
+import createNamespacedHelpers from 'vuex';
+const { mapGetters, mapActions } = createNamespacedHelpers('parallax');
+
 export default {
   name: 'Parallax',
   components: {
@@ -42,22 +45,24 @@ export default {
   },
   data() {
     return {
-      layers: 0,
+      count: 0,
       curLayer: 0,
       isLoaded: false,
     };
   },
   computed: {
+    ...mapGetters(['layers']),
     menuLinkClasses() {
       return { 'menu-link--active': this.curLayer };
     },
   },
   methods: {
+    ...mapActions(['readLayers']),
     addLayer() {
-      this.layers++;
+      this.count++;
     },
     setLastLayer() {
-      this.curLayer = this.layers - 1;
+      this.curLayer = this.count - 1;
     },
     setNewLayer() {
       this.addLayer();
@@ -66,7 +71,7 @@ export default {
     readyHandle() {
       if (!this.isLoaded) {
         this.addLayer();
-        this.curLayer = this.layers;
+        this.curLayer = this.count;
       }
     },
     errorHandle() {
@@ -75,6 +80,10 @@ export default {
         this.setLastLayer();
       }
     },
+  },
+  created() {
+    this.readLayers();
+    this.count = this.layers;
   },
 };
 </script>

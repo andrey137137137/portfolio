@@ -1,7 +1,6 @@
 const path = require('path');
 const router = require('express').Router();
 const Model = require('mongoose').model('parallax');
-const { IncomingForm } = require('formidable');
 const { each } = require('async');
 const sharp = require('sharp');
 const fs = require('fs');
@@ -11,7 +10,7 @@ const { getSlideImageName } = require('@apiHelpers');
 const crud = require('@contr/crud');
 const image = require('@contr/image');
 
-const sliderDir = 'slider';
+const dir = 'slider';
 const sliderBreakpoints = [
   { name: 'xl', height: 525 },
   { name: 'lg', height: 257 },
@@ -19,206 +18,62 @@ const sliderBreakpoints = [
   { name: 'sm', height: 93 },
 ];
 
-let curRes;
 let curID;
-let curMode;
 let curFields;
 let curImage;
 let uplImage;
-
-function uploadImage(data, highCB) {
-  if (!uplImage) {
-    return highCB(null, data);
-  }
-
-  curID = data._id;
-
-  each(
-    sliderBreakpoints,
-    (breakpoint, cb) => {
-      const resizeUploadPath = path.join(
-        image.getUploadPath(),
-        breakpoint.name,
-      );
-
-      image.makeDir(resizeUploadPath);
-
-      sharp(uplImage.path)
-        .resize({
-          background: { r: 0, g: 0, b: 0, alpha: 0 },
-          height: breakpoint.height,
-        })
-        .toFile(
-          path.join(
-            resizeUploadPath,
-            getSlideImageName(curID, curFields.imageNames[curImage]),
-          ),
-          cb,
-        );
-    },
-    (err, info) => {
-      return highCB(err, info);
-    },
-  );
-}
-
-function deleteImage(data, highCB) {
-  if (!data.imageNames[curImage]) {
-    return highCB(null, data);
-  }
-
-  image.setUploadPath(sliderDir);
-
-  each(
-    sliderBreakpoints,
-    (breakpoint, cb) => {
-      const deleteUploadPath = path.join(
-        image.getUploadPath(),
-        breakpoint.name,
-        getSlideImageName(curID, data.imageNames[curImage]),
-      );
-
-      if (fs.existsSync(deleteUploadPath)) {
-        fs.unlink(deleteUploadPath, cb);
-      } else {
-        cb(null, data);
-      }
-    },
-    (err, info) => {
-      return highCB(err, info);
-    },
-  );
-}
-
-function deleteAllImages(data, highCB) {
-  for (curImage = 0; curImage < data.imageNames.length; curImage++) {
-    if (data.imageNames[curImage]) {
-      break;
-    }
-  }
-
-  if (curImage >= data.imageNames.length) {
-    return highCB(null, data);
-  }
-
-  curImage = 0;
-
-  each(
-    data.imageNames,
-    (imageName, cb) => {
-      deleteImage(data, cb);
-      curImage++;
-    },
-    (err, info) => {
-      return highCB(err, info);
-    },
-  );
-}
-
-function formParse(req, res, mode, withoutImageCB, withImageCallbacksArray) {
-  curRes = res;
-  curMode = mode;
-
-  const form = new IncomingForm({
-    uploadDir: image.getTempPath(sliderDir),
-  });
-
-  form.parse(req, (err, fields, files) => {
-    if (err) {
-      return crud.sendError(err, curRes, curMode);
-    }
-
-    const { title, link, imageNames, selectedImageIndex, techs } = fields;
-
-    curImage = selectedImageIndex;
-    curFields = {
-      title,
-      link,
-      imageNames: JSON.parse(imageNames),
-      techs: JSON.parse(techs),
-    };
-
-    const condition =
-      mode == 'update' && curImage >= 0 ? !imageNames[curImage] : false;
-
-    uplImage = files.image;
-
-    console.log('Value: ' + imageNames);
-
-    if (uplImage || condition) {
-      image.startWaterfall(withImageCallbacksArray);
-    } else {
-      withoutImageCB();
-    }
-  });
-}
 
 router.get('/', (req, res) => {
   crud.getItems(Model, res, { title: 1 });
 });
 
 router.post('/:layer', isAuth, (req, res) => {
-  formParse(
-    req,
-    res,
-    'insert',
-    () => {
-      crud.createItem(Model, curFields, res);
-    },
+  image.startWaterfall(
     [
       cb => {
         crud.updateItem(Model, curID, { count: req.params.layer }, res, cb);
       },
       (result, cb) => {
-        image.upload(req, res, 'parallax', req.params.layer);
+        image.upload(req, res, dir, req.params.layer, cb);
       },
     ],
+    res,
+    'insert',
   );
 });
 
-router.put('/:id', isAuth, (req, res) => {
-  curID = req.params.id;
+router.put('/:layer', isAuth, (req, res) => {
+  const { layer } = req.params;
 
-  formParse(
-    req,
-    res,
-    'update',
-    () => {
-      crud.updateItem(Model, curID, curFields, res);
-    },
+  image.startWaterfall(
     [
       cb => {
-        crud.getItemById(Model, res, curID, {}, {}, cb);
+        image.remove(res, 'layer_' + layer, dir, layer, cb);
       },
       (result, cb) => {
-        deleteImage(result, cb);
-      },
-      (result, cb) => {
-        crud.updateItem(Model, curID, curFields, res, cb);
-      },
-      (result, cb) => {
-        uploadImage(result, cb);
+        image.upload(req, res, dir, layer, cb);
       },
     ],
+    res,
+    'update',
   );
 });
 
-router.delete('/:id', isAuth, (req, res) => {
-  curID = req.params.id;
-  curRes = res;
-  curMode = 'delete';
+router.delete('/:layer', isAuth, (req, res) => {
+  const { layer } = req.params;
 
-  image.startWaterfall([
-    cb => {
-      crud.getItemById(Model, res, curID, {}, {}, cb);
-    },
-    (result, cb) => {
-      deleteAllImages(result, cb);
-    },
-    (result, cb) => {
-      crud.deleteItem(Model, curID, res, cb);
-    },
-  ]);
+  image.startWaterfall(
+    [
+      cb => {
+        image.remove(res, 'layer_' + layer, dir, layer, cb);
+      },
+      (result, cb) => {
+        crud.updateItem(Model, curID, { count: layer }, res, cb);
+      },
+    ],
+    res,
+    'delete',
+  );
 });
 
 module.exports = router;

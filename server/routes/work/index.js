@@ -143,7 +143,7 @@ function formParse(req, res, mode, withoutImageCB, withImageCallbacksArray) {
 
     uplImage = files.image;
 
-    console.log('Value: ' + imageNames);
+    console.log('Values: ' + imageNames);
 
     if (uplImage || condition) {
       image.startWaterfall(withImageCallbacksArray, res, mode, uplImage);

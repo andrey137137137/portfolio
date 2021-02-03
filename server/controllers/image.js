@@ -1,8 +1,10 @@
-const { UPLOAD_PATH } = require('@config').client;
-const { ERROR } = require('@httpSt');
 const { IncomingForm } = require('formidable');
 const path = require('path');
 const fs = require('fs');
+const { waterfall } = require('async');
+const { UPLOAD_PATH } = require('@config').client;
+const { ERROR } = require('@httpSt');
+const crud = require('@contr/crud');
 
 let uploadPath;
 
@@ -81,6 +83,32 @@ const remove = (res, imageName, dir = '') => {
   });
 };
 
+const waterfallCB = function(err, result, params) {
+  const { res, mode } = params;
+
+  if (params.image) {
+    params.image = null;
+  }
+
+  if (err) {
+    return crud.sendError(err, res, mode);
+  }
+
+  return crud.sendResult(result, res, mode);
+};
+
+const startWaterfall = function(callbackArray, res, mode, image = null) {
+  waterfall(callbackArray, (err, result) => {
+    if (image) {
+      return fs.unlink(image.path, (err, result) => {
+        return waterfallCB(err, result, { res, mode, image });
+      });
+    }
+
+    waterfallCB(err, result, { res, mode, image });
+  });
+};
+
 module.exports = {
   sendMessage,
   makeDir,
@@ -89,4 +117,5 @@ module.exports = {
   getTempPath,
   upload,
   remove,
+  startWaterfall,
 };

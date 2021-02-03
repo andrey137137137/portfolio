@@ -1,6 +1,6 @@
 const path = require('path');
 const router = require('express').Router();
-const Model = require('mongoose').model('work');
+const Model = require('mongoose').model('parallax');
 const { IncomingForm } = require('formidable');
 const { each } = require('async');
 const sharp = require('sharp');
@@ -146,7 +146,7 @@ function formParse(req, res, mode, withoutImageCB, withImageCallbacksArray) {
     console.log('Value: ' + imageNames);
 
     if (uplImage || condition) {
-      image.startWaterfall(withImageCallbacksArray, res, mode, uplImage);
+      image.startWaterfall(withImageCallbacksArray);
     } else {
       withoutImageCB();
     }
@@ -157,7 +157,7 @@ router.get('/', (req, res) => {
   crud.getItems(Model, res, { title: 1 });
 });
 
-router.post('/', isAuth, (req, res) => {
+router.post('/:layer', isAuth, (req, res) => {
   formParse(
     req,
     res,
@@ -167,10 +167,10 @@ router.post('/', isAuth, (req, res) => {
     },
     [
       cb => {
-        crud.createItem(Model, curFields, res, cb);
+        crud.updateItem(Model, curID, { count: req.params.layer }, res, cb);
       },
       (result, cb) => {
-        uploadImage(result, cb);
+        image.upload(req, res, 'parallax', req.params.layer);
       },
     ],
   );
@@ -208,21 +208,17 @@ router.delete('/:id', isAuth, (req, res) => {
   curRes = res;
   curMode = 'delete';
 
-  image.startWaterfall(
-    [
-      cb => {
-        crud.getItemById(Model, res, curID, {}, {}, cb);
-      },
-      (result, cb) => {
-        deleteAllImages(result, cb);
-      },
-      (result, cb) => {
-        crud.deleteItem(Model, curID, res, cb);
-      },
-    ],
-    res,
-    curMode,
-  );
+  image.startWaterfall([
+    cb => {
+      crud.getItemById(Model, res, curID, {}, {}, cb);
+    },
+    (result, cb) => {
+      deleteAllImages(result, cb);
+    },
+    (result, cb) => {
+      crud.deleteItem(Model, curID, res, cb);
+    },
+  ]);
 });
 
 module.exports = router;

@@ -1,14 +1,22 @@
 <template lang="pug">
 PageWrapper
-  .menu(v-show='isLoaded')
-    a.menu-link.btn(
-      href='',
-      :class='menuLinkClasses',
-      v-for='(layer, index) in count',
-      :key='index',
-      @click.prevent='curLayer = index'
-    ) Слой №{{ index + 1 }}
-    a.menu-link.btn(href='', @click.prevent='setNewLayer') Новый слой
+  ul.menu(v-show='isLoaded')
+    li(v-for='(layer, index) in count', :key='index')
+      a.menu-link.btn(
+        href='',
+        :class='menuLinkClasses',
+        v-for='(layer, index) in count',
+        :key='index',
+        @click.prevent='curLayer = index'
+      ) Слой №{{ index + 1 }}
+      ButtonElem(
+        v-for='(layer, index) in count',
+        :key='index',
+        :isDanger='true',
+        @click.prevent.native='remove(index)'
+      ) удалить
+    li
+      a.menu-link.btn(href='', @click.prevent='setNewLayer') Новый слой
   UploadForm(
     :page='"parallax"',
     :breakpoints='["sm", "md", "lg", "xlg"]',
@@ -21,12 +29,15 @@ PageWrapper
 </template>
 
 <script>
+import axios from 'axios';
+import { SET_SUCCESS_MESSAGE } from '@common/store/mutation-types';
+import ButtonElem from '@components/formElems/ButtonElem';
 import PageWrapper from '@backCmp/PageWrapper';
 import UploadForm from '@backCmp/forms/UploadForm';
-import ButtonElem from '@components/formElems/ButtonElem';
 
-import createNamespacedHelpers from 'vuex';
-const { mapGetters, mapActions } = createNamespacedHelpers('parallax');
+import { mapGetters, mapActions, createNamespacedHelpers } from 'vuex';
+const parallaxMapGetters = createNamespacedHelpers('parallax').mapGetters;
+const parallaxMapActions = createNamespacedHelpers('parallax').mapActions;
 
 export default {
   name: 'Parallax',
@@ -51,13 +62,15 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['layers']),
+    ...mapGetters(['message']),
+    ...parallaxMapGetters(['layers']),
     menuLinkClasses() {
       return { 'menu-link--active': this.curLayer };
     },
   },
   methods: {
     ...mapActions(['readLayers']),
+    ...parallaxMapActions(['readLayers']),
     addLayer() {
       this.count++;
     },
@@ -67,6 +80,13 @@ export default {
     setNewLayer() {
       this.addLayer();
       this.setLastLayer();
+    },
+    remove(layer) {
+      axios.delete('parallax/' + layer).then(res => {
+        if (res.data.success) {
+          [SET_SUCCESS_MESSAGE](res.data.message);
+        }
+      });
     },
     readyHandle() {
       if (!this.isLoaded) {

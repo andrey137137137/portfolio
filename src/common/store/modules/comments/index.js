@@ -1,5 +1,11 @@
 import axios from 'axios';
-import { SET, INC_LOADING, INC_LOADED } from '@common/store/mutation-types';
+import {
+  SET,
+  INC_LOADING,
+  INC_LOADED,
+  ADD,
+  DELETE,
+} from '@common/store/mutation-types';
 
 const dbPage = 'comment';
 

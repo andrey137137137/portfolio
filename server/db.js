@@ -45,5 +45,6 @@ connectDB();
 require('./models/post');
 require('./models/skill');
 require('./models/work');
+require('./models/parallax');
 require('./models/comment');
 require('./models/user');

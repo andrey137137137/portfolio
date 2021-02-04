@@ -30,6 +30,11 @@ export default {
         dispatch('readData');
       });
     },
+    deleteLayer({ dispatch }, { id }) {
+      axios.delete(`${dbPage}/${id}`).then(() => {
+        dispatch('readData');
+      });
+    },
   },
   mutations: {
     [SET](state, data) {

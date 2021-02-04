@@ -78,8 +78,15 @@ const getItemById = (Model, res, id, fields = {}, options = {}, cb = false) => {
   get(Model, res, id, fields, options, 'id', cb);
 };
 
-const getItem = (Model, res, filter = {}, fields = {}, options = {}) => {
-  get(Model, res, filter, fields, options, 'one');
+const getItem = (
+  Model,
+  res,
+  filter = {},
+  fields = {},
+  options = {},
+  cb = false,
+) => {
+  get(Model, res, filter, fields, options, 'one', cb);
 };
 
 const getItems = (Model, res, sort, filter = {}, fields = {}) => {

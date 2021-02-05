@@ -5,13 +5,10 @@ PageWrapper
       a.menu-link.btn(
         href='',
         :class='menuLinkClasses',
-        v-for='(layer, index) in count',
-        :key='index',
         @click.prevent='curLayer = index'
       ) Слой №{{ index + 1 }}
       ButtonElem(
-        v-for='(layer, index) in count',
-        :key='index',
+        v-if='index == count - 1'
         :isDanger='true',
         @click.prevent.native='remove(index)'
       ) удалить
@@ -19,7 +16,7 @@ PageWrapper
       a.menu-link.btn(href='', @click.prevent='setNewLayer') Новый слой
   UploadForm(
     :page='"parallax"',
-    :breakpoints='["sm", "md", "lg", "xlg"]',
+    :breakpoints='["sm", "md", "lg", "xl"]',
     :stencilProps='stencilProps',
     :layer='curLayer',
     :readyHandle='readyHandle',
@@ -56,14 +53,13 @@ export default {
   },
   data() {
     return {
-      count: 0,
       curLayer: 0,
       isLoaded: false,
     };
   },
   computed: {
     ...mapGetters(['message']),
-    ...parallaxMapGetters(['layers']),
+    ...parallaxMapGetters(['count']),
     menuLinkClasses() {
       return { 'menu-link--active': this.curLayer };
     },
@@ -102,8 +98,7 @@ export default {
     },
   },
   created() {
-    this.readLayers();
-    this.count = this.layers;
+    this.readCount();
   },
 };
 </script>

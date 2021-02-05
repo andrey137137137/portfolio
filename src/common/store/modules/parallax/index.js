@@ -9,10 +9,10 @@ export default {
     data: [],
   },
   getters: {
-    layers: state => state.data,
+    count: state => state.data,
   },
   actions: {
-    readLayers({ commit }) {
+    readCount({ commit }) {
       commit(INC_LOADING, null, { root: true });
 
       axios.get(dbPage).then(res => {

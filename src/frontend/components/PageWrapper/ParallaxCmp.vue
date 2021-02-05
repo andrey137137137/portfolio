@@ -41,16 +41,15 @@ export default {
       path: '/upload/parallax',
       ext: 'png',
       breakpoints: [
-        { name: 'xlg.png', value: 2000 },
+        { name: 'xl.png', value: 2000 },
         { name: 'lg.png', value: 1200 },
         { name: 'md.png', value: 768 },
         { name: 'sm.png', value: 0 },
       ],
-      count: 3,
     };
   },
   computed: {
-    ...mapGetters(['layers']),
+    ...mapGetters(['count']),
     isScroll() {
       return this.$route.name != HOME.name;
     },
@@ -109,9 +108,9 @@ export default {
       }
     },
   },
-  // created() {
-  //   this.readLayers();
-  // },
+  created() {
+    this.readCount();
+  },
   mounted() {
     const $vm = this;
 

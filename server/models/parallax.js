@@ -1,11 +1,14 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const { Schema } = mongoose;
+const name = 'parallax';
 
-const ParallaxSchema = new Schema({
-  count: {
-    type: Number,
-    required: [true, 'Укажите количество слоёв'],
-  },
-});
-
-mongoose.model('parallax', ParallaxSchema);
+mongoose.model(
+  name,
+  new Schema({
+    count: {
+      type: Number,
+      required: [true, 'Укажите количество слоёв'],
+    },
+  }),
+  name,
+);

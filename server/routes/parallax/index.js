@@ -9,7 +9,15 @@ const dir = 'parallax';
 const prefix = 'layer_';
 
 router.get('/', (req, res) => {
-  crud.getItems(Model, res, { title: 1 });
+  crud.getItem(
+    Model,
+    res,
+    {},
+    {
+      _id: 0,
+      __v: 0,
+    },
+  );
 });
 
 router.post('/:layer', isAuth, (req, res) => {

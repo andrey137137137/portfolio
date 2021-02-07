@@ -1,5 +1,5 @@
 <template lang="pug">
-.parallax(ref='lkfsdjdlfglk', :class='classes')
+.parallax(:class='classes')
   ImageWrapper.parallax-layer(
     v-for='number in count',
     :key='number',
@@ -50,6 +50,9 @@ export default {
   },
   computed: {
     ...mapGetters(['count']),
+    areSomeLayers() {
+      return this.count > 1;
+    },
     isScroll() {
       return this.$route.name != HOME.name;
     },
@@ -58,10 +61,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['readLayers']),
-    areSomeLayers() {
-      return this.$refs.layers[1];
-    },
+    ...mapActions(['readCount']),
     calcDivider(index, mult, divider) {
       return ((this.$refs.layers.length - index) * mult) / divider;
     },
@@ -72,7 +72,7 @@ export default {
       return 'Слой ' + index;
     },
     moveLayers(event) {
-      if (this.areSomeLayers()) {
+      if (this.areSomeLayers) {
         const $vm = this;
 
         if ($vm.isScroll) {
@@ -114,27 +114,27 @@ export default {
   mounted() {
     const $vm = this;
 
-    $vm.$nextTick(() => {
-      $vm.centerX = window.innerWidth / 2;
-      $vm.centerY = window.innerHeight / 2;
+    // $vm.$nextTick(() => {
+    $vm.centerX = window.innerWidth / 2;
+    $vm.centerY = window.innerHeight / 2;
 
-      for (; !$vm.$refs.layers; );
+    // for (; !$vm.$refs.layers; );
 
-      if ($vm.areSomeLayers) {
-        // if ($vm.$parallaxContainer.classList.contains("parallax--scroll")) {
-        //   $vm.isScroll = true;
-        // }
+    // if ($vm.areSomeLayers) {
+    // if ($vm.$parallaxContainer.classList.contains("parallax--scroll")) {
+    //   $vm.isScroll = true;
+    // }
 
-        // $container = $vm.$parallaxContainer.firstElementChild
+    // $container = $vm.$parallaxContainer.firstElementChild
 
-        if ($vm.isScroll) {
-          window.addEventListener('scroll', $vm.moveLayers);
-          window.dispatchEvent(new Event('scroll'));
-        } else {
-          window.addEventListener('mousemove', $vm.moveLayers);
-        }
-      }
-    });
+    if ($vm.isScroll) {
+      window.addEventListener('scroll', $vm.moveLayers);
+      window.dispatchEvent(new Event('scroll'));
+    } else {
+      window.addEventListener('mousemove', $vm.moveLayers);
+    }
+    // }
+    // });
   },
 };
 </script>

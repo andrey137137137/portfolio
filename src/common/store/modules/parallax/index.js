@@ -6,10 +6,10 @@ const dbPage = 'parallax';
 export default {
   namespaced: true,
   state: {
-    data: [],
+    count: 0,
   },
   getters: {
-    count: state => state.data,
+    count: state => state.count,
   },
   actions: {
     readCount({ commit }) {
@@ -38,7 +38,7 @@ export default {
   },
   mutations: {
     [SET](state, data) {
-      state.data = data;
+      state.count = data.count;
     },
   },
 };

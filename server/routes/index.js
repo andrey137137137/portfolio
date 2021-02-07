@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const { NOT_FOUND } = require('@httpSt');
 
+router.use('/parallax', require('./parallax'));
 router.use('/image', require('./image'));
 router.use('/work', require('./work'));
 router.use('/skill', require('./skill'));

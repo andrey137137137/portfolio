@@ -1,18 +1,18 @@
 <template lang="pug">
 PageWrapper
   ul.menu(v-show='isLoaded')
-    li(v-for='(layer, index) in count', :key='index')
+    li.menu-item(v-for='(layer, index) in count', :key='index')
       a.menu-link.btn(
         href='',
         :class='menuLinkClasses',
         @click.prevent='curLayer = index'
       ) Слой №{{ index + 1 }}
       ButtonElem(
-        v-if='index == count - 1'
+        v-if='index == count - 1',
         :isDanger='true',
         @click.prevent.native='remove(index)'
       ) удалить
-    li
+    li.menu-item
       a.menu-link.btn(href='', @click.prevent='setNewLayer') Новый слой
   UploadForm(
     :page='"parallax"',
@@ -65,8 +65,8 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['readLayers']),
-    ...parallaxMapActions(['readLayers']),
+    ...mapActions([SET_SUCCESS_MESSAGE]),
+    ...parallaxMapActions(['readCount']),
     addLayer() {
       this.count++;
     },

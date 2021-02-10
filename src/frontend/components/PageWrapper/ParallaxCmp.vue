@@ -41,7 +41,7 @@ export default {
       path: '/upload/parallax',
       ext: 'png',
       breakpoints: [
-        { name: 'xl.png', value: 2000 },
+        { name: 'xl.png', value: 1800 },
         { name: 'lg.png', value: 1200 },
         { name: 'md.png', value: 768 },
         { name: 'sm.png', value: 0 },
@@ -63,13 +63,14 @@ export default {
   methods: {
     ...mapActions(['readCount']),
     calcDivider(index, mult, divider) {
-      return ((this.$refs.layers.length - index) * mult) / divider;
+      // return ((this.count - index) * mult) / divider;
+      return ((index + 1) * mult) / divider;
     },
     getLayerPath(index) {
-      return this.path + '/layer_' + index;
+      return `${this.path}/layer_${index - 1}`;
     },
     getTitle(index) {
-      return 'Слой ' + index;
+      return `Слой ${index - 1}`;
     },
     moveLayers(event) {
       if (this.areSomeLayers) {
@@ -114,18 +115,12 @@ export default {
   mounted() {
     const $vm = this;
 
-    // $vm.$nextTick(() => {
     $vm.centerX = window.innerWidth / 2;
     $vm.centerY = window.innerHeight / 2;
 
-    // for (; !$vm.$refs.layers; );
-
-    // if ($vm.areSomeLayers) {
     // if ($vm.$parallaxContainer.classList.contains("parallax--scroll")) {
     //   $vm.isScroll = true;
     // }
-
-    // $container = $vm.$parallaxContainer.firstElementChild
 
     if ($vm.isScroll) {
       window.addEventListener('scroll', $vm.moveLayers);
@@ -133,8 +128,6 @@ export default {
     } else {
       window.addEventListener('mousemove', $vm.moveLayers);
     }
-    // }
-    // });
   },
 };
 </script>

@@ -7,7 +7,7 @@ Fragment
   )
     h3.section-title Изображение: "{{ item.title }}"
     cropper(
-      :ref='croppers',
+      ref='croppers',
       :src='image(index)',
       :backgroundClass='"upload_form-cropper--bg"',
       :stencil-component='stencilComp',

@@ -1,14 +1,14 @@
 <template lang="pug">
 PageWrapper
   ul.menu(v-show='isLoaded')
-    li.menu-item(v-for='(layer, index) in count', :key='index')
+    li.menu-item(v-for='(layer, index) in layers', :key='index')
       a.menu-link.btn(
         href='',
         :class='menuLinkClasses',
         @click.prevent='curLayer = index'
       ) Слой №{{ index + 1 }}
       ButtonElem(
-        v-if='index == count - 1',
+        v-if='index == layers - 1',
         :isDanger='true',
         @click.prevent.native='remove(index)'
       ) удалить
@@ -53,6 +53,7 @@ export default {
   },
   data() {
     return {
+      layers: 0,
       curLayer: 0,
       isLoaded: false,
     };
@@ -68,10 +69,10 @@ export default {
     ...mapActions([SET_SUCCESS_MESSAGE]),
     ...parallaxMapActions(['readCount']),
     addLayer() {
-      this.count++;
+      this.layers++;
     },
     setLastLayer() {
-      this.curLayer = this.count - 1;
+      this.curLayer = this.layers - 1;
     },
     setNewLayer() {
       this.addLayer();
@@ -87,7 +88,7 @@ export default {
     readyHandle() {
       if (!this.isLoaded) {
         this.addLayer();
-        this.curLayer = this.count;
+        this.curLayer = this.layers;
       }
     },
     errorHandle() {
@@ -99,6 +100,7 @@ export default {
   },
   created() {
     this.readCount();
+    this.layers = this.count;
   },
 };
 </script>

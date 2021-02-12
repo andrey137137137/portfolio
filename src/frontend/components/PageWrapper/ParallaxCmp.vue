@@ -28,6 +28,7 @@ export default {
   },
   data() {
     return {
+      windowWidth: 0,
       centerX: 0,
       centerY: 0,
       diffX: 0,
@@ -53,6 +54,9 @@ export default {
     areSomeLayers() {
       return this.count > 1;
     },
+    isDesktop() {
+      return this.windowWidth >= 1200;
+    },
     isScroll() {
       return this.$route.name != HOME.name;
     },
@@ -73,7 +77,7 @@ export default {
       return `Слой ${index - 1}`;
     },
     moveLayers(event) {
-      if (this.areSomeLayers) {
+      if (this.areSomeLayers && this.isDesktop) {
         const $vm = this;
 
         if ($vm.isScroll) {
@@ -108,6 +112,16 @@ export default {
         });
       }
     },
+    setCenterCoords() {
+      this.windowWidth = window.innerWidth;
+
+      this.centerX = this.windowWidth / 2;
+      this.centerY = window.innerHeight / 2;
+    },
+    resetLayers(event) {
+      this.setCenterCoords();
+      this.moveLayers(event);
+    },
   },
   created() {
     this.readCount();
@@ -115,8 +129,7 @@ export default {
   mounted() {
     const $vm = this;
 
-    $vm.centerX = window.innerWidth / 2;
-    $vm.centerY = window.innerHeight / 2;
+    $vm.setCenterCoords();
 
     // if ($vm.$parallaxContainer.classList.contains("parallax--scroll")) {
     //   $vm.isScroll = true;
@@ -128,6 +141,8 @@ export default {
     } else {
       window.addEventListener('mousemove', $vm.moveLayers);
     }
+
+    window.addEventListener('resize', $vm.resetLayers);
   },
 };
 </script>

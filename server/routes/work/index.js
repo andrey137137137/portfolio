@@ -4,15 +4,14 @@ const Model = require('mongoose').model('work');
 const { IncomingForm } = require('formidable');
 const { each } = require('async');
 const sharp = require('sharp');
-const fs = require('fs');
 
 const { isAuth } = require('@auth');
 const { getSlideImageName } = require('@apiHelpers');
 const crud = require('@contr/crud');
 const image = require('@contr/image');
 
-const sliderDir = 'slider';
-const sliderBreakpoints = [
+const dir = 'slider';
+const breakpoints = [
   { name: 'xl', height: 525 },
   { name: 'lg', height: 257 },
   { name: 'md', height: 215 },
@@ -26,7 +25,7 @@ let curFields;
 let curImage;
 let uplImage;
 
-function uploadImage(data, highCB) {
+function uploadBreakpointImages(data, highCB) {
   if (!uplImage) {
     return highCB(null, data);
   }
@@ -34,7 +33,7 @@ function uploadImage(data, highCB) {
   curID = data._id;
 
   each(
-    sliderBreakpoints,
+    breakpoints,
     (breakpoint, cb) => {
       const resizeUploadPath = path.join(
         image.getUploadPath(),
@@ -62,31 +61,21 @@ function uploadImage(data, highCB) {
   );
 }
 
-function deleteImage(data, highCB) {
+function deleteSliderBreakpointImages(data, highCB) {
   if (!data.imageNames[curImage]) {
     return highCB(null, data);
   }
 
-  image.setUploadPath(sliderDir);
-
-  each(
-    sliderBreakpoints,
-    (breakpoint, cb) => {
-      const deleteUploadPath = path.join(
-        image.getUploadPath(),
-        breakpoint.name,
+  return image.deleteBreakpointImages(
+    breakpoints.map(item => {
+      return path.join(
+        item.name,
         getSlideImageName(curID, data.imageNames[curImage]),
       );
-
-      if (fs.existsSync(deleteUploadPath)) {
-        fs.unlink(deleteUploadPath, cb);
-      } else {
-        cb(null, data);
-      }
-    },
-    (err, info) => {
-      return highCB(err, info);
-    },
+    }),
+    data,
+    dir,
+    highCB,
   );
 }
 
@@ -106,7 +95,7 @@ function deleteAllImages(data, highCB) {
   each(
     data.imageNames,
     (imageName, cb) => {
-      deleteImage(data, cb);
+      deleteSliderBreakpointImages(data, cb);
       curImage++;
     },
     (err, info) => {
@@ -120,7 +109,7 @@ function formParse(req, res, mode, withoutImageCB, withImageCallbacksArray) {
   curMode = mode;
 
   const form = new IncomingForm({
-    uploadDir: image.getTempPath(sliderDir),
+    uploadDir: image.getTempPath(dir),
   });
 
   form.parse(req, (err, fields, files) => {
@@ -170,7 +159,7 @@ router.post('/', isAuth, (req, res) => {
         crud.createItem(Model, curFields, res, cb);
       },
       (result, cb) => {
-        uploadImage(result, cb);
+        uploadBreakpointImages(result, cb);
       },
     ],
   );
@@ -191,13 +180,13 @@ router.put('/:id', isAuth, (req, res) => {
         crud.getItemById(Model, res, curID, {}, {}, cb);
       },
       (result, cb) => {
-        deleteImage(result, cb);
+        deleteSliderBreakpointImages(result, cb);
       },
       (result, cb) => {
         crud.updateItem(Model, curID, curFields, res, cb);
       },
       (result, cb) => {
-        uploadImage(result, cb);
+        uploadBreakpointImages(result, cb);
       },
     ],
   );

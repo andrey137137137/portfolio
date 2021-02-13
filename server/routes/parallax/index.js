@@ -1,12 +1,21 @@
 const router = require('express').Router();
 const Model = require('mongoose').model('parallax');
 
+const { getBreakpointsWithExt } = require('@apiHelpers');
 const { isAuth } = require('@auth');
 const crud = require('@contr/crud');
 const image = require('@contr/image');
 
 const dir = 'parallax';
-const prefix = 'layer_';
+
+function deleteParallaxBreakpointImages(data, highCB) {
+  return image.deleteBreakpointImages(
+    getBreakpointsWithExt('png'),
+    data,
+    dir,
+    highCB,
+  );
+}
 
 router.get('/', (req, res) => {
   crud.getItem(
@@ -50,7 +59,7 @@ router.put('/:layer', isAuth, (req, res) => {
   image.startWaterfall(
     [
       cb => {
-        image.remove(res, prefix + layer, dir, layer, cb);
+        deleteParallaxBreakpointImages({}, cb);
       },
       (result, cb) => {
         image.upload(req, res, dir, layer, cb);
@@ -70,7 +79,7 @@ router.delete('/:layer', isAuth, (req, res) => {
         crud.getItem(Model, res, {}, {}, {}, cb);
       },
       (result, cb) => {
-        image.remove(res, prefix + layer, dir, layer, cb);
+        deleteParallaxBreakpointImages(result, cb);
       },
       (result, cb) => {
         crud.updateItem(

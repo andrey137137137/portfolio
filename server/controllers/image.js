@@ -1,7 +1,7 @@
 const { IncomingForm } = require('formidable');
 const path = require('path');
 const fs = require('fs');
-const { waterfall } = require('async');
+const { waterfall, each } = require('async');
 const { UPLOAD_PATH } = require('@config').client;
 const { ERROR } = require('@httpSt');
 const crud = require('@contr/crud');
@@ -89,6 +89,25 @@ const remove = (res, imageName, dir = '', layer = -1, cb = false) => {
   });
 };
 
+const deleteBreakpointImages = (breakpoints, data, dir, highCB, layer = -1) => {
+  setUploadPath(dir, layer);
+  each(
+    breakpoints,
+    (breakpoint, cb) => {
+      const deleteUploadPath = path.join(getUploadPath(), breakpoint);
+
+      if (fs.existsSync(deleteUploadPath)) {
+        fs.unlink(deleteUploadPath, cb);
+      } else {
+        cb(null, data);
+      }
+    },
+    (err, info) => {
+      return highCB(err, info);
+    },
+  );
+};
+
 const waterfallCB = function(err, result, params) {
   const { res, mode } = params;
 
@@ -123,5 +142,6 @@ module.exports = {
   getTempPath,
   upload,
   remove,
+  deleteBreakpointImages,
   startWaterfall,
 };

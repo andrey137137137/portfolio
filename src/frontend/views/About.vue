@@ -13,7 +13,7 @@ Fragment
       )
       ImageWrapper.col.col--center.col--tb_8.about-col(
         :path='image.path',
-        :breakpoints='image.breakpoints',
+        :breakpoints='breakpoints',
         title='Обо мне',
         :addClasses='image.classes'
       )
@@ -53,6 +53,7 @@ Fragment
 
 <script>
 import { Fragment } from 'vue-fragment';
+import { getBreakpointsWithExt } from '@apiHelpers';
 import TopWrapper from '@frontCmp/TopWrapper';
 import SectionWrapper from '@frontCmp/SectionWrapper';
 import TitleWrapper from '@frontCmp/TitleWrapper';
@@ -87,11 +88,6 @@ export default {
           'about-img_wrap': true,
         },
         path: '/upload/about',
-        breakpoints: [
-          { name: 'lg.jpg', value: 1200 },
-          { name: 'md.jpg', value: 768 },
-          { name: 'sm.jpg', value: 0 },
-        ],
       },
       bottomWrapClass: {
         'bottom_wrap--map_wrap': true,
@@ -104,8 +100,30 @@ export default {
   computed: {
     ...mapGetters(['dbData']),
     ...profileMapGetters(['old', 'footerDesc']),
+    breakpoints() {
+      return getBreakpointsWithExt('jpg', ['xl']);
+    },
     compOld() {
-      return this.old;
+      let yearStr = '';
+
+      if (this.old > 10 && this.old < 20) {
+        yearStr = 'лет';
+      } else {
+        switch (this.old % 10) {
+          case 1:
+            yearStr = 'год';
+            break;
+          case 2:
+          case 3:
+          case 4:
+            yearStr = 'года';
+            break;
+          default:
+            yearStr = 'лет';
+        }
+      }
+
+      return `${this.old} ${yearStr}`;
     },
   },
 };

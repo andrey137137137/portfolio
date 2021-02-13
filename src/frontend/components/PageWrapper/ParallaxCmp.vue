@@ -1,5 +1,8 @@
 <template lang="pug">
 .parallax(:class='classes')
+  .parallax-layer
+    video.parallax-img(autoplay, loop, autobuffer, muted, playsinline)
+      source(:src='path + "/night.mp4"', type='video/mp4')
   ImageWrapper.parallax-layer(
     v-for='number in count',
     :key='number',
@@ -14,6 +17,7 @@
 </template>
 
 <script>
+import { getBreakpointsWithExt } from '@apiHelpers';
 import { HOME } from '@common/constants/router';
 import { getScrollY } from '@common/helpers';
 import ImageWrapper from '@frontCmp/ImageWrapper';
@@ -41,16 +45,13 @@ export default {
       transformString: '',
       path: '/upload/parallax',
       ext: 'png',
-      breakpoints: [
-        { name: 'xl.png', value: 1800 },
-        { name: 'lg.png', value: 1200 },
-        { name: 'md.png', value: 768 },
-        { name: 'sm.png', value: 0 },
-      ],
     };
   },
   computed: {
     ...mapGetters(['count']),
+    breakpoints() {
+      return getBreakpointsWithExt(this.ext);
+    },
     areSomeLayers() {
       return this.count > 1;
     },

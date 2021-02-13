@@ -16,7 +16,7 @@ PageWrapper
       a.menu-link.btn(href='', @click.prevent='setNewLayer') Новый слой
   UploadForm(
     :page='"parallax"',
-    :breakpoints='["sm", "md", "lg", "xl"]',
+    :breakpoints='breakpoints',
     :stencilProps='stencilProps',
     :layer='curLayer',
     :readyHandle='readyHandle',
@@ -27,6 +27,7 @@ PageWrapper
 
 <script>
 import axios from 'axios';
+import { getBreakpointNames } from '@apiHelpers';
 import { SET_SUCCESS_MESSAGE } from '@common/store/mutation-types';
 import ButtonElem from '@components/formElems/ButtonElem';
 import PageWrapper from '@backCmp/PageWrapper';
@@ -61,6 +62,9 @@ export default {
   computed: {
     ...mapGetters(['message']),
     ...parallaxMapGetters(['count']),
+    breakpoints() {
+      return getBreakpointNames();
+    },
     menuLinkClasses() {
       return { 'menu-link--active': this.curLayer };
     },

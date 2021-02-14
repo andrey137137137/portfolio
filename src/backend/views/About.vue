@@ -2,7 +2,7 @@
 PageWrapper
   UploadForm(
     page='about',
-    :breakpoints='["sm", "md", "lg"]',
+    :breakpoints='breakpoints',
     :stencilProps='stencilProps'
   )
   SkillForm(v-for='skill in dbData', :key='skill._id', :item='skill')
@@ -12,6 +12,7 @@ PageWrapper
 
 <script>
 import PictureInput from 'vue-picture-input';
+import { getBreakpointNamesWithoutXL } from '@apiHelpers';
 import pageDataMixin from '@backend/mixins/pageDataMixin';
 import PageWrapper from '@backCmp/PageWrapper';
 import UploadForm from '@backCmp/forms/UploadForm';
@@ -32,6 +33,11 @@ export default {
         aspectRatio: 1.130742049469965,
       },
     };
+  },
+  computed: {
+    breakpoints() {
+      return getBreakpointNamesWithoutXL();
+    },
   },
 };
 </script>

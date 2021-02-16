@@ -1,17 +1,21 @@
 <template lang="pug">
 .parallax(:class='classes')
-  .parallax-layer
-    video.parallax-img(autoplay, loop, autobuffer, muted, playsinline)
+  .parallax-layer(ref='firstLayer')
+    video.parallax-img.parallax-img--first(
+      autoplay,
+      loop,
+      autobuffer,
+      muted,
+      playsinline
+    )
       source(:src='path + "/night.mp4"', type='video/mp4')
   ImageWrapper.parallax-layer(
-    v-for='number in count',
-    :key='number',
-    ref='layers',
-    :path='getLayerPath(number)',
+    ref='lastLayer',
+    :path='getLayerPath()',
     :breakpoints='breakpoints',
-    :title='getTitle(number)',
+    :title='getTitle()',
     :isWrapperClass='false',
-    :imgAddClasses='{ "parallax-img": true }',
+    :imgAddClasses='{ "parallax-img": true, "parallax-img--other": true }',
     :isLazyLoading='false'
   )
 </template>
@@ -45,6 +49,7 @@ export default {
       transformString: '',
       path: '/upload/parallax',
       ext: 'png',
+      layers: [],
     };
   },
   computed: {
@@ -52,8 +57,8 @@ export default {
     breakpoints() {
       return getBreakpointsWithExt(this.ext);
     },
-    areSomeLayers() {
-      return this.count > 1;
+    lastLayer() {
+      return this.count - 1;
     },
     isDesktop() {
       return this.windowWidth >= 1200;
@@ -71,14 +76,14 @@ export default {
       // return ((this.count - index) * mult) / divider;
       return ((index + 1) * mult) / divider;
     },
-    getLayerPath(index) {
-      return `${this.path}/layer_${index - 1}`;
+    getLayerPath() {
+      return `${this.path}/layer_${this.lastLayer}`;
     },
-    getTitle(index) {
-      return `Слой ${index - 1}`;
+    getTitle() {
+      return `Слой ${this.lastLayer}`;
     },
     moveLayers(event) {
-      if (this.areSomeLayers && this.isDesktop) {
+      if (this.isDesktop) {
         const $vm = this;
 
         if ($vm.isScroll) {
@@ -89,9 +94,7 @@ export default {
 
         $vm.diffY = $vm.isScroll ? -$vm.scrollY : $vm.centerY - event.pageY;
 
-        $vm.$refs.layers.forEach(($layerCmp, index) => {
-          const $layer = $layerCmp.$el;
-
+        $vm.layers.forEach(($layer, index) => {
           if ($vm.isScroll) {
             $vm.divider = $vm.calcDivider(index, 25, 100);
           } else {
@@ -99,7 +102,6 @@ export default {
           }
 
           $vm.positionY = $vm.diffY * $vm.divider;
-          $vm.bottomPosition = $vm.centerY * $vm.divider;
 
           if ($vm.isScroll) {
             $vm.transformString = `translateY(${$vm.positionY}px)`;
@@ -109,7 +111,11 @@ export default {
           }
 
           $layer.style.transform = $vm.transformString;
-          $layer.firstElementChild.style.bottom = `-${$vm.bottomPosition}px`;
+
+          if (index) {
+            $vm.bottomPosition = $vm.centerY * $vm.divider;
+            $layer.firstElementChild.style.bottom = `-${$vm.bottomPosition}px`;
+          }
         });
       }
     },
@@ -128,22 +134,20 @@ export default {
     this.readCount();
   },
   mounted() {
-    const $vm = this;
+    this.setCenterCoords();
 
-    $vm.setCenterCoords();
+    console.log(this.layers);
+    this.layers.push(this.$refs.firstLayer);
+    this.layers.push(this.$refs.lastLayer.$el);
 
-    // if ($vm.$parallaxContainer.classList.contains("parallax--scroll")) {
-    //   $vm.isScroll = true;
-    // }
-
-    if ($vm.isScroll) {
-      window.addEventListener('scroll', $vm.moveLayers);
+    if (this.isScroll) {
+      window.addEventListener('scroll', this.moveLayers);
       window.dispatchEvent(new Event('scroll'));
     } else {
-      window.addEventListener('mousemove', $vm.moveLayers);
+      window.addEventListener('mousemove', this.moveLayers);
     }
 
-    window.addEventListener('resize', $vm.resetLayers);
+    window.addEventListener('resize', this.resetLayers);
   },
 };
 </script>

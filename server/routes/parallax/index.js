@@ -10,7 +10,7 @@ const dir = 'parallax';
 
 function deleteParallaxBreakpointImages(data, highCB) {
   return image.deleteBreakpointImages(
-    getBreakpointsWithExt('png'),
+    getBreakpointsWithExt('png').map(item => item.name),
     data,
     dir,
     highCB,

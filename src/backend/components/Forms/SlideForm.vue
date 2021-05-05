@@ -149,8 +149,6 @@ export default {
         }
       }
 
-      console.log(isUplImageName);
-
       if (isUplImageName) {
         const uplImageName = this.images[index].name;
         this.imageNames[index] = uplImageName;

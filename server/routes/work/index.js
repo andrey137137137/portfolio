@@ -12,10 +12,14 @@ const image = require('@contr/image');
 
 const dir = 'slider';
 const breakpoints = [
-  { name: 'xl', height: 525 },
-  { name: 'lg', height: 257 },
-  { name: 'md', height: 215 },
-  { name: 'sm', height: 93 },
+  // { name: 'xl', height: 525 },
+  // { name: 'lg', height: 257 },
+  // { name: 'md', height: 215 },
+  // { name: 'sm', height: 93 },
+  { name: 'xl', height: 369 },
+  { name: 'lg', height: 186 },
+  { name: 'md', height: 153 },
+  { name: 'sm', height: 76 },
 ];
 
 let curRes;
@@ -62,6 +66,7 @@ function uploadBreakpointImages(data, highCB) {
 }
 
 function deleteSliderBreakpointImages(data, highCB) {
+  console.log(data);
   if (!data.imageNames[curImage]) {
     return highCB(null, data);
   }
@@ -127,12 +132,22 @@ function formParse(req, res, mode, withoutImageCB, withImageCallbacksArray) {
       techs: JSON.parse(techs),
     };
 
+    const curImageName = [null];
+
     const condition =
-      mode == 'update' && curImage >= 0 ? !imageNames[curImage] : false;
+      mode == 'update' && curImage >= 0
+        ? !curFields.imageNames[curImage]
+        : false;
 
     uplImage = files.image;
 
-    console.log('Values: ' + imageNames);
+    console.log('mode: ' + mode);
+    console.log('curImage: ' + curImage);
+    console.log('imageNames: ' + curFields.imageNames);
+    console.log('image: ' + files.image);
+    console.log('condition: ' + condition);
+    console.log('condition: ' + !!null);
+    console.log('curImageName: ' + !curImageName[0]);
 
     if (uplImage || condition) {
       image.startWaterfall(withImageCallbacksArray, res, mode, uplImage);

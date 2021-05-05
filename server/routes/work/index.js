@@ -133,7 +133,7 @@ function formParse(req, res, mode, withoutImageCB, withImageCallbacksArray) {
     };
 
     const curImageName = curFields.imageNames[curImage];
-    const condition = mode == 'update' && curImage >= 0 ? !curImageName : false;
+    const condition = mode == 'update' && curImage >= 0 && !curImageName;
 
     uplImage = files.image;
 
@@ -145,7 +145,10 @@ function formParse(req, res, mode, withoutImageCB, withImageCallbacksArray) {
     console.log('curImageName: ' + curImageName);
     console.log('!curImageName: ' + !curImageName);
 
-    if (uplImage || condition) {
+    if (
+      uplImage ||
+      (mode == 'update' && curImage >= 0 && !curFields.imageNames[curImage])
+    ) {
       image.startWaterfall(withImageCallbacksArray, res, mode, uplImage);
     } else {
       withoutImageCB();

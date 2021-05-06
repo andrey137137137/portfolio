@@ -65,7 +65,7 @@ export default {
   mixins: [uploadMixin, itemFormMixin],
   data() {
     const data = {
-      selectedImageIndex: -1,
+      removingImageIndex: -1,
       images: [null, null, null],
       fields: [
         {
@@ -132,41 +132,47 @@ export default {
     },
     prepareData() {
       const $vm = this;
-      const selectedImages = [];
       const data = {
         title: this.title,
         link: this.link,
-        selectedImageIndex: this.selectedImageIndex,
+        removingImageIndex: this.removingImageIndex,
       };
+      const selectedImages = [];
       const techs = this.techs.map(item => item.name);
       const form = new FormData();
 
-      let index;
-      let isUplImageName = false;
+      // let index;
+      // let isUplImageName = false;
 
-      for (index = 0; index < this.images.length; index++) {
-        if (this.images[index]) {
-          isUplImageName = true;
-          break;
-        }
+      // for (index = 0; index < this.images.length; index++) {
+      //   if (this.images[index]) {
+      //     isUplImageName = true;
+      //     break;
+      //   }
+      // }
+
+      // if (isUplImageName) {
+      //   const uplImageName = this.images[index].name;
+      //   this.imageNames[index] = uplImageName;
+      //   data.removingImageIndex = index;
+      //   form.append('image', this.images[index], uplImageName);
+      // }
+
+      if (this.removingImageIndex >= 0) {
+        form.append('removingImageIndex', this.removingImageIndex);
+      } else {
+        this.images.forEach((image, index) => {
+          const isImage = image ? 1 : 0;
+
+          if (isImage) {
+            $vm.imageNames[index] = image.name;
+            form.append('image' + index, image, image.name);
+          }
+
+          selectedImages.push(isImage);
+        });
+        form.append('selectedImages', JSON.stringify(selectedImages));
       }
-
-      if (isUplImageName) {
-        const uplImageName = this.images[index].name;
-        this.imageNames[index] = uplImageName;
-        data.selectedImageIndex = index;
-        form.append('image', this.images[index], uplImageName);
-      }
-
-      this.images.forEach((image, index) => {
-        const isImage = image ? 1 : 0;
-
-        if (isImage) {
-          $vm.imageNames[index] = image.name;
-        }
-
-        selectedImages.push(isImage);
-      });
 
       for (const key in data) {
         if (data.hasOwnProperty(key)) {
@@ -174,7 +180,6 @@ export default {
         }
       }
 
-      form.append('selectedImages', JSON.stringify(selectedImages));
       form.append('imageNames', JSON.stringify(this.imageNames));
       form.append('techs', JSON.stringify(techs));
 
@@ -194,8 +199,8 @@ export default {
     },
     removeUploadedImage(index) {
       this.imageNames[index] = null;
-      this.selectedImageIndex = index;
-      this.removeImage(index);
+      this.removingImageIndex = index;
+      // this.removeImage(index);
       this.submit();
     },
   },

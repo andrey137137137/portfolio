@@ -6,7 +6,7 @@ const { each } = require('async');
 const sharp = require('sharp');
 
 const { isAuth } = require('@auth');
-const { getSlideImageName } = require('@apiHelpers');
+const { exist, getSlideImageName } = require('@apiHelpers');
 const crud = require('@contr/crud');
 const image = require('@contr/image');
 
@@ -26,16 +26,20 @@ let curRes;
 let curID;
 let curMode;
 let curFields;
-let curImage;
-let uplImage;
+let curImageIndex = -1;
+let selectedImages = null;
+let uplImages = null;
 
-function uploadBreakpointImages(data, highCB) {
-  if (!uplImage) {
-    return highCB(null, data);
+function setCurImageIndex() {
+  for (var index = curImageIndex + 1; index < selectedImages.length; index++) {
+    if (selectedImages[index]) {
+      curImageIndex = index;
+      break;
+    }
   }
+}
 
-  curID = data._id;
-
+function uploadBreakpointImages(uplImage, highCB) {
   each(
     breakpoints,
     (breakpoint, cb) => {
@@ -54,7 +58,7 @@ function uploadBreakpointImages(data, highCB) {
         .toFile(
           path.join(
             resizeUploadPath,
-            getSlideImageName(curID, curFields.imageNames[curImage]),
+            getSlideImageName(curID, curFields.imageNames[curImageIndex]),
           ),
           cb,
         );
@@ -65,9 +69,28 @@ function uploadBreakpointImages(data, highCB) {
   );
 }
 
+function uploadAllBreakpointImages(data, highCB) {
+  if (!uplImages) {
+    return highCB(null, data);
+  }
+
+  curID = data._id;
+
+  each(
+    uplImages,
+    (uplImage, cb) => {
+      uploadBreakpointImages(uplImage, cb);
+      setCurImageIndex();
+    },
+    (err, info) => {
+      return highCB(err, info);
+    },
+  );
+}
+
 function deleteSliderBreakpointImages(data, highCB) {
   console.log(data);
-  if (!data.imageNames[curImage]) {
+  if (!data.imageNames[curImageIndex]) {
     return highCB(null, data);
   }
 
@@ -75,7 +98,7 @@ function deleteSliderBreakpointImages(data, highCB) {
     breakpoints.map(item => {
       return path.join(
         item.name,
-        getSlideImageName(curID, data.imageNames[curImage]),
+        getSlideImageName(curID, data.imageNames[curImageIndex]),
       );
     }),
     data,
@@ -85,23 +108,27 @@ function deleteSliderBreakpointImages(data, highCB) {
 }
 
 function deleteAllImages(data, highCB) {
-  for (curImage = 0; curImage < data.imageNames.length; curImage++) {
-    if (data.imageNames[curImage]) {
+  for (
+    curImageIndex = 0;
+    curImageIndex < data.imageNames.length;
+    curImageIndex++
+  ) {
+    if (data.imageNames[curImageIndex]) {
       break;
     }
   }
 
-  if (curImage >= data.imageNames.length) {
+  if (curImageIndex >= data.imageNames.length) {
     return highCB(null, data);
   }
 
-  curImage = 0;
+  curImageIndex = 0;
 
   each(
     data.imageNames,
     (imageName, cb) => {
       deleteSliderBreakpointImages(data, cb);
-      curImage++;
+      curImageIndex++;
     },
     (err, info) => {
       return highCB(err, info);
@@ -122,9 +149,8 @@ function formParse(req, res, mode, withoutImageCB, withImageCallbacksArray) {
       return crud.sendError(err, curRes, curMode);
     }
 
-    const { title, link, imageNames, selectedImageIndex, techs } = fields;
+    const { title, link, imageNames, techs } = fields;
 
-    curImage = selectedImageIndex;
     curFields = {
       title,
       link,
@@ -132,25 +158,39 @@ function formParse(req, res, mode, withoutImageCB, withImageCallbacksArray) {
       techs: JSON.parse(techs),
     };
 
-    uplImage = files.image;
+    if (exist('removingImageIndex', fields)) {
+      curImageIndex = fields.removingImageIndex;
+    } else {
+      selectedImages = JSON.parse(fields.selectedImages);
+
+      selectedImages.forEach((selectedImage, index) => {
+        if (selectedImage) {
+          uplImages.push(files['image' + index]);
+        }
+      });
+
+      setCurImageIndex();
+    }
 
     console.log('mode: ' + mode);
-    console.log('curImage: ' + curImage);
+    console.log('curImageIndex: ' + curImageIndex);
     console.log('imageNames: ' + curFields.imageNames);
     console.log('image: ' + files.image);
 
-    const curImageName = curFields.imageNames[curImage];
-    const condition = mode == 'update' && curImage >= 0 && !curImageName;
+    const curImageName = curFields.imageNames[curImageIndex];
+    const condition = mode == 'update' && curImageIndex >= 0 && !curImageName;
 
     console.log('condition: ' + condition);
     console.log('curImageName: ' + curImageName);
     console.log('!curImageName: ' + !curImageName);
 
     if (
-      uplImage ||
-      (mode == 'update' && curImage >= 0 && !curFields.imageNames[curImage])
+      uplImages ||
+      (mode == 'update' &&
+        curImageIndex >= 0 &&
+        !curFields.imageNames[curImageIndex])
     ) {
-      image.startWaterfall(withImageCallbacksArray, res, mode, uplImage);
+      image.startWaterfall(withImageCallbacksArray, res, mode, uplImages);
     } else {
       withoutImageCB();
     }
@@ -174,7 +214,7 @@ router.post('/', isAuth, (req, res) => {
         crud.createItem(Model, curFields, res, cb);
       },
       (result, cb) => {
-        uploadBreakpointImages(result, cb);
+        uploadAllBreakpointImages(result, cb);
       },
     ],
   );
@@ -201,7 +241,7 @@ router.put('/:id', isAuth, (req, res) => {
         crud.updateItem(Model, curID, curFields, res, cb);
       },
       (result, cb) => {
-        uploadBreakpointImages(result, cb);
+        uploadAllBreakpointImages(result, cb);
       },
     ],
   );

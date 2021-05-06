@@ -132,15 +132,16 @@ function formParse(req, res, mode, withoutImageCB, withImageCallbacksArray) {
       techs: JSON.parse(techs),
     };
 
-    const curImageName = curFields.imageNames[curImage];
-    const condition = mode == 'update' && curImage >= 0 && !curImageName;
-
     uplImage = files.image;
 
     console.log('mode: ' + mode);
     console.log('curImage: ' + curImage);
     console.log('imageNames: ' + curFields.imageNames);
     console.log('image: ' + files.image);
+
+    const curImageName = curFields.imageNames[curImage];
+    const condition = mode == 'update' && curImage >= 0 && !curImageName;
+
     console.log('condition: ' + condition);
     console.log('curImageName: ' + curImageName);
     console.log('!curImageName: ' + !curImageName);

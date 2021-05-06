@@ -131,6 +131,8 @@ export default {
       };
     },
     prepareData() {
+      const $vm = this;
+      const selectedImages = [];
       const data = {
         title: this.title,
         link: this.link,
@@ -156,12 +158,23 @@ export default {
         form.append('image', this.images[index], uplImageName);
       }
 
+      this.images.forEach((image, index) => {
+        const isImage = image ? 1 : 0;
+
+        if (isImage) {
+          $vm.imageNames[index] = image.name;
+        }
+
+        selectedImages.push(isImage);
+      });
+
       for (const key in data) {
         if (data.hasOwnProperty(key)) {
           form.append(key, data[key]);
         }
       }
 
+      form.append('selectedImages', JSON.stringify(selectedImages));
       form.append('imageNames', JSON.stringify(this.imageNames));
       form.append('techs', JSON.stringify(techs));
 
@@ -178,11 +191,10 @@ export default {
     },
     removeImage(index) {
       this.images[index] = null;
-      this.selectedImageIndex = index;
     },
     removeUploadedImage(index) {
       this.imageNames[index] = null;
-
+      this.selectedImageIndex = index;
       this.removeImage(index);
       this.submit();
     },

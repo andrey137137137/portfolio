@@ -164,9 +164,7 @@ function formParse(req, res, mode, withoutImageCB, withImageCallbacksArray) {
       selectedImages = JSON.parse(fields.selectedImages);
 
       selectedImages.forEach((selectedImage, index) => {
-        if (selectedImage) {
-          uplImages.push(files['image' + index]);
-        }
+        uplImages.push(selectedImage ? files['image' + index] : null);
       });
 
       setCurImageIndex();

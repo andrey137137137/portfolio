@@ -111,8 +111,8 @@ const deleteBreakpointImages = (breakpoints, data, dir, highCB, layer = -1) => {
 const waterfallCB = function(err, result, params) {
   const { res, mode } = params;
 
-  if (params.image) {
-    params.image = null;
+  if (params.oneOrManyImages) {
+    params.oneOrManyImages = null;
   }
 
   if (err) {
@@ -122,15 +122,34 @@ const waterfallCB = function(err, result, params) {
   return crud.sendResult(result, res, mode);
 };
 
-const startWaterfall = function(callbackArray, res, mode, image = null) {
+const startWaterfall = function(
+  callbackArray,
+  res,
+  mode,
+  oneOrManyImages = null,
+) {
   waterfall(callbackArray, (err, result) => {
-    if (image) {
-      return fs.unlink(image.path, (err, result) => {
-        return waterfallCB(err, result, { res, mode, image });
-      });
+    if (oneOrManyImages) {
+      // return fs.unlink(image.path, (err, result) => {
+      //   return waterfallCB(err, result, { res, mode, image });
+      // });
+
+      const images = oneOrManyImages.isArray()
+        ? oneOrManyImages
+        : [oneOrManyImages];
+
+      each(
+        images,
+        (image, cb) => {
+          fs.unlink(image.path, cb);
+        },
+        (err, info) => {
+          return waterfallCB(err, result, { res, mode, oneOrManyImages });
+        },
+      );
     }
 
-    waterfallCB(err, result, { res, mode, image });
+    waterfallCB(err, result, { res, mode, oneOrManyImages });
   });
 };
 

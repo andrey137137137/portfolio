@@ -65,7 +65,7 @@ export default {
   mixins: [uploadMixin, itemFormMixin],
   data() {
     const data = {
-      removingImageIndex: -1,
+      rmImageIndex: -1,
       images: [null, null, null],
       fields: [
         {
@@ -135,7 +135,7 @@ export default {
       const data = {
         title: this.title,
         link: this.link,
-        removingImageIndex: this.removingImageIndex,
+        // rmImageIndex: this.rmImageIndex,
       };
       const selectedImages = [];
       const techs = this.techs.map(item => item.name);
@@ -154,24 +154,30 @@ export default {
       // if (isUplImageName) {
       //   const uplImageName = this.images[index].name;
       //   this.imageNames[index] = uplImageName;
-      //   data.removingImageIndex = index;
+      //   data.rmImageIndex = index;
       //   form.append('image', this.images[index], uplImageName);
       // }
 
-      if (this.removingImageIndex >= 0) {
-        form.append('removingImageIndex', this.removingImageIndex);
+      if (this.rmImageIndex >= 0) {
+        form.append('rmImageIndex', this.rmImageIndex);
       } else {
+        let areImages = false;
+
         this.images.forEach((image, index) => {
           const isImage = image ? 1 : 0;
 
           if (isImage) {
             $vm.imageNames[index] = image.name;
             form.append('image' + index, image, image.name);
+            areImages = true;
           }
 
           selectedImages.push(isImage);
         });
-        form.append('selectedImages', JSON.stringify(selectedImages));
+
+        if (areImages) {
+          form.append('selectedImages', JSON.stringify(selectedImages));
+        }
       }
 
       for (const key in data) {
@@ -199,7 +205,7 @@ export default {
     },
     removeUploadedImage(index) {
       this.imageNames[index] = null;
-      this.removingImageIndex = index;
+      this.rmImageIndex = index;
       // this.removeImage(index);
       this.submit();
     },

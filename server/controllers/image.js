@@ -143,7 +143,7 @@ const startWaterfall = function(
         (image, cb) => {
           fs.unlink(image.path, cb);
         },
-        (err, info) => {
+        err => {
           return waterfallCB(err, result, { res, mode, oneOrManyImages });
         },
       );

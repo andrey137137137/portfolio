@@ -27,12 +27,11 @@ let curID;
 let curMode;
 let curFields;
 let curImageIndex = -1;
-let selectedImages = null;
 let uplImages = null;
 
 function setCurImageIndex() {
-  for (var index = curImageIndex + 1; index < selectedImages.length; index++) {
-    if (selectedImages[index]) {
+  for (var index = curImageIndex + 1; index < uplImages.length; index++) {
+    if (uplImages[index]) {
       curImageIndex = index;
       break;
     }
@@ -158,10 +157,11 @@ function formParse(req, res, mode, withoutImageCB, withImageCallbacksArray) {
       techs: JSON.parse(techs),
     };
 
-    if (exist('removingImageIndex', fields)) {
-      curImageIndex = fields.removingImageIndex;
-    } else {
-      selectedImages = JSON.parse(fields.selectedImages);
+    if (exist('rmImageIndex', fields)) {
+      curImageIndex = fields.rmImageIndex;
+    } else if (exist('selectedImages', fields)) {
+      const selectedImages = JSON.parse(fields.selectedImages);
+      uplImages = [];
 
       selectedImages.forEach((selectedImage, index) => {
         uplImages.push(selectedImage ? files['image' + index] : null);
@@ -170,10 +170,12 @@ function formParse(req, res, mode, withoutImageCB, withImageCallbacksArray) {
       setCurImageIndex();
     }
 
+    console.log('rmImageIndex: ' + fields.rmImageIndex);
+    console.log('selectedImages: ' + fields.selectedImages);
     console.log('mode: ' + mode);
     console.log('curImageIndex: ' + curImageIndex);
     console.log('imageNames: ' + curFields.imageNames);
-    console.log('image: ' + files.image);
+    console.log('uplImages: ' + uplImages);
 
     const curImageName = curFields.imageNames[curImageIndex];
     const condition = mode == 'update' && curImageIndex >= 0 && !curImageName;
@@ -182,12 +184,7 @@ function formParse(req, res, mode, withoutImageCB, withImageCallbacksArray) {
     console.log('curImageName: ' + curImageName);
     console.log('!curImageName: ' + !curImageName);
 
-    if (
-      uplImages ||
-      (mode == 'update' &&
-        curImageIndex >= 0 &&
-        !curFields.imageNames[curImageIndex])
-    ) {
+    if (uplImages || (mode == 'update' && curImageIndex >= 0)) {
       image.startWaterfall(withImageCallbacksArray, res, mode, uplImages);
     } else {
       withoutImageCB();

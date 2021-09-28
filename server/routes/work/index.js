@@ -139,9 +139,23 @@ function deleteAllImages(data, highCB) {
   );
 }
 
-function formParse(req, res, mode, withoutImageCB, withImageCallbacksArray) {
+function initVars(res, mode, id = -1) {
   curRes = res;
   curMode = mode;
+  curID = id;
+  curImageIndex = -1;
+  uplImages = null;
+}
+
+function formParse(
+  req,
+  res,
+  mode,
+  id,
+  withoutImageCB,
+  withImageCallbacksArray,
+) {
+  initVars(res, mode, id);
 
   const form = new IncomingForm({
     uploadDir: image.getTempPath(dir),
@@ -160,6 +174,13 @@ function formParse(req, res, mode, withoutImageCB, withImageCallbacksArray) {
       imageNames: JSON.parse(imageNames),
       techs: JSON.parse(techs),
     };
+
+    console.log('rmImageIndex: ' + fields.rmImageIndex);
+    console.log('selectedImages: ' + fields.selectedImages);
+    console.log('mode: ' + mode);
+    console.log('curImageIndex: ' + curImageIndex);
+    console.log('imageNames: ' + curFields.imageNames);
+    console.log('uplImages: ' + uplImages);
 
     if (exist('rmImageIndex', fields)) {
       curImageIndex = fields.rmImageIndex;
@@ -203,6 +224,7 @@ router.post('/', isAuth, (req, res) => {
     req,
     res,
     'insert',
+    -1,
     () => {
       crud.createItem(Model, curFields, res);
     },
@@ -218,12 +240,11 @@ router.post('/', isAuth, (req, res) => {
 });
 
 router.put('/:id', isAuth, (req, res) => {
-  curID = req.params.id;
-
   formParse(
     req,
     res,
     'update',
+    req.params.id,
     () => {
       crud.updateItem(Model, curID, curFields, res);
     },
@@ -245,10 +266,7 @@ router.put('/:id', isAuth, (req, res) => {
 });
 
 router.delete('/:id', isAuth, (req, res) => {
-  curID = req.params.id;
-  curRes = res;
-  curMode = 'delete';
-
+  initVars(res, 'delete', req.params.id);
   image.startWaterfall(
     [
       cb => {

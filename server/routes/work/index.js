@@ -38,7 +38,11 @@ function setCurImageIndex() {
   }
 }
 
-function uploadBreakpointImages(uplImage, highCB) {
+function uploadBreakpointImages(uplImage, data, highCB) {
+  if (!uplImage) {
+    return highCB(null, data);
+  }
+
   each(
     breakpoints,
     (breakpoint, cb) => {
@@ -78,7 +82,7 @@ function uploadAllBreakpointImages(data, highCB) {
   each(
     uplImages,
     (uplImage, cb) => {
-      uploadBreakpointImages(uplImage, cb);
+      uploadBreakpointImages(uplImage, data, cb);
       setCurImageIndex();
     },
     (err, info) => {
@@ -162,11 +166,9 @@ function formParse(req, res, mode, withoutImageCB, withImageCallbacksArray) {
     } else if (exist('selectedImages', fields)) {
       const selectedImages = JSON.parse(fields.selectedImages);
       uplImages = [];
-
       selectedImages.forEach((selectedImage, index) => {
         uplImages.push(selectedImage ? files['image' + index] : null);
       });
-
       setCurImageIndex();
     }
 

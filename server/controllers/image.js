@@ -134,22 +134,27 @@ const startWaterfall = function(
       //   return waterfallCB(err, result, { res, mode, image });
       // });
 
-      const images = oneOrManyImages.isArray()
+      const images = Array.isArray(oneOrManyImages)
         ? oneOrManyImages
         : [oneOrManyImages];
 
       each(
         images,
         (image, cb) => {
-          fs.unlink(image.path, cb);
+          if (image) {
+            fs.unlink(image.path, cb);
+          }
+          // else {
+          //   cb(null);
+          // }
         },
         err => {
           return waterfallCB(err, result, { res, mode, oneOrManyImages });
         },
       );
+    } else {
+      waterfallCB(err, result, { res, mode, oneOrManyImages });
     }
-
-    waterfallCB(err, result, { res, mode, oneOrManyImages });
   });
 };
 

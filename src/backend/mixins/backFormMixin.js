@@ -45,7 +45,9 @@ export default {
     touchInvalidElem() {
       const elemName = this.returnInvalidElem();
 
-      if (!elemName) return true;
+      if (!elemName) {
+        return true;
+      }
 
       this.$v[elemName].$touch();
 

@@ -89,7 +89,7 @@ const remove = (res, imageName, dir = '', layer = -1, cb = false) => {
   });
 };
 
-const deleteBreakpointImages = (breakpoints, data, dir, highCB, layer = -1) => {
+const deleteBreakpointImages = (dir, data, breakpoints, highCB, layer = -1) => {
   setUploadPath(dir, layer);
   each(
     breakpoints,
@@ -108,12 +108,8 @@ const deleteBreakpointImages = (breakpoints, data, dir, highCB, layer = -1) => {
   );
 };
 
-const waterfallCB = function(err, result, params) {
-  const { res, mode } = params;
-
-  if (params.oneOrManyImages) {
-    params.oneOrManyImages = null;
-  }
+const waterfallCB = function(err, result, res, mode) {
+  // const { res, mode } = params;
 
   if (err) {
     return crud.sendError(err, res, mode);
@@ -122,39 +118,27 @@ const waterfallCB = function(err, result, params) {
   return crud.sendResult(result, res, mode);
 };
 
-const startWaterfall = function(
-  callbackArray,
-  res,
-  mode,
-  oneOrManyImages = null,
-) {
-  waterfall(callbackArray, (err, result) => {
-    if (oneOrManyImages) {
-      // return fs.unlink(image.path, (err, result) => {
-      //   return waterfallCB(err, result, { res, mode, image });
-      // });
+const startWaterfall = function(res, mode, cbArray, images = []) {
+  waterfall(cbArray, (err, result) => {
+    // const cbParams = { res, mode };
 
-      const images = Array.isArray(oneOrManyImages)
-        ? oneOrManyImages
-        : [oneOrManyImages];
+    // if (images) {
+    // return fs.unlink(image.path, (err, result) => {
+    //   return waterfallCB(err, result, { res, mode, image });
+    // });
 
-      each(
-        images,
-        (image, cb) => {
-          if (image) {
-            fs.unlink(image.path, cb);
-          }
-          // else {
-          //   cb(null);
-          // }
-        },
-        err => {
-          return waterfallCB(err, result, { res, mode, oneOrManyImages });
-        },
-      );
-    } else {
-      waterfallCB(err, result, { res, mode, oneOrManyImages });
-    }
+    each(
+      images.filter(item => !!item),
+      (image, cb) => {
+        fs.unlink(image.path, cb);
+      },
+      err => {
+        return waterfallCB(err, result, res, mode);
+      },
+    );
+    // } else {
+    //   waterfallCB(err, result, cbParams);
+    // }
   });
 };
 

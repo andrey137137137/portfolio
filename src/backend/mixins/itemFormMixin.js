@@ -41,12 +41,14 @@ export default {
         this.updateData({ id: this.item._id, data: this.submitData });
       }
     },
+    afterSubmit() {},
     submit() {
       if (this.$v.$invalid) {
         return false;
       }
 
       this.sendData();
+      this.afterSubmit();
       return true;
     },
   },

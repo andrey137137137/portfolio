@@ -98,14 +98,14 @@ function deleteSliderBreakpointImages(data, highCB) {
   }
 
   return image.deleteBreakpointImages(
+    dir,
+    data,
     breakpoints.map(item => {
       return path.join(
         item.name,
         getSlideImageName(curID, data.imageNames[curImageIndex]),
       );
     }),
-    data,
-    dir,
     highCB,
   );
 }
@@ -147,14 +147,7 @@ function initVars(res, mode, id = -1) {
   uplImages = null;
 }
 
-function formParse(
-  req,
-  res,
-  mode,
-  id,
-  withoutImageCB,
-  withImageCallbacksArray,
-) {
+function formParse(req, res, mode, id, withoutImageCB, withImageCbArray) {
   initVars(res, mode, id);
 
   const form = new IncomingForm({
@@ -181,15 +174,18 @@ function formParse(
     console.log('curImageIndex: ' + curImageIndex);
     console.log('imageNames: ' + curFields.imageNames);
     console.log('uplImages: ' + uplImages);
+    console.log('files: ' + files);
 
     if (exist('rmImageIndex', fields)) {
       curImageIndex = fields.rmImageIndex;
     } else if (exist('selectedImages', fields)) {
       const selectedImages = JSON.parse(fields.selectedImages);
       uplImages = [];
+
       selectedImages.forEach((selectedImage, index) => {
         uplImages.push(selectedImage ? files['image' + index] : null);
       });
+
       setCurImageIndex();
     }
 
@@ -208,7 +204,7 @@ function formParse(
     console.log('!curImageName: ' + !curImageName);
 
     if (uplImages || (mode == 'update' && curImageIndex >= 0)) {
-      image.startWaterfall(withImageCallbacksArray, res, mode, uplImages);
+      image.startWaterfall(res, mode, withImageCbArray, uplImages);
     } else {
       withoutImageCB();
     }
@@ -267,21 +263,17 @@ router.put('/:id', isAuth, (req, res) => {
 
 router.delete('/:id', isAuth, (req, res) => {
   initVars(res, 'delete', req.params.id);
-  image.startWaterfall(
-    [
-      cb => {
-        crud.getItemById(Model, res, curID, {}, {}, cb);
-      },
-      (result, cb) => {
-        deleteAllImages(result, cb);
-      },
-      (result, cb) => {
-        crud.deleteItem(Model, curID, res, cb);
-      },
-    ],
-    res,
-    curMode,
-  );
+  image.startWaterfall(res, curMode, [
+    cb => {
+      crud.getItemById(Model, res, curID, {}, {}, cb);
+    },
+    (result, cb) => {
+      deleteAllImages(result, cb);
+    },
+    (result, cb) => {
+      crud.deleteItem(Model, curID, res, cb);
+    },
+  ]);
 });
 
 module.exports = router;

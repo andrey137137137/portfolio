@@ -191,6 +191,9 @@ export default {
 
       this.submitData = form;
     },
+    afterSubmit() {
+      this.rmImageIndex = -1;
+    },
     imagePreview(index) {
       return (
         '/upload/slider/xl/' +

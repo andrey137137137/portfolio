@@ -1,7 +1,7 @@
 const { SUCCESS, FORBIDDEN, NOT_FOUND, ERROR } = require('@httpSt');
 const waterfall = require('async/waterfall');
 
-const getMessage = (mode, isError = false) => {
+function getMessage(mode, isError = false) {
   switch (mode) {
     case 'find':
       return 'чтении записей';
@@ -17,6 +17,78 @@ const getMessage = (mode, isError = false) => {
       if (isError) return 'удалении записи';
       return 'удалена';
   }
+}
+
+function get(Model, res, params, cb = false) {
+  const { filter, fields, options, mode } = params;
+  const types = {
+    many: 'find',
+    one: 'findOne',
+    id: 'findById',
+  };
+  const method = mode ? types[mode] : types['many'];
+
+  if (cb !== false) {
+    return Model[method](filter, fields, options, cb);
+  }
+
+  Model[method](filter, fields, options)
+    .then(result => {
+      res.status(SUCCESS).json({ result });
+    })
+    .catch(err => {
+      sendError(err, res, mode == 'many' ? 'find' : 'findOne');
+    });
+}
+
+function update(Model, res, params, cb = false) {
+  const { query, data } = params;
+  const method = query.id ? 'findByIdAndUpdate' : 'findOneAndUpdate';
+  const filter = query.id ? query.id : query;
+
+  if (cb !== false) {
+    return Model[method](filter, { $set: data }, cb);
+  }
+
+  Model[method](filter, { $set: data })
+    .then(result => {
+      sendResult(result, res, 'update');
+    })
+    .catch(err => {
+      sendError(err, res, 'update');
+    });
+}
+
+const createItem = (Model, data, res, cb = false) => {
+  const item = new Model(data);
+
+  if (cb !== false) {
+    return item.save(cb);
+  }
+
+  item
+    .save()
+    .then(result => {
+      sendResult(result, res, 'insert');
+    })
+    .catch(err => {
+      sendError(err, res, 'insert');
+    });
+};
+
+const deleteItem = (Model, id, res, cb = false) => {
+  if (cb !== false) {
+    return Model.findByIdAndRemove(id, cb);
+  }
+
+  Model.findByIdAndRemove(id).then(
+    result => {
+      sendResult(result, res, 'delete');
+    },
+    err => {
+      sendError(err, res, 'delete');
+    },
+  );
 };
 
 const sendResult = (result, res, mode = 'insert') => {
@@ -45,37 +117,8 @@ const sendError = (err, res, mode) => {
   });
 };
 
-const get = (
-  Model,
-  res,
-  filter,
-  fields,
-  options,
-  mode = 'many',
-  cb = false,
-) => {
-  const types = {
-    many: 'find',
-    one: 'findOne',
-    id: 'findById',
-  };
-  const method = types[mode];
-
-  if (cb !== false) {
-    return Model[method](filter, fields, options, cb);
-  }
-
-  Model[method](filter, fields, options)
-    .then(result => {
-      res.status(SUCCESS).json({ result });
-    })
-    .catch(err => {
-      sendError(err, res, mode == 'many' ? 'find' : 'findOne');
-    });
-};
-
 const getItemById = (Model, res, id, fields = {}, options = {}, cb = false) => {
-  get(Model, res, id, fields, options, 'id', cb);
+  get(Model, res, { filter: id, fields, options, mode: 'id' }, cb);
 };
 
 const getItem = (
@@ -86,53 +129,19 @@ const getItem = (
   options = {},
   cb = false,
 ) => {
-  get(Model, res, filter, fields, options, 'one', cb);
+  get(Model, res, { filter, fields, options, mode: 'one' }, cb);
 };
 
 const getItems = (Model, res, sort, filter = {}, fields = {}) => {
-  get(Model, res, filter, fields, { sort });
-};
-
-const createItem = (Model, data, res, cb = false) => {
-  const item = new Model(data);
-
-  if (cb !== false) {
-    return item.save(cb);
-  }
-
-  item
-    .save()
-    .then(result => {
-      sendResult(result, res, 'insert');
-    })
-    .catch(err => {
-      sendError(err, res, 'insert');
-    });
-};
-
-const update = (Model, query, data, res, cb = false) => {
-  const method = query.id ? 'findByIdAndUpdate' : 'findOneAndUpdate';
-  const filter = query.id ? query.id : query;
-
-  if (cb !== false) {
-    return Model[method](filter, { $set: data }, cb);
-  }
-
-  Model[method](filter, { $set: data })
-    .then(result => {
-      sendResult(result, res, 'update');
-    })
-    .catch(err => {
-      sendError(err, res, 'update');
-    });
+  get(Model, res, { filter, fields, options: { sort } });
 };
 
 const updateItem = (Model, id, data, res, isNotCB = false) => {
-  update(Model, { id }, data, res, isNotCB);
+  update(Model, { query: { id }, data }, res, isNotCB);
 };
 
 const updateItemByQuery = (Model, query, data, res, isNotCB = false) => {
-  update(Model, query, data, res, isNotCB);
+  update(Model, { query, data }, res, isNotCB);
 };
 
 const updateUserPassword = (Model, id, data, res) => {
@@ -169,21 +178,6 @@ const updateUserPassword = (Model, id, data, res) => {
       }
 
       sendResult(user, res, 'update');
-    },
-  );
-};
-
-const deleteItem = (Model, id, res, cb = false) => {
-  if (cb !== false) {
-    return Model.findByIdAndRemove(id, cb);
-  }
-
-  Model.findByIdAndRemove(id).then(
-    result => {
-      sendResult(result, res, 'delete');
-    },
-    err => {
-      sendError(err, res, 'delete');
     },
   );
 };

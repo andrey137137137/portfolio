@@ -108,13 +108,13 @@ const deleteBreakpointImages = (dir, data, breakpoints, highCB, layer = -1) => {
   );
 };
 
-const waterfallCB = function(err, result, res, mode) {
+function waterfallCB(err, result, res, mode) {
   if (err) {
     return crud.sendError(err, res, mode);
   }
 
   return crud.sendResult(result, res, mode);
-};
+}
 
 const startWaterfall = function(res, mode, cbArray, images = []) {
   waterfall(cbArray, (err, result) => {

@@ -58,18 +58,20 @@ router.put('/:layer', isAuth, (req, res) => {
 
 router.delete('/:layer', isAuth, (req, res) => {
   const { layer } = req.params;
+  let data = null;
 
   image.startWaterfall(res, 'delete', [
     cb => {
       crud.getItem(Model, res, {}, {}, {}, cb);
     },
     (result, cb) => {
+      data = result;
       deleteParallaxBreakpointImages(result, cb);
     },
     (result, cb) => {
       crud.updateItem(
         Model,
-        { count: result.count - 1 },
+        { count: data.count - 1 },
         { count: layer },
         res,
         cb,

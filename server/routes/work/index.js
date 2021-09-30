@@ -26,8 +26,12 @@ let curRes;
 let curID;
 let curMode;
 let curFields;
-let curImageIndex = -1;
-let uplImages = null;
+let curImageIndex;
+let uplImages;
+
+function areUplImages() {
+  return uplImages.length;
+}
 
 function setCurImageIndex() {
   for (var index = curImageIndex + 1; index < uplImages.length; index++) {
@@ -73,7 +77,7 @@ function uploadBreakpointImages(uplImage, data, highCB) {
 }
 
 function uploadAllBreakpointImages(data, highCB) {
-  if (!uplImages) {
+  if (!areUplImages()) {
     return highCB(null, data);
   }
 
@@ -144,7 +148,7 @@ function initVars(res, mode, id = -1) {
   curMode = mode;
   curID = id;
   curImageIndex = -1;
-  uplImages = null;
+  uplImages = [];
 }
 
 function formParse(req, res, mode, id, withoutImageCB, withImageCbArray) {
@@ -180,7 +184,6 @@ function formParse(req, res, mode, id, withoutImageCB, withImageCbArray) {
       curImageIndex = fields.rmImageIndex;
     } else if (exist('selectedImages', fields)) {
       const selectedImages = JSON.parse(fields.selectedImages);
-      uplImages = [];
 
       selectedImages.forEach((selectedImage, index) => {
         uplImages.push(selectedImage ? files['image' + index] : null);
@@ -203,7 +206,7 @@ function formParse(req, res, mode, id, withoutImageCB, withImageCbArray) {
     console.log('curImageName: ' + curImageName);
     console.log('!curImageName: ' + !curImageName);
 
-    if (uplImages || (mode == 'update' && curImageIndex >= 0)) {
+    if (areUplImages() || (mode == 'update' && curImageIndex >= 0)) {
       image.startWaterfall(res, mode, withImageCbArray, uplImages);
     } else {
       withoutImageCB();

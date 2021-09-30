@@ -109,8 +109,6 @@ const deleteBreakpointImages = (dir, data, breakpoints, highCB, layer = -1) => {
 };
 
 const waterfallCB = function(err, result, res, mode) {
-  // const { res, mode } = params;
-
   if (err) {
     return crud.sendError(err, res, mode);
   }
@@ -120,9 +118,6 @@ const waterfallCB = function(err, result, res, mode) {
 
 const startWaterfall = function(res, mode, cbArray, images = []) {
   waterfall(cbArray, (err, result) => {
-    // const cbParams = { res, mode };
-
-    // if (images) {
     // return fs.unlink(image.path, (err, result) => {
     //   return waterfallCB(err, result, { res, mode, image });
     // });
@@ -136,9 +131,6 @@ const startWaterfall = function(res, mode, cbArray, images = []) {
         return waterfallCB(err, result, res, mode);
       },
     );
-    // } else {
-    //   waterfallCB(err, result, cbParams);
-    // }
   });
 };
 

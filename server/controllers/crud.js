@@ -19,14 +19,26 @@ function getMessage(mode, isError = false) {
   }
 }
 
-function get(Model, res, params, cb = false) {
-  const { filter, fields, options, mode } = params;
+function getValidatedObjects(params, keys) {
+  const result = {};
+  keys.forEach(key => {
+    result[key] = !params[key] ? {} : params[key];
+  });
+  return result;
+}
+
+function get(Model, res, params, mode = 'many', cb = false) {
   const types = {
     many: 'find',
     one: 'findOne',
     id: 'findById',
   };
   const method = mode ? types[mode] : types['many'];
+  const { filter, fields, options } = getValidatedObjects(params, [
+    'filter',
+    'fields',
+    'options',
+  ]);
 
   if (cb !== false) {
     return Model[method](filter, fields, options, cb);
@@ -42,7 +54,7 @@ function get(Model, res, params, cb = false) {
 }
 
 function update(Model, res, params, cb = false) {
-  const { query, data } = params;
+  const { query, data } = getValidatedObjects(params, ['query', 'data']);
   const method = query.id ? 'findByIdAndUpdate' : 'findOneAndUpdate';
   const filter = query.id ? query.id : query;
 
@@ -59,7 +71,7 @@ function update(Model, res, params, cb = false) {
     });
 }
 
-const createItem = (Model, data, res, cb = false) => {
+const createItem = (Model, res, data, cb = false) => {
   const item = new Model(data);
 
   if (cb !== false) {
@@ -76,7 +88,7 @@ const createItem = (Model, data, res, cb = false) => {
     });
 };
 
-const deleteItem = (Model, id, res, cb = false) => {
+const deleteItem = (Model, res, id, cb = false) => {
   if (cb !== false) {
     return Model.findByIdAndRemove(id, cb);
   }
@@ -117,34 +129,27 @@ const sendError = (err, res, mode) => {
   });
 };
 
-const getItemById = (Model, res, id, fields = {}, options = {}, cb = false) => {
-  get(Model, res, { filter: id, fields, options, mode: 'id' }, cb);
+const getItemById = (Model, res, id, params, cb = false) => {
+  get(Model, res, { ...params, filter: id }, 'id', cb);
 };
 
-const getItem = (
-  Model,
-  res,
-  filter = {},
-  fields = {},
-  options = {},
-  cb = false,
-) => {
-  get(Model, res, { filter, fields, options, mode: 'one' }, cb);
+const getItem = (Model, res, params, cb = false) => {
+  get(Model, res, params, 'one', cb);
 };
 
-const getItems = (Model, res, sort, filter = {}, fields = {}) => {
-  get(Model, res, { filter, fields, options: { sort } });
+const getItems = (Model, res, sort, params) => {
+  get(Model, res, { ...params, options: { sort } });
 };
 
-const updateItem = (Model, id, data, res, isNotCB = false) => {
-  update(Model, { query: { id }, data }, res, isNotCB);
+const updateItem = (Model, res, id, data, cb = false) => {
+  update(Model, res, { query: { id }, data }, cb);
 };
 
-const updateItemByQuery = (Model, query, data, res, isNotCB = false) => {
-  update(Model, { query, data }, res, isNotCB);
+const updateItemByQuery = (Model, res, params, cb = false) => {
+  update(Model, res, params, cb);
 };
 
-const updateUserPassword = (Model, id, data, res) => {
+const updateUserPassword = (Model, res, id, data) => {
   const { email, username, oldPassword, password, repPassword } = data;
 
   waterfall(

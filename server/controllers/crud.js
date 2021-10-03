@@ -1,6 +1,12 @@
 const { SUCCESS, FORBIDDEN, NOT_FOUND, ERROR } = require('@httpSt');
 const waterfall = require('async/waterfall');
 
+const getQueryTypes = {
+  many: 'find',
+  one: 'findOne',
+  id: 'findById',
+};
+
 function getMessage(mode, isError = false) {
   switch (mode) {
     case 'find':
@@ -27,18 +33,19 @@ function getValidatedObjects(params, keys) {
   return result;
 }
 
+function getGetParams(params, mode) {
+  const keys = ['fields', 'options', 'filter'];
+
+  if (mode == 'one') {
+    keys.length = 2;
+  }
+
+  return getValidatedObjects(params, keys);
+}
+
 function get(Model, res, params, mode = 'many', cb = false) {
-  const types = {
-    many: 'find',
-    one: 'findOne',
-    id: 'findById',
-  };
-  const method = mode ? types[mode] : types['many'];
-  const { filter, fields, options } = getValidatedObjects(params, [
-    'filter',
-    'fields',
-    'options',
-  ]);
+  const method = mode ? getQueryTypes[mode] : getQueryTypes['many'];
+  const { filter, fields, options } = getGetParams(params, mode);
 
   if (cb !== false) {
     return Model[method](filter, fields, options, cb);

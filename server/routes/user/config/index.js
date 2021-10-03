@@ -15,18 +15,13 @@ router.get('/', isAuth, (req, res, next) => {
 router.post('/', isAuth, (req, res, next) => {
   const cond = !req.body.oldPassword && !req.body.password;
   const FUNC = cond ? 'updateItem' : 'updateUserPassword';
-
-  crud[FUNC](
-    Model,
-    userId(req.session.token, next),
-    cond
-      ? {
-          email: req.body.email,
-          username: req.body.username,
-        }
-      : req.body,
-    res,
-  );
+  const params = cond
+    ? {
+        email: req.body.email,
+        username: req.body.username,
+      }
+    : req.body;
+  crud[FUNC](Model, res, userId(req.session.token, next), params);
 });
 
 module.exports = router;

@@ -9,32 +9,23 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', isAuth, (req, res) => {
-  crud.createItem(
-    Model,
-    {
-      title: req.body.title,
-      date: new Date(),
-      body: req.body.text,
-    },
-    res,
-  );
+  crud.createItem(Model, res, {
+    title: req.body.title,
+    date: new Date(),
+    body: req.body.text,
+  });
 });
 
 router.put('/:id', isAuth, (req, res) => {
-  crud.updateItem(
-    Model,
-    req.params.id,
-    {
-      title: req.body.title,
-      date: new Date(req.body.date),
-      body: req.body.text,
-    },
-    res,
-  );
+  crud.updateItem(Model, res, req.params.id, {
+    title: req.body.title,
+    date: new Date(req.body.date),
+    body: req.body.text,
+  });
 });
 
 router.delete('/:id', isAuth, (req, res) => {
-  crud.deleteItem(Model, req.params.id, res);
+  crud.deleteItem(Model, res, req.params.id);
 });
 
 module.exports = router;

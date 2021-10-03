@@ -225,11 +225,11 @@ router.post('/', isAuth, (req, res) => {
     'insert',
     -1,
     () => {
-      crud.createItem(Model, curFields, res);
+      crud.createItem(Model, res, curFields);
     },
     [
       cb => {
-        crud.createItem(Model, curFields, res, cb);
+        crud.createItem(Model, res, curFields, cb);
       },
       (result, cb) => {
         uploadAllBreakpointImages(result, cb);
@@ -245,17 +245,17 @@ router.put('/:id', isAuth, (req, res) => {
     'update',
     req.params.id,
     () => {
-      crud.updateItem(Model, curID, curFields, res);
+      crud.updateItem(Model, res, curID, curFields);
     },
     [
       cb => {
-        crud.getItemById(Model, res, curID, {}, {}, cb);
+        crud.getItemById(Model, res, curID, {}, cb);
       },
       (result, cb) => {
         deleteSliderBreakpointImages(result, cb);
       },
       (result, cb) => {
-        crud.updateItem(Model, curID, curFields, res, cb);
+        crud.updateItem(Model, res, curID, curFields, cb);
       },
       (result, cb) => {
         uploadAllBreakpointImages(result, cb);
@@ -268,13 +268,13 @@ router.delete('/:id', isAuth, (req, res) => {
   initVars(res, 'delete', req.params.id);
   image.startWaterfall(res, curMode, [
     cb => {
-      crud.getItemById(Model, res, curID, {}, {}, cb);
+      crud.getItemById(Model, res, curID, {}, cb);
     },
     (result, cb) => {
       deleteAllImages(result, cb);
     },
     (result, cb) => {
-      crud.deleteItem(Model, curID, res, cb);
+      crud.deleteItem(Model, res, curID, cb);
     },
   ]);
 });

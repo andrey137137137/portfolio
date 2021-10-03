@@ -8,14 +8,17 @@ export default {
   render(h) {
     let elems = [];
 
-    for (const valIndex in this.vals) {
-      if (this.vals.hasOwnProperty(valIndex)) {
+    // for (const valIndex in this.vals) {
+    for (const valIndex in this.compItems) {
+      // if (this.vals.hasOwnProperty(valIndex)) {
+      if (this.compItems.hasOwnProperty(valIndex)) {
         this.fields.forEach(field => {
           elems.push(
             this.inputEvElem(
               h,
               valIndex,
-              this.vals[valIndex],
+              // this.vals[valIndex],
+              this.compItems[valIndex],
               field.name,
               field.type,
               field.placeholder,
@@ -28,10 +31,10 @@ export default {
     return h('div', {}, [...elems.map(elem => elem), this.navElem(h)]);
   },
   props: {
-    vals: {
-      type: Object,
-      required: true,
-    },
+    // vals: {
+    //   type: Object,
+    //   required: true,
+    // },
     items: {
       type: Array,
       required: true,
@@ -45,13 +48,18 @@ export default {
       required: true,
     },
   },
+  data() {
+    return {
+      isLoaded: false,
+      compItems: [],
+    };
+  },
   methods: {
     getIndex(index) {
       return parseInt(index) + 1;
     },
     inputEvElem(h, index, val, fieldName, type, placeholder) {
-      const self = this;
-
+      const $vm = this;
       return h('InputEventElem', {
         props: {
           type,
@@ -61,17 +69,18 @@ export default {
         },
         on: {
           input: value => {
-            self.items[index][fieldName] = value;
+            // $vm.items[index][fieldName] = value;
+            $vm.compItems[index][fieldName] = value;
             val.$touch();
-            self.$emit('input', value);
+            $vm.$emit('input', value);
           },
         },
       });
     },
     removeItem(e) {
       e.preventDefault();
-
-      this.items.pop();
+      // this.items.pop();
+      this.compItems.pop();
     },
     addItem(e) {
       e.preventDefault();
@@ -83,8 +92,11 @@ export default {
           template[key] = this.propTemplate[key];
         }
       }
+      console.log(template);
 
-      this.items.push(template);
+      // this.items.push(template);
+      this.compItems.push(template);
+      // this.compItems.push('template');
     },
     navElem(h) {
       return h('div', { class: 'menu' }, [
@@ -101,4 +113,16 @@ export default {
       ]);
     },
   },
+  // updated() {
+  //   if (!this.isLoaded) {
+  //     const $vm = this;
+
+  //     $vm.compItems = $vm.items.map(item => item);
+
+  //     // $vm.items = [];
+  //     $vm.isLoaded = true;
+  //     console.log($vm.items.map(item => item));
+  //     console.log($vm.compItems);
+  //   }
+  // },
 };

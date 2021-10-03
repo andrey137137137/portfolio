@@ -18,24 +18,21 @@ function deleteParallaxBreakpointImages(data, highCB) {
 }
 
 router.get('/', (req, res) => {
-  crud.getItem(
-    Model,
-    res,
-    {},
-    {
+  crud.getItem(Model, res, {
+    fields: {
       _id: 0,
       __v: 0,
     },
-  );
+  });
 });
 
 router.post('/:layer', isAuth, (req, res) => {
   image.startWaterfall(res, 'insert', [
     cb => {
-      crud.getItem(Model, res, {}, {}, {}, cb);
+      crud.getItem(Model, res, {}, cb);
     },
     (result, cb) => {
-      crud.updateItem(Model, result._id, { count: result.count + 1 }, res, cb);
+      crud.updateItem(Model, res, result._id, { count: result.count + 1 }, cb);
     },
     (result, cb) => {
       image.upload(req, res, dir, req.params.layer, cb);
@@ -62,7 +59,7 @@ router.delete('/:layer', isAuth, (req, res) => {
 
   image.startWaterfall(res, 'delete', [
     cb => {
-      crud.getItem(Model, res, {}, {}, {}, cb);
+      crud.getItem(Model, res, {}, cb);
     },
     (result, cb) => {
       data = result;
@@ -71,9 +68,9 @@ router.delete('/:layer', isAuth, (req, res) => {
     (result, cb) => {
       crud.updateItem(
         Model,
+        res,
         { count: data.count - 1 },
         { count: layer },
-        res,
         cb,
       );
     },

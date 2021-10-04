@@ -93,7 +93,9 @@ export default new Vuex.Store({
     readData({ state, commit }) {
       let { page } = state.data;
 
-      if (page == COMMENT) page += '/back';
+      if (page == COMMENT) {
+        page += '/back';
+      }
 
       axios.get(page).then(res => {
         commit(SET, res.data.result);

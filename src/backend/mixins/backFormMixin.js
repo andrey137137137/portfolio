@@ -18,12 +18,12 @@ export default {
   },
   methods: {
     ...mapActions(['updateData']),
-    cloneMultipleArray(array, props) {
+    cloneMultipleArray(array, propTemplate) {
       return array.map(item => {
         const object = {};
 
-        for (const key in props) {
-          if (props.hasOwnProperty(key)) {
+        for (const key in propTemplate) {
+          if (propTemplate.hasOwnProperty(key)) {
             object[key] = item[key];
           }
         }
@@ -31,9 +31,9 @@ export default {
         return object;
       });
     },
-    getMultipleArray(root, arrayKey, props) {
+    getMultipleArray(root, arrayKey, propTemplate) {
       return exist(arrayKey, root)
-        ? this.cloneMultipleArray(root[arrayKey], props)
+        ? this.cloneMultipleArray(root[arrayKey], propTemplate)
         : [];
     },
     defaultFields() {

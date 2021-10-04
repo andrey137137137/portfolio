@@ -3,8 +3,8 @@ UserForm(:handleSubmit='submit', :disabled='disabled')
   InputEventElem(v-model='firstName', :val='$v.firstName', placeholder='Имя')
   InputEventElem(v-model='lastName', :val='$v.lastName', placeholder='Фамилия')
   MultipleElem(
-    :vals='$v.contacts.$each.$iter',
-    :items='contacts',
+    :vals='$v.copyContacts.$each.$iter',
+    :items='copyContacts',
     :fields='contactFields',
     :propTemplate='contactTemplate'
   )
@@ -21,6 +21,7 @@ import userFormMixin from '@backend/mixins/userFormMixin';
 import UserForm from '@backCmp/forms/UserForm';
 import InputEventElem from '@components/formElems/InputEventElem';
 import MultipleElem from '@components/formElems/MultipleElem';
+// import { exist } from '@apiHelpers';
 
 export default {
   name: 'ProfileForm',
@@ -54,6 +55,8 @@ export default {
         href: '',
         icon: '',
       },
+      copyContacts: [],
+      isFirstUpdated: false,
     };
   },
   validations: {
@@ -63,7 +66,7 @@ export default {
     lastName: {
       required,
     },
-    contacts: {
+    copyContacts: {
       $each: {
         name: {
           required,
@@ -71,13 +74,18 @@ export default {
         },
         href: {
           required,
-          alphaNum,
+          // alphaNum,
         },
         icon: {
           required,
-          alphaNum,
+          // alphaNum,
         },
       },
+    },
+  },
+  computed: {
+    compContacts() {
+      return this.getMultipleArray(this, 'contacts', this.contactTemplate);
     },
   },
   methods: {
@@ -85,9 +93,18 @@ export default {
       this.submitData = {
         firstName: this.firstName,
         lastName: this.lastName,
-        contacts: this.cloneMultipleArray(this.contacts, this.contactTemplate),
+        contacts: this.cloneMultipleArray(
+          this.compContacts,
+          this.contactTemplate,
+        ),
       };
     },
+  },
+  updated() {
+    if (!this.isFirstUpdated) {
+      this.copyContacts = this.compContacts;
+      this.isFirstUpdated = true;
+    }
   },
 };
 </script>

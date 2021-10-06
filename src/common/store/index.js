@@ -40,6 +40,10 @@ function convertData(data) {
   return newData;
 }
 
+function isUser(page) {
+  return page.slice(0, 4) == 'user';
+}
+
 export default new Vuex.Store({
   strict: IS_DEV,
   state: {
@@ -98,7 +102,9 @@ export default new Vuex.Store({
       }
 
       axios.get(page).then(res => {
-        commit(SET, res.data.result);
+        const { result } = res.data;
+        const items = isUser(page) ? [result] : result;
+        commit(SET, items);
         if (state.isFront) {
           commit(INC_LOADED);
         }
@@ -115,21 +121,14 @@ export default new Vuex.Store({
     },
     updateData({ state, dispatch, commit }, { data, id }) {
       const { page } = state.data;
-
-      let isUser = false;
-      let method = 'put';
-      let url = `${page}/${id}`;
-
-      if (page.slice(0, 4) == 'user') {
-        isUser = true;
-        method = 'post';
-        url = page;
-      }
+      const isUserFlag = isUser(page);
+      const method = isUserFlag ? 'post' : 'put';
+      const url = isUserFlag ? page : `${page}/${id}`;
 
       axios[method](url, data).then(res => {
         const commitPayload = { id: 0, data: convertData(data) };
 
-        if (!isUser) {
+        if (!isUserFlag) {
           commitPayload.id = id;
         }
 

@@ -72,7 +72,9 @@ export default {
       },
     };
 
-    if (!this.changePassword) return userValids;
+    if (!this.changePassword) {
+      return userValids;
+    }
 
     return {
       ...userValids,

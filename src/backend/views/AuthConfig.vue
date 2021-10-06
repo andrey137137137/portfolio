@@ -1,6 +1,6 @@
 <template lang="pug">
 PageWrapper
-  UsernameForm(:username='dbData.username', :email='dbData.email')
+  UsernameForm(v-for='item in dbData', :key='item._id', :params='item')
 </template>
 
 <script>

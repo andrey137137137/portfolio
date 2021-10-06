@@ -3,28 +3,36 @@ import backFormMixin from '@backend/mixins/backFormMixin';
 export default {
   mixins: [backFormMixin],
   props: {
-    firstName: {
-      type: String,
-      default: '',
-    },
-    lastName: {
-      type: String,
-      default: '',
-    },
-    contacts: {
-      type: Array,
-      default: () => [],
-    },
-    email: {
-      type: String,
-      default: '',
-    },
-    username: {
-      type: String,
-      default: '',
+    params: {
+      type: Object,
+      default: null,
     },
   },
+  data() {
+    const { firstName, lastName, email, username, old } = this.params;
+    return {
+      stencilProps: {
+        aspectRatio: 1,
+      },
+      cropSize: {
+        width: 141,
+        height: 141,
+      },
+      firstName,
+      lastName,
+      email,
+      username,
+      old,
+    };
+  },
   methods: {
+    setData() {
+      for (const key in this.params) {
+        if (Object.hasOwnProperty.call(this.params, key)) {
+          this[key] = this.params[key];
+        }
+      }
+    },
     defaultFields() {
       return {};
     },

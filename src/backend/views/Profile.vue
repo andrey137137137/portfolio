@@ -6,12 +6,7 @@ PageWrapper
     :stencilProps='stencilProps',
     :cropSize='cropSize'
   )
-  ProfileForm(
-    :firstName='dbData.firstName',
-    :lastName='dbData.lastName',
-    :contacts='dbData.contacts',
-    :email='dbData.email'
-  )
+  ProfileForm(v-for='item in dbData', :key='item._id', :params='item')
 </template>
 
 <script>

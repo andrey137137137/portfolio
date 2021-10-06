@@ -67,27 +67,27 @@ const router = new VueRouter({
       children: [
         {
           path: ADMIN_ABOUT,
-          meta: { title: 'Обо мне', page: 'skill', isFront: false },
+          meta: { title: 'Обо мне', page: 'skill' },
           component: () => import('@backViews/About.vue'),
         },
         {
           path: ADMIN_BLOG,
-          meta: { title: 'Блог', page: 'post', isFront: false },
+          meta: { title: 'Блог', page: 'post' },
           component: () => import('@backViews/Blog.vue'),
         },
         {
           path: ADMIN_WORKS,
-          meta: { title: 'Мои работы', page: 'work', isFront: false },
+          meta: { title: 'Мои работы', page: 'work' },
           component: () => import('@backViews/Works.vue'),
         },
         {
           path: ADMIN_COMMENTS,
-          meta: { title: 'Отзывы', page: 'comment', isFront: false },
+          meta: { title: 'Отзывы', page: 'comment' },
           component: () => import('@backViews/Comments.vue'),
         },
         {
           path: ADMIN_PARALLAX,
-          meta: { title: 'Параллакс', isFront: false },
+          meta: { title: 'Параллакс' },
           component: () => import('@backViews/Parallax.vue'),
         },
         {
@@ -95,7 +95,6 @@ const router = new VueRouter({
           meta: {
             title: 'Личные данные',
             page: 'user/profile',
-            isFront: false,
           },
           component: () => import('@backViews/Profile.vue'),
         },
@@ -104,7 +103,6 @@ const router = new VueRouter({
           meta: {
             title: 'Имя пользователя и email',
             page: 'user/config',
-            isFront: false,
           },
           component: () => import('@backViews/AuthConfig.vue'),
         },

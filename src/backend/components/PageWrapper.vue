@@ -6,6 +6,7 @@
 </template>
 
 <script>
+import { exist } from '@apiHelpers';
 import loadDataMixin from '@common/mixins/loadDataMixin';
 import SubmitMessage from '@components/formElems/SubmitMessage';
 
@@ -26,7 +27,7 @@ export default {
     },
   },
   created() {
-    this.isItFront(this.$route.meta.isFront);
+    this.isItFront(exist('isFront', this.$route.meta));
     this.loadData();
   },
 };

@@ -104,7 +104,9 @@ export default new Vuex.Store({
       axios.get(page).then(res => {
         const { result } = res.data;
         const items = isUser(page) ? [result] : result;
+
         commit(SET, items);
+
         if (state.isFront) {
           commit(INC_LOADED);
         }
@@ -193,13 +195,14 @@ export default new Vuex.Store({
       state.data.result.push(newItem);
     },
     [UPDATE](state, { id, data }) {
+      let index = 0;
+
       if (id) {
-        const index = state.data.result.findIndex(item => item._id == id);
+        index = state.data.result.findIndex(item => item._id == id);
         data._id = id;
-        state.data.result.splice(index, 1, data);
-      } else {
-        state.data.result = data;
       }
+
+      state.data.result.splice(index, 1, data);
     },
     [DELETE](state, id) {
       state.data.result = state.data.result.filter(item => item._id !== id);

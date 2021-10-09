@@ -52,13 +52,13 @@ export default {
       return true;
     },
   },
-  created() {
-    if (this.item) {
-      for (const key in this.item) {
-        if (this.item.hasOwnProperty(key)) {
-          this.sourceData[key] = this.item[key];
-        }
-      }
-    }
-  },
+  // created() {
+  //   if (this.item) {
+  //     for (const key in this.item) {
+  //       if (this.item.hasOwnProperty(key)) {
+  //         this.sourceData[key] = this.item[key];
+  //       }
+  //     }
+  //   }
+  // },
 };

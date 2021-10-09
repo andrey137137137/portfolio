@@ -11,13 +11,6 @@ export default {
   data() {
     const { firstName, lastName, email, username, old } = this.params;
     return {
-      stencilProps: {
-        aspectRatio: 1,
-      },
-      cropSize: {
-        width: 141,
-        height: 141,
-      },
       firstName,
       lastName,
       email,
@@ -58,5 +51,8 @@ export default {
 
       return true;
     },
+  },
+  updated() {
+    // this.setData();
   },
 };

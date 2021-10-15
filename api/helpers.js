@@ -1,3 +1,12 @@
+const IS_DEV = process.env.NODE_ENV !== 'production';
+
+const deviceBreakpoints = [
+  { name: 'xl', value: 1800 },
+  { name: 'lg', value: 1200 },
+  { name: 'md', value: 768 },
+  { name: 'sm', value: 0 },
+];
+
 function getBreakpointsWithExcludes(exludes = []) {
   const breakpoints = [];
 
@@ -15,15 +24,6 @@ function getBreakpointsWithExcludes(exludes = []) {
 
   return breakpoints;
 }
-
-const IS_DEV = process.env.NODE_ENV !== 'production';
-
-const deviceBreakpoints = [
-  { name: 'xl', value: 1800 },
-  { name: 'lg', value: 1200 },
-  { name: 'md', value: 768 },
-  { name: 'sm', value: 0 },
-];
 
 const getBreakpointNamesWithoutXL = (isFirstSmallest = true) => {
   return getBreakpointNames(['xl'], isFirstSmallest);

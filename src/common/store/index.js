@@ -105,6 +105,7 @@ export default new Vuex.Store({
         const { result } = res.data;
         const items = isUser(page) ? [result] : result;
         commit(SET, items);
+
         if (state.isFront) {
           commit(INC_LOADED);
         }
@@ -126,9 +127,11 @@ export default new Vuex.Store({
       const url = isUserFlag ? page : `${page}/${id}`;
 
       axios[method](url, data).then(res => {
-        const commitPayload = { id: 0, data: convertData(data) };
+        let commitPayload = { id: 0, data: convertData(data) };
 
-        if (!isUserFlag) {
+        if (isUserFlag) {
+          commitPayload = [commitPayload];
+        } else {
           commitPayload.id = id;
         }
 

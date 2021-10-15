@@ -6,11 +6,11 @@ const { isAuth } = require('@auth');
 const crud = require('@contr/crud');
 const image = require('@contr/image');
 
-const dir = 'parallax';
+const DIR = 'parallax';
 
 function deleteParallaxBreakpointImages(data, highCB) {
   return image.deleteBreakpointImages(
-    dir,
+    DIR,
     data,
     getBreakpointsWithExt('png').map(item => item.name),
     highCB,
@@ -35,7 +35,7 @@ router.post('/:layer', isAuth, (req, res) => {
       crud.updateItem(Model, res, result._id, { count: result.count + 1 }, cb);
     },
     (result, cb) => {
-      image.upload(req, res, dir, req.params.layer, cb);
+      image.upload(req, res, DIR, req.params.layer, cb);
     },
   ]);
 });
@@ -45,10 +45,10 @@ router.put('/:layer', isAuth, (req, res) => {
 
   image.startWaterfall(res, 'update', [
     cb => {
-      deleteParallaxBreakpointImages({}, cb);
+      deleteParallaxBreakpointImages({}, cb, layer);
     },
     (result, cb) => {
-      image.upload(req, res, dir, layer, cb);
+      image.upload(req, res, DIR, layer, cb);
     },
   ]);
 });
@@ -63,16 +63,10 @@ router.delete('/:layer', isAuth, (req, res) => {
     },
     (result, cb) => {
       data = result;
-      deleteParallaxBreakpointImages(result, cb);
+      deleteParallaxBreakpointImages(result, cb, layer);
     },
     (result, cb) => {
-      crud.updateItem(
-        Model,
-        res,
-        { count: data.count - 1 },
-        { count: layer },
-        cb,
-      );
+      crud.updateItem(Model, res, data._id, { count: data.count - 1 }, cb);
     },
   ]);
 });

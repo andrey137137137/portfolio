@@ -1,23 +1,25 @@
 <template lang="pug">
 .parallax(:class='classes')
-  .parallax-layer(ref='firstLayer')
-    video.parallax-img.parallax-img--first(
-      autoplay,
-      loop,
-      autobuffer,
-      muted,
-      playsinline
-    )
-      source(:src='path + "/night.mp4"', type='video/mp4')
   ImageWrapper.parallax-layer(
-    ref='lastLayer',
+    v-for='(item, index in count)',
+    key='item',
+    ref='layers',
     :path='getLayerPath()',
     :breakpoints='breakpoints',
     :title='getTitle()',
     :isWrapperClass='false',
-    :imgAddClasses='{ "parallax-img": true, "parallax-img--other": true }',
+    :imgAddClasses='getImgAddClasses(index)',
     :isLazyLoading='false'
   )
+  //- .parallax-layer(ref='firstLayer')
+  //-   video.parallax-img.parallax-img--first(
+  //-     autoplay,
+  //-     loop,
+  //-     autobuffer,
+  //-     muted,
+  //-     playsinline
+  //-   )
+  //-     source(:src='path + "/night.mp4"', type='video/mp4')
 </template>
 
 <script>
@@ -82,6 +84,13 @@ export default {
     getTitle() {
       return `Слой ${this.lastLayer}`;
     },
+    getImgAddClasses(index) {
+      return {
+        'parallax-img': true,
+        'parallax-img--first': !index,
+        'parallax-img--other': index,
+      };
+    },
     moveLayers(event) {
       if (this.isDesktop) {
         const $vm = this;
@@ -137,8 +146,13 @@ export default {
     this.setCenterCoords();
 
     console.log(this.layers);
-    this.layers.push(this.$refs.firstLayer);
-    this.layers.push(this.$refs.lastLayer.$el);
+
+    // this.layers.push(this.$refs.firstLayer);
+    // this.layers.push(this.$refs.lastLayer.$el);
+
+    this.$refs.layers.forEach($comp => {
+      this.layers.push($comp.$el);
+    });
 
     if (this.isScroll) {
       window.addEventListener('scroll', this.moveLayers);

@@ -6,12 +6,12 @@ PageWrapper
     :stencilProps='stencilProps',
     :cropSize='cropSize'
   )
-  ProfileForm(v-for='item in dbData', :key='item._id', :params='item')
+  ProfileForm(v-for='item in dbData', :key='item.old', :params='item')
 </template>
 
 <script>
 import uploadMixin from '@backend/mixins/uploadMixin';
-import pageDataMixin from '@backend/mixins/pageDataMixin';
+import userPageDataMixin from '@backend/mixins/userPageDataMixin';
 import PageWrapper from '@backCmp/PageWrapper';
 import UploadForm from '@backCmp/forms/UploadForm';
 import ProfileForm from '@backCmp/forms/ProfileForm';
@@ -23,7 +23,7 @@ export default {
     UploadForm,
     ProfileForm,
   },
-  mixins: [uploadMixin, pageDataMixin],
+  mixins: [uploadMixin, userPageDataMixin],
   data() {
     return {
       stencilProps: {

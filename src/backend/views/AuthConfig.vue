@@ -1,10 +1,10 @@
 <template lang="pug">
 PageWrapper
-  UsernameForm(v-for='item in dbData', :key='item._id', :params='item')
+  UsernameForm(v-for='item in dbData', :key='item.username', :params='item')
 </template>
 
 <script>
-import pageDataMixin from '@backend/mixins/pageDataMixin';
+import userPageDataMixin from '@backend/mixins/userPageDataMixin';
 import PageWrapper from '@backCmp/PageWrapper';
 import UsernameForm from '@backCmp/forms/UsernameForm';
 
@@ -14,6 +14,6 @@ export default {
     PageWrapper,
     UsernameForm,
   },
-  mixins: [pageDataMixin],
+  mixins: [userPageDataMixin],
 };
 </script>

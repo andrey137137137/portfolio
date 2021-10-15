@@ -10,7 +10,9 @@ router.get('/', isAuth, (req, res) => {
 });
 
 router.post('/', (req, res, next) => {
-  if (req.session.token) return res.json({ success: true });
+  if (req.session.token) {
+    return res.json({ success: true });
+  }
 
   const { username, password } = req.body;
 
@@ -30,7 +32,9 @@ router.post('/', (req, res, next) => {
       },
     ],
     (err, user) => {
-      if (err) next(err);
+      if (err) {
+        next(err);
+      }
 
       req.session.token = setToken(user._id, next);
       res.json({ success: true });

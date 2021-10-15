@@ -1,17 +1,25 @@
 const { SUCCESS, FORBIDDEN, NOT_FOUND, ERROR } = require('@httpSt');
 const waterfall = require('async/waterfall');
 
+const QUERY_TYPE_MANY = 'many';
+const QUERY_TYPE_ONE = 'one';
+const QUERY_TYPE_BY_ID = 'id';
+
+const QUERY_FIND = 'find';
+const QUERY_FIND_ONE = 'findOne';
+const QUERY_FIND_BY_ID = 'findById';
+
 const getQueryTypes = {
-  many: 'find',
-  one: 'findOne',
-  id: 'findById',
+  [QUERY_TYPE_MANY]: QUERY_FIND,
+  [QUERY_TYPE_ONE]: QUERY_FIND_ONE,
+  [QUERY_TYPE_BY_ID]: QUERY_FIND_BY_ID,
 };
 
 function getMessage(mode, isError = false) {
   switch (mode) {
-    case 'find':
+    case QUERY_FIND:
       return 'чтении записей';
-    case 'findOne':
+    case QUERY_FIND_ONE:
       return 'чтении записи';
     case 'insert':
       if (isError) return 'добавлении записи';
@@ -36,7 +44,7 @@ function getValidatedObjects(params, keys) {
 function getGetParams(params, mode) {
   const keys = ['fields', 'options', 'filter'];
 
-  if (mode == 'one') {
+  if (getQueryTypes[mode] == QUERY_FIND_ONE) {
     keys.length = 2;
   }
 
@@ -44,8 +52,8 @@ function getGetParams(params, mode) {
 }
 
 function get(Model, res, params, mode = 'many', cb = false) {
-  const method = mode ? getQueryTypes[mode] : getQueryTypes['many'];
   const { filter, fields, options } = getGetParams(params, mode);
+  const method = getQueryTypes[mode];
 
   if (cb !== false) {
     return Model[method](filter, fields, options, cb);
@@ -56,9 +64,22 @@ function get(Model, res, params, mode = 'many', cb = false) {
       res.status(SUCCESS).json({ result });
     })
     .catch(err => {
-      sendError(err, res, mode == 'many' ? 'find' : 'findOne');
+      const messageMode = method == QUERY_FIND ? method : QUERY_FIND_ONE;
+      sendError(err, res, messageMode);
     });
 }
+
+const getItemById = (Model, res, id, params, cb = false) => {
+  get(Model, res, { ...params, filter: id }, QUERY_TYPE_BY_ID, cb);
+};
+
+const getItem = (Model, res, params, cb = false) => {
+  get(Model, res, params, QUERY_TYPE_ONE, cb);
+};
+
+const getItems = (Model, res, sort, params) => {
+  get(Model, res, { ...params, options: { sort } });
+};
 
 function update(Model, res, params, cb = false) {
   const { query, data } = getValidatedObjects(params, ['query', 'data']);
@@ -77,6 +98,52 @@ function update(Model, res, params, cb = false) {
       sendError(err, res, 'update');
     });
 }
+
+const updateItem = (Model, res, id, data, cb = false) => {
+  update(Model, res, { query: { id }, data }, cb);
+};
+
+const updateItemByQuery = (Model, res, params, cb = false) => {
+  update(Model, res, params, cb);
+};
+
+const updateUserPassword = (Model, res, id, data) => {
+  const { email, username, oldPassword, password, repPassword } = data;
+
+  waterfall(
+    [
+      cb => {
+        Model.findById(id, cb);
+      },
+      (user, cb) => {
+        if (!user.validatePassword(oldPassword)) {
+          return res
+            .status(FORBIDDEN)
+            .json({ message: 'Старый пароль неверный' });
+        }
+
+        if (!password || password !== repPassword) {
+          return res
+            .status(FORBIDDEN)
+            .json({ message: 'Повтор пароля неверный' });
+        }
+
+        user.email = email;
+        user.username = username;
+        user.password = password;
+
+        user.save(cb);
+      },
+    ],
+    (err, user) => {
+      if (err) {
+        sendError(err, res, 'update');
+      }
+
+      sendResult(user, res, 'update');
+    },
+  );
+};
 
 const createItem = (Model, res, data, cb = false) => {
   const item = new Model(data);
@@ -134,64 +201,6 @@ const sendError = (err, res, mode) => {
   res.status(ERROR).json({
     message: `При ${getMessage(mode, true)} произошла ошибка: ${err}`,
   });
-};
-
-const getItemById = (Model, res, id, params, cb = false) => {
-  get(Model, res, { ...params, filter: id }, 'id', cb);
-};
-
-const getItem = (Model, res, params, cb = false) => {
-  get(Model, res, params, 'one', cb);
-};
-
-const getItems = (Model, res, sort, params) => {
-  get(Model, res, { ...params, options: { sort } });
-};
-
-const updateItem = (Model, res, id, data, cb = false) => {
-  update(Model, res, { query: { id }, data }, cb);
-};
-
-const updateItemByQuery = (Model, res, params, cb = false) => {
-  update(Model, res, params, cb);
-};
-
-const updateUserPassword = (Model, res, id, data) => {
-  const { email, username, oldPassword, password, repPassword } = data;
-
-  waterfall(
-    [
-      cb => {
-        Model.findById(id, cb);
-      },
-      (user, cb) => {
-        if (!user.validatePassword(oldPassword)) {
-          return res
-            .status(FORBIDDEN)
-            .json({ message: 'Старый пароль неверный' });
-        }
-
-        if (!password || password !== repPassword) {
-          return res
-            .status(FORBIDDEN)
-            .json({ message: 'Повтор пароля неверный' });
-        }
-
-        user.email = email;
-        user.username = username;
-        user.password = password;
-
-        user.save(cb);
-      },
-    ],
-    (err, user) => {
-      if (err) {
-        sendError(err, res, 'update');
-      }
-
-      sendResult(user, res, 'update');
-    },
-  );
 };
 
 module.exports = {

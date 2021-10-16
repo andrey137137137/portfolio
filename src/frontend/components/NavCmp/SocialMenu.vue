@@ -1,8 +1,8 @@
 <template lang="pug">
 .socials(:class='containerClasses')
   a.icon.socials-link(
-    v-for='link in contacts',
-    :key='link.href',
+    v-for='(link, index) in contacts',
+    :key='link.href + "" + index',
     :class='iconClass(link.icon)',
     target='_blank',
     :href='link.href',

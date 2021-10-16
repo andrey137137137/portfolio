@@ -1,8 +1,8 @@
 <template lang="pug">
 .parallax(:class='classes')
   ImageWrapper.parallax-layer(
-    v-for='(item, index in count)',
-    key='item',
+    v-for='(item, index) in count',
+    :key='item',
     ref='layers',
     :path='getLayerPath()',
     :breakpoints='breakpoints',
@@ -51,7 +51,7 @@ export default {
       transformString: '',
       path: '/upload/parallax',
       ext: 'png',
-      layers: [],
+      // layers: [],
     };
   },
   computed: {
@@ -94,6 +94,8 @@ export default {
     moveLayers(event) {
       if (this.isDesktop) {
         const $vm = this;
+        const { layers } = $vm.$refs;
+        const $layers = layers ? layers : [];
 
         if ($vm.isScroll) {
           $vm.scrollY = getScrollY();
@@ -103,7 +105,9 @@ export default {
 
         $vm.diffY = $vm.isScroll ? -$vm.scrollY : $vm.centerY - event.pageY;
 
-        $vm.layers.forEach(($layer, index) => {
+        $layers.forEach(($comp, index) => {
+          const $layer = $comp.$el;
+
           if ($vm.isScroll) {
             $vm.divider = $vm.calcDivider(index, 25, 100);
           } else {
@@ -130,7 +134,6 @@ export default {
     },
     setCenterCoords() {
       this.windowWidth = window.innerWidth;
-
       this.centerX = this.windowWidth / 2;
       this.centerY = window.innerHeight / 2;
     },
@@ -145,18 +148,19 @@ export default {
   mounted() {
     this.setCenterCoords();
 
-    console.log(this.layers);
+    // console.log(this.$refs);
+    // console.log(this.layers);
 
     // this.layers.push(this.$refs.firstLayer);
     // this.layers.push(this.$refs.lastLayer.$el);
 
-    this.$refs.layers.forEach($comp => {
-      this.layers.push($comp.$el);
-    });
+    // this.$refs.layers.forEach($comp => {
+    //   this.layers.push($comp.$el);
+    // });
 
     if (this.isScroll) {
       window.addEventListener('scroll', this.moveLayers);
-      window.dispatchEvent(new Event('scroll'));
+      // window.dispatchEvent(new Event('scroll'));
     } else {
       window.addEventListener('mousemove', this.moveLayers);
     }

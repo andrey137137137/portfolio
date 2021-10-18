@@ -31,7 +31,7 @@ export default {
   },
   mixins: [userFormMixin],
   data() {
-    return {
+    const data = {
       contactFields: [
         {
           name: 'name',
@@ -54,7 +54,15 @@ export default {
         href: '',
         icon: '',
       },
-      contacts: [],
+    };
+
+    return {
+      ...data,
+      contacts: this.getMultipleArray(
+        this.params,
+        'contacts',
+        data.contactTemplate,
+      ),
     };
   },
   validations: {
@@ -81,32 +89,15 @@ export default {
       },
     },
   },
-  computed: {
-    compContacts() {
-      return this.getMultipleArray(
-        this.params,
-        'contacts',
-        this.contactTemplate,
-      );
-    },
-  },
   methods: {
     prepareData() {
       this.submitData = {
         firstName: this.firstName,
         lastName: this.lastName,
-        contacts: this.cloneMultipleArray(
-          this.compContacts,
-          this.contactTemplate,
-        ),
+        old: this.old,
+        contacts: this.cloneMultipleArray(this.contacts, this.contactTemplate),
       };
     },
-  },
-  mounted() {
-    this.contacts = this.compContacts;
-  },
-  updated() {
-    this.contacts = this.compContacts;
   },
 };
 </script>

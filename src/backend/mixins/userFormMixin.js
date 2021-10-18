@@ -19,13 +19,6 @@ export default {
     };
   },
   methods: {
-    setData() {
-      for (const key in this.params) {
-        if (Object.hasOwnProperty.call(this.params, key)) {
-          this[key] = this.params[key];
-        }
-      }
-    },
     defaultFields() {
       return {};
     },
@@ -51,8 +44,5 @@ export default {
 
       return true;
     },
-  },
-  updated() {
-    // this.setData();
   },
 };

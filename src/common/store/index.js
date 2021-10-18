@@ -130,9 +130,7 @@ export default new Vuex.Store({
       axios[method](url, data).then(res => {
         let commitPayload = { id: 0, data: convertData(data) };
 
-        if (isUserFlag) {
-          commitPayload = [commitPayload];
-        } else {
+        if (!isUserFlag) {
           commitPayload.id = id;
         }
 

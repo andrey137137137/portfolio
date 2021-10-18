@@ -11,7 +11,7 @@ PageWrapper
 
 <script>
 import uploadMixin from '@backend/mixins/uploadMixin';
-import userPageDataMixin from '@backend/mixins/userPageDataMixin';
+import pageDataMixin from '@backend/mixins/pageDataMixin';
 import PageWrapper from '@backCmp/PageWrapper';
 import UploadForm from '@backCmp/forms/UploadForm';
 import ProfileForm from '@backCmp/forms/ProfileForm';
@@ -23,7 +23,7 @@ export default {
     UploadForm,
     ProfileForm,
   },
-  mixins: [uploadMixin, userPageDataMixin],
+  mixins: [uploadMixin, pageDataMixin],
   data() {
     return {
       stencilProps: {

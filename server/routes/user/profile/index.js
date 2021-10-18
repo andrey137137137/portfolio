@@ -7,8 +7,8 @@ const crud = require('@contr/crud');
 router.get('/', (req, res) => {
   crud.getItem(Model, res, {
     fields: {
-      // _id: 0,
-      _id: 1,
+      _id: 0,
+      // _id: 1,
       __v: 0,
       username: 0,
       password: 0,

@@ -50,7 +50,9 @@ const UserSchema = new Schema({
 });
 
 UserSchema.pre('save', function(next) {
-  if (!this.isModified('password')) return next();
+  if (!this.isModified('password')) {
+    return next();
+  }
 
   this.password = hmacSha512(this.password, SALT).toString();
   next();

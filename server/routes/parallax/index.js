@@ -8,13 +8,8 @@ const image = require('@contr/image');
 
 const DIR = 'parallax';
 
-function deleteParallaxBreakpointImages(data, highCB) {
-  return image.deleteBreakpointImages(
-    DIR,
-    data,
-    getBreakpointsWithExt('png').map(item => item.name),
-    highCB,
-  );
+function getBreakpointsWithExtPng() {
+  return getBreakpointsWithExt('png').map(item => item.name);
 }
 
 router.get('/', (req, res) => {
@@ -27,25 +22,38 @@ router.get('/', (req, res) => {
 });
 
 router.post('/:layer', isAuth, (req, res) => {
-  image.startWaterfall(res, 'insert', [
-    cb => {
-      crud.getItem(Model, res, {}, cb);
-    },
-    (result, cb) => {
-      crud.updateItem(Model, res, result._id, { count: result.count + 1 }, cb);
-    },
-    (result, cb) => {
-      image.upload(req, res, DIR, req.params.layer, cb);
-    },
-  ]);
+  const { layer } = req.params;
+
+  if (image.isAnyBreakpointImage(DIR, getBreakpointsWithExtPng(), layer)) {
+    return image.upload(req, res, DIR, layer);
+  } else {
+    image.startWaterfall(res, 'insert', [
+      cb => {
+        crud.getItem(Model, res, {}, cb);
+      },
+      (result, cb) => {
+        crud.updateItem(
+          Model,
+          res,
+          result._id,
+          { count: result.count + 1 },
+          cb,
+        );
+      },
+      (result, cb) => {
+        image.upload(req, res, DIR, layer, cb);
+      },
+    ]);
+  }
 });
 
 router.put('/:layer', isAuth, (req, res) => {
-  const { layer } = req.params;
+  const { layer, breakpoint } = req.params;
 
   image.startWaterfall(res, 'update', [
     cb => {
-      deleteParallaxBreakpointImages({}, cb, layer);
+      // deleteParallaxBreakpointImages({}, cb, layer);
+      image.remove(res, breakpoint, DIR, layer, cb);
     },
     (result, cb) => {
       image.upload(req, res, DIR, layer, cb);
@@ -63,7 +71,14 @@ router.delete('/:layer', isAuth, (req, res) => {
     },
     (result, cb) => {
       data = result;
-      deleteParallaxBreakpointImages(result, cb, layer);
+      // deleteParallaxBreakpointImages(result, cb, layer);
+      image.deleteBreakpointImages(
+        DIR,
+        data,
+        getBreakpointsWithExtPng(),
+        cb,
+        layer,
+      );
     },
     (result, cb) => {
       crud.updateItem(Model, res, data._id, { count: data.count - 1 }, cb);

@@ -89,6 +89,20 @@ const remove = (res, imageName, dir = '', layer = -1, cb = false) => {
   });
 };
 
+const isAnyBreakpointImage = (dir, breakpoints, layer = -1) => {
+  setUploadPath(dir, layer);
+
+  for (let index = 0; index < breakpoints.length; index++) {
+    const checkingPath = (getUploadPath(), breakpoints[index]);
+
+    if (fs.existsSync(checkingPath)) {
+      return true;
+    }
+  }
+
+  return false;
+};
+
 const deleteBreakpointImages = (dir, data, breakpoints, highCB, layer = -1) => {
   setUploadPath(dir, layer);
   each(
@@ -142,6 +156,7 @@ module.exports = {
   getTempPath,
   upload,
   remove,
+  isAnyBreakpointImage,
   deleteBreakpointImages,
   startWaterfall,
 };

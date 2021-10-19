@@ -26,7 +26,6 @@ PageWrapper
 </template>
 
 <script>
-import axios from 'axios';
 import { getBreakpointNames } from '@apiHelpers';
 import { SET_SUCCESS_MESSAGE } from '@common/store/mutation-types';
 import ButtonElem from '@components/formElems/ButtonElem';
@@ -62,6 +61,14 @@ export default {
   computed: {
     ...mapGetters(['message']),
     ...parallaxMapGetters(['count']),
+    compCount: {
+      get() {
+        return this.count > 0 ? this.count : 0;
+      },
+      set(value) {
+        this.layers = value;
+      },
+    },
     breakpoints() {
       return getBreakpointNames();
     },
@@ -71,7 +78,12 @@ export default {
   },
   methods: {
     ...mapActions([SET_SUCCESS_MESSAGE]),
-    ...parallaxMapActions(['readCount']),
+    ...parallaxMapActions([
+      'insertLayer',
+      'updateLayer',
+      'deleteLayer',
+      'readCount',
+    ]),
     addLayer() {
       this.layers++;
     },
@@ -83,11 +95,7 @@ export default {
       this.setLastLayer();
     },
     remove(layer) {
-      axios.delete('parallax/' + layer).then(res => {
-        if (res.data.success) {
-          [SET_SUCCESS_MESSAGE](res.data.message);
-        }
-      });
+      this.deleteLayer(layer);
     },
     readyHandle() {
       if (!this.isLoaded) {
@@ -104,7 +112,7 @@ export default {
   },
   created() {
     this.readCount();
-    this.layers = this.count;
+    this.layers = this.compCount;
   },
 };
 </script>

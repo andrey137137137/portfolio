@@ -133,7 +133,6 @@ export default {
 
       if (this.breakpoints) {
         const prevIndex = index == 0 ? index : index - 1;
-
         return `${root}/${dir}/${this.images[prevIndex].title}.${this.ext}`;
       }
 
@@ -144,9 +143,11 @@ export default {
       const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
       const ab = new ArrayBuffer(byteString.length);
       const ia = new Uint8Array(ab);
+
       for (var i = 0; i < byteString.length; i++) {
         ia[i] = byteString.charCodeAt(i);
       }
+
       const bb = new Blob([ab], { type: mimeString });
       return bb;
     },

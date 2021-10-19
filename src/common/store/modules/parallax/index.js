@@ -20,19 +20,19 @@ export default {
         commit(INC_LOADED, null, { root: true });
       });
     },
-    insertLayer({ dispatch }, { data }) {
-      axios.post(dbPage, data).then(() => {
-        dispatch('readData');
+    insertLayer({ dispatch }, { layer, data }) {
+      axios.post(`${dbPage}/${layer}`, data).then(() => {
+        dispatch('readCount');
       });
     },
-    updateLayer({ dispatch }, { id, data }) {
-      axios.put(`${dbPage}/${id}`, data).then(() => {
-        dispatch('readData');
+    updateLayer({ dispatch }, { layer, data }) {
+      axios.put(`${dbPage}/${layer}`, data).then(() => {
+        dispatch('readCount');
       });
     },
-    deleteLayer({ dispatch }, { id }) {
-      axios.delete(`${dbPage}/${id}`).then(() => {
-        dispatch('readData');
+    deleteLayer({ dispatch }, { layer }) {
+      axios.delete(`${dbPage}/${layer}`).then(() => {
+        dispatch('readCount');
       });
     },
   },

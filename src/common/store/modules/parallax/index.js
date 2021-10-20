@@ -20,16 +20,16 @@ export default {
         commit(INC_LOADED, null, { root: true });
       });
     },
-    insertLayer({ dispatch }, { layer, data }) {
-      axios.post(`${dbPage}/${layer}`, data).then(() => {
-        dispatch('readCount');
-      });
-    },
-    updateLayer({ dispatch }, { layer, data }) {
-      axios.put(`${dbPage}/${layer}`, data).then(() => {
-        dispatch('readCount');
-      });
-    },
+    // insertLayer({ dispatch }, { layer, data }) {
+    //   axios.post(`${dbPage}/${layer}`, data).then(() => {
+    //     dispatch('readCount');
+    //   });
+    // },
+    // updateLayer({ dispatch }, { layer, data }) {
+    //   axios.put(`${dbPage}/${layer}`, data).then(() => {
+    //     dispatch('readCount');
+    //   });
+    // },
     deleteLayer({ dispatch }, { layer }) {
       axios.delete(`${dbPage}/${layer}`).then(() => {
         dispatch('readCount');

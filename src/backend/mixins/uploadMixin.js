@@ -8,7 +8,14 @@ export default {
   },
   methods: {
     getUploadPage(page, layer) {
-      let url = `${this.uploadHost}image/${page}`;
+      const PARALLAX_PAGE = 'parallax';
+      let url = this.uploadHost;
+
+      if (page == PARALLAX_PAGE) {
+        url += PARALLAX_PAGE;
+      } else {
+        url += `image/${page}`;
+      }
 
       if (layer >= 0) {
         url += `/${layer}`;

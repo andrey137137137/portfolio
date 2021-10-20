@@ -45,27 +45,15 @@ export default {
   },
   mixins: [uploadMixin],
   props: {
-    page: {
-      type: String,
-      required: true,
-    },
-    layer: {
-      type: Number,
-      default: -1,
-    },
+    page: { type: String, required: true },
+    layer: { type: Number, default: -1 },
+    ext: { type: String, default: 'jpg' },
+    isRound: { type: Boolean, default: false },
     breakpoints: {
       type: Array,
       default() {
         return null;
       },
-    },
-    ext: {
-      type: String,
-      default: 'jpg',
-    },
-    isRound: {
-      type: Boolean,
-      default: false,
     },
     stencilProps: {
       type: Object,
@@ -187,6 +175,7 @@ export default {
       const { canvas } = this.$refs.croppers[index].getResult();
 
       if (canvas) {
+        const $vm = this;
         const form = new FormData();
         // this.resultURL = canvas.toDataURL(`image/${this.ext}`, 1);
 
@@ -200,7 +189,7 @@ export default {
         axios
           .post(this.getUploadPage(this.page, this.layer), form)
           .then(res => {
-            this.fileMsg = res.data.message;
+            $vm.fileMsg = res.data.message;
 
             // if (res.data.status === "Ok") {
             //   this.resultURL = "";

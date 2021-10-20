@@ -47,19 +47,19 @@ router.post('/:layer', isAuth, (req, res) => {
   }
 });
 
-router.put('/:layer', isAuth, (req, res) => {
-  const { layer, breakpoint } = req.params;
+// router.put('/:layer', isAuth, (req, res) => {
+//   const { layer, breakpoint } = req.params;
 
-  image.startWaterfall(res, 'update', [
-    cb => {
-      // deleteParallaxBreakpointImages({}, cb, layer);
-      image.remove(res, breakpoint, DIR, layer, cb);
-    },
-    (result, cb) => {
-      image.upload(req, res, DIR, layer, cb);
-    },
-  ]);
-});
+//   image.startWaterfall(res, 'update', [
+//     cb => {
+//       // deleteParallaxBreakpointImages({}, cb, layer);
+//       image.remove(res, breakpoint, DIR, layer, cb);
+//     },
+//     (result, cb) => {
+//       image.upload(req, res, DIR, layer, cb);
+//     },
+//   ]);
+// });
 
 router.delete('/:layer', isAuth, (req, res) => {
   const { layer } = req.params;

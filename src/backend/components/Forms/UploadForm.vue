@@ -107,7 +107,9 @@ export default {
   },
   methods: {
     handle(index, eventMethod) {
-      if (index) return;
+      if (index) {
+        return;
+      }
       this[eventMethod]();
     },
     image(index) {

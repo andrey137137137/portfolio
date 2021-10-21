@@ -1,7 +1,7 @@
 <template lang="pug">
 .parallax(:class='classes')
   ImageWrapper.parallax-layer(
-    v-for='(item, index) in count',
+    v-for='(item, index) in layers',
     :key='item',
     ref='layers',
     :path='getLayerPath()',
@@ -56,11 +56,14 @@ export default {
   },
   computed: {
     ...mapGetters(['count']),
+    layers() {
+      return this.count > 0 ? this.count : 0;
+    },
     breakpoints() {
       return getBreakpointsWithExt(this.ext);
     },
     lastLayer() {
-      return this.count - 1;
+      return this.layers - 1;
     },
     isDesktop() {
       return this.windowWidth >= 1200;

@@ -30,7 +30,7 @@ export default {
     //     dispatch('readCount');
     //   });
     // },
-    deleteLayer({ dispatch }, { layer }) {
+    deleteLayer({ dispatch }, layer) {
       axios.delete(`${dbPage}/${layer}`).then(() => {
         dispatch('readCount');
       });

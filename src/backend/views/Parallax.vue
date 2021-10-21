@@ -23,6 +23,7 @@ PageWrapper
     :errorHandle='errorHandle',
     ext='png'
   )
+  //- v-if='areLayers',
 </template>
 
 <script>
@@ -69,6 +70,9 @@ export default {
         this.layers = value;
       },
     },
+    areLayers() {
+      return this.layers;
+    },
     breakpoints() {
       return getBreakpointNames();
     },
@@ -78,13 +82,9 @@ export default {
   },
   methods: {
     ...mapActions([SET_SUCCESS_MESSAGE]),
-    ...parallaxMapActions([
-      'insertLayer',
-      'updateLayer',
-      'deleteLayer',
-      'readCount',
-    ]),
+    ...parallaxMapActions(['deleteLayer', 'readCount']),
     addLayer() {
+      console.log(this.layers);
       this.layers++;
     },
     setLastLayer() {

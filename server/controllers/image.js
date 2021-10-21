@@ -117,6 +117,7 @@ const deleteBreakpointImages = (dir, data, breakpoints, highCB, layer = -1) => {
       }
     },
     (err, info) => {
+      console.log(err);
       return highCB(err, info);
     },
   );

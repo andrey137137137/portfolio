@@ -12,6 +12,10 @@ function getBreakpointsWithExtPng() {
   return getBreakpointsWithExt('png').map(item => item.name);
 }
 
+function getCount(value) {
+  return value > 0 ? value : 0;
+}
+
 router.get('/', (req, res) => {
   crud.getItem(Model, res, {
     fields: {
@@ -36,7 +40,7 @@ router.post('/:layer', isAuth, (req, res) => {
           Model,
           res,
           result._id,
-          { count: result.count + 1 },
+          { count: getCount(result.count) + 1 },
           cb,
         );
       },

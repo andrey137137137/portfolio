@@ -51,20 +51,6 @@ router.post('/:layer', isAuth, (req, res) => {
   }
 });
 
-// router.put('/:layer', isAuth, (req, res) => {
-//   const { layer, breakpoint } = req.params;
-
-//   image.startWaterfall(res, 'update', [
-//     cb => {
-//       // deleteParallaxBreakpointImages({}, cb, layer);
-//       image.remove(res, breakpoint, DIR, layer, cb);
-//     },
-//     (result, cb) => {
-//       image.upload(req, res, DIR, layer, cb);
-//     },
-//   ]);
-// });
-
 router.delete('/:layer', isAuth, (req, res) => {
   const { layer } = req.params;
   let data = null;
@@ -85,7 +71,14 @@ router.delete('/:layer', isAuth, (req, res) => {
       );
     },
     (result, cb) => {
-      crud.updateItem(Model, res, data._id, { count: data.count - 1 }, cb);
+      const newCount = getCount(data.count);
+      crud.updateItem(
+        Model,
+        res,
+        data._id,
+        { count: getCount(newCount - 1) },
+        cb,
+      );
     },
   ]);
 });

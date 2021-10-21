@@ -28,13 +28,17 @@ PageWrapper
 
 <script>
 import { getBreakpointNames } from '@apiHelpers';
-import { SET_SUCCESS_MESSAGE } from '@common/store/mutation-types';
+// import { SET_SUCCESS_MESSAGE } from '@common/store/mutation-types';
 import ButtonElem from '@components/formElems/ButtonElem';
 import PageWrapper from '@backCmp/PageWrapper';
 import UploadForm from '@backCmp/forms/UploadForm';
 
-import { mapGetters, mapActions, createNamespacedHelpers } from 'vuex';
-const parallaxMapGetters = createNamespacedHelpers('parallax').mapGetters;
+import {
+  // mapGetters,
+  // mapActions,
+  createNamespacedHelpers,
+} from 'vuex';
+// const parallaxMapGetters = createNamespacedHelpers('parallax').mapGetters;
 const parallaxMapActions = createNamespacedHelpers('parallax').mapActions;
 
 export default {
@@ -60,16 +64,16 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['message']),
-    ...parallaxMapGetters(['count']),
-    compCount: {
-      get() {
-        return this.count > 0 ? this.count : 0;
-      },
-      set(value) {
-        this.layers = value;
-      },
-    },
+    // ...mapGetters(['message']),
+    // ...parallaxMapGetters(['count']),
+    // compCount: {
+    //   get() {
+    //     return this.count > 0 ? this.count : 0;
+    //   },
+    //   set(value) {
+    //     this.layers = value;
+    //   },
+    // },
     areLayers() {
       return this.layers;
     },
@@ -81,8 +85,9 @@ export default {
     },
   },
   methods: {
-    ...mapActions([SET_SUCCESS_MESSAGE]),
-    ...parallaxMapActions(['deleteLayer', 'readCount']),
+    // ...mapActions([SET_SUCCESS_MESSAGE]),
+    // ...parallaxMapActions(['deleteLayer', 'readCount']),
+    ...parallaxMapActions(['deleteLayer']),
     addLayer() {
       console.log(this.layers);
       this.layers++;
@@ -110,10 +115,10 @@ export default {
       }
     },
   },
-  created() {
-    this.readCount();
-    this.layers = this.compCount;
-  },
+  // created() {
+  //   this.readCount();
+  //   this.layers = this.compCount;
+  // },
 };
 </script>
 

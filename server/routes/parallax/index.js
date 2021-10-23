@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const Model = require('mongoose').model('parallax');
 
-const { getBreakpointsWithExt } = require('@apiHelpers');
+const { getPositiveValue, getBreakpointsWithExt } = require('@apiHelpers');
 const { isAuth } = require('@auth');
 const crud = require('@contr/crud');
 const image = require('@contr/image');
@@ -10,10 +10,6 @@ const DIR = 'parallax';
 
 function getBreakpointsWithExtPng() {
   return getBreakpointsWithExt('png').map(item => item.name);
-}
-
-function getCount(value) {
-  return value > 0 ? value : 0;
 }
 
 router.get('/', (req, res) => {
@@ -40,7 +36,7 @@ router.post('/:layer', isAuth, (req, res) => {
           Model,
           res,
           result._id,
-          { count: getCount(result.count) + 1 },
+          { count: getPositiveValue(result.count) + 1 },
           cb,
         );
       },
@@ -51,7 +47,7 @@ router.post('/:layer', isAuth, (req, res) => {
   }
 });
 
-router.delete('/:layer', isAuth, (req, res) => {
+router.put('/:layer', isAuth, (req, res) => {
   const { layer } = req.params;
   let data = null;
 
@@ -71,12 +67,12 @@ router.delete('/:layer', isAuth, (req, res) => {
       );
     },
     (result, cb) => {
-      const newCount = getCount(data.count);
+      const newCount = getPositiveValue(data.count);
       crud.updateItem(
         Model,
         res,
         data._id,
-        { count: getCount(newCount - 1) },
+        { count: getPositiveValue(newCount - 1) },
         cb,
       );
     },

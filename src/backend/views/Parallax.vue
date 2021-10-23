@@ -5,18 +5,17 @@ PageWrapper
       a.menu-link.btn(
         href='',
         :class='menuLinkClasses',
-        @click.prevent='curLayer = index'
-      ) Слой №{{ index + 1 }}
+        @click.prevent='setCurLayer(index)'
+      ) {{ getLayerTitle(index) }}
       ButtonElem(
         v-if='index == layers - 1',
         :isDanger='true',
         @click.prevent.native='remove(index)'
       ) удалить
     li.menu-item
-      a.menu-link.btn(href='', @click.prevent='setNewLayer') Новый слой
+      a.menu-link.btn(href='', @click.prevent='setNewLayer') {{ newLayerTitle }}
     //- ul.menu(v-show='isLoaded')
   UploadForm(
-    :style='isVisibleForm',
     page='parallax',
     :breakpoints='breakpoints',
     :stencilProps='stencilProps',
@@ -25,10 +24,11 @@ PageWrapper
     :errorHandle='errorHandle',
     ext='png'
   )
+  //- :style='isVisibleForm',
 </template>
 
 <script>
-import { getBreakpointNames } from '@apiHelpers';
+import { getPositiveValue, getBreakpointNames } from '@apiHelpers';
 import pageDataMixin from '@backend/mixins/pageDataMixin';
 import ButtonElem from '@components/formElems/ButtonElem';
 import PageWrapper from '@backCmp/PageWrapper';
@@ -56,18 +56,16 @@ export default {
     return {
       layers: 0,
       curLayer: 0,
+      isClickedNewLayer: false,
       isLoaded: false,
     };
   },
   computed: {
-    // compCount: {
-    //   get() {
-    //     return this.count > 0 ? this.count : 0;
-    //   },
-    //   set(value) {
-    //     this.layers = value;
-    //   },
-    // },
+    newLayerTitle() {
+      return this.isClickedNewLayer
+        ? this.getLayerTitle(this.layers)
+        : 'Новый слой';
+    },
     areLayers() {
       return this.layers;
     },
@@ -86,18 +84,34 @@ export default {
   },
   methods: {
     ...mapActions(['updateData']),
-    addLayer() {
-      this.layers++;
+    getLayerTitle(index) {
+      return `Слой №${index + 1}`;
+    },
+    // addLayer() {
+    //   this.layers++;
+    // },
+    setCurLayer(index) {
+      this.curLayer = index;
+      this.isClickedNewLayer = false;
     },
     setLastLayer() {
       this.curLayer = this.layers - 1;
+      if (this.curLayer < 0) {
+        this.isClickedNewLayer = true;
+        this.curLayer = 0;
+      }
     },
     setNewLayer() {
-      this.addLayer();
-      this.setLastLayer();
+      // this.addLayer();
+      // this.setLastLayer();
+      this.curLayer = this.layers;
+      this.isClickedNewLayer = true;
     },
     remove(layer) {
-      this.updateData({ id: layer, data: null });
+      this.updateData({
+        id: layer,
+        data: { count: getPositiveValue(this.layers - 1) },
+      });
     },
     readyHandle() {
       // if (!this.isLoaded) {
@@ -113,13 +127,10 @@ export default {
     },
   },
   watch: {
-    // dbPage(newValue) {
-    //   console.log(newValue);
-    //   this.layers = this.count;
-    //   this.setLastLayer();
-    // },
     dbData(newValue) {
+      console.log(this.isLoaded);
       console.log(newValue);
+      this.isLoaded = true;
       this.layers = newValue[0].count;
       this.setLastLayer();
     },

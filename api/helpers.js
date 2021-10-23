@@ -1,5 +1,4 @@
 const IS_DEV = process.env.NODE_ENV !== 'production';
-
 const deviceBreakpoints = [
   { name: 'xl', value: 1800 },
   { name: 'lg', value: 1200 },
@@ -25,6 +24,15 @@ function getBreakpointsWithExcludes(exludes = []) {
   return breakpoints;
 }
 
+const exist = (property, obj = window) => {
+  // return Object.prototype.hasOwnProperty.call(obj, property);
+  return typeof obj[property] !== 'undefined';
+};
+
+const getPositiveValue = value => {
+  return value > 0 ? value : 0;
+};
+
 const getBreakpointNamesWithoutXL = (isFirstSmallest = true) => {
   return getBreakpointNames(['xl'], isFirstSmallest);
 };
@@ -44,11 +52,6 @@ const getBreakpointsWithExt = (ext, exludes = []) => {
   });
 };
 
-const exist = (property, obj = window) => {
-  // return Object.prototype.hasOwnProperty.call(obj, property);
-  return typeof obj[property] !== 'undefined';
-};
-
 const getSlideImageName = (id, name) => {
   return `${id}_${name}`;
 };
@@ -56,9 +59,10 @@ const getSlideImageName = (id, name) => {
 module.exports = {
   IS_DEV,
   deviceBreakpoints,
+  exist,
+  getPositiveValue,
   getBreakpointNamesWithoutXL,
   getBreakpointNames,
   getBreakpointsWithExt,
-  exist,
   getSlideImageName,
 };

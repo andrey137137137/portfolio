@@ -3,7 +3,7 @@ import Vuex from 'vuex';
 import axios from 'axios';
 import { SUCCESS, ERROR } from '@httpSt';
 import { exist, IS_DEV } from '@apiHelpers';
-import { COMMENT } from '@common/constants/router';
+import { COMMENT, ADMIN_PARALLAX } from '@common/constants/router';
 import {
   SET,
   SET_PAGE,
@@ -27,6 +27,10 @@ import comments from '@common/store/modules/comments';
 Vue.use(Vuex);
 
 function convertData(data) {
+  if (!data) {
+    return data;
+  }
+
   const newData = {};
 
   if (exist('append', data) && exist('entries', data)) {
@@ -102,7 +106,7 @@ export default new Vuex.Store({
         case COMMENT:
           page += '/back';
           break;
-        case 'parallax':
+        case ADMIN_PARALLAX:
           toWrapArray = true;
           break;
         default:
@@ -140,7 +144,7 @@ export default new Vuex.Store({
       axios[method](url, data).then(res => {
         let commitPayload = { id: 0, data: convertData(data) };
 
-        if (!isUserFlag) {
+        if (!isUserFlag && page != ADMIN_PARALLAX) {
           commitPayload.id = id;
         }
 

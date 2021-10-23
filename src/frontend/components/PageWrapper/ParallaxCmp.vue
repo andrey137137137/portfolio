@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { getBreakpointsWithExt } from '@apiHelpers';
+import { getPositiveValue, getBreakpointsWithExt } from '@apiHelpers';
 import { HOME } from '@common/constants/router';
 import { getScrollY } from '@common/helpers';
 import ImageWrapper from '@frontCmp/ImageWrapper';
@@ -57,7 +57,7 @@ export default {
   computed: {
     ...mapGetters(['count']),
     layers() {
-      return this.count > 0 ? this.count : 0;
+      return getPositiveValue(this.count);
     },
     breakpoints() {
       return getBreakpointsWithExt(this.ext);

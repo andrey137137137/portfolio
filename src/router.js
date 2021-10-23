@@ -87,7 +87,7 @@ const router = new VueRouter({
         },
         {
           path: ADMIN_PARALLAX,
-          meta: { title: 'Параллакс' },
+          meta: { title: 'Параллакс', page: 'parallax' },
           component: () => import('@backViews/Parallax.vue'),
         },
         {

@@ -36,7 +36,7 @@ export default {
         dispatch('readData');
       });
     },
-    deleteComment({ dispatch }, { id }) {
+    deleteComment({ dispatch }, id) {
       axios.delete(`${dbPage}/${id}`).then(() => {
         dispatch('readData');
       });

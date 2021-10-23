@@ -1,6 +1,6 @@
 <template lang="pug">
 PageWrapper
-  ul.menu(v-show='isLoaded')
+  ul.menu
     li.menu-item(v-for='(layer, index) in layers', :key='index')
       a.menu-link.btn(
         href='',
@@ -14,8 +14,10 @@ PageWrapper
       ) удалить
     li.menu-item
       a.menu-link.btn(href='', @click.prevent='setNewLayer') Новый слой
+    //- ul.menu(v-show='isLoaded')
   UploadForm(
-    :page='"parallax"',
+    :style='isVisibleForm',
+    page='parallax',
     :breakpoints='breakpoints',
     :stencilProps='stencilProps',
     :layer='curLayer',
@@ -23,23 +25,16 @@ PageWrapper
     :errorHandle='errorHandle',
     ext='png'
   )
-  //- v-if='areLayers',
 </template>
 
 <script>
 import { getBreakpointNames } from '@apiHelpers';
-// import { SET_SUCCESS_MESSAGE } from '@common/store/mutation-types';
+import pageDataMixin from '@backend/mixins/pageDataMixin';
 import ButtonElem from '@components/formElems/ButtonElem';
 import PageWrapper from '@backCmp/PageWrapper';
 import UploadForm from '@backCmp/forms/UploadForm';
 
-import {
-  // mapGetters,
-  // mapActions,
-  createNamespacedHelpers,
-} from 'vuex';
-// const parallaxMapGetters = createNamespacedHelpers('parallax').mapGetters;
-const parallaxMapActions = createNamespacedHelpers('parallax').mapActions;
+import { mapActions } from 'vuex';
 
 export default {
   name: 'Parallax',
@@ -48,6 +43,7 @@ export default {
     UploadForm,
     ButtonElem,
   },
+  mixins: [pageDataMixin],
   props: {
     stencilProps: {
       type: Object,
@@ -64,8 +60,6 @@ export default {
     };
   },
   computed: {
-    // ...mapGetters(['message']),
-    // ...parallaxMapGetters(['count']),
     // compCount: {
     //   get() {
     //     return this.count > 0 ? this.count : 0;
@@ -77,6 +71,12 @@ export default {
     areLayers() {
       return this.layers;
     },
+    isVisibleForm() {
+      const value = this.areLayers ? 'block' : 'none';
+      return {
+        display: value,
+      };
+    },
     breakpoints() {
       return getBreakpointNames();
     },
@@ -85,11 +85,8 @@ export default {
     },
   },
   methods: {
-    // ...mapActions([SET_SUCCESS_MESSAGE]),
-    // ...parallaxMapActions(['deleteLayer', 'readCount']),
-    ...parallaxMapActions(['deleteLayer']),
+    ...mapActions(['updateData']),
     addLayer() {
-      console.log(this.layers);
       this.layers++;
     },
     setLastLayer() {
@@ -100,25 +97,33 @@ export default {
       this.setLastLayer();
     },
     remove(layer) {
-      this.deleteLayer(layer);
+      this.updateData({ id: layer, data: null });
     },
     readyHandle() {
-      if (!this.isLoaded) {
-        this.addLayer();
-        this.curLayer = this.layers;
-      }
+      // if (!this.isLoaded) {
+      //   this.addLayer();
+      //   this.curLayer = this.layers;
+      // }
     },
     errorHandle() {
-      if (!this.isLoaded) {
-        this.isLoaded = true;
-        this.setLastLayer();
-      }
+      // if (!this.isLoaded) {
+      //   this.isLoaded = true;
+      //   this.setLastLayer();
+      // }
     },
   },
-  // created() {
-  //   this.readCount();
-  //   this.layers = this.compCount;
-  // },
+  watch: {
+    // dbPage(newValue) {
+    //   console.log(newValue);
+    //   this.layers = this.count;
+    //   this.setLastLayer();
+    // },
+    dbData(newValue) {
+      console.log(newValue);
+      this.layers = newValue[0].count;
+      this.setLastLayer();
+    },
+  },
 };
 </script>
 

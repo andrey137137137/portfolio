@@ -1,5 +1,10 @@
 import axios from 'axios';
-import { SET, INC_LOADING, INC_LOADED } from '@common/store/mutation-types';
+import {
+  SET,
+  SET_SUCCESS_MESSAGE,
+  INC_LOADING,
+  INC_LOADED,
+} from '@common/store/mutation-types';
 
 const dbPage = 'parallax';
 
@@ -22,16 +27,19 @@ export default {
     },
     // insertLayer({ dispatch }, { layer, data }) {
     //   axios.post(`${dbPage}/${layer}`, data).then(() => {
+    //     dispatch(SET_SUCCESS_MESSAGE, res.data.message, { root: true });
     //     dispatch('readCount');
     //   });
     // },
     // updateLayer({ dispatch }, { layer, data }) {
     //   axios.put(`${dbPage}/${layer}`, data).then(() => {
+    //     dispatch(SET_SUCCESS_MESSAGE, res.data.message, { root: true });
     //     dispatch('readCount');
     //   });
     // },
     deleteLayer({ dispatch }, layer) {
-      axios.delete(`${dbPage}/${layer}`).then(() => {
+      axios.delete(`${dbPage}/${layer}`).then(res => {
+        dispatch(SET_SUCCESS_MESSAGE, res.data.message, { root: true });
         dispatch('readCount');
       });
     },

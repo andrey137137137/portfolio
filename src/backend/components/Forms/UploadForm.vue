@@ -1,5 +1,5 @@
 <template lang="pug">
-Fragment
+div
   AdminFormWrapper.upload_form(
     v-for='(item, index) in images',
     :key='index',

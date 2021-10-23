@@ -96,14 +96,24 @@ export default new Vuex.Store({
     },
     readData({ state, commit }) {
       let { page } = state.data;
+      let toWrapArray = false;
 
-      if (page == COMMENT) {
-        page += '/back';
+      switch (page) {
+        case COMMENT:
+          page += '/back';
+          break;
+        case 'parallax':
+          toWrapArray = true;
+          break;
+        default:
+          if (isUser(page)) {
+            toWrapArray = true;
+          }
       }
 
       axios.get(page).then(res => {
         const { result } = res.data;
-        const items = isUser(page) ? [result] : result;
+        const items = toWrapArray ? [result] : result;
 
         commit(SET, items);
 

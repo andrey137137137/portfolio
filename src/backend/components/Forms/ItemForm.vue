@@ -23,14 +23,8 @@ export default {
     ButtonElem,
   },
   props: {
-    handleSubmit: {
-      type: Function,
-      required: true,
-    },
-    disabled: {
-      type: Boolean,
-      required: true,
-    },
+    handleSubmit: { type: Function, required: true },
+    disabled: { type: Boolean, required: true },
     handleDelete: {
       type: Function,
       default: () => {},

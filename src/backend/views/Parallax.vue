@@ -128,7 +128,7 @@ export default {
   },
   watch: {
     dbData(newValue) {
-      console.log(this.isLoaded);
+      console.log(this.$options.name);
       console.log(newValue);
       this.isLoaded = true;
       this.layers = newValue[0].count;

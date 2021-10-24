@@ -57,14 +57,14 @@ router.put('/:layer', isAuth, (req, res) => {
     },
     (result, cb) => {
       data = result;
-      // deleteParallaxBreakpointImages(result, cb, layer);
-      image.deleteBreakpointImages(
-        DIR,
-        data,
-        getBreakpointsWithExtPng(),
-        cb,
-        layer,
-      );
+      // image.deleteBreakpointImages(
+      //   DIR,
+      //   data,
+      //   getBreakpointsWithExtPng(),
+      //   cb,
+      //   layer,
+      // );
+      image.remove(res, '', DIR, layer, cb);
     },
     (result, cb) => {
       const newCount = getPositiveValue(data.count);

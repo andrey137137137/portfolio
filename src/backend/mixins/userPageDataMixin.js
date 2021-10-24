@@ -5,27 +5,34 @@ export default {
   data() {
     return {
       user: null,
-      isUpdated: false,
+      // isUpdated: false,
     };
   },
-  computed: {
-    compUser() {
-      return this.dbData[0];
-    },
-  },
-  methods: {
-    setData() {
-      if (!this.isUpdated) {
-        this.user = this.compUser;
-      }
+  // computed: {
+  //   compUser() {
+  //     return this.dbData[0];
+  //   },
+  // },
+  // methods: {
+  //   setData() {
+  //     if (!this.isUpdated) {
+  //       this.user = this.compUser;
+  //     }
 
-      this.isUpdated = true;
+  //     this.isUpdated = true;
+  //   },
+  // },
+  watch: {
+    dbData(newValue) {
+      console.log(this.$options.name);
+      console.log(newValue);
+      this.user = newValue[0];
     },
   },
-  mounted() {
-    this.setData();
-  },
-  updated() {
-    this.setData();
-  },
+  // mounted() {
+  //   this.setData();
+  // },
+  // updated() {
+  //   this.setData();
+  // },
 };

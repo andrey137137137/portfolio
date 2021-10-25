@@ -49,11 +49,23 @@ export default {
   },
   mixins: [userFormMixin],
   data() {
-    return {
+    const data = {
       changePassword: false,
       oldPassword: '',
       password: '',
       repPassword: '',
+    };
+
+    if (!this.params) {
+      return { ...data, ...this.defaultFields() };
+    }
+
+    const { email, username } = this.params;
+
+    return {
+      ...data,
+      email,
+      username,
     };
   },
   validations() {
@@ -84,7 +96,6 @@ export default {
   methods: {
     prepareData() {
       const { email, username, oldPassword, password, repPassword } = this;
-
       this.submitData = {
         email,
         username,

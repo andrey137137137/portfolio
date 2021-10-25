@@ -56,6 +56,10 @@ export default {
       },
     };
 
+    if (!this.params) {
+      return { ...data, ...this.defaultFields() };
+    }
+
     return {
       ...data,
       contacts: this.getMultipleArray(
@@ -91,11 +95,12 @@ export default {
   },
   methods: {
     prepareData() {
+      const { firstName, lastName, old, contacts } = this;
       this.submitData = {
-        firstName: this.firstName,
-        lastName: this.lastName,
-        old: this.old,
-        contacts: this.cloneMultipleArray(this.contacts, this.contactTemplate),
+        firstName,
+        lastName,
+        old,
+        contacts: this.cloneMultipleArray(contacts, this.contactTemplate),
       };
     },
   },

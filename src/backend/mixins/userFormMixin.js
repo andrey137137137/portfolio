@@ -8,19 +8,16 @@ export default {
       default: null,
     },
   },
-  data() {
-    const { firstName, lastName, email, username, old } = this.params;
-    return {
-      firstName,
-      lastName,
-      email,
-      username,
-      old,
-    };
-  },
   methods: {
     defaultFields() {
-      return {};
+      return {
+        firstName: '',
+        lastName: '',
+        email: '',
+        username: '',
+        old: 0,
+        contacts: [],
+      };
     },
     prepareData() {
       this.submitData = {};
@@ -43,6 +40,16 @@ export default {
       this.updateData({ data: this.submitData });
 
       return true;
+    },
+  },
+  watch: {
+    params(newValue) {
+      console.log(this.$options.name);
+      console.log(newValue);
+      const { firstName, lastName, old } = newValue;
+      this.firstName = firstName;
+      this.lastName = lastName;
+      this.old = old;
     },
   },
 };

@@ -4,15 +4,15 @@ export default {
   mixins: [pageDataMixin],
   data() {
     return {
-      user: null,
+      // user: null,
       // isUpdated: false,
     };
   },
-  // computed: {
-  //   compUser() {
-  //     return this.dbData[0];
-  //   },
-  // },
+  computed: {
+    user() {
+      return this.dbData[0];
+    },
+  },
   // methods: {
   //   setData() {
   //     if (!this.isUpdated) {
@@ -22,13 +22,13 @@ export default {
   //     this.isUpdated = true;
   //   },
   // },
-  watch: {
-    dbData(newValue) {
-      console.log(this.$options.name);
-      console.log(newValue);
-      this.user = newValue[0];
-    },
-  },
+  // watch: {
+  //   dbData(newValue) {
+  //     console.log(this.$options.name);
+  //     console.log(newValue);
+  //     this.user = newValue[0];
+  //   },
+  // },
   // mounted() {
   //   this.setData();
   // },

@@ -1,3 +1,4 @@
+import { watchVar } from '@common/helpers';
 import backFormMixin from '@backend/mixins/backFormMixin';
 
 export default {
@@ -7,6 +8,9 @@ export default {
       type: Object,
       default: null,
     },
+  },
+  data() {
+    return this.defaultFields();
   },
   methods: {
     defaultFields() {
@@ -44,12 +48,7 @@ export default {
   },
   watch: {
     params(newValue) {
-      console.log(this.$options.name);
-      console.log(newValue);
-      const { firstName, lastName, old } = newValue;
-      this.firstName = firstName;
-      this.lastName = lastName;
-      this.old = old;
+      watchVar(this, newValue);
     },
   },
 };

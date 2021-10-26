@@ -5,8 +5,8 @@ UserForm(:handleSubmit='submit', :disabled='disabled')
   MultipleElem(
     :vals='$v.contacts.$each.$iter',
     :items='contacts',
-    :fields='contactFields',
-    :propTemplate='contactTemplate'
+    :fields='contactsFields',
+    :propTemplate='contactsTemplate'
   )
 </template>
 
@@ -31,8 +31,8 @@ export default {
   },
   mixins: [userFormMixin],
   data() {
-    const data = {
-      contactFields: [
+    return {
+      contactsFields: [
         {
           name: 'name',
           type: 'text',
@@ -49,24 +49,11 @@ export default {
           placeholder: 'Иконка',
         },
       ],
-      contactTemplate: {
+      contactsTemplate: {
         name: '',
         href: '',
         icon: '',
       },
-    };
-
-    if (!this.params) {
-      return { ...data, ...this.defaultFields() };
-    }
-
-    return {
-      ...data,
-      contacts: this.getMultipleArray(
-        this.params,
-        'contacts',
-        data.contactTemplate,
-      ),
     };
   },
   validations: {
@@ -100,7 +87,7 @@ export default {
         firstName,
         lastName,
         old,
-        contacts: this.cloneMultipleArray(contacts, this.contactTemplate),
+        contacts: this.cloneMultipleArray(contacts, this.contactsTemplate),
       };
     },
   },

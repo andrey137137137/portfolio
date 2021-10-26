@@ -49,23 +49,11 @@ export default {
   },
   mixins: [userFormMixin],
   data() {
-    const data = {
+    return {
       changePassword: false,
       oldPassword: '',
       password: '',
       repPassword: '',
-    };
-
-    if (!this.params) {
-      return { ...data, ...this.defaultFields() };
-    }
-
-    const { email, username } = this.params;
-
-    return {
-      ...data,
-      email,
-      username,
     };
   },
   validations() {
@@ -76,13 +64,13 @@ export default {
       },
       username: userAlphaNumValids,
     };
-    const changePasswordValids = {
-      oldPassword: userAlphaNumValids,
-      password: userAlphaNumValids,
-      repPassword: {
-        sameAsPassword: sameAs('password'),
-      },
-    };
+    // const changePasswordValids = {
+    //   oldPassword: userAlphaNumValids,
+    //   password: userAlphaNumValids,
+    //   repPassword: {
+    //     sameAsPassword: sameAs('password'),
+    //   },
+    // };
 
     if (!this.changePassword) {
       return userValids;
@@ -90,7 +78,12 @@ export default {
 
     return {
       ...userValids,
-      ...changePasswordValids,
+      // ...changePasswordValids,
+      oldPassword: userAlphaNumValids,
+      password: userAlphaNumValids,
+      repPassword: {
+        sameAsPassword: sameAs('password'),
+      },
     };
   },
   methods: {

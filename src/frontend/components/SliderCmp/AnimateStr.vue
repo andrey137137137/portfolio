@@ -1,20 +1,20 @@
 <template lang="pug">
-  transition-group(
-    :name="transitionName"
-    :tag="rootElem"
-    :class="addClasses"
-    :css="false"
-    appear
-    @before-enter="beforeEnter"
-    @enter="enter"
-    @leave="leave"
-  )
-    span(
-      v-for="(symbol, index) in str"
-      :key="getSymbolKey(symbol, index)"
-      :data-index="index"
-      :class="spanAddClasses"
-    ) {{symbol}}
+transition-group(
+  :name='transitionName',
+  :tag='rootElem',
+  :class='addClasses',
+  :css='false',
+  appear,
+  @before-enter='beforeEnter',
+  @enter='enter',
+  @leave='leave'
+)
+  span(
+    v-for='(symbol, index) in str',
+    :key='getSymbolKey(symbol, index)',
+    :data-index='index',
+    :class='spanAddClasses'
+  ) {{ symbol }}
 </template>
 
 <script>
@@ -71,11 +71,11 @@ export default {
     getSymbolKey(symbol, index) {
       return this.commonKey + symbol + index;
     },
-    beforeEnter: function(el) {
+    beforeEnter: function (el) {
       el.style.opacity = 0;
     },
-    enter: function(el, done) {
-      setTimeout(function() {
+    enter: function (el, done) {
+      setTimeout(function () {
         $(el).animate(
           {
             opacity: 1,
@@ -85,7 +85,7 @@ export default {
         );
       }, el.dataset.index * this.spanDelay);
     },
-    leave: function(el, done) {
+    leave: function (el, done) {
       el.style.opacity = 0;
       done();
     },

@@ -53,3 +53,20 @@ export const userAlphaNumValids = {
   minLength: minLength(6),
   maxLength: maxLength(16),
 };
+
+export const watchVar = ($vm, newValue) => {
+  console.log($vm.$options.name);
+  console.log(newValue);
+
+  for (const key in newValue) {
+    if (Object.hasOwnProperty.call(newValue, key)) {
+      const prop = newValue[key];
+
+      if (Array.isArray(prop)) {
+        $vm[key] = $vm.getMultipleArray(newValue, key, $vm[key + 'Template']);
+      } else {
+        $vm[key] = prop;
+      }
+    }
+  }
+};

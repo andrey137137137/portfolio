@@ -19,7 +19,6 @@ transition-group(
 
 <script>
 import $ from 'jquery';
-
 import addClassesMixin from '@common/mixins/addClassesMixin';
 
 export default {
@@ -71,21 +70,22 @@ export default {
     getSymbolKey(symbol, index) {
       return this.commonKey + symbol + index;
     },
-    beforeEnter: function (el) {
+    beforeEnter(el) {
       el.style.opacity = 0;
     },
-    enter: function (el, done) {
-      setTimeout(function () {
+    enter(el, done) {
+      const $vm = this;
+      setTimeout(() => {
         $(el).animate(
           {
             opacity: 1,
           },
-          this.spanDuration,
+          $vm.spanDuration,
           done,
         );
-      }, el.dataset.index * this.spanDelay);
+      }, el.dataset.index * $vm.spanDelay);
     },
-    leave: function (el, done) {
+    leave(el, done) {
       el.style.opacity = 0;
       done();
     },

@@ -5,8 +5,8 @@ SectionWrapper(
   :isContainerClass='false',
   :isOwnContainerClass='true'
 )
-  ul(style='display: none')
-    li(v-for='item in items') {{ item.title }}
+  //- ul(style='display: none')
+  //-   li(v-for='item in items') { item.title }
 
   .slider-demo
     ImageList(
@@ -163,17 +163,20 @@ export default {
     transitionName() {
       return `slider--${this.transitionMethod}`;
     },
+    count() {
+      return this.items ? this.items.length : 0;
+    },
     prevIndex() {
       const tempIndex = this.curIndex - 1;
 
       if (tempIndex < 0) {
-        return this.items.length - 1;
+        return this.count - 1;
       }
 
       return tempIndex;
     },
     nextIndex() {
-      return (this.curIndex + 1) % this.items.length;
+      return (this.curIndex + 1) % this.count;
     },
     demoImageFullNames() {
       return this.getImageFullNames(this.curIndex);
@@ -191,30 +194,46 @@ export default {
       return this.getArrowImgBreakpoints(this.nextImg);
     },
     title() {
-      return this.items[this.curIndex].title;
+      return this.getActualStr(this.curIndex, 'title');
     },
     alt() {
       const number = this.curIndex + 1;
       return number + '. ' + this.title;
     },
     prevTitle() {
-      return this.items[this.prevIndex].title;
+      return this.getActualStr(this.prevIndex, 'title');
     },
     nextTitle() {
-      return this.items[this.nextIndex].title;
+      return this.getActualStr(this.nextIndex, 'title');
     },
     techs() {
-      return this.items[this.curIndex].techs.join(', ');
+      return this.getActualValue(this.curIndex, 'techs', 'Array').join(', ');
     },
     link() {
-      return this.items[this.curIndex].link;
+      return this.getActualStr(this.curIndex, 'link');
     },
   },
   methods: {
+    getActualValue(index, prop, type = 'String') {
+      if (!this.count) {
+        switch (type) {
+          case 'Number':
+            return 0;
+          case 'Array':
+            return [];
+          default:
+            return '';
+        }
+      }
+      return this.items[index][prop];
+    },
+    getActualStr(index, prop) {
+      return this.getActualValue(index, prop);
+    },
     getImageFullNames(index) {
       return {
-        id: this.items[index]._id,
-        imageNames: this.items[index].imageNames,
+        id: this.getActualValue(index, '_id', 'Number'),
+        imageNames: this.getActualValue(index, 'imageNames', 'Array'),
       };
     },
     animate() {

@@ -24,46 +24,16 @@ export default {
     ImageWrapper,
   },
   props: {
-    transitionName: {
-      type: String,
-      required: true,
-    },
-    isLoaded: {
-      type: Boolean,
-      required: true,
-    },
-    index: {
-      type: Number,
-      required: true,
-    },
-    path: {
-      type: String,
-      required: true,
-    },
-    breakpoints: {
-      type: Array,
-      required: true,
-    },
-    imageFullNames: {
-      type: Object,
-      required: true,
-    },
-    alt: {
-      type: String,
-      required: true,
-    },
-    imgAddClasses: {
-      type: Object,
-      required: true,
-    },
-    isDemoSlide: {
-      type: Boolean,
-      default: false,
-    },
-    isNext: {
-      type: Boolean,
-      default: true,
-    },
+    transitionName: { type: String, required: true },
+    isLoaded: { type: Boolean, required: true },
+    index: { type: Number, required: true },
+    path: { type: String, required: true },
+    breakpoints: { type: Array, required: true },
+    imageFullNames: { type: Object, required: true },
+    alt: { type: String, required: true },
+    imgAddClasses: { type: Object, required: true },
+    isDemoSlide: { type: Boolean, default: false },
+    isNext: { type: Boolean, default: true },
   },
   computed: {
     containerClasses() {
@@ -85,7 +55,6 @@ export default {
 
       return this.breakpoints.map(breakpoint => {
         const { name, value } = breakpoint;
-        console.log(name);
         return {
           name:
             name +

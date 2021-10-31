@@ -75,13 +75,14 @@ const upload = (req, res, dir = '', layer = -1) => {
 const remove = (res, imageName, dir = '', layer = -1, cb = false) => {
   setUploadPath(dir, layer);
 
-  const imagePath = path.join(uploadPath, imageName);
+  const IMAGE_PATH = path.join(uploadPath, imageName);
+  console.log(IMAGE_PATH);
 
   if (cb !== false) {
-    return fs.unlink(imagePath, cb);
+    return fs.unlink(IMAGE_PATH, cb);
   }
 
-  fs.unlink(imagePath, err => {
+  fs.unlink(IMAGE_PATH, err => {
     sendMessage(res, err, {
       success: 'Изображение успешно удалено',
       error: 'Не удалось удалить изображение',

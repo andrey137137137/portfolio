@@ -57,14 +57,13 @@ router.put('/:layer', isAuth, (req, res) => {
     },
     (result, cb) => {
       data = result;
-      // image.deleteBreakpointImages(
-      //   DIR,
-      //   data,
-      //   getBreakpointsWithExtPng(),
-      //   cb,
-      //   layer,
-      // );
-      image.remove(res, '', DIR, layer, cb);
+      image.deleteBreakpointImages(
+        DIR,
+        data,
+        getBreakpointsWithExtPng(),
+        cb,
+        layer,
+      );
     },
     (result, cb) => {
       const newCount = getPositiveValue(data.count);

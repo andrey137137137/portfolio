@@ -57,7 +57,7 @@ export default {
       layers: 0,
       curLayer: 0,
       isClickedNewLayer: false,
-      isLoaded: false,
+      // isLoaded: false,
     };
   },
   computed: {
@@ -128,9 +128,6 @@ export default {
   },
   watch: {
     dbData(newValue) {
-      console.log(this.$options.name);
-      console.log(newValue);
-      this.isLoaded = true;
       this.layers = newValue[0].count;
       this.setLastLayer();
     },

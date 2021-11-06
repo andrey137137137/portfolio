@@ -5,7 +5,6 @@ public/upload
 src/assets/img
 
 api/config.json
-api/config.js
 collections/sessions
 collections/users
 

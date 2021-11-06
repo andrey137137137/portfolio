@@ -9,7 +9,9 @@ router.get('/:for', (req, res) => {
   const sort = { date: 1 };
   const filter = {};
 
-  if (req.params.for == 'front') filter.isPublished = true;
+  if (req.params.for == 'front') {
+    filter.isPublished = true;
+  }
 
   crud.getItems(Model, res, sort, { filter });
 });

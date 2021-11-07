@@ -1,4 +1,8 @@
 const IS_DEV = process.env.NODE_ENV !== 'production';
+const SERVER_PORT = process.env.PORT || 3000;
+const CLIENT_PORT = IS_DEV ? 5000 : SERVER_PORT;
+const CLIENT_PATH = 'client';
+
 const deviceBreakpoints = [
   { name: 'xl', value: 1800 },
   { name: 'lg', value: 1200 },
@@ -58,6 +62,9 @@ const getSlideImageName = (id, name) => {
 
 module.exports = {
   IS_DEV,
+  SERVER_PORT,
+  CLIENT_PORT,
+  CLIENT_PATH,
   deviceBreakpoints,
   exist,
   getPositiveValue,

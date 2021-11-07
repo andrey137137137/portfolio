@@ -70,6 +70,7 @@ SectionWrapper(
 </template>
 
 <script>
+import { exist } from '@apiHelpers';
 import {
   IMAGES_LOADING,
   PRELOADER_CLASSES_REMOVING,
@@ -215,7 +216,7 @@ export default {
   },
   methods: {
     getActualValue(index, prop, type = 'String') {
-      if (!this.count) {
+      if (!this.count || !exist(prop, this.items[0])) {
         switch (type) {
           case 'Number':
             return 0;

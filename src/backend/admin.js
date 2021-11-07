@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueRx from 'vue-rx';
-import { axiosConfig } from '@common/helpers';
 import { IS_DEV } from '@apiHelpers';
+import { axiosConfig } from '@common/helpers';
 import store from '@common/store';
 import Admin from './Admin.vue';
 import router from '@/router';

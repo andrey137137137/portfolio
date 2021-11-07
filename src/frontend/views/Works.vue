@@ -34,21 +34,23 @@ export default {
   computed: {
     ...mapGetters(['dbData']),
   },
-  methods: {
-    moveLayers() {
-      const scrollY = window.pageYOffset || document.documentElement.scrollTop;
-      const bottomImgPos =
-        (document.body.scrollHeight - (window.innerHeight + scrollY)) / 10000;
-      this.$refs[
-        'parallaxLayer'
-      ].style.transform = `translateY(${bottomImgPos}px)`;
-    },
-  },
-  mounted() {
-    window.addEventListener('scroll', this.moveLayers);
-    window.addEventListener('resize', this.moveLayers);
-    this.moveLayers();
-  },
+  // methods: {
+  //   moveLayers() {
+  //     const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+  //     const bottomImgPos =
+  //       (document.body.scrollHeight - (window.innerHeight + scrollY)) / 10000;
+  //     this.$refs.parallaxLayer.style.transform = `translateY(${bottomImgPos}px)`;
+  //   },
+  // },
+  // mounted() {
+  //   window.addEventListener('scroll', this.moveLayers);
+  //   window.addEventListener('resize', this.moveLayers);
+  //   this.moveLayers();
+  // },
+  // beforeDestroy() {
+  //   window.removeEventListener('scroll', this.moveLayers);
+  //   window.removeEventListener('resize', this.moveLayers);
+  // },
 };
 </script>
 

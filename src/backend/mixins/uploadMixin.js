@@ -1,18 +1,19 @@
-import { server } from '@config';
+// import { server } from '@config';
+import { SERVER_BASE_URL } from '@common/helpers';
+import { ADMIN_PARALLAX } from '@common/constants/router';
 
 export default {
   data() {
     return {
-      uploadHost: `${server.PROTOCOL}://${server.HOST}:${server.PORT}${server.URL}`,
+      uploadHost: SERVER_BASE_URL,
     };
   },
   methods: {
     getUploadPage(page, layer) {
-      const PARALLAX_PAGE = 'parallax';
       let url = this.uploadHost;
 
-      if (page == PARALLAX_PAGE) {
-        url += PARALLAX_PAGE;
+      if (page == ADMIN_PARALLAX) {
+        url += ADMIN_PARALLAX;
       } else {
         url += `image/${page}`;
       }

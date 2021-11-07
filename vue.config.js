@@ -1,8 +1,10 @@
 const path = require('path');
 const packageJson = require('./package.json');
 
-const configPath = resolve(packageJson._moduleAliases['@config']);
-const { PROD_PATH, PORT } = require(configPath).client;
+// const configPath = resolve(packageJson._moduleAliases['@config']);
+// const { PROD_PATH, PORT } = require(configPath).client;
+const apiHelpersPath = resolve(packageJson._moduleAliases['@apiHelpers']);
+const { CLIENT_PATH, CLIENT_PORT } = require(apiHelpersPath);
 const ASSETS_PATH = 'assets';
 const DEV_PATH = 'src';
 
@@ -28,9 +30,9 @@ function resolveBack(dir) {
 
 module.exports = {
   publicPath: '/',
-  outputDir: PROD_PATH,
+  outputDir: CLIENT_PATH,
   devServer: {
-    port: PORT,
+    port: CLIENT_PORT,
   },
   pluginOptions: {
     svgSprite: {
@@ -78,7 +80,7 @@ module.exports = {
       .use('svgo-loader')
       .loader('svgo-loader');
 
-    config.resolve.alias.set('@config', configPath);
+    // config.resolve.alias.set('@config', configPath);
     config.resolve.alias.set(
       '@httpSt',
       resolve(packageJson._moduleAliases['@httpSt']),

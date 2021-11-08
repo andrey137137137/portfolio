@@ -8,7 +8,7 @@ div(ref='preloader', :class='rootClass')
 </template>
 
 <script>
-import { gsap } from 'gsap';
+// import { gsap } from 'gsap';
 import { mapGetters } from 'vuex';
 import {
   IMAGES_LOADING,
@@ -77,19 +77,22 @@ export default {
         clearInterval(this.intervalID);
         const $vm = this;
 
-        $vm.$nextTick(() => {
-          const $images = document.querySelectorAll(
-            'source:not(.lazy), img:not(.lazy)',
-          );
-          $vm.imageCount = $images.length;
+        // $vm.$nextTick(() => {
+        const $images = document.querySelectorAll(
+          'source:not(.lazy), img:not(.lazy)',
+        );
+        $vm.imageCount = $images.length;
+        console.log('Reset');
 
-          for (let i = 0; i < $vm.imageCount; i++) {
-            const $imageClone = new Image();
-            $imageClone.onload = $vm.imageLoaded;
-            $imageClone.onerror = $vm.imageLoaded;
-            $imageClone.src = $images[i].src;
-          }
-        });
+        for (let i = 0; i < $vm.imageCount; i++) {
+          console.log(i);
+          console.log($vm.imageCount);
+          const $imageClone = new Image();
+          $imageClone.onload = $vm.imageLoaded;
+          $imageClone.onerror = $vm.imageLoaded;
+          $imageClone.src = $images[i].src;
+        }
+        // });
       }
     },
     imageLoaded() {
@@ -113,17 +116,22 @@ export default {
   },
   watch: {
     prs(newValue) {
-      gsap.to(this.$data, {
-        duration: 0.5,
-        tweenedNumber: newValue,
-      });
+      // gsap.to(this.$data, {
+      //   duration: 0.5,
+      //   tweenedNumber: newValue,
+      // });
+      this.tweenedNumber = newValue;
     },
   },
   mounted() {
+    console.log(this.$options.name + ' mounted');
     this.startLoading();
   },
   beforeUpdate() {
-    this.reset();
+    if (!this.isActive) {
+      console.log(this.$options.name + ' beforeUpdate');
+      this.reset();
+    }
   },
 };
 </script>

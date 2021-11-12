@@ -5,14 +5,12 @@ div(ref='preloader', :class='getRootClasses()')
       circle.preloader-center_circle(ref='circle')
       circle.preloader-satellite_circle(ref='satellite')
     .preloader-counter(ref='counter') {{ animatedNumber }}
-  //- div(ref='preloader', :class='rootClass')
 </template>
 
 <script>
-// import { gsap } from 'gsap';
+import { gsap } from 'gsap';
 import { mapGetters } from 'vuex';
 import {
-  // IMAGES_LOADING,
   PRELOADER_CLASSES_REMOVING,
   PRELOADER_HIDDEN,
 } from '@common/constants/timeouts';
@@ -23,7 +21,6 @@ export default {
     return {
       rootClass: 'preloader',
       activeClass: 'preloader--active',
-      // intervalID: 0,
       imageCount: 100000000000,
       imageCounter: 0,
       prs: 0,
@@ -32,7 +29,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['dbDataLoadingCount', 'dbDataLoadedCount']),
+    ...mapGetters(['dbDataLoadedCount', 'dbDataLoadingCount']),
     isChangedPage() {
       return {
         isLoading: !this.dbDataLoadedCount,
@@ -58,30 +55,8 @@ export default {
     getRootClasses() {
       return this.rootClass + ' ' + this.activeClass;
     },
-    // startLoading() {
-    //   const $vm = this;
-
-    //   $vm.$refs.preloader.classList.add($vm.activeClass);
-
-    //   $vm.intervalID = setInterval(() => {
-    //     $vm.imagesLoading();
-    //   }, IMAGES_LOADING);
-    // },
-    reset() {
-      // if (this.dbDataLoadedCount == 0) {
-      this.imageCount = 100000000000;
-      this.imageCounter = 0;
-      this.prs = 0;
-      this.tweenedNumber = 0;
-      this.$refs.preloader.style.display = 'block';
-      // this.startLoading();
-      // }
-      this.$refs.preloader.classList.add(this.activeClass);
-      this.imagesLoading();
-    },
     imagesLoading() {
       if (this.dbDataLoadingCount == this.dbDataLoadedCount) {
-        // clearInterval(this.intervalID);
         const $vm = this;
 
         $vm.$nextTick(() => {
@@ -105,12 +80,10 @@ export default {
     imageLoaded() {
       this.imageCounter++;
       this.prs = Math.floor((this.imageCounter * 100) / this.imageCount);
-
       this.$refs.preloader.classList.add(`preloader--prs_${this.prs}`);
 
       if (!this.isActive) {
         const $vm = this;
-
         setTimeout(() => {
           $vm.$refs.preloader.classList.remove(this.activeClass);
           setTimeout(() => {
@@ -123,36 +96,35 @@ export default {
   },
   watch: {
     prs(newValue) {
-      // gsap.to(this.$data, {
-      //   duration: 0.5,
-      //   tweenedNumber: newValue,
-      // });
-      this.tweenedNumber = newValue;
-    },
-    dbDataLoadingCount() {
-      this.imagesLoading();
+      gsap.to(this.$data, {
+        duration: 0.5,
+        tweenedNumber: newValue,
+      });
     },
     dbDataLoadedCount(newValue) {
       if (!newValue && !this.isFirstLoading) {
-        this.reset();
+        this.imageCount = 100000000000;
+        this.imageCounter = 0;
+        this.prs = 0;
+        this.tweenedNumber = 0;
+        this.$refs.preloader.style.display = 'block';
+        this.$refs.preloader.classList.add(this.activeClass);
       } else {
         if (this.isFirstLoading) {
           this.isFirstLoading = false;
         }
+      }
+
+      if (this.dbDataLoadingCount) {
+        this.imagesLoading();
+      }
+    },
+    dbDataLoadingCount() {
+      if (this.dbDataLoadedCount) {
         this.imagesLoading();
       }
     },
   },
-  // mounted() {
-  //   console.log(this.$options.name + ' mounted');
-  //   this.startLoading();
-  // },
-  // beforeUpdate() {
-  //   if (!this.isActive) {
-  //     console.log(this.$options.name + ' beforeUpdate');
-  //     this.reset();
-  //   }
-  // },
 };
 </script>
 

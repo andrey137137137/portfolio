@@ -52,8 +52,9 @@ export default {
     ...mapActions(['resetLoadedCounters']),
     ...profileMapActions(['readProfile']),
     changedPage() {
-      if (this.isSamePage) return;
-
+      if (this.isSamePage) {
+        return;
+      }
       this.changedPageCount++;
     },
     loadProfileAndPageData() {

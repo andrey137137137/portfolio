@@ -94,7 +94,8 @@ const isAnyBreakpointImage = (dir, breakpoints, layer = -1) => {
   setUploadPath(dir, layer);
 
   for (let index = 0; index < breakpoints.length; index++) {
-    const checkingPath = (getUploadPath(), breakpoints[index]);
+    const checkingPath = path.join(getUploadPath(), breakpoints[index]);
+    console.log(checkingPath);
 
     if (fs.existsSync(checkingPath)) {
       return true;

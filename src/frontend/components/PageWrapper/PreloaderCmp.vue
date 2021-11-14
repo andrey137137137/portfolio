@@ -56,26 +56,31 @@ export default {
       return this.rootClass + ' ' + this.activeClass;
     },
     imagesLoading() {
-      if (this.dbDataLoadingCount == this.dbDataLoadedCount) {
-        const $vm = this;
-
-        $vm.$nextTick(() => {
-          const $images = document.querySelectorAll(
-            'source:not(.lazy), img:not(.lazy)',
-          );
-          $vm.imageCount = $images.length;
-          console.log('imagesLoading');
-
-          for (let i = 0; i < $vm.imageCount; i++) {
-            console.log(i);
-            console.log($vm.imageCount);
-            const $imageClone = new Image();
-            $imageClone.onload = $vm.imageLoaded;
-            $imageClone.onerror = $vm.imageLoaded;
-            $imageClone.src = $images[i].src;
-          }
-        });
+      if (
+        !this.dbDataLoadingCount ||
+        this.dbDataLoadedCount != this.dbDataLoadingCount
+      ) {
+        return;
       }
+
+      const $vm = this;
+
+      $vm.$nextTick(() => {
+        const $images = document.querySelectorAll(
+          'source:not(.lazy), img:not(.lazy)',
+        );
+        $vm.imageCount = $images.length;
+        console.log('imagesLoading');
+
+        for (let i = 0; i < $vm.imageCount; i++) {
+          console.log(i);
+          console.log($vm.imageCount);
+          const $imageClone = new Image();
+          $imageClone.onload = $vm.imageLoaded;
+          $imageClone.onerror = $vm.imageLoaded;
+          $imageClone.src = $images[i].src;
+        }
+      });
     },
     imageLoaded() {
       this.imageCounter++;
@@ -114,15 +119,10 @@ export default {
           this.isFirstLoading = false;
         }
       }
-
-      if (this.dbDataLoadingCount) {
-        this.imagesLoading();
-      }
+      this.imagesLoading();
     },
     dbDataLoadingCount() {
-      if (this.dbDataLoadedCount) {
-        this.imagesLoading();
-      }
+      this.imagesLoading();
     },
   },
 };

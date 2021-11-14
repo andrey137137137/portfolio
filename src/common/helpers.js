@@ -1,5 +1,4 @@
 import axios from 'axios';
-// import { server } from '@config';
 import { IS_DEV, SERVER_PORT } from '@apiHelpers';
 import {
   required,
@@ -21,21 +20,16 @@ export const getImg = (img, files) => {
 export const axiosConfig = () => {
   axios.interceptors.request.use(
     config => {
-      // const { PROTOCOL, HOST, PORT, URL } = server;
-      // const { SERVER_PROTOCOL, SERVER_HOST, SERVER_URL } = process.env;
-
       config.baseURL = SERVER_BASE_URL;
       config.timeout = 5000;
       config.headers = { 'Content-Type': 'application/json' };
       config.withCredentials = true;
-
       return config;
     },
     err => {
       if (IS_DEV) {
         console.log(err.response.status);
       }
-
       return Promise.reject();
     },
   );

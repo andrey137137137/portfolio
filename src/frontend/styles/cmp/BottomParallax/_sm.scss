@@ -11,8 +11,8 @@
   &-img {
     @include position('absolute 0 0 0 0');
     size: 100%;
-    background: $black url(../../assets/img/bottom.jpg) fixed no-repeat right
-      center;
+    // background: $black url(../../assets/img/bottom.jpg) fixed no-repeat right
+    background: $black url(/upload/works/sm.jpg) fixed no-repeat right center;
     background-size: cover;
   }
 }

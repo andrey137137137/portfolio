@@ -121,7 +121,9 @@ export default {
   methods: {
     ...mapActions(['setAuthStatus', 'setFormMessage']),
     handleSubmit() {
-      if (!this.touchInvalidElem()) return false;
+      if (!this.touchInvalidElem()) {
+        return false;
+      }
 
       const $vm = this;
       const { author, position, email, description } = this;

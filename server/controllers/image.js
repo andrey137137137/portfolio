@@ -4,7 +4,7 @@ const fs = require('fs');
 const { waterfall, each } = require('async');
 const { UPLOAD_PATH } = require('@config').client;
 const { ERROR } = require('@httpSt');
-const crud = require('@contr/crud');
+const { sendError, sendResult } = require('@contr/crud');
 
 let uploadPath;
 
@@ -125,15 +125,14 @@ const deleteBreakpointImages = (dir, data, breakpoints, highCB, layer = -1) => {
   );
 };
 
-function waterfallCB(err, result, res, mode) {
+const waterfallCB = (err, result, res, mode) => {
   if (err) {
-    return crud.sendError(err, res, mode);
+    return sendError(err, res, mode);
   }
+  return sendResult(result, res, mode);
+};
 
-  return crud.sendResult(result, res, mode);
-}
-
-const startWaterfall = function(res, mode, cbArray, images = []) {
+const startWaterfall = (res, mode, cbArray, images = []) => {
   waterfall(cbArray, (err, result) => {
     // return fs.unlink(image.path, (err, result) => {
     //   return waterfallCB(err, result, { res, mode, image });
@@ -162,4 +161,5 @@ module.exports = {
   isAnyBreakpointImage,
   deleteBreakpointImages,
   startWaterfall,
+  waterfallCB,
 };

@@ -64,9 +64,9 @@ module.exports = {
     SUBJECT: 'Сообщение с сайта',
   },
   smtp: {
-    SECURE: SMTP_SECURE,
     HOST: SMTP_HOST,
     PORT: SMTP_PORT,
+    SECURE: SMTP_SECURE,
     EMAIL: SMTP_EMAIL,
     PASSWORD: SMTP_PASSWORD,
   },

@@ -1,5 +1,5 @@
 <template lang="pug">
-Fragment
+Fragment(:key='$route.name')
   PageWrapper
     HeaderWrapper
       a.btn.btn--opacity.authorization(

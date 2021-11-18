@@ -8,7 +8,9 @@ export default {
   computed: {
     ...mapGetters(['formInputName', 'formError']),
     errorStyleTop() {
-      if (!this.formInputName) return 0;
+      if (!this.formInputName) {
+        return 0;
+      }
       return this.$refs[this.formInputName].$el.offsetTop;
     },
   },
@@ -22,11 +24,12 @@ export default {
       }
 
       this.$refs[elemName].touchHandle();
-
       return false;
     },
     handleSubmit() {
-      if (!this.touchInvalidElem()) return false;
+      if (!this.touchInvalidElem()) {
+        return false;
+      }
       return true;
     },
   },

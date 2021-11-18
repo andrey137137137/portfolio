@@ -1,5 +1,5 @@
 <template lang="pug">
-Fragment
+Fragment(:key='$route.name')
   TopWrapper
     aside.tabs
       #scroll_menu.container.tabs-container
@@ -74,7 +74,7 @@ export default {
     },
     setPostPositions() {
       const $vm = this;
-      $vm.$posts.each(function(item) {
+      $vm.$posts.each(function (item) {
         $vm.postPositions[item] = {};
         $vm.postPositions[item].top = $(this).offset().top - this.offsetHeight;
         $vm.postPositions[item].bottom =

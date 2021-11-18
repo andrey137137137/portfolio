@@ -1,5 +1,5 @@
 <template lang="pug">
-Fragment
+Fragment(:key='$route.name')
   TopWrapper
     SliderCmp.top_wrap-content(:items='dbData')
   BottomWrapper.bottom_wrap--without_bg.parallax_mirror(ref='parallax')

@@ -49,17 +49,20 @@ router.post('/', isAuth, (req, res) => {
         );
       },
       (result, cb) => {
+        console.log(result);
         const Vue = require('vue');
         const app = new Vue({
           data: {
             name: result.author,
+            status: result.position,
           },
-          template: `<div>{{name}}</div>`,
+          template: `<p><b>{{name}}</b><i>{{status}}</i></p>`,
         });
         const renderer = require('vue-server-renderer').createRenderer();
         renderer.renderToString(app, cb);
       },
       (result, cb) => {
+        console.log(result);
         const { EMAIL, PASSWORD } = require('@config').smtp;
         const transporter = nodemailer.createTransport({
           service: 'gmail',
@@ -67,6 +70,7 @@ router.post('/', isAuth, (req, res) => {
             user: EMAIL,
             pass: PASSWORD,
           },
+          tls: { rejectUnauthorized: false },
         });
         transporter.sendMail(
           {
@@ -81,6 +85,8 @@ router.post('/', isAuth, (req, res) => {
       },
     ],
     (err, result) => {
+      console.log(err);
+      console.log(result);
       return waterfallCB(err, result, res, 'insert');
     },
   );

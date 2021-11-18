@@ -1,5 +1,5 @@
 <template lang="pug">
-Fragment
+Fragment(:key='$route.name')
   TopWrapper.top_wrap-content
     SectionWrapper(
       name='about',

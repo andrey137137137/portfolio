@@ -6,26 +6,16 @@ section#reviews.section.container.reviews
     containerAddClass='reviews-title_wrap',
     titleAddClass='reviews-title'
   )
-
-  article.col.col--float.col--tb_6.col--ds_4.reviews-article(
-    v-for='(review, index) in comments'
+  FeedbackItem(
+    v-for='(review, index) in comments',
+    :key='review._id',
+    v-bind='review'
   )
-    .icon.icon--quote.reviews-quote
-    .img_wrap.reviews-img_wrap
-      img.img_wrap-img(
-        :src='"userfiles/reviews/m/" + (index + 1) + ".jpg"',
-        :alt='review.author'
-      )
-    .reviews-text_wrap
-      p.section-desc.reviews-desc {{ review.description }}
-      span.reviews-author {{ review.author }}
-      span.reviews-status
-        | &#8212;
-        | {{ review.position }}
 </template>
 
 <script>
 import TitleWrapper from '@frontCmp/TitleWrapper';
+import FeedbackItem from './FeedbackItem';
 
 import { createNamespacedHelpers } from 'vuex';
 const { mapGetters } = createNamespacedHelpers('comments');
@@ -35,6 +25,7 @@ export default {
   name: 'FeedbackList',
   components: {
     TitleWrapper,
+    FeedbackItem,
   },
   computed: {
     ...mapGetters(['comments']),

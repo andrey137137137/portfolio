@@ -21,7 +21,8 @@ router.get('/:for', (req, res) => {
 });
 
 router.post('/', isAuth, (req, res) => {
-  const { author, position, email, description } = req.body;
+  const { author, position, description } = req.body;
+  const EMAIL_FROM = req.body.email;
   // const testEmailAccount = await nodemailer.createTestAccount();
   // const transporter = nodemailer.createTransport({
   //   host: IS_DEV ? 'smtp.ethereal.email' : HOST,
@@ -42,7 +43,7 @@ router.post('/', isAuth, (req, res) => {
           {
             author,
             position,
-            email,
+            email: EMAIL_FROM,
             description,
           },
           cb,
@@ -56,7 +57,7 @@ router.post('/', isAuth, (req, res) => {
             name: result.author,
             status: result.position,
           },
-          template: `<p><b>{{name}}</b><i>{{status}}</i></p>`,
+          template: `<p><b>{{name}}</b> <i>{{status}}</i></p>`,
         });
         const renderer = require('vue-server-renderer').createRenderer();
         renderer.renderToString(app, cb);
@@ -74,9 +75,9 @@ router.post('/', isAuth, (req, res) => {
         });
         transporter.sendMail(
           {
-            from: '"Node js" <nodejs@example.com>',
-            to: 'user@example.com, user@example.com',
-            subject: 'Message from Node js',
+            from: EMAIL_FROM,
+            to: EMAIL,
+            subject: 'Portfolio comment',
             text: 'This message was sent from Node js server.',
             html: result,
           },
@@ -93,13 +94,12 @@ router.post('/', isAuth, (req, res) => {
 });
 
 router.put('/:id', isAuth, (req, res) => {
-  const { author, position, email, description, date, isPublished } = req.body;
+  const { author, position, email, description, isPublished } = req.body;
   crud.updateItem(Model, res, req.params.id, {
     author,
     position,
     description,
     email,
-    date: new Date(date),
     isPublished,
   });
 });

@@ -70,11 +70,8 @@ export default {
           'source:not(.lazy), img:not(.lazy)',
         );
         $vm.imageCount = $images.length;
-        console.log('imagesLoading');
 
         for (let i = 0; i < $vm.imageCount; i++) {
-          console.log(i);
-          console.log($vm.imageCount);
           const $imageClone = new Image();
           $imageClone.onload = $vm.imageLoaded;
           $imageClone.onerror = $vm.imageLoaded;

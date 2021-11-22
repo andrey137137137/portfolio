@@ -88,6 +88,7 @@
     "@config": "api/config.js",
     "@httpSt": "api/httpStatuses.js",
     "@apiHelpers": "api/helpers.js",
+    "@letterTemplate": "api/letterTemplate.js",
     "@contr": "server/controllers",
     "@routes": "server/routes",
     "@auth": "server/routes/auth.js"

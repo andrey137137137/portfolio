@@ -51,14 +51,15 @@ router.post('/', isAuth, (req, res) => {
       },
       (result, cb) => {
         console.log(result);
-        const Vue = require('vue');
-        const app = new Vue({
-          data: {
-            name: result.author,
-            status: result.position,
-          },
-          template: `<p><b>{{name}}</b> <i>{{status}}</i></p>`,
-        });
+        // const Vue = require('vue');
+        // const app = new Vue({
+        //   data: {
+        //     name: result.author,
+        //     status: result.position,
+        //   },
+        //   template: `<p><b>{{name}}</b> <i>{{status}}</i></p>`,
+        // });
+        const app = require('@letterTemplate')(result);
         const renderer = require('vue-server-renderer').createRenderer();
         renderer.renderToString(app, cb);
       },

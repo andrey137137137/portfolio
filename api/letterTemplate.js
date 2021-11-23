@@ -2,8 +2,8 @@ import Vue from 'vue';
 import App from './letterTemplate.vue';
 
 // экспортируем функцию фабрику для создания экземпляров
-// нового приложения, маршрутизатора и хранилища
-export function createApp(context) {
+// нового приложения
+function createApp(context) {
   const app = new Vue({
     data: {
       item: context.item,

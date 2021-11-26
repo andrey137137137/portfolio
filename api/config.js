@@ -1,10 +1,12 @@
 const path = require('path');
-const result = require('dotenv').config();
-const result2 = require('dotenv').config({ path: '.env.development.local' });
+// const result = require('dotenv').config();
+// const result2 = require('dotenv').config({ path: '.env.development.local' });
+require('dotenv').config();
+require('dotenv').config({ path: '.env.development.local' });
 const { IS_DEV, SERVER_PORT, CLIENT_PATH } = require('./helpers');
 
-console.log(result);
-console.log(result2);
+// console.log(result);
+// console.log(result2);
 
 const {
   VUE_APP_SERVER_PROTOCOL,

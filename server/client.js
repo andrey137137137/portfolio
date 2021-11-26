@@ -8,7 +8,7 @@ module.exports = app => {
 
     app.use(require('express').static(BUILT_CLIENT));
 
-    app.get('/admin/*', (req, res) => {
+    app.get('/admin' + PUBLIC_PATTERN, (req, res) => {
       res.sendFile(path.resolve(BUILT_CLIENT, 'admin.html'));
     });
     app.get(PUBLIC_PATTERN, (req, res) => {

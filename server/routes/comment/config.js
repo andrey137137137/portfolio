@@ -7,6 +7,8 @@ const { VueLoaderPlugin } = require('vue-loader');
 const nodeExternals = require('webpack-node-externals');
 const VueSSRServerPlugin = require('vue-server-renderer/server-plugin');
 
+const DIST_FOLDER = 'mailTemplate';
+
 const plugins = IS_DEV
   ? [new VueLoaderPlugin(), new FriendlyErrorsPlugin()]
   : [
@@ -31,7 +33,7 @@ plugins.push(new VueSSRServerPlugin());
 
 module.exports = {
   // Укажите точку входа серверной части вашего приложения
-  entry: './letterTemplate.js',
+  entry: './mailTemplate.js',
 
   // Это позволяет Webpack обрабатывать динамические импорты в Node-стиле,
   // а также сообщает `vue-loader` генерировать серверно-ориентированный код
@@ -43,9 +45,9 @@ module.exports = {
 
   // Это сообщает что в серверной сборке следует использовать экспорты в стиле Node
   output: {
-    path: path.resolve(__dirname, '../dist'),
-    publicPath: '/dist/',
-    filename: 'letterTemplate.js',
+    path: path.resolve(__dirname, '../' + DIST_FOLDER),
+    publicPath: '/' + DIST_FOLDER + '/',
+    filename: 'index.js',
     libraryTarget: 'commonjs2',
   },
 

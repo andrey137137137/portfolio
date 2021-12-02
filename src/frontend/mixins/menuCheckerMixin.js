@@ -25,32 +25,26 @@ export default {
   },
   methods: {
     closeMenu() {
-      let {
-        $checker,
-        $menu,
-        checkerClasses,
-        menuClasses,
-        delay,
-        itemDelay,
-      } = this.menuChecker;
+      let { $checker, $menu, checkerClasses, menuClasses, delay, itemDelay } =
+        this.menuChecker;
 
       if ($checker.hasClass(checkerClasses.close)) {
         itemDelay = 100;
 
         $menu
-          .queue(function() {
+          .queue(function () {
             $checker.toggleClass(
               `${checkerClasses.close} ${checkerClasses.open}`,
             );
             $(this).dequeue();
           })
-          .queue(function() {
+          .queue(function () {
             var delay = 0;
 
-            $menu.find('.' + menuClasses.item).each(function() {
+            $menu.find('.' + menuClasses.item).each(function () {
               $(this)
                 .delay(delay)
-                .queue(function() {
+                .queue(function () {
                   $(this).removeClass(menuClasses.visibleMenuItem);
                   $(this).dequeue();
                 });
@@ -60,12 +54,12 @@ export default {
             $(this).dequeue();
           })
           .delay(delay + itemDelay)
-          .queue(function() {
+          .queue(function () {
             $menu.addClass(menuClasses.hidden);
             $(this).dequeue();
           })
           .delay(delay)
-          .queue(function() {
+          .queue(function () {
             $menu.removeClass(`
           ${menuClasses.visibleBg}
           ${menuClasses.opened}
@@ -77,7 +71,7 @@ export default {
     },
   },
   mounted() {
-    this.$nextTick(function() {
+    this.$nextTick(function () {
       const $vm = this;
 
       $vm.menuChecker.$checker = $('body').find('#menu_checker');
@@ -106,7 +100,7 @@ export default {
       //   $vm.closeMenu();
       // });
 
-      $checker.click(function(event) {
+      $checker.click(function (event) {
         event.preventDefault();
 
         if (process) {
@@ -117,29 +111,29 @@ export default {
           itemDelay = 200;
 
           $menu
-            .queue(function() {
+            .queue(function () {
               $checker.toggleClass(
                 `${checkerClasses.open} ${checkerClasses.close}`,
               );
               $(this).dequeue();
             })
-            .queue(function() {
+            .queue(function () {
               $menu.addClass(menuClasses.opened);
               $(this).dequeue();
             })
             .delay(100)
-            .queue(function() {
+            .queue(function () {
               $menu.addClass(menuClasses.visibleBg);
               $(this).dequeue();
             })
             .delay(delay)
-            .queue(function() {
+            .queue(function () {
               var delay = 0;
 
-              $menu.find('.' + menuClasses.item).each(function() {
+              $menu.find('.' + menuClasses.item).each(function () {
                 $(this)
                   .delay(delay)
-                  .queue(function() {
+                  .queue(function () {
                     $(this).addClass(menuClasses.visibleMenuItem);
                     $(this).dequeue();
                   });
@@ -158,7 +152,7 @@ export default {
     });
   },
   updated() {
-    this.$nextTick(function() {
+    this.$nextTick(function () {
       // Код, который будет запущен только после
       // обновления всех представлений
       this.closeMenu();

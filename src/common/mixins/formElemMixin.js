@@ -5,8 +5,8 @@ import addClassesMixin from '@common/mixins/addClassesMixin';
 import ErrorElem from '@components/formElems/ErrorElem';
 
 import { mapGetters, mapActions, createNamespacedHelpers } from 'vuex';
-const mapFrontFormErrorActions = createNamespacedHelpers('frontFormError')
-  .mapActions;
+const mapFrontFormErrorActions =
+  createNamespacedHelpers('frontFormError').mapActions;
 
 export default {
   mixins: [addClassesMixin],
@@ -166,7 +166,7 @@ export default {
       this.$emit(event, value);
 
       if (this.isRequiredInput) {
-        this.$nextTick(function() {
+        this.$nextTick(function () {
           this.touchHandle();
         });
       }

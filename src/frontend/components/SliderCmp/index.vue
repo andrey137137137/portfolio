@@ -265,8 +265,8 @@ export default {
         this.curIndex = oldIndex;
         this.transitionMethod = transitionMethod;
 
-        console.log('Slider:');
-        console.log(this.curIndex);
+        // console.log('Slider:');
+        // console.log(this.curIndex);
       }
 
       this.animate();
@@ -278,7 +278,7 @@ export default {
       this.changeSlide(nowTime, this.nextIndex, 'scroll_up');
     },
     handleChangeSlide(isNext = true) {
-      console.log(this.durationStep);
+      // console.log(this.durationStep);
 
       // if (!this.durationStep) {
       this.resetInterval();
@@ -310,10 +310,10 @@ export default {
       const topBorder = container.getBoundingClientRect().top;
       const bottomBorder = topBorder + parseInt(elemHeight);
 
-      console.log('Container:');
-      console.log(targetHeight);
-      console.log(topBorder);
-      console.log(bottomBorder);
+      // console.log('Container:');
+      // console.log(targetHeight);
+      // console.log(topBorder);
+      // console.log(bottomBorder);
 
       if (
         topBorder + targetHalfHeight <= targetHeight &&

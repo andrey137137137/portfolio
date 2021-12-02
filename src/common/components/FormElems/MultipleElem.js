@@ -87,7 +87,6 @@ export default {
           template[key] = this.propTemplate[key];
         }
       }
-      console.log(this.items);
 
       this.items.push(template);
     },

@@ -1,5 +1,8 @@
 import axios from 'axios';
-import { IS_DEV, SERVER_PORT } from '@apiHelpers';
+import {
+  // IS_DEV,
+  SERVER_PORT,
+} from '@apiHelpers';
 import {
   required,
   alphaNum,
@@ -27,9 +30,9 @@ export const axiosConfig = () => {
       return config;
     },
     err => {
-      if (IS_DEV) {
-        console.log(err.response.status);
-      }
+      // if (IS_DEV) {
+      //   console.log(err.response.status);
+      // }
       return Promise.reject();
     },
   );
@@ -52,8 +55,8 @@ export const userAlphaNumValids = {
 };
 
 export const watchVar = ($vm, newValue) => {
-  console.log($vm.$options.name);
-  console.log(newValue);
+  // console.log($vm.$options.name);
+  // console.log(newValue);
 
   for (const key in newValue) {
     if (Object.hasOwnProperty.call(newValue, key)) {

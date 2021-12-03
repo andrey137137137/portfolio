@@ -3,14 +3,14 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "vue-cli-service build",
+    "start": "concurrently \"npm run server\" \"npm run client\"",
     "lint": "vue-cli-service lint",
-    "buildMailTemplate": "cross-env NODE_ENV=production webpack --config build/webpack.server.config.js --progress --hide-modules",
+    "build": "vue-cli-service build",
     "client": "vue-cli-service serve --open",
-    "prod": "cross-env NODE_ENV=production node server/index.js",
     "server": "nodemon server/index.js",
-    "start": "concurrently \"nodemon server/index.js\" \"vue-cli-service serve --open\"",
-    "testProd": "cross-env NODE_ENV=production nodemon server/index.js"
+    "buildMailTemplate": "cross-env NODE_ENV=production webpack --config build/webpack.server.config.js --progress --hide-modules",
+    "testProd": "cross-env NODE_ENV=production npm run server",
+    "prod": "cross-env NODE_ENV=production node server/index.js"
   },
   "dependencies": {
     "async": "^3.2.2",

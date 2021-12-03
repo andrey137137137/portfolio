@@ -4,7 +4,6 @@
   "private": true,
   "scripts": {
     "build": "vue-cli-service build",
-    "postinstall": "npm run build",
     "lint": "vue-cli-service lint",
     "buildMailTemplate": "cross-env NODE_ENV=production webpack --config build/webpack.server.config.js --progress --hide-modules",
     "client": "vue-cli-service serve --open",

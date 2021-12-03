@@ -6,8 +6,8 @@ PageWrapper
 <script>
 import pageDataMixin from '@backend/mixins/pageDataMixin';
 import PageWrapper from '@backCmp/PageWrapper';
-import CommentForm from '@backCmp/forms/CommentForm';
-// import CommentForm from '../components/forms/CommentForm';
+// import CommentForm from '@backCmp/forms/CommentForm';
+import CommentForm from '../components/forms/CommentForm';
 
 export default {
   name: 'AdminCommentsView',

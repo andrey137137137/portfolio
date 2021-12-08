@@ -72,8 +72,7 @@ export default {
             'section-desc': true,
             'header-desc': true,
             ...this.descClasses,
-          }}
-        >
+          }}>
           {this.desc}
         </p>
       );

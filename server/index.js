@@ -9,8 +9,8 @@ console.log('IS_DEV: ' + IS_DEV);
 app.use(require('morgan')('dev'));
 
 if (IS_DEV) {
-  require('./cors')(app);
   require('./logger')(app);
+  require('./cors')(app);
 }
 
 require('./parsersAndSession')(app);

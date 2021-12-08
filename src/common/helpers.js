@@ -1,8 +1,5 @@
 import axios from 'axios';
-import {
-  // IS_DEV,
-  SERVER_PORT,
-} from '@apiHelpers';
+import { IS_DEV, SERVER_PORT } from '@apiHelpers';
 import {
   required,
   alphaNum,
@@ -11,7 +8,17 @@ import {
   helpers,
 } from 'vuelidate/lib/validators';
 
-export const SERVER_BASE_URL = `${process.env.VUE_APP_SERVER_PROTOCOL}://${process.env.VUE_APP_SERVER_HOST}:${SERVER_PORT}${process.env.VUE_APP_SERVER_URL}`;
+function getServerBaseUrl() {
+  const SERVER_URL = process.env.VUE_APP_SERVER_URL;
+  if (!IS_DEV) {
+    return SERVER_URL;
+  }
+  const { VUE_APP_SERVER_PROTOCOL, VUE_APP_SERVER_HOST } = process.env;
+  // return `${VUE_APP_SERVER_PROTOCOL}://${VUE_APP_SERVER_HOST}:${SERVER_PORT}${SERVER_URL}`;
+  return `${VUE_APP_SERVER_PROTOCOL}://${VUE_APP_SERVER_HOST}${SERVER_URL}`;
+}
+
+export const SERVER_BASE_URL = getServerBaseUrl();
 
 export const getImg = (img, files) => {
   const start = img.lastIndexOf('.');
@@ -23,8 +30,8 @@ export const getImg = (img, files) => {
 export const axiosConfig = () => {
   axios.interceptors.request.use(
     config => {
-      config.baseURL = SERVER_BASE_URL;
-      config.timeout = 5000;
+      config.baseURL = getServerBaseUrl();
+      // config.timeout = 5000;
       config.headers = { 'Content-Type': 'application/json' };
       config.withCredentials = true;
       return config;

@@ -58,7 +58,8 @@ export default {
         <a
           id="menu_checker"
           class="header-menu_checker header-menu_checker--open"
-          href="#">
+          href="#"
+        >
           <div class="header-menu_checker_line" />
           <div class="header-menu_checker_line" />
           <div class="header-menu_checker_line" />

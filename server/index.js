@@ -10,9 +10,9 @@ app.use(require('morgan')('dev'));
 
 if (IS_DEV) {
   require('./logger')(app);
-  require('./cors')(app);
 }
 
+require('./cors')(app);
 require('./parsersAndSession')(app);
 require('./router')(app);
 

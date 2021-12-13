@@ -26,14 +26,19 @@ export default {
       }
     }
 
-    let elems = [
-      ...this.elemsBeforeInput(h),
-      this.inputElem(h),
-      ...this.elemsAfterInput(h),
-    ];
+    let elems = [];
 
-    if (this.isWrapper()) {
-      elems = this.wrapInput(h, elems);
+    if (!exist(0, this.values)) {
+      elems = this.getBaseElems(h);
+    } else {
+      this.values.forEach(function (item, index) {
+        this.curIndex = index;
+        elems.push(this.getBaseElems(h));
+      });
+    }
+
+    if (this.subWrapClass) {
+      elems = h('div', { class: this.subWrapClass }, elems);
     }
 
     return h(
@@ -51,14 +56,9 @@ export default {
     );
   },
   props: {
-    name: {
-      type: String,
-      default: '',
-    },
-    wrapClass: {
-      type: String,
-      default: '',
-    },
+    name: { type: String, default: '' },
+    wrapClass: { type: String, default: '' },
+    subWrapClass: { type: [String, Object], default: '' },
     addInputClasses: {
       type: Object,
       default() {
@@ -72,20 +72,21 @@ export default {
       },
     },
     value: {
-      // type: String,
+      type: [String, Number],
       default: '',
     },
-    type: {
-      type: String,
-      default: 'text',
-    },
-    label: {
-      type: String,
-      default: '',
+    type: { type: String, default: 'text' },
+    label: { type: String, default: '' },
+    values: {
+      type: Array,
+      default() {
+        return [];
+      },
     },
   },
   data() {
     return {
+      curIndex: -1,
       classes: {
         block: 'form',
         elem: 'input',
@@ -99,6 +100,9 @@ export default {
   },
   computed: {
     ...mapGetters(['message']),
+    areManyInputs() {
+      return this.curIndex >= 0;
+    },
     isFront() {
       return this.$route.meta.isFront;
     },
@@ -147,8 +151,21 @@ export default {
     isWrapper() {
       return exist('wrapInput', this);
     },
+    getBaseElems(h) {
+      let elems = [
+        ...this.elemsBeforeInput(h),
+        this.inputElem(h),
+        ...this.elemsAfterInput(h),
+      ];
+
+      if (this.isWrapper()) {
+        elems = this.wrapInput(h, elems);
+      }
+
+      return elems;
+    },
     handle(e) {
-      let event;
+      let eventName;
       let value;
 
       if (this.message) {
@@ -157,15 +174,15 @@ export default {
 
       switch (this.type) {
         case 'checkbox':
-          event = 'change';
+          eventName = 'change';
           value = e.target.checked;
           break;
         default:
-          event = 'input';
+          eventName = 'input';
           value = e.target.value;
       }
 
-      this.$emit(event, value);
+      this.$emit(eventName, value);
 
       if (this.isRequiredInput) {
         this.$nextTick(function () {
@@ -183,15 +200,18 @@ export default {
       return <ErrorElem message={this.error} />;
     },
     inputElem(h) {
+      const inputOptions = this.areManyInputs
+        ? this.values[this.curIndex]
+        : false;
       const on = {
         input: this.handle,
       };
       const attrs = {
-        placeholder: this.placeholder,
+        placeholder: inputOptions ? inputOptions.placeholder : this.placeholder,
       };
       let classes = {
         'form-input': true,
-        ...this.addInputClasses,
+        ...(inputOptions ? inputOptions.addInputClasses : this.addInputClasses),
       };
       let formElem = '';
 
@@ -214,7 +234,7 @@ export default {
         class: classes,
         attrs,
         domProps: {
-          value: this.value,
+          value: inputOptions ? inputOptions.value : this.value,
         },
         on,
       });

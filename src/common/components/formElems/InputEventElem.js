@@ -4,6 +4,7 @@ import SvgCmp from '@components/SvgCmp';
 import NavMultipleElem from '@components/formElems/MultipleElem/NavMultipleElem';
 
 export default {
+  name: 'ChangeEventElem',
   components: {
     NavMultipleElem,
   },

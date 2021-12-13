@@ -2,6 +2,7 @@ import addClassesMixin from '@common/mixins/addClassesMixin';
 
 export default {
   name: 'NavMultipleElem',
+  mixins: [addClassesMixin],
   render(h) {
     const $vm = this;
     const elems = [];
@@ -18,7 +19,6 @@ export default {
 
     return h('div', { class: $vm.containerClasses }, elems);
   },
-  mixins: [addClassesMixin],
   props: {
     list: { type: Array, required: true },
   },

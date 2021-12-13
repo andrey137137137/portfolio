@@ -1,6 +1,7 @@
 import formElemMixin from '@common/mixins/formElemMixin';
 
 export default {
+  name: 'ChangeEventElem',
   mixins: [formElemMixin],
   model: {
     prop: 'value',
@@ -19,7 +20,14 @@ export default {
       return elems;
     },
     wrapInput(h, elems) {
-      return [h('label', { class: 'form-label' }, elems)];
+      const addWrapClasses = this.areManyInputs
+        ? this.values[this.curIndex].addWrapClasses
+        : false;
+      const classes = {
+        'form-label': true,
+        [addWrapClasses]: addWrapClasses,
+      };
+      return [h('label', { class: classes }, elems)];
     },
     checkedElem() {
       return <div class="form-checked" />;

@@ -1,20 +1,22 @@
+import { exist } from '@apiHelpers';
 import formElemMixin from '@common/mixins/formElemMixin';
 import SvgCmp from '@components/SvgCmp';
+import NavMultipleElem from '@components/formElems/MultipleElem/NavMultipleElem';
 
 export default {
+  components: {
+    NavMultipleElem,
+  },
   mixins: [formElemMixin],
   props: {
-    labelIcon: {
-      type: String,
-      default: '',
-    },
-    placeholder: {
-      type: String,
-      default: '',
-    },
-    measure: {
-      type: String,
-      default: '',
+    labelIcon: { type: String, default: '' },
+    placeholder: { type: String, default: '' },
+    measure: { type: String, default: '' },
+    multipleNav: {
+      type: Array,
+      default() {
+        return [];
+      },
     },
   },
   methods: {
@@ -36,6 +38,16 @@ export default {
 
       if (this.measure) {
         elems.push(this.measureElem());
+      }
+
+      if (exist(0, this.multipleNav)) {
+        elems.push(
+          h('NavMultipleElem', {
+            props: {
+              list: this.multipleNav,
+            },
+          }),
+        );
       }
 
       return elems;

@@ -123,7 +123,8 @@ export default {
   mixins: [frontFormMixin, getAuthStatusMixin],
   data() {
     return {
-      isFlipped: false,
+      // isFlipped: false,
+      isFlipped: true,
       username: '',
       password: '',
       isHuman: false,

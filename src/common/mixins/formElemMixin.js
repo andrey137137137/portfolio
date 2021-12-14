@@ -31,9 +31,11 @@ export default {
     if (!exist(0, this.values)) {
       elems = this.getBaseElems(h);
     } else {
-      this.values.forEach(function (item, index) {
-        this.curIndex = index;
-        elems.push(this.getBaseElems(h));
+      console.log(this.name);
+      const $vm = this;
+      this.values.forEach((item, index) => {
+        // $vm.curIndex = index;
+        elems.push($vm.getBaseElems(h, index));
       });
     }
 
@@ -72,7 +74,7 @@ export default {
       },
     },
     value: {
-      type: [String, Number],
+      type: [String, Number, Boolean],
       default: '',
     },
     type: { type: String, default: 'text' },
@@ -86,7 +88,7 @@ export default {
   },
   data() {
     return {
-      curIndex: -1,
+      // curIndex: -1,
       classes: {
         block: 'form',
         elem: 'input',
@@ -100,9 +102,9 @@ export default {
   },
   computed: {
     ...mapGetters(['message']),
-    areManyInputs() {
-      return this.curIndex >= 0;
-    },
+    // areManyInputs() {
+    //   return this.curIndex >= 0;
+    // },
     isFront() {
       return this.$route.meta.isFront;
     },
@@ -142,6 +144,9 @@ export default {
   methods: {
     ...mapActions(['setFormMessage']),
     ...mapFrontFormErrorActions(['setFormError']),
+    getValueOption(index, name) {
+      return index >= 0 ? this.values[index][name] : false;
+    },
     elemsBeforeInput() {
       return [];
     },
@@ -151,15 +156,15 @@ export default {
     isWrapper() {
       return exist('wrapInput', this);
     },
-    getBaseElems(h) {
+    getBaseElems(h, index = -1) {
       let elems = [
         ...this.elemsBeforeInput(h),
-        this.inputElem(h),
-        ...this.elemsAfterInput(h),
+        this.inputElem(h, index),
+        ...this.elemsAfterInput(h, index),
       ];
 
       if (this.isWrapper()) {
-        elems = this.wrapInput(h, elems);
+        elems = this.wrapInput(h, elems, index);
       }
 
       return elems;
@@ -199,10 +204,8 @@ export default {
     errorElem() {
       return <ErrorElem message={this.error} />;
     },
-    inputElem(h) {
-      const inputOptions = this.areManyInputs
-        ? this.values[this.curIndex]
-        : false;
+    inputElem(h, index) {
+      const inputOptions = index >= 0 ? this.values[index] : false;
       const on = {
         input: this.handle,
       };

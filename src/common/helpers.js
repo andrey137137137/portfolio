@@ -14,8 +14,8 @@ function getServerBaseUrl() {
     return SERVER_URL;
   }
   const { VUE_APP_SERVER_PROTOCOL, VUE_APP_SERVER_HOST } = process.env;
-  // return `${VUE_APP_SERVER_PROTOCOL}://${VUE_APP_SERVER_HOST}:${SERVER_PORT}${SERVER_URL}`;
-  return `${VUE_APP_SERVER_PROTOCOL}://${VUE_APP_SERVER_HOST}${SERVER_URL}`;
+  return `${VUE_APP_SERVER_PROTOCOL}://${VUE_APP_SERVER_HOST}:${SERVER_PORT}${SERVER_URL}`;
+  // return `${VUE_APP_SERVER_PROTOCOL}://${VUE_APP_SERVER_HOST}${SERVER_URL}`;
 }
 
 export const SERVER_BASE_URL = getServerBaseUrl();

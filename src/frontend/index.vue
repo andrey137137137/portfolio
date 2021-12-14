@@ -73,6 +73,14 @@ Fragment(:key='$route.name')
                   .form-checked
                   .form-checkbox_text Не уверен
 
+            ChangeEventElem(
+              ref='notRobot',
+              name='notRobot',
+              :val='$v.notRobot.$model',
+              type='radio',
+              :values='notRobotValues'
+            )
+
             ErrorElem(:message='formError', :styleTop='errorStyleTop')
 
           .menu.header-menu.header-menu--float.form-menu.login_form-menu
@@ -128,7 +136,17 @@ export default {
       username: '',
       password: '',
       isHuman: false,
-      notRobot: '',
+      notRobotValues: [
+        {
+          addWrapClasses: 'login_form-radio_yes',
+          label: 'Да',
+          value: 'yes',
+        },
+        {
+          label: 'Не уверен',
+          value: 'no',
+        },
+      ],
     };
   },
   validations: {

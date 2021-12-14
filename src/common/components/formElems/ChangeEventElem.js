@@ -8,21 +8,24 @@ export default {
     event: 'change',
   },
   methods: {
-    elemsAfterInput() {
+    elemsAfterInput(h, index) {
       let elems = [];
 
       elems.push(this.checkedElem());
 
-      if (this.label) {
-        elems.push(this.checkboxTextElem());
+      const label = this.getValueOption(index, 'label') || this.label;
+
+      if (label) {
+        elems.push(this.checkboxTextElem(h, label));
       }
 
       return elems;
     },
-    wrapInput(h, elems) {
-      const addWrapClasses = this.areManyInputs
-        ? this.values[this.curIndex].addWrapClasses
-        : false;
+    wrapInput(h, elems, index) {
+      // const addWrapClasses =
+      //   index >= 0 ? this.values[index].addWrapClasses : false;
+      const addWrapClasses = this.getValueOption(index, 'addWrapClasses');
+      console.log(this.name + ': ' + addWrapClasses);
       const classes = {
         'form-label': true,
         [addWrapClasses]: addWrapClasses,
@@ -32,8 +35,9 @@ export default {
     checkedElem() {
       return <div class="form-checked" />;
     },
-    checkboxTextElem() {
-      return <div class="form-checkbox_text">{this.label}</div>;
+    checkboxTextElem(h, label) {
+      console.log(this.name + ': ' + label);
+      return <div class="form-checkbox_text">{label}</div>;
     },
   },
 };

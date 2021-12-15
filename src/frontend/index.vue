@@ -76,8 +76,10 @@ Fragment(:key='$route.name')
             ChangeEventElem(
               ref='notRobot',
               name='notRobot',
-              :val='$v.notRobot.$model',
+              addClasses='login_form-radio_wrap',
+              :val='$v.notRobot',
               type='radio',
+              subWrapClass='form-row flex flex--wrap',
               :values='notRobotValues'
             )
 
@@ -96,7 +98,7 @@ import axios from 'axios';
 import { Fragment } from 'vue-fragment';
 import { ERROR } from '@httpSt';
 import { ADMIN } from '@common/constants/router';
-// import { required } from "vuelidate/lib/validators";
+import { required } from 'vuelidate/lib/validators';
 import { userAlphaNumValids, checked } from '@common/helpers';
 import frontFormMixin from '@frontend/mixins/frontFormMixin';
 import getAuthStatusMixin from '@frontend/mixins/getAuthStatusMixin';
@@ -156,7 +158,7 @@ export default {
       checked,
     },
     notRobot: {
-      // required
+      required,
     },
   },
   computed: {

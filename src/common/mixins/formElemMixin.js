@@ -40,7 +40,7 @@ export default {
     }
 
     if (this.subWrapClass) {
-      elems = h('div', { class: this.subWrapClass }, elems);
+      elems = [h('div', { class: this.subWrapClass }, elems)];
     }
 
     return h(

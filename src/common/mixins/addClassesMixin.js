@@ -1,7 +1,7 @@
 export default {
   props: {
     addClasses: {
-      type: Object,
+      type: [String, Object, Array],
       default() {
         return {};
       },

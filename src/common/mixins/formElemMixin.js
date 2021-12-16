@@ -1,6 +1,6 @@
+import { exist } from '@apiHelpers';
 import types from '@common/constants/validation/types';
 import errors from '@common/constants/validation/errors';
-import { exist } from '@apiHelpers';
 import addClassesMixin from '@common/mixins/addClassesMixin';
 import ErrorElem from '@components/formElems/ErrorElem';
 
@@ -31,7 +31,6 @@ export default {
     if (!exist(0, this.values)) {
       elems = this.getBaseElems(h);
     } else {
-      console.log(this.name);
       const $vm = this;
       this.values.forEach((item, index) => {
         // $vm.curIndex = index;
@@ -49,7 +48,7 @@ export default {
         class: {
           'form-wrap': true,
           [`form-wrap--${wrapClass}`]: true,
-          ...this.addClasses,
+          ...this.compClasses,
         },
       },
       !this.isFront && this.isRequiredInput
@@ -179,14 +178,22 @@ export default {
 
       switch (this.type) {
         case 'checkbox':
+        case 'radio':
           eventName = 'change';
-          value = e.target.checked;
           break;
         default:
           eventName = 'input';
+      }
+
+      switch (this.type) {
+        case 'checkbox':
+          value = e.target.checked;
+          break;
+        default:
           value = e.target.value;
       }
 
+      console.log(value);
       this.$emit(eventName, value);
 
       if (this.isRequiredInput) {
@@ -210,6 +217,7 @@ export default {
         input: this.handle,
       };
       const attrs = {
+        name: this.name,
         placeholder: inputOptions ? inputOptions.placeholder : this.placeholder,
       };
       let classes = {

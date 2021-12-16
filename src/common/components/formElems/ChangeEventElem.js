@@ -22,10 +22,7 @@ export default {
       return elems;
     },
     wrapInput(h, elems, index) {
-      // const addWrapClasses =
-      //   index >= 0 ? this.values[index].addWrapClasses : false;
       const addWrapClasses = this.getValueOption(index, 'addWrapClasses');
-      console.log(this.name + ': ' + addWrapClasses);
       const classes = {
         'form-label': true,
         [addWrapClasses]: addWrapClasses,
@@ -36,7 +33,6 @@ export default {
       return <div class="form-checked" />;
     },
     checkboxTextElem(h, label) {
-      console.log(this.name + ': ' + label);
       return <div class="form-checkbox_text">{label}</div>;
     },
   },

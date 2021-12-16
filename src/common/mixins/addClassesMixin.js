@@ -1,10 +1,16 @@
+import concatClassesMixin from '@common/mixins/concatClassesMixin';
+
 export default {
+  mixins: [concatClassesMixin],
   props: {
     addClasses: {
       type: [String, Object, Array],
-      default() {
-        return {};
-      },
+      default: '',
+    },
+  },
+  computed: {
+    compClasses() {
+      return this.getClassesAsObject(this.addClasses);
     },
   },
 };

@@ -54,33 +54,34 @@ Fragment(:key='$route.name')
 
             legend.form-legend Вы точно не робот?
 
-            .form-wrap.form-wrap--radio.login_form-radio_wrap
-              .form-row.flex.flex--wrap
-                label.form-label.login_form-radio_yes
-                  input.form-input(
-                    type='radio',
-                    value='yes',
-                    v-model='$v.notRobot.$model'
-                  )
-                  .form-checked
-                  .form-checkbox_text Да
-                label.form-label
-                  input.form-input(
-                    type='radio',
-                    value='no',
-                    v-model='$v.notRobot.$model'
-                  )
-                  .form-checked
-                  .form-checkbox_text Не уверен
+            //- .form-wrap.form-wrap--radio.login_form-radio_wrap
+            //-   .form-row.flex.flex--wrap
+            //-     label.form-label.login_form-radio_yes
+            //-       input.form-input(
+            //-         type='radio',
+            //-         value='yes',
+            //-         v-model='notRobot'
+            //-       )
+            //-       .form-checked
+            //-       .form-checkbox_text Да
+            //-     label.form-label
+            //-       input.form-input(
+            //-         type='radio',
+            //-         value='no',
+            //-         v-model='notRobot'
+            //-       )
+            //-       .form-checked
+            //-       .form-checkbox_text Не уверен
 
             ChangeEventElem(
+              addClasses='login_form-radio_wrap',
+              subWrapClass='form-row flex flex--wrap',
               ref='notRobot',
               name='notRobot',
-              addClasses='login_form-radio_wrap',
+              v-model='notRobot',
               :val='$v.notRobot',
-              type='radio',
-              subWrapClass='form-row flex flex--wrap',
-              :values='notRobotValues'
+              :values='notRobotValues',
+              type='radio'
             )
 
             ErrorElem(:message='formError', :styleTop='errorStyleTop')
@@ -138,15 +139,16 @@ export default {
       username: '',
       password: '',
       isHuman: false,
+      notRobot: 'undefined',
       notRobotValues: [
         {
           addWrapClasses: 'login_form-radio_yes',
           label: 'Да',
-          value: 'yes',
+          value: 'Проходите',
         },
         {
           label: 'Не уверен',
-          value: 'no',
+          value: 'Роботам здесь не место',
         },
       ],
     };

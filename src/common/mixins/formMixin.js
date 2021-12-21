@@ -22,7 +22,9 @@ export default {
       }
     },
     returnInvalidElem() {
-      if (!this.$v.$invalid) return false;
+      if (!this.$v.$invalid) {
+        return false;
+      }
 
       for (const key in this.$v) {
         if (

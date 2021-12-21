@@ -72,12 +72,13 @@ export default {
         return {};
       },
     },
+    type: { type: String, default: 'text' },
+    label: { type: String, default: '' },
+    errorMessage: { type: String, default: '' },
     value: {
       type: [String, Number, Boolean],
       default: '',
     },
-    type: { type: String, default: 'text' },
-    label: { type: String, default: '' },
     values: {
       type: Array,
       default() {
@@ -116,6 +117,19 @@ export default {
       }
 
       if (this.val.$error) {
+        if (this.type == types.native.radio) {
+          for (let index = 0; index < this.values.length; index++) {
+            const item = this.values[index];
+            if (item.value == this.val.$model && exist('isError', item)) {
+              return item.value;
+            }
+          }
+        }
+
+        if (this.errorMessage) {
+          return this.errorMessage;
+        }
+
         return exist(this.type, errors) ? errors[this.type] : errors.other;
       }
 

@@ -177,7 +177,9 @@ export default {
   methods: {
     ...mapActions(['setAuthStatus', 'setFormMessage']),
     fadeButton(e) {
-      if (this.isAuth) return;
+      if (this.isAuth) {
+        return;
+      }
 
       e.preventDefault();
 
@@ -186,7 +188,9 @@ export default {
       $flipBtn[this.isFlipped ? 'fadeOut' : 'fadeIn']();
     },
     handleSubmit() {
-      if (!this.touchInvalidElem()) return false;
+      if (!this.touchInvalidElem()) {
+        return false;
+      }
 
       const $vm = this;
       const { username, password } = $vm;

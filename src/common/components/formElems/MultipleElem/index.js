@@ -35,8 +35,12 @@ export default {
       h('NavMultipleElem', {
         props: {
           list: [
-            { label: 'Remove', handle: this.removeItem },
-            { label: 'Add', handle: this.addItem },
+            {
+              classes: 'form-btn--danger',
+              label: '-',
+              handle: this.removeItem,
+            },
+            { label: '+', handle: this.addItem },
           ],
         },
       }),
@@ -67,8 +71,7 @@ export default {
       if (toSetMultipleNav) {
         if (curIndex) {
           multipleNav.push({
-            classes: { 'btn-arrow_up': true },
-            label: 'toPrev',
+            classes: 'icon icon--chevron_up',
             handle: () => {
               $vm.toPrevItem(curIndex);
             },
@@ -77,13 +80,20 @@ export default {
 
         if (curIndex < $vm.items.length - 1) {
           multipleNav.push({
-            classes: { 'btn-arrow_down': true },
-            label: 'toNext',
+            classes: 'icon icon--chevron_down',
             handle: () => {
               $vm.toNextItem(curIndex);
             },
           });
         }
+
+        multipleNav.push({
+          classes: 'form-btn--danger',
+          label: 'toDelete',
+          handle: () => {
+            $vm.removeCurItem(curIndex);
+          },
+        });
       }
 
       return h('InputEventElem', {
@@ -113,6 +123,9 @@ export default {
     },
     toNextItem(index) {
       this.replaceItems(index, index + 1);
+    },
+    removeCurItem(index) {
+      this.items.splice(index, 1);
     },
     removeItem() {
       this.items.pop();

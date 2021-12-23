@@ -8,6 +8,13 @@ export default {
     const elems = [];
 
     this.list.forEach((item, index) => {
+      const { label } = item;
+      const domProps = { type: 'button' };
+
+      if (label) {
+        domProps.innerHTML = label;
+      }
+
       elems.push(
         h('button', {
           class: $vm.getClasses(index),
@@ -17,7 +24,7 @@ export default {
               item.handle();
             },
           },
-          domProps: { type: 'button', innerHTML: item.label },
+          domProps,
         }),
       );
     });
@@ -37,11 +44,10 @@ export default {
   },
   methods: {
     getClasses(index) {
-      const { classes } = this.list[index];
-      const compClasses = classes ? classes : {};
       return {
         btn: true,
-        ...compClasses,
+        'form-btn': true,
+        ...this.getClassesAsObject(this.list[index].classes),
       };
     },
   },

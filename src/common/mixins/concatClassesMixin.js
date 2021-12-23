@@ -1,78 +1,38 @@
-// import { exist } from '@apiHelpers';
-
-const STRING_TYPE = 'string';
-const ARRAY_TYPE = 'array';
-const OBJECT_TYPE = 'object';
-
 export default {
-  data() {
-    return {
-      classesType: false,
-    };
-  },
-  computed: {
-    asString() {
-      return this.classesType === STRING_TYPE;
-    },
-    asArray() {
-      return this.classesType === ARRAY_TYPE;
-    },
-    asObject() {
-      return this.classesType === OBJECT_TYPE;
-    },
-  },
   methods: {
-    // areClassesAsString(classes) {
-    //   return typeof classes === STRING_TYPE;
-    // },
-    // areClassesAsArray(classes) {
-    //   return Array.isArray(classes);
-    // },
-    areClasses(classes) {
-      if (typeof classes === STRING_TYPE) {
-        this.classesType = STRING_TYPE;
-        return;
-      }
-
-      if (Array.isArray(classes)) {
-        this.classesType = ARRAY_TYPE;
-        return;
-      }
-
-      if (typeof classes === OBJECT_TYPE) {
-        for (let key in classes) {
-          if (Object.prototype.hasOwnProperty.call(classes, key)) {
-            this.classesType = OBJECT_TYPE;
-            return;
-          }
-        }
-      }
-
-      this.classesType = false;
-      return;
+    asString(classes) {
+      return typeof classes === 'string';
+    },
+    asArray(classes) {
+      return Array.isArray(classes);
+    },
+    asObject(classes) {
+      return typeof classes === 'object';
     },
     getClassesAsObject(classes) {
-      this.areClasses(classes);
-
-      if (!this.classesType) {
-        return {};
-      }
-
-      if (this.asObject) {
+      if (this.asObject(classes) && !this.asArray(classes)) {
+        // for (let key in classes) {
+        //   if (Object.prototype.hasOwnProperty.call(classes, key)) {
         return classes;
+        //   }
+        // }
       }
 
-      if (this.asString) {
+      if (this.asString(classes)) {
         classes = classes.split(' ');
       }
 
-      const resultClasses = {};
+      if (this.asArray(classes)) {
+        const resultClasses = {};
 
-      classes.forEach(item => {
-        resultClasses[item] = true;
-      });
+        classes.forEach(item => {
+          resultClasses[item] = true;
+        });
 
-      return resultClasses;
+        return resultClasses;
+      }
+
+      return {};
     },
   },
 };

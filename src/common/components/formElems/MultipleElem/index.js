@@ -9,6 +9,7 @@ export default {
   },
   render(h) {
     let elems = [];
+    let fieldsCount = 0;
 
     for (const valIndex in this.vals) {
       if (this.vals.hasOwnProperty(valIndex)) {
@@ -21,8 +22,10 @@ export default {
               field.name,
               field.type,
               field.placeholder,
+              !this.arePairs || (this.arePairs && fieldsCount % 2 != 0),
             ),
           );
+          fieldsCount++;
         });
       }
     }
@@ -44,6 +47,7 @@ export default {
     items: { type: Array, required: true },
     fields: { type: Array, required: true },
     propTemplate: { type: Object, required: true },
+    arePairs: { type: Boolean, default: true },
   },
   data() {
     return {
@@ -55,24 +59,31 @@ export default {
     getIndex(index) {
       return parseInt(index) + 1;
     },
-    inputEvElem(h, index, val, fieldName, type, placeholder) {
+    inputEvElem(h, index, val, fieldName, type, placeholder, toSetMultipleNav) {
       const $vm = this;
       const multipleNav = [];
 
-      if (index) {
-        multipleNav.push({
-          classes: { 'btn-arrow_up': true },
-          label: 'toPrev',
-          handle: $vm.toPrevItem(e, index),
-        });
-      }
+      if (toSetMultipleNav) {
+        console.log(index);
+        if (index > 0) {
+          multipleNav.push({
+            classes: { 'btn-arrow_up': true },
+            label: 'toPrev',
+            handle: () => {
+              $vm.toPrevItem(index);
+            },
+          });
+        }
 
-      if (index < $vm.items.length - 1) {
-        multipleNav.push({
-          classes: { 'btn-arrow_down': true },
-          label: 'toNext',
-          handle: $vm.toNextItem(e, index),
-        });
+        if (index < $vm.items.length - 1) {
+          multipleNav.push({
+            classes: { 'btn-arrow_down': true },
+            label: 'toNext',
+            handle: () => {
+              $vm.toNextItem(index);
+            },
+          });
+        }
       }
 
       return h('InputEventElem', {
@@ -85,6 +96,7 @@ export default {
         },
         on: {
           input: value => {
+            console.log($vm);
             $vm.items[index][fieldName] = value;
             val.$touch();
             $vm.$emit('input', value);
@@ -94,23 +106,21 @@ export default {
     },
     replaceItems(index, nearIndex) {
       const temp = this.items[nearIndex];
-      this.items[nearIndex] = this.items[index];
-      this.items[index] = temp;
+      // this.items[nearIndex] = this.items[index];
+      this.$set(this.items, nearIndex, this.items[index]);
+      // this.items[index] = temp;
+      this.$set(this.items, index, temp);
     },
-    toPrevItem(e, index) {
-      e.preventDefault();
+    toPrevItem(index) {
       this.replaceItems(index, index - 1);
     },
-    toNextItem(e, index) {
-      e.preventDefault();
+    toNextItem(index) {
       this.replaceItems(index, index + 1);
     },
-    removeItem(e) {
-      e.preventDefault();
+    removeItem() {
       this.items.pop();
     },
-    addItem(e) {
-      e.preventDefault();
+    addItem() {
       const template = {};
 
       for (const key in this.propTemplate) {

@@ -4,7 +4,7 @@ import SvgCmp from '@components/SvgCmp';
 import NavMultipleElem from '@components/formElems/MultipleElem/NavMultipleElem';
 
 export default {
-  name: 'ChangeEventElem',
+  name: 'InputEventElem',
   components: {
     NavMultipleElem,
   },
@@ -34,7 +34,7 @@ export default {
 
       return elems;
     },
-    elemsAfterInput() {
+    elemsAfterInput(h) {
       let elems = [];
 
       if (this.measure) {

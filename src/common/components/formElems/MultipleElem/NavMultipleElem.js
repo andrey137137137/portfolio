@@ -11,7 +11,12 @@ export default {
       elems.push(
         h('button', {
           class: $vm.getClasses(index),
-          on: { click: item.handle },
+          on: {
+            click: e => {
+              e.preventDefault();
+              item.handle();
+            },
+          },
           domProps: { type: 'button', innerHTML: item.label },
         }),
       );

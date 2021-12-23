@@ -47,7 +47,7 @@ export default {
     items: { type: Array, required: true },
     fields: { type: Array, required: true },
     propTemplate: { type: Object, required: true },
-    arePairs: { type: Boolean, default: true },
+    arePairs: { type: Boolean, default: false },
   },
   data() {
     return {
@@ -60,27 +60,27 @@ export default {
       return parseInt(index) + 1;
     },
     inputEvElem(h, index, val, fieldName, type, placeholder, toSetMultipleNav) {
+      const curIndex = +index;
       const $vm = this;
       const multipleNav = [];
 
       if (toSetMultipleNav) {
-        console.log(index);
-        if (index > 0) {
+        if (curIndex) {
           multipleNav.push({
             classes: { 'btn-arrow_up': true },
             label: 'toPrev',
             handle: () => {
-              $vm.toPrevItem(index);
+              $vm.toPrevItem(curIndex);
             },
           });
         }
 
-        if (index < $vm.items.length - 1) {
+        if (curIndex < $vm.items.length - 1) {
           multipleNav.push({
             classes: { 'btn-arrow_down': true },
             label: 'toNext',
             handle: () => {
-              $vm.toNextItem(index);
+              $vm.toNextItem(curIndex);
             },
           });
         }
@@ -91,13 +91,12 @@ export default {
           type,
           value: val[fieldName].$model,
           val: val[fieldName],
-          placeholder: `${placeholder} ${$vm.getIndex(index)}`,
+          placeholder: `${placeholder} ${$vm.getIndex(curIndex)}`,
           multipleNav,
         },
         on: {
           input: value => {
-            console.log($vm);
-            $vm.items[index][fieldName] = value;
+            $vm.items[curIndex][fieldName] = value;
             val.$touch();
             $vm.$emit('input', value);
           },
@@ -106,9 +105,7 @@ export default {
     },
     replaceItems(index, nearIndex) {
       const temp = this.items[nearIndex];
-      // this.items[nearIndex] = this.items[index];
       this.$set(this.items, nearIndex, this.items[index]);
-      // this.items[index] = temp;
       this.$set(this.items, index, temp);
     },
     toPrevItem(index) {

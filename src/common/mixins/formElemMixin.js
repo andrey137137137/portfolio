@@ -210,7 +210,6 @@ export default {
           value = e.target.value;
       }
 
-      console.log(value);
       this.$emit(eventName, value);
 
       if (this.isRequiredInput) {

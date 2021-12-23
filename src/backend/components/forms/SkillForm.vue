@@ -14,7 +14,8 @@ ItemForm(
     :vals='$v.items.$each.$iter',
     :items='items',
     :fields='fields',
-    :propTemplate='propTemplate'
+    :propTemplate='propTemplate',
+    :arePairs='true'
   )
 </template>
 

@@ -144,11 +144,12 @@ export default {
         {
           addWrapClasses: 'login_form-radio_yes',
           label: 'Да',
-          value: 'Проходите',
+          value: true,
         },
         {
           label: 'Не уверен',
-          value: 'Роботам здесь не место',
+          value: false,
+          isError: 'Роботам здесь не место',
         },
       ],
     };
@@ -160,7 +161,8 @@ export default {
       checked,
     },
     notRobot: {
-      required,
+      // required,
+      checked,
     },
   },
   computed: {

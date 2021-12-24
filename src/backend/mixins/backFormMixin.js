@@ -13,7 +13,8 @@ export default {
   },
   computed: {
     disabled() {
-      return this.$v.$pending || this.$v.$invalid;
+      // return this.$v.$pending || this.$v.$invalid;
+      return this.$v.$pending;
     },
   },
   methods: {
@@ -44,14 +45,14 @@ export default {
     },
     touchInvalidElem() {
       const elemName = this.returnInvalidElem();
-
+      console.log(elemName);
       if (!elemName) {
-        return true;
+        return false;
       }
 
       this.$v[elemName].$touch();
 
-      return false;
+      return true;
     },
     reset() {
       const data = this.defaultFields();
@@ -63,7 +64,11 @@ export default {
       }
     },
     submit() {
-      if (this.$v.$invalid) {
+      // if (this.$v.$invalid) {
+      //   return false;
+      // }
+
+      if (this.touchInvalidElem()) {
         return false;
       }
 

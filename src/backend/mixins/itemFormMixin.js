@@ -22,12 +22,25 @@ export default {
   },
   methods: {
     ...mapActions(['deleteData', 'insertData']),
+    confirmAction(toEdit = false) {
+      let actionStr;
+
+      if (!toEdit) {
+        actionStr = 'удалить';
+      } else if (this.id) {
+        actionStr = 'обновить';
+      } else {
+        actionStr = 'добавить';
+      }
+
+      const postfix = this.id ? `: "${this.id}"` : '';
+
+      return confirm(
+        `Вы уверены, что хотите ${actionStr} ${this.removeTitle}${postfix}?`,
+      );
+    },
     removeItem() {
-      if (
-        confirm(
-          `Вы уверены, что хотите удалить ${this.removeTitle}: "${this.id}"?`,
-        )
-      ) {
+      if (this.confirmAction()) {
         this.deleteData(this.id);
       }
     },
@@ -43,13 +56,15 @@ export default {
     },
     afterSubmit() {},
     submit() {
-      if (this.$v.$invalid) {
+      if (this.touchInvalidElem()) {
         return false;
       }
 
-      this.sendData();
-      this.afterSubmit();
-      return true;
+      if (this.confirmAction(true)) {
+        this.sendData();
+        this.afterSubmit();
+        return true;
+      }
     },
   },
   // created() {

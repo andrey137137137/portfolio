@@ -6,6 +6,11 @@ export default {
   // validations() {
   //   return this.fields;
   // },
+  computed: {
+    isFront() {
+      return this.$route.meta.isFront;
+    },
+  },
   methods: {
     getValue(value, type) {
       if (typeof value !== 'undefined') {
@@ -35,6 +40,39 @@ export default {
           return key;
         }
       }
+    },
+    touchInvalidElem() {
+      const elemName = this.returnInvalidElem();
+      console.log(elemName);
+
+      if (!elemName) {
+        return false;
+      }
+
+      if (this.isFront) {
+        this.$refs[elemName].touchHandle();
+      } else {
+        this.$v[elemName].$touch();
+      }
+
+      return true;
+    },
+    baseConfirmAction(actionStr) {
+      return confirm(`Вы уверены, что хотите ${actionStr}?`);
+    },
+    confirmAction() {
+      return baseConfirmAction('обновить данные');
+    },
+    submitActions() {},
+    submit() {
+      if (this.touchInvalidElem()) {
+        return false;
+      }
+      if (!this.isFront && !this.confirmAction()) {
+        return false;
+      }
+      this.submitActions();
+      return true;
     },
   },
 };

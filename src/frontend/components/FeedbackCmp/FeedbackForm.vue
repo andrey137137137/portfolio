@@ -1,6 +1,6 @@
 <template lang="pug">
 FrontFormWrapper#feedback.section.container.container--full_width.feedback_form(
-  @submit.prevent.native='handleSubmit'
+  @submit.prevent.native='submit'
 )
   h2.section-title.section-title--uppercase.section-title--underlined.feedback_form-title Связаться со мной
 
@@ -120,9 +120,9 @@ export default {
   },
   methods: {
     ...mapActions(['setAuthStatus', 'setFormMessage']),
-    handleSubmit() {
-      if (!this.touchInvalidElem()) {
-        return false;
+    submitActions() {
+      if (!confirm('Отправить сообщение?')) {
+        return;
       }
 
       const $vm = this;

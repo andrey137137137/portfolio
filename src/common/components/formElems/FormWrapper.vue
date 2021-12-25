@@ -1,6 +1,6 @@
 <template lang="pug">
-  form.form
-    slot
+form.form(novalidate='novalidate')
+  slot
 </template>
 
 <script>

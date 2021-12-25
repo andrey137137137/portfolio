@@ -15,7 +15,7 @@ Fragment(:key='$route.name')
           NavCmp
         FrontFormWrapper#login_form.header-flip_wrap.header-flip_wrap--back.login_form(
           action='/admin',
-          @submit.prevent.native='handleSubmit'
+          @submit.prevent.native='submit'
         )
           .login_form-top_wrap
             h2.section-title.section-title--uppercase.login_form-title Авторизуйтесь
@@ -99,7 +99,7 @@ import axios from 'axios';
 import { Fragment } from 'vue-fragment';
 import { ERROR } from '@httpSt';
 import { ADMIN } from '@common/constants/router';
-import { required, sameAs } from 'vuelidate/lib/validators';
+// import { required, sameAs } from 'vuelidate/lib/validators';
 import { userAlphaNumValids, checked } from '@common/helpers';
 import frontFormMixin from '@frontend/mixins/frontFormMixin';
 import getAuthStatusMixin from '@frontend/mixins/getAuthStatusMixin';
@@ -149,7 +149,7 @@ export default {
         {
           label: 'Не уверен',
           value: '',
-          isError: 'Роботам здесь не место',
+          errorMessage: 'Роботам здесь не место',
         },
       ],
     };
@@ -161,9 +161,7 @@ export default {
       checked,
     },
     notRobot: {
-      required,
       checked,
-      // sameAs: sameAs('true'),
     },
   },
   computed: {
@@ -190,11 +188,7 @@ export default {
       this.isFlipped = !this.isFlipped;
       $flipBtn[this.isFlipped ? 'fadeOut' : 'fadeIn']();
     },
-    handleSubmit() {
-      if (!this.touchInvalidElem()) {
-        return false;
-      }
-
+    submitActions() {
       const $vm = this;
       const { username, password } = $vm;
 

@@ -113,27 +113,24 @@ export default {
     },
     error() {
       if (this.isEmptyRequired) {
-        return errors['required'];
-      }
-
-      // console.log(this.type == types.native.radio);
-
-      if (!this.val.$error) {
         if (this.type == types.native.radio) {
           for (let index = 0; index < this.values.length; index++) {
             const item = this.values[index];
-
-            if (item.value == this.val.$model && exist('isError', item)) {
-              return item.value;
+            if (item.value == this.val.$model && exist('errorMessage', item)) {
+              return item.errorMessage;
             }
           }
         }
 
-        return '';
+        if (this.errorMessage) {
+          return this.errorMessage;
+        }
+
+        return errors['required'];
       }
 
-      if (this.errorMessage) {
-        return this.errorMessage;
+      if (!this.val.$error) {
+        return '';
       }
 
       return exist(this.type, errors) ? errors[this.type] : errors.other;

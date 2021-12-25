@@ -43,17 +43,6 @@ export default {
     prepareData() {
       this.submitData = this.item;
     },
-    touchInvalidElem() {
-      const elemName = this.returnInvalidElem();
-      console.log(elemName);
-      if (!elemName) {
-        return false;
-      }
-
-      this.$v[elemName].$touch();
-
-      return true;
-    },
     reset() {
       const data = this.defaultFields();
 
@@ -63,19 +52,9 @@ export default {
         }
       }
     },
-    submit() {
-      // if (this.$v.$invalid) {
-      //   return false;
-      // }
-
-      if (this.touchInvalidElem()) {
-        return false;
-      }
-
+    submitActions() {
       this.prepareData();
       this.updateData({ id: this.item._id, data: this.submitData });
-
-      return true;
     },
   },
 };

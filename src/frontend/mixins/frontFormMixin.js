@@ -16,22 +16,6 @@ export default {
   },
   methods: {
     ...mapActions(['clearFormError']),
-    touchInvalidElem() {
-      const elemName = this.returnInvalidElem();
-
-      if (!elemName) {
-        return true;
-      }
-
-      this.$refs[elemName].touchHandle();
-      return false;
-    },
-    handleSubmit() {
-      if (!this.touchInvalidElem()) {
-        return false;
-      }
-      return true;
-    },
   },
   created() {
     this.clearFormError();

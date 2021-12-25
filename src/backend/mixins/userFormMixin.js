@@ -35,15 +35,9 @@ export default {
         }
       }
     },
-    submit() {
-      if (this.$v.$invalid) {
-        return false;
-      }
-
+    submitActions() {
       this.prepareData();
       this.updateData({ data: this.submitData });
-
-      return true;
     },
   },
   watch: {

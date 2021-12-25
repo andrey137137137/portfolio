@@ -99,7 +99,7 @@ import axios from 'axios';
 import { Fragment } from 'vue-fragment';
 import { ERROR } from '@httpSt';
 import { ADMIN } from '@common/constants/router';
-import { required } from 'vuelidate/lib/validators';
+import { required, sameAs } from 'vuelidate/lib/validators';
 import { userAlphaNumValids, checked } from '@common/helpers';
 import frontFormMixin from '@frontend/mixins/frontFormMixin';
 import getAuthStatusMixin from '@frontend/mixins/getAuthStatusMixin';
@@ -139,16 +139,16 @@ export default {
       username: '',
       password: '',
       isHuman: false,
-      notRobot: 'undefined',
+      notRobot: '',
       notRobotValues: [
         {
           addWrapClasses: 'login_form-radio_yes',
           label: 'Да',
-          value: true,
+          value: 'true',
         },
         {
           label: 'Не уверен',
-          value: false,
+          value: '',
           isError: 'Роботам здесь не место',
         },
       ],
@@ -161,8 +161,9 @@ export default {
       checked,
     },
     notRobot: {
-      // required,
+      required,
       checked,
+      // sameAs: sameAs('true'),
     },
   },
   computed: {

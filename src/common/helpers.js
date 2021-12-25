@@ -23,7 +23,6 @@ export const SERVER_BASE_URL = getServerBaseUrl();
 export const getImg = (img, files) => {
   const start = img.lastIndexOf('.');
   const ext = img.slice(start + 1);
-
   return files[ext](`./${img}`);
 };
 
@@ -49,10 +48,13 @@ export const getScrollY = () => {
   return window.pageYOffset || document.documentElement.scrollTop;
 };
 
-export const checked = helpers.withParams(
-  { type: 'checked' },
-  value => !helpers.req(value) || value === true,
-);
+export const checked = helpers.withParams({ type: 'checked' }, value => {
+  value = !!value;
+  console.log(value);
+  console.log(helpers.req(value));
+  console.log(value === true);
+  return !helpers.req(value) || value === true;
+});
 
 export const userAlphaNumValids = {
   required,

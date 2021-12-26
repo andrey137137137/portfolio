@@ -113,24 +113,24 @@ export default {
     },
     error() {
       if (this.isEmptyRequired) {
-        if (this.type == types.native.radio) {
-          for (let index = 0; index < this.values.length; index++) {
-            const item = this.values[index];
-            if (item.value == this.val.$model && exist('errorMessage', item)) {
-              return item.errorMessage;
-            }
-          }
-        }
-
-        if (this.errorMessage) {
-          return this.errorMessage;
-        }
-
         return errors['required'];
       }
 
       if (!this.val.$error) {
         return '';
+      }
+
+      if (this.type == types.native.radio) {
+        for (let index = 0; index < this.values.length; index++) {
+          const item = this.values[index];
+          if (item.value == this.val.$model && exist('errorMessage', item)) {
+            return item.errorMessage;
+          }
+        }
+      }
+
+      if (this.errorMessage) {
+        return this.errorMessage;
       }
 
       return exist(this.type, errors) ? errors[this.type] : errors.other;

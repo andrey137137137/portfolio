@@ -43,7 +43,6 @@ export default {
     },
     touchInvalidElem() {
       const elemName = this.returnInvalidElem();
-      console.log(elemName);
 
       if (!elemName) {
         return false;

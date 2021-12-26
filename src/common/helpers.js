@@ -49,11 +49,8 @@ export const getScrollY = () => {
 };
 
 export const checked = helpers.withParams({ type: 'checked' }, value => {
-  value = !!value;
-  console.log(value);
-  console.log(helpers.req(value));
-  console.log(value === true);
-  return !helpers.req(value) || value === true;
+  const boolValue = !!value;
+  return !helpers.req(boolValue) || boolValue === true;
 });
 
 export const userAlphaNumValids = {

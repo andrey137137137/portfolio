@@ -54,25 +54,6 @@ Fragment(:key='$route.name')
 
             legend.form-legend Вы точно не робот?
 
-            //- .form-wrap.form-wrap--radio.login_form-radio_wrap
-            //-   .form-row.flex.flex--wrap
-            //-     label.form-label.login_form-radio_yes
-            //-       input.form-input(
-            //-         type='radio',
-            //-         value='yes',
-            //-         v-model='notRobot'
-            //-       )
-            //-       .form-checked
-            //-       .form-checkbox_text Да
-            //-     label.form-label
-            //-       input.form-input(
-            //-         type='radio',
-            //-         value='no',
-            //-         v-model='notRobot'
-            //-       )
-            //-       .form-checked
-            //-       .form-checkbox_text Не уверен
-
             ChangeEventElem(
               addClasses='login_form-radio_wrap',
               subWrapClass='form-row flex flex--wrap',
@@ -99,7 +80,6 @@ import axios from 'axios';
 import { Fragment } from 'vue-fragment';
 import { ERROR } from '@httpSt';
 import { ADMIN } from '@common/constants/router';
-// import { required, sameAs } from 'vuelidate/lib/validators';
 import { userAlphaNumValids, checked } from '@common/helpers';
 import frontFormMixin from '@frontend/mixins/frontFormMixin';
 import getAuthStatusMixin from '@frontend/mixins/getAuthStatusMixin';
@@ -134,8 +114,7 @@ export default {
   mixins: [frontFormMixin, getAuthStatusMixin],
   data() {
     return {
-      // isFlipped: false,
-      isFlipped: true,
+      isFlipped: false,
       username: '',
       password: '',
       isHuman: false,
@@ -148,7 +127,7 @@ export default {
         },
         {
           label: 'Не уверен',
-          value: '',
+          value: 'false',
           errorMessage: 'Роботам здесь не место',
         },
       ],
@@ -161,7 +140,9 @@ export default {
       checked,
     },
     notRobot: {
-      checked,
+      humanChecked(value) {
+        return value == this.notRobotValues[0].value;
+      },
     },
   },
   computed: {
@@ -178,12 +159,10 @@ export default {
   methods: {
     ...mapActions(['setAuthStatus', 'setFormMessage']),
     fadeButton(e) {
+      e.preventDefault();
       if (this.isAuth) {
         return;
       }
-
-      e.preventDefault();
-
       const $flipBtn = $(this.$refs.flipBtn);
       this.isFlipped = !this.isFlipped;
       $flipBtn[this.isFlipped ? 'fadeOut' : 'fadeIn']();

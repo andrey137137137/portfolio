@@ -1,5 +1,5 @@
 <template lang="pug">
-div(ref='preloader', :class='getRootClasses()', style='display: none')
+div(ref='preloader', :class='getRootClasses()')
   .preloader-container(:class='isChangedPage')
     svg.preloader-circles
       circle.preloader-center_circle(ref='circle')
@@ -56,12 +56,12 @@ export default {
       return this.rootClass + ' ' + this.activeClass;
     },
     imagesLoading() {
-      // if (
-      //   !this.dbDataLoadingCount ||
-      //   this.dbDataLoadedCount != this.dbDataLoadingCount
-      // ) {
-      //   return;
-      // }
+      if (
+        !this.dbDataLoadingCount ||
+        this.dbDataLoadedCount != this.dbDataLoadingCount
+      ) {
+        return;
+      }
 
       const $vm = this;
 
@@ -103,24 +103,24 @@ export default {
         tweenedNumber: newValue,
       });
     },
-    // dbDataLoadedCount(newValue) {
-    //   if (!newValue && !this.isFirstLoading) {
-    //     this.imageCount = 100000000000;
-    //     this.imageCounter = 0;
-    //     this.prs = 0;
-    //     this.tweenedNumber = 0;
-    //     this.$refs.preloader.style.display = 'block';
-    //     this.$refs.preloader.classList.add(this.activeClass);
-    //   } else {
-    //     if (this.isFirstLoading) {
-    //       this.isFirstLoading = false;
-    //     }
-    //   }
-    //   this.imagesLoading();
-    // },
-    // dbDataLoadingCount() {
-    //   this.imagesLoading();
-    // },
+    dbDataLoadedCount(newValue) {
+      if (!newValue && !this.isFirstLoading) {
+        this.imageCount = 100000000000;
+        this.imageCounter = 0;
+        this.prs = 0;
+        this.tweenedNumber = 0;
+        this.$refs.preloader.style.display = 'block';
+        this.$refs.preloader.classList.add(this.activeClass);
+      } else {
+        if (this.isFirstLoading) {
+          this.isFirstLoading = false;
+        }
+      }
+      this.imagesLoading();
+    },
+    dbDataLoadingCount() {
+      this.imagesLoading();
+    },
   },
 };
 </script>

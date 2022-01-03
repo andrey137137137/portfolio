@@ -4,6 +4,7 @@ client
 public/upload
 src/assets/img
 
+credentials.json
 api/config.json
 collections/sessions
 collections/users

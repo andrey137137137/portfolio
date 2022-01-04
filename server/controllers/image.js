@@ -5,9 +5,6 @@ const { waterfall, each } = require('async');
 const { UPLOAD_PATH } = require('@config').client;
 const { ERROR } = require('@httpSt');
 const { sendError, sendResult } = require('@contr/crud');
-
-// const fs = require('fs');
-const readline = require('readline');
 const { google } = require('googleapis');
 
 // If modifying these scopes, delete token.json.
@@ -18,11 +15,16 @@ const SCOPES = ['https://www.googleapis.com/auth/drive.metadata.readonly'];
 const TOKEN_PATH = 'token.json';
 
 // Load client secrets from a local file.
-fs.readFile('credentials.json', (err, content) => {
-  if (err) return console.log('Error loading client secret file:', err);
-  // Authorize a client with credentials, then call the Google Drive API.
-  authorize(JSON.parse(content), listFiles);
-});
+function readCredentials(action = 'uploadFile') {
+  fs.readFile('credentials.json', (err, content) => {
+    if (err) {
+      console.log('Error loading client secret file:', err);
+      return false;
+    }
+    // Authorize a client with credentials, then call the Google Drive API.
+    authorize(JSON.parse(content), action);
+  });
+}
 
 /**
  * Create an OAuth2 client with the given credentials, and then execute the
@@ -40,7 +42,9 @@ function authorize(credentials, callback) {
 
   // Check if we have previously stored a token.
   fs.readFile(TOKEN_PATH, (err, token) => {
-    if (err) return getAccessToken(oAuth2Client, callback);
+    if (err) {
+      return getAccessToken(oAuth2Client, callback);
+    }
     oAuth2Client.setCredentials(JSON.parse(token));
     callback(oAuth2Client);
   });
@@ -58,18 +62,22 @@ function getAccessToken(oAuth2Client, callback) {
     scope: SCOPES,
   });
   console.log('Authorize this app by visiting this url:', authUrl);
-  const rl = readline.createInterface({
+  const rl = require('readline').createInterface({
     input: process.stdin,
     output: process.stdout,
   });
   rl.question('Enter the code from that page here: ', code => {
     rl.close();
     oAuth2Client.getToken(code, (err, token) => {
-      if (err) return console.error('Error retrieving access token', err);
+      if (err) {
+        return console.error('Error retrieving access token', err);
+      }
       oAuth2Client.setCredentials(token);
       // Store the token to disk for later program executions
       fs.writeFile(TOKEN_PATH, JSON.stringify(token), err => {
-        if (err) return console.error(err);
+        if (err) {
+          return console.error(err);
+        }
         console.log('Token stored to', TOKEN_PATH);
       });
       callback(oAuth2Client);
@@ -98,6 +106,35 @@ function listFiles(auth) {
         });
       } else {
         console.log('No files found.');
+      }
+    },
+  );
+}
+
+/**
+ * Describe with given media and metaData and upload it using google.drive.create method()
+ */
+function uploadFile(auth) {
+  const drive = google.drive({ version: 'v3', auth });
+  const fileMetadata = {
+    name: 'photo.jpg',
+  };
+  const media = {
+    mimeType: 'image/jpeg',
+    body: fs.createReadStream('files/photo.jpg'),
+  };
+  drive.files.create(
+    {
+      resource: fileMetadata,
+      media: media,
+      fields: 'id',
+    },
+    (err, file) => {
+      if (err) {
+        // Handle error
+        console.error(err);
+      } else {
+        console.log('File Id: ', file.id);
       }
     },
   );

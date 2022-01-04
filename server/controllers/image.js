@@ -14,17 +14,7 @@ const SCOPES = ['https://www.googleapis.com/auth/drive.metadata.readonly'];
 // time.
 const TOKEN_PATH = 'token.json';
 
-// Load client secrets from a local file.
-function readCredentials(action = 'uploadFile') {
-  fs.readFile('credentials.json', (err, content) => {
-    if (err) {
-      console.log('Error loading client secret file:', err);
-      return false;
-    }
-    // Authorize a client with credentials, then call the Google Drive API.
-    authorize(JSON.parse(content), action);
-  });
-}
+let uploadPath;
 
 /**
  * Create an OAuth2 client with the given credentials, and then execute the
@@ -46,7 +36,7 @@ function authorize(credentials, callback) {
       return getAccessToken(oAuth2Client, callback);
     }
     oAuth2Client.setCredentials(JSON.parse(token));
-    callback(oAuth2Client);
+    return callback(oAuth2Client);
   });
 }
 
@@ -80,41 +70,15 @@ function getAccessToken(oAuth2Client, callback) {
         }
         console.log('Token stored to', TOKEN_PATH);
       });
-      callback(oAuth2Client);
+      return callback(oAuth2Client);
     });
   });
 }
 
 /**
- * Lists the names and IDs of up to 10 files.
- * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
- */
-function listFiles(auth) {
-  const drive = google.drive({ version: 'v3', auth });
-  drive.files.list(
-    {
-      pageSize: 10,
-      fields: 'nextPageToken, files(id, name)',
-    },
-    (err, res) => {
-      if (err) return console.log('The API returned an error: ' + err);
-      const files = res.data.files;
-      if (files.length) {
-        console.log('Files:');
-        files.map(file => {
-          console.log(`${file.name} (${file.id})`);
-        });
-      } else {
-        console.log('No files found.');
-      }
-    },
-  );
-}
-
-/**
  * Describe with given media and metaData and upload it using google.drive.create method()
  */
-function uploadFile(auth) {
+function uploadFile(auth, cb) {
   const drive = google.drive({ version: 'v3', auth });
   const fileMetadata = {
     name: 'photo.jpg',
@@ -130,17 +94,43 @@ function uploadFile(auth) {
       fields: 'id',
     },
     (err, file) => {
-      if (err) {
-        // Handle error
-        console.error(err);
-      } else {
-        console.log('File Id: ', file.id);
-      }
+      // if (err) {
+      //   // Handle error
+      //   console.error(err);
+      // } else {
+      //   console.log('File Id: ', file.id);
+      // }
+      return cb(err, file);
     },
   );
 }
 
-let uploadPath;
+function action(res, actionMessages, method = 'uploadFile') {
+  const messages = {
+    success: 'Изображение успешно добавлено',
+    error: 'Error loading client secret file:',
+  };
+  waterfall(
+    [
+      cb => {
+        fs.readFile('credentials.json', cb);
+      },
+      (content, cb) => {
+        authorize(JSON.parse(content), cb);
+      },
+      (auth, cb) => {
+        const { success, error } = actionMessages;
+        messages.success = success;
+        messages.error = error;
+        [method](auth, cb);
+      },
+    ],
+    (err, info) => {
+      const { success, error } = messages;
+      sendMessage(res, err, { success, error }, err);
+    },
+  );
+}
 
 const sendMessage = (res, err, messages, info = false) => {
   if (err) {
@@ -197,11 +187,16 @@ const upload = (req, res, dir = '', layer = -1) => {
     const filePath = files.image.path;
     const fileName = files.image.name;
 
-    fs.rename(filePath, path.join(uploadPath, fileName), err => {
-      sendMessage(res, err, {
-        success: 'Изображение успешно добавлено',
-        error: 'Не удалось переместить изображение',
-      });
+    // fs.rename(filePath, path.join(uploadPath, fileName), err => {
+    //   sendMessage(res, err, {
+    //     success: 'Изображение успешно добавлено',
+    //     error: 'Не удалось переместить изображение',
+    //   });
+    // });
+
+    action(res, {
+      success: 'Изображение успешно добавлено',
+      error: 'Не удалось переместить изображение',
     });
   });
 };

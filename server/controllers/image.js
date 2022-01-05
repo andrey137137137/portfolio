@@ -5,7 +5,6 @@ const { waterfall, each } = require('async');
 const { UPLOAD_PATH } = require('@config').client;
 const { ERROR } = require('@httpSt');
 const { sendError, sendResult } = require('@contr/crud');
-const { google } = require('googleapis');
 
 // If modifying these scopes, delete token.json.
 const SCOPES = ['https://www.googleapis.com/auth/drive.metadata.readonly'];
@@ -75,22 +74,24 @@ function getAccessToken(oAuth2Client, callback) {
   });
 }
 
+function getS3Drive(auth) {
+  const { google } = require('googleapis');
+  return google.drive({ version: 'v3', auth });
+}
+
 /**
  * Describe with given media and metaData and upload it using google.drive.create method()
  */
-function uploadFile(auth, cb) {
-  const drive = google.drive({ version: 'v3', auth });
-  const fileMetadata = {
-    name: 'photo.jpg',
-  };
-  const media = {
-    mimeType: 'image/jpeg',
-    body: fs.createReadStream('files/photo.jpg'),
-  };
-  drive.files.create(
+function uploadFile(auth, file, cb) {
+  // const drive = google.drive({ version: 'v3', auth });
+  const { name, path } = file;
+  getS3Drive(auth).files.create(
     {
-      resource: fileMetadata,
-      media: media,
+      resource: { name },
+      media: {
+        mimeType: 'image/jpeg',
+        body: fs.createReadStream(path + '/' + name),
+      },
       fields: 'id',
     },
     (err, file) => {
@@ -105,7 +106,34 @@ function uploadFile(auth, cb) {
   );
 }
 
-function action(res, actionMessages, method = 'uploadFile') {
+function deleteFile(auth, file, cb) {
+  // var fileId = '1vuZs3N8qnevNEETCKnZQ5js0HOCpGTxs'; // Desired file id to download from  google drive
+
+  // const drive = google.drive({ version: 'v3', auth }); // Authenticating drive API
+
+  // Deleting the image from Drive
+  getS3Drive(auth).files.delete({ fileId: file.id }, (err, file) => {
+    return cb(err, file);
+  });
+  // .then(
+  //   async function (response) {
+  //     res.status(204).json({ status: 'success' });
+  //   },
+  //   function (err) {
+  //     return res
+  //       .status(400)
+  //       .json({ errors: [{ msg: 'Deletion Failed for some reason' }] });
+  //   },
+  // );
+}
+
+function action(
+  res,
+  actionMessages,
+  file = {},
+  method = 'uploadFile',
+  cb = false,
+) {
   const messages = {
     success: 'Изображение успешно добавлено',
     error: 'Error loading client secret file:',
@@ -122,10 +150,14 @@ function action(res, actionMessages, method = 'uploadFile') {
         const { success, error } = actionMessages;
         messages.success = success;
         messages.error = error;
-        [method](auth, cb);
+        [method](auth, file, cb);
       },
     ],
     (err, info) => {
+      if (cb !== false) {
+        return cb(err, info);
+      }
+
       const { success, error } = messages;
       sendMessage(res, err, { success, error }, err);
     },
@@ -184,8 +216,8 @@ const upload = (req, res, dir = '', layer = -1) => {
       });
     }
 
-    const filePath = files.image.path;
-    const fileName = files.image.name;
+    // const filePath = files.image.path;
+    // const fileName = files.image.name;
 
     // fs.rename(filePath, path.join(uploadPath, fileName), err => {
     //   sendMessage(res, err, {
@@ -194,7 +226,7 @@ const upload = (req, res, dir = '', layer = -1) => {
     //   });
     // });
 
-    action(res, {
+    action(res, files.image, {
       success: 'Изображение успешно добавлено',
       error: 'Не удалось переместить изображение',
     });

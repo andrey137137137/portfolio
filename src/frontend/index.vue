@@ -159,13 +159,12 @@ export default {
   methods: {
     ...mapActions(['setAuthStatus', 'setFormMessage']),
     fadeButton(e) {
-      e.preventDefault();
-      if (this.isAuth) {
-        return;
+      if (!this.isAuth) {
+        e.preventDefault();
+        const $flipBtn = $(this.$refs.flipBtn);
+        this.isFlipped = !this.isFlipped;
+        $flipBtn[this.isFlipped ? 'fadeOut' : 'fadeIn']();
       }
-      const $flipBtn = $(this.$refs.flipBtn);
-      this.isFlipped = !this.isFlipped;
-      $flipBtn[this.isFlipped ? 'fadeOut' : 'fadeIn']();
     },
     submitActions() {
       const $vm = this;

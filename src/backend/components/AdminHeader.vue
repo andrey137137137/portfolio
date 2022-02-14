@@ -1,10 +1,10 @@
 <template lang="pug">
-  header.section.admin_header
-    .container
-      div
-        a.admin_header-link(:href="homeLink" target="_blank") Вернуться на сайт
-        a.admin_header-link(href="" @click.prevent="logout") Выйти
-      h2.section-title.admin_header-title Панель администрирования
+header.section.admin_header
+  .container
+    div(style='display: flex; justify-content: space-between')
+      a.admin_header-link(:href='homeLink', target='_blank') Вернуться на сайт
+      a.admin_header-link(href='', @click.prevent='logout') Выйти
+    h2.section-title.admin_header-title Панель администрирования
 </template>
 
 <script>

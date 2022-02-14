@@ -144,6 +144,7 @@ function action(
         fs.readFile('credentials.json', cb);
       },
       (content, cb) => {
+        console.log(content);
         authorize(JSON.parse(content), cb);
       },
       (auth, cb) => {

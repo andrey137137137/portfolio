@@ -12,11 +12,6 @@ router.get('/reg', (req, res) => {
         href: 'https://github.com/andrey137137137',
         icon: 'github_alt',
       },
-      {
-        name: 'skype',
-        href: 'skype:andrey27x777@gmail.com',
-        icon: 'skype',
-      },
     ],
     email: 'andrey27x777@gmail.com',
     username: '',

@@ -60,7 +60,7 @@ export default {
       return confirm(`Вы уверены, что хотите ${actionStr}?`);
     },
     confirmAction() {
-      return baseConfirmAction('обновить данные');
+      return this.baseConfirmAction('обновить данные');
     },
     submitActions() {},
     submit() {

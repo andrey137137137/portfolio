@@ -35,7 +35,9 @@ export default {
 
       const postfix = this.id ? `: "${this.id}"` : '';
 
-      return baseConfirmAction(`${actionStr} ${this.removeTitle}${postfix}`);
+      return this.baseConfirmAction(
+        `${actionStr} ${this.removeTitle}${postfix}`,
+      );
     },
     removeItem() {
       if (this.confirmAction(false)) {

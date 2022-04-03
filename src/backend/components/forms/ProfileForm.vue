@@ -6,7 +6,8 @@ UserForm(:handleSubmit='submit', :disabled='disabled')
     :vals='$v.contacts.$each.$iter',
     :items='contacts',
     :fields='contactsFields',
-    :propTemplate='contactsTemplate'
+    :propTemplate='contactsTemplate',
+    :arePairs='true'
   )
 </template>
 

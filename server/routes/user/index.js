@@ -3,8 +3,8 @@ const Model = require('mongoose').model('user');
 
 router.get('/reg', (req, res) => {
   const User = new Model({
-    firstName: 'Андрей',
-    lastName: 'Банников',
+    firstName: 'Andrew',
+    lastName: '17',
     old: 33,
     contacts: [
       {

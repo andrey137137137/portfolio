@@ -8,8 +8,10 @@ export default {
     NavMultipleElem,
   },
   render(h) {
+    const FIELDS_COUNT = this.fields.length;
+
     let elems = [];
-    let fieldsCount = 0;
+    let fieldsCounter = 0;
 
     for (const valIndex in this.vals) {
       if (this.vals.hasOwnProperty(valIndex)) {
@@ -22,10 +24,10 @@ export default {
               field.name,
               field.type,
               field.placeholder,
-              !this.arePairs || (this.arePairs && fieldsCount % 2 != 0),
+              (fieldsCounter + 1) % FIELDS_COUNT == 0,
             ),
           );
-          fieldsCount++;
+          fieldsCounter++;
         });
       }
     }
@@ -89,7 +91,7 @@ export default {
 
         multipleNav.push({
           classes: 'form-btn--danger',
-          label: 'toDelete',
+          label: '&mdash;',
           handle: () => {
             $vm.removeCurItem(curIndex);
           },

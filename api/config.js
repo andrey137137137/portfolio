@@ -30,6 +30,9 @@ const {
   SMTP_PORT,
   SMTP_EMAIL,
   SMTP_PASSWORD,
+
+  GOOGLE_API_KEY,
+  GOOGLE_OAUTH_CLIENT_ID,
 } = process.env;
 const ROOT_PATH = IS_DEV ? 'public' : CLIENT_PATH;
 
@@ -71,5 +74,9 @@ module.exports = {
     SECURE: SMTP_SECURE,
     EMAIL: SMTP_EMAIL,
     PASSWORD: SMTP_PASSWORD,
+  },
+  google: {
+    API_KEY: GOOGLE_API_KEY,
+    OAUTH_CLIENT_ID: GOOGLE_OAUTH_CLIENT_ID,
   },
 };

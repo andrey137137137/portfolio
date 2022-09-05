@@ -3,7 +3,7 @@ const router = require('express').Router();
 const Model = require('mongoose').model('work');
 const { IncomingForm } = require('formidable');
 const { each } = require('async');
-// const sharp = require('sharp');
+const sharp = require('sharp');
 
 const { isAuth } = require('@auth');
 const { exist, getSlideImageName } = require('@apiHelpers');

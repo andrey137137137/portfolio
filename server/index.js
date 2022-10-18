@@ -1,6 +1,6 @@
 require('module-alias/register');
 require('./db');
-require('./google-auth');
+// require('./google-auth');
 
 const { IS_DEV } = require('@apiHelpers');
 const app = require('express')();

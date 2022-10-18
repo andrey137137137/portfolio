@@ -1,6 +1,6 @@
 <template lang="pug">
-  FormWrapper.form--admin
-    slot
+FormWrapper.form--admin
+  slot
 </template>
 
 <script>

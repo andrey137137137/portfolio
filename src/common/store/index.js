@@ -31,14 +31,18 @@ function convertData(data) {
     return data;
   }
 
+  if (!exist('append', data)) {
+    return data;
+  }
+
+  if (!exist('entries', data)) {
+    return data;
+  }
+
   const newData = {};
 
-  if (exist('append', data) && exist('entries', data)) {
-    for (const pair of data.entries()) {
-      newData[pair[0]] = pair[1];
-    }
-  } else {
-    return data;
+  for (const pair of data.entries()) {
+    newData[pair[0]] = pair[1];
   }
 
   return newData;
